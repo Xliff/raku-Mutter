@@ -1,0 +1,6 @@
+prefix=Mutter
+modules=Mutter::Raw::Types
+backups=backup,bitbucket,google-backup,azure-backup,hut
+hfile-prefix=META_EXPORT:META_EXPORT
+lib=mutter
+include-directory=/usr/src/mutter-42.1/src/meta
