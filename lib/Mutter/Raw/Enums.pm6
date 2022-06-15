@@ -1,0 +1,1250 @@
+use v6.c;
+
+use GLib::Raw::Definitions;
+
+unit package Mutter::Raw::Enums;
+
+constant ClutterActorAlign is export := guint32;
+our enum ClutterActorAlignEnum is export <
+  CLUTTER_ACTOR_ALIGN_FILL
+  CLUTTER_ACTOR_ALIGN_START
+  CLUTTER_ACTOR_ALIGN_CENTER
+  CLUTTER_ACTOR_ALIGN_END
+>;
+
+constant ClutterActorFlags is export := guint32;
+our enum ClutterActorFlagsEnum is export (
+  CLUTTER_ACTOR_MAPPED    => 1 +< 1,
+  CLUTTER_ACTOR_REALIZED  => 1 +< 2,
+  CLUTTER_ACTOR_REACTIVE  => 1 +< 3,
+  CLUTTER_ACTOR_VISIBLE   => 1 +< 4,
+  CLUTTER_ACTOR_NO_LAYOUT => 1 +< 5,
+);
+
+constant ClutterAlignAxis is export := guint32;
+our enum ClutterAlignAxisEnum is export <
+  CLUTTER_ALIGN_X_AXIS
+  CLUTTER_ALIGN_Y_AXIS
+  CLUTTER_ALIGN_BOTH
+>;
+
+constant ClutterAnimationMode is export := guint32;
+our enum ClutterAnimationModeEnum is export (
+  CLUTTER_CUSTOM_MODE         => 0,
+  'CLUTTER_LINEAR',
+  'CLUTTER_EASE_IN_QUAD',
+  'CLUTTER_EASE_OUT_QUAD',
+  'CLUTTER_EASE_IN_OUT_QUAD',
+  'CLUTTER_EASE_IN_CUBIC',
+  'CLUTTER_EASE_OUT_CUBIC',
+  'CLUTTER_EASE_IN_OUT_CUBIC',
+  'CLUTTER_EASE_IN_QUART',
+  'CLUTTER_EASE_OUT_QUART',
+  'CLUTTER_EASE_IN_OUT_QUART',
+  'CLUTTER_EASE_IN_QUINT',
+  'CLUTTER_EASE_OUT_QUINT',
+  'CLUTTER_EASE_IN_OUT_QUINT',
+  'CLUTTER_EASE_IN_SINE',
+  'CLUTTER_EASE_OUT_SINE',
+  'CLUTTER_EASE_IN_OUT_SINE',
+  'CLUTTER_EASE_IN_EXPO',
+  'CLUTTER_EASE_OUT_EXPO',
+  'CLUTTER_EASE_IN_OUT_EXPO',
+  'CLUTTER_EASE_IN_CIRC',
+  'CLUTTER_EASE_OUT_CIRC',
+  'CLUTTER_EASE_IN_OUT_CIRC',
+  'CLUTTER_EASE_IN_ELASTIC',
+  'CLUTTER_EASE_OUT_ELASTIC',
+  'CLUTTER_EASE_IN_OUT_ELASTIC',
+  'CLUTTER_EASE_IN_BACK',
+  'CLUTTER_EASE_OUT_BACK',
+  'CLUTTER_EASE_IN_OUT_BACK',
+  'CLUTTER_EASE_IN_BOUNCE',
+  'CLUTTER_EASE_OUT_BOUNCE',
+  'CLUTTER_EASE_IN_OUT_BOUNCE',
+  'CLUTTER_STEPS',
+  'CLUTTER_STEP_START',
+  'CLUTTER_STEP_END',
+  'CLUTTER_CUBIC_BEZIER',
+  'CLUTTER_EASE',
+  'CLUTTER_EASE_IN',
+  'CLUTTER_EASE_OUT',
+  'CLUTTER_EASE_IN_OUT',
+  'CLUTTER_ANIMATION_LAST'
+);
+
+constant ClutterBinAlignment is export := guint32;
+our enum ClutterBinAlignmentEnum is export <
+  CLUTTER_BIN_ALIGNMENT_FIXED
+  CLUTTER_BIN_ALIGNMENT_FILL
+  CLUTTER_BIN_ALIGNMENT_START
+  CLUTTER_BIN_ALIGNMENT_END
+  CLUTTER_BIN_ALIGNMENT_CENTER
+>;
+
+constant ClutterBindCoordinate is export := guint32;
+our enum ClutterBindCoordinateEnum is export <
+  CLUTTER_BIND_X
+  CLUTTER_BIND_Y
+  CLUTTER_BIND_WIDTH
+  CLUTTER_BIND_HEIGHT
+  CLUTTER_BIND_POSITION
+  CLUTTER_BIND_SIZE
+  CLUTTER_BIND_ALL
+>;
+
+constant ClutterBoxAlignment is export := guint32;
+our enum ClutterBoxAlignmentEnum is export <
+  CLUTTER_BOX_ALIGNMENT_START
+  CLUTTER_BOX_ALIGNMENT_END
+  CLUTTER_BOX_ALIGNMENT_CENTER
+>;
+
+constant ClutterButtonState is export := guint32;
+our enum ClutterButtonStateEnum is export <
+  CLUTTER_BUTTON_STATE_RELEASED
+  CLUTTER_BUTTON_STATE_PRESSED
+>;
+
+constant ClutterContentGravity is export := guint32;
+our enum ClutterContentGravityEnum is export <
+  CLUTTER_CONTENT_GRAVITY_TOP_LEFT
+  CLUTTER_CONTENT_GRAVITY_TOP
+  CLUTTER_CONTENT_GRAVITY_TOP_RIGHT
+  CLUTTER_CONTENT_GRAVITY_LEFT
+  CLUTTER_CONTENT_GRAVITY_CENTER
+  CLUTTER_CONTENT_GRAVITY_RIGHT
+  CLUTTER_CONTENT_GRAVITY_BOTTOM_LEFT
+  CLUTTER_CONTENT_GRAVITY_BOTTOM
+  CLUTTER_CONTENT_GRAVITY_BOTTOM_RIGHT
+  CLUTTER_CONTENT_GRAVITY_RESIZE_FILL
+  CLUTTER_CONTENT_GRAVITY_RESIZE_ASPECT
+>;
+
+constant ClutterDebugFlag is export := guint32;
+our enum ClutterDebugFlagEnum is export (
+  CLUTTER_DEBUG_MISC           =>  1 +< 0,
+  CLUTTER_DEBUG_ACTOR          =>  1 +< 1,
+  CLUTTER_DEBUG_TEXTURE        =>  1 +< 2,
+  CLUTTER_DEBUG_EVENT          =>  1 +< 3,
+  CLUTTER_DEBUG_PAINT          =>  1 +< 4,
+  CLUTTER_DEBUG_PANGO          =>  1 +< 5,
+  CLUTTER_DEBUG_BACKEND        =>  1 +< 6,
+  CLUTTER_DEBUG_SCHEDULER      =>  1 +< 7,
+  CLUTTER_DEBUG_SCRIPT         =>  1 +< 8,
+  CLUTTER_DEBUG_SHADER         =>  1 +< 9,
+  CLUTTER_DEBUG_MULTISTAGE     => 1 +< 10,
+  CLUTTER_DEBUG_ANIMATION      => 1 +< 11,
+  CLUTTER_DEBUG_LAYOUT         => 1 +< 12,
+  CLUTTER_DEBUG_PICK           => 1 +< 13,
+  CLUTTER_DEBUG_EVENTLOOP      => 1 +< 14,
+  CLUTTER_DEBUG_CLIPPING       => 1 +< 15,
+  CLUTTER_DEBUG_OOB_TRANSFORMS => 1 +< 16,
+  CLUTTER_DEBUG_FRAME_TIMINGS  => 1 +< 17,
+  CLUTTER_DEBUG_DETAILED_TRACE => 1 +< 18,
+);
+
+constant ClutterDragAxis is export := guint32;
+our enum ClutterDragAxisEnum is export (
+  CLUTTER_DRAG_AXIS_NONE => 0,
+  'CLUTTER_DRAG_X_AXIS',
+  'CLUTTER_DRAG_Y_AXIS'
+);
+
+constant ClutterDrawDebugFlag is export := guint32;
+our enum ClutterDrawDebugFlagEnum is export (
+  CLUTTER_DEBUG_DISABLE_SWAP_EVENTS             =>  1 +< 0,
+  CLUTTER_DEBUG_DISABLE_CLIPPED_REDRAWS         =>  1 +< 1,
+  CLUTTER_DEBUG_REDRAWS                         =>  1 +< 2,
+  CLUTTER_DEBUG_PAINT_VOLUMES                   =>  1 +< 3,
+  CLUTTER_DEBUG_DISABLE_CULLING                 =>  1 +< 4,
+  CLUTTER_DEBUG_DISABLE_OFFSCREEN_REDIRECT      =>  1 +< 5,
+  CLUTTER_DEBUG_CONTINUOUS_REDRAW               =>  1 +< 6,
+  CLUTTER_DEBUG_PAINT_DEFORM_TILES              =>  1 +< 7,
+  CLUTTER_DEBUG_PAINT_DAMAGE_REGION             =>  1 +< 8,
+  CLUTTER_DEBUG_DISABLE_DYNAMIC_MAX_RENDER_TIME =>  1 +< 9,
+  CLUTTER_DEBUG_PAINT_MAX_RENDER_TIME           => 1 +< 10,
+);
+
+constant ClutterEffectPaintFlags is export := guint32;
+our enum ClutterEffectPaintFlagsEnum is export (
+  CLUTTER_EFFECT_PAINT_ACTOR_DIRTY   => (1 +< 0),
+  CLUTTER_EFFECT_PAINT_BYPASS_EFFECT => (1 +< 1),
+);
+
+constant ClutterEventFlags is export := guint32;
+our enum ClutterEventFlagsEnum is export (
+  CLUTTER_EVENT_NONE                 =>      0,
+  CLUTTER_EVENT_FLAG_SYNTHETIC       => 1 +< 0,
+  CLUTTER_EVENT_FLAG_INPUT_METHOD    => 1 +< 1,
+  CLUTTER_EVENT_FLAG_REPEATED        => 1 +< 2,
+  CLUTTER_EVENT_FLAG_RELATIVE_MOTION => 1 +< 3,
+  CLUTTER_EVENT_FLAG_GRAB_NOTIFY     => 1 +< 4,
+);
+
+constant ClutterEventPhase is export := guint32;
+our enum ClutterEventPhaseEnum is export <
+  CLUTTER_PHASE_CAPTURE
+  CLUTTER_PHASE_BUBBLE
+>;
+
+constant ClutterEventType is export := guint32;
+our enum ClutterEventTypeEnum is export (
+  CLUTTER_NOTHING            => 0,
+  'CLUTTER_KEY_PRESS',
+  'CLUTTER_KEY_RELEASE',
+  'CLUTTER_MOTION',
+  'CLUTTER_ENTER',
+  'CLUTTER_LEAVE',
+  'CLUTTER_BUTTON_PRESS',
+  'CLUTTER_BUTTON_RELEASE',
+  'CLUTTER_SCROLL',
+  'CLUTTER_TOUCH_BEGIN',
+  'CLUTTER_TOUCH_UPDATE',
+  'CLUTTER_TOUCH_END',
+  'CLUTTER_TOUCH_CANCEL',
+  'CLUTTER_TOUCHPAD_PINCH',
+  'CLUTTER_TOUCHPAD_SWIPE',
+  'CLUTTER_TOUCHPAD_HOLD',
+  'CLUTTER_PROXIMITY_IN',
+  'CLUTTER_PROXIMITY_OUT',
+  'CLUTTER_PAD_BUTTON_PRESS',
+  'CLUTTER_PAD_BUTTON_RELEASE',
+  'CLUTTER_PAD_STRIP',
+  'CLUTTER_PAD_RING',
+  'CLUTTER_DEVICE_ADDED',
+  'CLUTTER_DEVICE_REMOVED',
+  'CLUTTER_IM_COMMIT',
+  'CLUTTER_IM_DELETE',
+  'CLUTTER_IM_PREEDIT',
+  'CLUTTER_EVENT_LAST'
+);
+
+constant ClutterFeatureFlags is export := guint32;
+our enum ClutterFeatureFlagsEnum is export (
+  CLUTTER_FEATURE_SHADERS_GLSL => (1 +< 9),
+);
+
+constant ClutterFlowOrientation is export := guint32;
+our enum ClutterFlowOrientationEnum is export <
+  CLUTTER_FLOW_HORIZONTAL
+  CLUTTER_FLOW_VERTICAL
+>;
+
+constant ClutterFrameHint is export := guint32;
+our enum ClutterFrameHintEnum is export (
+  CLUTTER_FRAME_HINT_NONE                     =>      0,
+  CLUTTER_FRAME_HINT_DIRECT_SCANOUT_ATTEMPTED => 1 +< 0,
+);
+
+constant ClutterFrameInfoFlag is export := guint32;
+our enum ClutterFrameInfoFlagEnum is export (
+  CLUTTER_FRAME_INFO_FLAG_NONE      =>      0,
+  CLUTTER_FRAME_INFO_FLAG_HW_CLOCK  => 1 +< 0,
+  CLUTTER_FRAME_INFO_FLAG_ZERO_COPY => 1 +< 1,
+  CLUTTER_FRAME_INFO_FLAG_VSYNC     => 1 +< 2,
+);
+
+constant ClutterFrameResult is export := guint32;
+our enum ClutterFrameResultEnum is export <
+  CLUTTER_FRAME_RESULT_PENDING_PRESENTED
+  CLUTTER_FRAME_RESULT_IDLE
+>;
+
+constant ClutterGestureTriggerEdge is export := guint32;
+our enum ClutterGestureTriggerEdgeEnum is export (
+  CLUTTER_GESTURE_TRIGGER_EDGE_NONE   => 0,
+  'CLUTTER_GESTURE_TRIGGER_EDGE_AFTER',
+  'CLUTTER_GESTURE_TRIGGER_EDGE_BEFORE'
+);
+
+constant ClutterGravity is export := guint32;
+our enum ClutterGravityEnum is export (
+  CLUTTER_GRAVITY_NONE       => 0,
+  'CLUTTER_GRAVITY_NORTH',
+  'CLUTTER_GRAVITY_NORTH_EAST',
+  'CLUTTER_GRAVITY_EAST',
+  'CLUTTER_GRAVITY_SOUTH_EAST',
+  'CLUTTER_GRAVITY_SOUTH',
+  'CLUTTER_GRAVITY_SOUTH_WEST',
+  'CLUTTER_GRAVITY_WEST',
+  'CLUTTER_GRAVITY_NORTH_WEST',
+  'CLUTTER_GRAVITY_CENTER'
+);
+
+constant ClutterGridPosition is export := guint32;
+our enum ClutterGridPositionEnum is export <
+  CLUTTER_GRID_POSITION_LEFT
+  CLUTTER_GRID_POSITION_RIGHT
+  CLUTTER_GRID_POSITION_TOP
+  CLUTTER_GRID_POSITION_BOTTOM
+>;
+
+constant ClutterImageError is export := guint32;
+our enum ClutterImageErrorEnum is export <
+  CLUTTER_IMAGE_ERROR_INVALID_DATA
+>;
+
+constant ClutterInputAxis is export := guint32;
+our enum ClutterInputAxisEnum is export <
+  CLUTTER_INPUT_AXIS_IGNORE
+  CLUTTER_INPUT_AXIS_X
+  CLUTTER_INPUT_AXIS_Y
+  CLUTTER_INPUT_AXIS_PRESSURE
+  CLUTTER_INPUT_AXIS_XTILT
+  CLUTTER_INPUT_AXIS_YTILT
+  CLUTTER_INPUT_AXIS_WHEEL
+  CLUTTER_INPUT_AXIS_DISTANCE
+  CLUTTER_INPUT_AXIS_ROTATION
+  CLUTTER_INPUT_AXIS_SLIDER
+  CLUTTER_INPUT_AXIS_LAST
+>;
+
+constant ClutterInputAxisFlags is export := guint32;
+our enum ClutterInputAxisFlagsEnum is export (
+  CLUTTER_INPUT_AXIS_FLAG_NONE     =>                                0,
+  CLUTTER_INPUT_AXIS_FLAG_X        =>        1 +< CLUTTER_INPUT_AXIS_X,
+  CLUTTER_INPUT_AXIS_FLAG_Y        =>        1 +< CLUTTER_INPUT_AXIS_Y,
+  CLUTTER_INPUT_AXIS_FLAG_PRESSURE => 1 +< CLUTTER_INPUT_AXIS_PRESSURE,
+  CLUTTER_INPUT_AXIS_FLAG_XTILT    =>    1 +< CLUTTER_INPUT_AXIS_XTILT,
+  CLUTTER_INPUT_AXIS_FLAG_YTILT    =>    1 +< CLUTTER_INPUT_AXIS_YTILT,
+  CLUTTER_INPUT_AXIS_FLAG_WHEEL    =>    1 +< CLUTTER_INPUT_AXIS_WHEEL,
+  CLUTTER_INPUT_AXIS_FLAG_DISTANCE => 1 +< CLUTTER_INPUT_AXIS_DISTANCE,
+  CLUTTER_INPUT_AXIS_FLAG_ROTATION => 1 +< CLUTTER_INPUT_AXIS_ROTATION,
+  CLUTTER_INPUT_AXIS_FLAG_SLIDER   =>   1 +< CLUTTER_INPUT_AXIS_SLIDER,
+);
+
+constant ClutterInputCapabilities is export := guint32;
+our enum ClutterInputCapabilitiesEnum is export (
+  CLUTTER_INPUT_CAPABILITY_NONE        =>      0,
+  CLUTTER_INPUT_CAPABILITY_POINTER     => 1 +< 0,
+  CLUTTER_INPUT_CAPABILITY_KEYBOARD    => 1 +< 1,
+  CLUTTER_INPUT_CAPABILITY_TOUCHPAD    => 1 +< 2,
+  CLUTTER_INPUT_CAPABILITY_TOUCH       => 1 +< 3,
+  CLUTTER_INPUT_CAPABILITY_TABLET_TOOL => 1 +< 4,
+  CLUTTER_INPUT_CAPABILITY_TABLET_PAD  => 1 +< 5,
+);
+
+constant ClutterInputContentHintFlags is export := guint32;
+our enum ClutterInputContentHintFlagsEnum is export (
+  CLUTTER_INPUT_CONTENT_HINT_COMPLETION          => 1 +< 0,
+  CLUTTER_INPUT_CONTENT_HINT_SPELLCHECK          => 1 +< 1,
+  CLUTTER_INPUT_CONTENT_HINT_AUTO_CAPITALIZATION => 1 +< 2,
+  CLUTTER_INPUT_CONTENT_HINT_LOWERCASE           => 1 +< 3,
+  CLUTTER_INPUT_CONTENT_HINT_UPPERCASE           => 1 +< 4,
+  CLUTTER_INPUT_CONTENT_HINT_TITLECASE           => 1 +< 5,
+  CLUTTER_INPUT_CONTENT_HINT_HIDDEN_TEXT         => 1 +< 6,
+  CLUTTER_INPUT_CONTENT_HINT_SENSITIVE_DATA      => 1 +< 7,
+  CLUTTER_INPUT_CONTENT_HINT_LATIN               => 1 +< 8,
+  CLUTTER_INPUT_CONTENT_HINT_MULTILINE           => 1 +< 9,
+);
+
+constant ClutterInputContentPurpose is export := guint32;
+our enum ClutterInputContentPurposeEnum is export <
+  CLUTTER_INPUT_CONTENT_PURPOSE_NORMAL
+  CLUTTER_INPUT_CONTENT_PURPOSE_ALPHA
+  CLUTTER_INPUT_CONTENT_PURPOSE_DIGITS
+  CLUTTER_INPUT_CONTENT_PURPOSE_NUMBER
+  CLUTTER_INPUT_CONTENT_PURPOSE_PHONE
+  CLUTTER_INPUT_CONTENT_PURPOSE_URL
+  CLUTTER_INPUT_CONTENT_PURPOSE_EMAIL
+  CLUTTER_INPUT_CONTENT_PURPOSE_NAME
+  CLUTTER_INPUT_CONTENT_PURPOSE_PASSWORD
+  CLUTTER_INPUT_CONTENT_PURPOSE_DATE
+  CLUTTER_INPUT_CONTENT_PURPOSE_TIME
+  CLUTTER_INPUT_CONTENT_PURPOSE_DATETIME
+  CLUTTER_INPUT_CONTENT_PURPOSE_TERMINAL
+>;
+
+constant ClutterInputDevicePadFeature is export := guint32;
+our enum ClutterInputDevicePadFeatureEnum is export <
+  CLUTTER_PAD_FEATURE_BUTTON
+  CLUTTER_PAD_FEATURE_RING
+  CLUTTER_PAD_FEATURE_STRIP
+>;
+
+constant ClutterInputDevicePadSource is export := guint32;
+our enum ClutterInputDevicePadSourceEnum is export <
+  CLUTTER_INPUT_DEVICE_PAD_SOURCE_UNKNOWN
+  CLUTTER_INPUT_DEVICE_PAD_SOURCE_FINGER
+>;
+
+constant ClutterInputDeviceToolType is export := guint32;
+our enum ClutterInputDeviceToolTypeEnum is export <
+  CLUTTER_INPUT_DEVICE_TOOL_NONE
+  CLUTTER_INPUT_DEVICE_TOOL_PEN
+  CLUTTER_INPUT_DEVICE_TOOL_ERASER
+  CLUTTER_INPUT_DEVICE_TOOL_BRUSH
+  CLUTTER_INPUT_DEVICE_TOOL_PENCIL
+  CLUTTER_INPUT_DEVICE_TOOL_AIRBRUSH
+  CLUTTER_INPUT_DEVICE_TOOL_MOUSE
+  CLUTTER_INPUT_DEVICE_TOOL_LENS
+>;
+
+constant ClutterInputDeviceType is export := guint32;
+our enum ClutterInputDeviceTypeEnum is export <
+  CLUTTER_POINTER_DEVICE
+  CLUTTER_KEYBOARD_DEVICE
+  CLUTTER_EXTENSION_DEVICE
+  CLUTTER_JOYSTICK_DEVICE
+  CLUTTER_TABLET_DEVICE
+  CLUTTER_TOUCHPAD_DEVICE
+  CLUTTER_TOUCHSCREEN_DEVICE
+  CLUTTER_PEN_DEVICE
+  CLUTTER_ERASER_DEVICE
+  CLUTTER_CURSOR_DEVICE
+  CLUTTER_PAD_DEVICE
+  CLUTTER_N_DEVICE_TYPES
+>;
+
+constant ClutterInputMode is export := guint32;
+our enum ClutterInputModeEnum is export <
+  CLUTTER_INPUT_MODE_LOGICAL
+  CLUTTER_INPUT_MODE_PHYSICAL
+  CLUTTER_INPUT_MODE_FLOATING
+>;
+
+constant ClutterInputPanelState is export := guint32;
+our enum ClutterInputPanelStateEnum is export <
+  CLUTTER_INPUT_PANEL_STATE_OFF
+  CLUTTER_INPUT_PANEL_STATE_ON
+  CLUTTER_INPUT_PANEL_STATE_TOGGLE
+>;
+
+constant ClutterInterpolation is export := guint32;
+our enum ClutterInterpolationEnum is export <
+  CLUTTER_INTERPOLATION_LINEAR
+  CLUTTER_INTERPOLATION_CUBIC
+>;
+
+constant ClutterKeyState is export := guint32;
+our enum ClutterKeyStateEnum is export <
+  CLUTTER_KEY_STATE_RELEASED
+  CLUTTER_KEY_STATE_PRESSED
+>;
+
+constant ClutterLongPressState is export := guint32;
+our enum ClutterLongPressStateEnum is export <
+  CLUTTER_LONG_PRESS_QUERY
+  CLUTTER_LONG_PRESS_ACTIVATE
+  CLUTTER_LONG_PRESS_CANCEL
+>;
+
+constant ClutterOffscreenRedirect is export := guint32;
+our enum ClutterOffscreenRedirectEnum is export (
+  CLUTTER_OFFSCREEN_REDIRECT_AUTOMATIC_FOR_OPACITY => 1 +< 0,
+  CLUTTER_OFFSCREEN_REDIRECT_ALWAYS                => 1 +< 1,
+  CLUTTER_OFFSCREEN_REDIRECT_ON_IDLE               => 1 +< 2,
+);
+
+constant ClutterOrientation is export := guint32;
+our enum ClutterOrientationEnum is export <
+  CLUTTER_ORIENTATION_HORIZONTAL
+  CLUTTER_ORIENTATION_VERTICAL
+>;
+
+constant ClutterPaintFlag is export := guint32;
+our enum ClutterPaintFlagEnum is export (
+  CLUTTER_PAINT_FLAG_NONE          =>      0,
+  CLUTTER_PAINT_FLAG_NO_CURSORS    => 1 +< 0,
+  CLUTTER_PAINT_FLAG_FORCE_CURSORS => 1 +< 1,
+  CLUTTER_PAINT_FLAG_CLEAR         => 1 +< 2,
+);
+
+constant ClutterPanAxis is export := guint32;
+our enum ClutterPanAxisEnum is export (
+  CLUTTER_PAN_AXIS_NONE => 0,
+  'CLUTTER_PAN_X_AXIS',
+  'CLUTTER_PAN_Y_AXIS',
+  'CLUTTER_PAN_AXIS_AUTO'
+);
+
+constant ClutterPickDebugFlag is export := guint32;
+our enum ClutterPickDebugFlagEnum is export (
+  CLUTTER_DEBUG_NOP_PICKING => 1 +< 0,
+);
+
+constant ClutterPickMode is export := guint32;
+our enum ClutterPickModeEnum is export (
+  CLUTTER_PICK_NONE     => 0,
+  'CLUTTER_PICK_REACTIVE',
+  'CLUTTER_PICK_ALL'
+);
+
+constant ClutterPreeditResetMode is export := guint32;
+our enum ClutterPreeditResetModeEnum is export <
+  CLUTTER_PREEDIT_RESET_CLEAR
+  CLUTTER_PREEDIT_RESET_COMMIT
+>;
+
+constant ClutterRepaintFlags is export := guint32;
+our enum ClutterRepaintFlagsEnum is export (
+  CLUTTER_REPAINT_FLAGS_PRE_PAINT  => 1 +< 0,
+  CLUTTER_REPAINT_FLAGS_POST_PAINT => 1 +< 1,
+);
+
+constant ClutterRequestMode is export := guint32;
+our enum ClutterRequestModeEnum is export <
+  CLUTTER_REQUEST_HEIGHT_FOR_WIDTH
+  CLUTTER_REQUEST_WIDTH_FOR_HEIGHT
+  CLUTTER_REQUEST_CONTENT_SIZE
+>;
+
+constant ClutterRotateAxis is export := guint32;
+our enum ClutterRotateAxisEnum is export <
+  CLUTTER_X_AXIS
+  CLUTTER_Y_AXIS
+  CLUTTER_Z_AXIS
+>;
+
+constant ClutterRotateDirection is export := guint32;
+our enum ClutterRotateDirectionEnum is export <
+  CLUTTER_ROTATE_CW
+  CLUTTER_ROTATE_CCW
+>;
+
+constant ClutterScalingFilter is export := guint32;
+our enum ClutterScalingFilterEnum is export <
+  CLUTTER_SCALING_FILTER_LINEAR
+  CLUTTER_SCALING_FILTER_NEAREST
+  CLUTTER_SCALING_FILTER_TRILINEAR
+>;
+
+constant ClutterScriptError is export := guint32;
+our enum ClutterScriptErrorEnum is export <
+  CLUTTER_SCRIPT_ERROR_INVALID_TYPE_FUNCTION
+  CLUTTER_SCRIPT_ERROR_INVALID_PROPERTY
+  CLUTTER_SCRIPT_ERROR_INVALID_VALUE
+>;
+
+constant ClutterScrollDirection is export := guint32;
+our enum ClutterScrollDirectionEnum is export <
+  CLUTTER_SCROLL_UP
+  CLUTTER_SCROLL_DOWN
+  CLUTTER_SCROLL_LEFT
+  CLUTTER_SCROLL_RIGHT
+  CLUTTER_SCROLL_SMOOTH
+>;
+
+constant ClutterScrollFinishFlags is export := guint32;
+our enum ClutterScrollFinishFlagsEnum is export (
+  CLUTTER_SCROLL_FINISHED_NONE       =>      0,
+  CLUTTER_SCROLL_FINISHED_HORIZONTAL => 1 +< 0,
+  CLUTTER_SCROLL_FINISHED_VERTICAL   => 1 +< 1,
+);
+
+constant ClutterScrollSource is export := guint32;
+our enum ClutterScrollSourceEnum is export <
+  CLUTTER_SCROLL_SOURCE_UNKNOWN
+  CLUTTER_SCROLL_SOURCE_WHEEL
+  CLUTTER_SCROLL_SOURCE_FINGER
+  CLUTTER_SCROLL_SOURCE_CONTINUOUS
+>;
+
+constant ClutterShaderType is export := guint32;
+our enum ClutterShaderTypeEnum is export <
+  CLUTTER_VERTEX_SHADER
+  CLUTTER_FRAGMENT_SHADER
+>;
+
+constant ClutterSnapEdge is export := guint32;
+our enum ClutterSnapEdgeEnum is export <
+  CLUTTER_SNAP_EDGE_TOP
+  CLUTTER_SNAP_EDGE_RIGHT
+  CLUTTER_SNAP_EDGE_BOTTOM
+  CLUTTER_SNAP_EDGE_LEFT
+>;
+
+constant ClutterStepMode is export := guint32;
+our enum ClutterStepModeEnum is export <
+  CLUTTER_STEP_MODE_START
+  CLUTTER_STEP_MODE_END
+>;
+
+constant ClutterSwipeDirection is export := guint32;
+our enum ClutterSwipeDirectionEnum is export (
+  CLUTTER_SWIPE_DIRECTION_UP    => 1 +< 0,
+  CLUTTER_SWIPE_DIRECTION_DOWN  => 1 +< 1,
+  CLUTTER_SWIPE_DIRECTION_LEFT  => 1 +< 2,
+  CLUTTER_SWIPE_DIRECTION_RIGHT => 1 +< 3,
+);
+
+constant ClutterTextDirection is export := guint32;
+our enum ClutterTextDirectionEnum is export <
+  CLUTTER_TEXT_DIRECTION_DEFAULT
+  CLUTTER_TEXT_DIRECTION_LTR
+  CLUTTER_TEXT_DIRECTION_RTL
+>;
+
+constant ClutterTextureQuality is export := guint32;
+our enum ClutterTextureQualityEnum is export <
+  CLUTTER_TEXTURE_QUALITY_LOW
+  CLUTTER_TEXTURE_QUALITY_MEDIUM
+  CLUTTER_TEXTURE_QUALITY_HIGH
+>;
+
+constant ClutterTimelineDirection is export := guint32;
+our enum ClutterTimelineDirectionEnum is export <
+  CLUTTER_TIMELINE_FORWARD
+  CLUTTER_TIMELINE_BACKWARD
+>;
+
+constant ClutterTouchpadGesturePhase is export := guint32;
+our enum ClutterTouchpadGesturePhaseEnum is export <
+  CLUTTER_TOUCHPAD_GESTURE_PHASE_BEGIN
+  CLUTTER_TOUCHPAD_GESTURE_PHASE_UPDATE
+  CLUTTER_TOUCHPAD_GESTURE_PHASE_END
+  CLUTTER_TOUCHPAD_GESTURE_PHASE_CANCEL
+>;
+
+constant ClutterUnitType is export := guint32;
+our enum ClutterUnitTypeEnum is export <
+  CLUTTER_UNIT_PIXEL
+  CLUTTER_UNIT_EM
+  CLUTTER_UNIT_MM
+  CLUTTER_UNIT_POINT
+  CLUTTER_UNIT_CM
+>;
+
+constant ClutterVirtualDeviceType is export := guint32;
+our enum ClutterVirtualDeviceTypeEnum is export (
+  CLUTTER_VIRTUAL_DEVICE_TYPE_NONE        =>      0,
+  CLUTTER_VIRTUAL_DEVICE_TYPE_KEYBOARD    => 1 +< 0,
+  CLUTTER_VIRTUAL_DEVICE_TYPE_POINTER     => 1 +< 1,
+  CLUTTER_VIRTUAL_DEVICE_TYPE_TOUCHSCREEN => 1 +< 2,
+);
+
+constant CoglAttributeType is export := guint32;
+our enum CoglAttributeTypeEnum is export (
+  COGL_ATTRIBUTE_TYPE_BYTE           => 0x1400,
+  COGL_ATTRIBUTE_TYPE_UNSIGNED_BYTE  => 0x1401,
+  COGL_ATTRIBUTE_TYPE_SHORT          => 0x1402,
+  COGL_ATTRIBUTE_TYPE_UNSIGNED_SHORT => 0x1403,
+  COGL_ATTRIBUTE_TYPE_FLOAT          => 0x1406,
+);
+
+constant CoglBitmapError is export := guint32;
+our enum CoglBitmapErrorEnum is export <
+  COGL_BITMAP_ERROR_FAILED
+  COGL_BITMAP_ERROR_UNKNOWN_TYPE
+  COGL_BITMAP_ERROR_CORRUPT_IMAGE
+>;
+
+constant CoglBlendStringError is export := guint32;
+our enum CoglBlendStringErrorEnum is export <
+  COGL_BLEND_STRING_ERROR_PARSE_ERROR
+  COGL_BLEND_STRING_ERROR_ARGUMENT_PARSE_ERROR
+  COGL_BLEND_STRING_ERROR_INVALID_ERROR
+  COGL_BLEND_STRING_ERROR_GPU_UNSUPPORTED_ERROR
+>;
+
+constant CoglBufferBit is export := guint64;
+our enum CoglBufferBitEnum is export (
+  COGL_BUFFER_BIT_COLOR   => 1L+<0,
+  COGL_BUFFER_BIT_DEPTH   => 1L+<1,
+  COGL_BUFFER_BIT_STENCIL => 1L+<2,
+);
+
+constant CoglBufferError is export := guint32;
+our enum CoglBufferErrorEnum is export <
+  COGL_BUFFER_ERROR_MAP
+>;
+
+constant CoglBufferMapHint is export := guint32;
+our enum CoglBufferMapHintEnum is export (
+  COGL_BUFFER_MAP_HINT_DISCARD       => 1 +< 0,
+  COGL_BUFFER_MAP_HINT_DISCARD_RANGE => 1 +< 1,
+);
+
+constant CoglBufferTarget is export := guint32;
+our enum CoglBufferTargetEnum is export (
+  COGL_WINDOW_BUFFER    => (1 +< 1),
+  COGL_OFFSCREEN_BUFFER => (1 +< 2),
+);
+
+constant CoglBufferUpdateHint is export := guint32;
+our enum CoglBufferUpdateHintEnum is export <
+  COGL_BUFFER_UPDATE_HINT_STATIC
+  COGL_BUFFER_UPDATE_HINT_DYNAMIC
+  COGL_BUFFER_UPDATE_HINT_STREAM
+>;
+
+constant CoglDepthTestFunction is export := guint32;
+our enum CoglDepthTestFunctionEnum is export (
+  COGL_DEPTH_TEST_FUNCTION_NEVER    => 0x0200,
+  COGL_DEPTH_TEST_FUNCTION_LESS     => 0x0201,
+  COGL_DEPTH_TEST_FUNCTION_EQUAL    => 0x0202,
+  COGL_DEPTH_TEST_FUNCTION_LEQUAL   => 0x0203,
+  COGL_DEPTH_TEST_FUNCTION_GREATER  => 0x0204,
+  COGL_DEPTH_TEST_FUNCTION_NOTEQUAL => 0x0205,
+  COGL_DEPTH_TEST_FUNCTION_GEQUAL   => 0x0206,
+  COGL_DEPTH_TEST_FUNCTION_ALWAYS   => 0x0207,
+);
+
+constant CoglEglImageFlags is export := guint32;
+our enum CoglEglImageFlagsEnum is export (
+  COGL_EGL_IMAGE_FLAG_NONE        =>      0,
+  COGL_EGL_IMAGE_FLAG_NO_GET_DATA => 1 +< 0,
+);
+
+constant CoglFeatureID is export := guint32;
+our enum CoglFeatureIDEnum is export <
+  COGL_FEATURE_ID_UNSIGNED_INT_INDICES
+  COGL_FEATURE_ID_MAP_BUFFER_FOR_READ
+  COGL_FEATURE_ID_MAP_BUFFER_FOR_WRITE
+  COGL_FEATURE_ID_FENCE
+  COGL_FEATURE_ID_TEXTURE_RG
+  COGL_FEATURE_ID_BUFFER_AGE
+  COGL_FEATURE_ID_TEXTURE_EGL_IMAGE_EXTERNAL
+  COGL_FEATURE_ID_BLIT_FRAMEBUFFER
+  COGL_FEATURE_ID_TIMESTAMP_QUERY
+  _COGL_N_FEATURE_IDS
+>;
+
+constant CoglFilterReturn is export := guint32;
+our enum CoglFilterReturnEnum is export <
+  COGL_FILTER_CONTINUE
+  COGL_FILTER_REMOVE
+>;
+
+constant CoglFrameEvent is export := guint32;
+our enum CoglFrameEventEnum is export (
+  COGL_FRAME_EVENT_SYNC     => 1,
+  'COGL_FRAME_EVENT_COMPLETE'
+);
+
+constant CoglFramebufferError is export := guint32;
+our enum CoglFramebufferErrorEnum is export <
+  COGL_FRAMEBUFFER_ERROR_ALLOCATE
+>;
+
+constant CoglGraphicsResetStatus is export := guint32;
+our enum CoglGraphicsResetStatusEnum is export <
+  COGL_GRAPHICS_RESET_STATUS_NO_ERROR
+  COGL_GRAPHICS_RESET_STATUS_GUILTY_CONTEXT_RESET
+  COGL_GRAPHICS_RESET_STATUS_INNOCENT_CONTEXT_RESET
+  COGL_GRAPHICS_RESET_STATUS_UNKNOWN_CONTEXT_RESET
+  COGL_GRAPHICS_RESET_STATUS_PURGED_CONTEXT_RESET
+>;
+
+constant CoglIndicesType is export := guint32;
+our enum CoglIndicesTypeEnum is export <
+  COGL_INDICES_TYPE_UNSIGNED_BYTE
+  COGL_INDICES_TYPE_UNSIGNED_SHORT
+  COGL_INDICES_TYPE_UNSIGNED_INT
+>;
+
+constant CoglPipelineAlphaFunc is export := guint32;
+our enum CoglPipelineAlphaFuncEnum is export (
+  COGL_PIPELINE_ALPHA_FUNC_NEVER    => 0x0200,
+  COGL_PIPELINE_ALPHA_FUNC_LESS     => 0x0201,
+  COGL_PIPELINE_ALPHA_FUNC_EQUAL    => 0x0202,
+  COGL_PIPELINE_ALPHA_FUNC_LEQUAL   => 0x0203,
+  COGL_PIPELINE_ALPHA_FUNC_GREATER  => 0x0204,
+  COGL_PIPELINE_ALPHA_FUNC_NOTEQUAL => 0x0205,
+  COGL_PIPELINE_ALPHA_FUNC_GEQUAL   => 0x0206,
+  COGL_PIPELINE_ALPHA_FUNC_ALWAYS   => 0x0207,
+);
+
+constant CoglPipelineCullFaceMode is export := guint32;
+our enum CoglPipelineCullFaceModeEnum is export <
+  COGL_PIPELINE_CULL_FACE_MODE_NONE
+  COGL_PIPELINE_CULL_FACE_MODE_FRONT
+  COGL_PIPELINE_CULL_FACE_MODE_BACK
+  COGL_PIPELINE_CULL_FACE_MODE_BOTH
+>;
+
+constant CoglPipelineFilter is export := guint32;
+our enum CoglPipelineFilterEnum is export (
+  COGL_PIPELINE_FILTER_NEAREST                => 0x2600,
+  COGL_PIPELINE_FILTER_LINEAR                 => 0x2601,
+  COGL_PIPELINE_FILTER_NEAREST_MIPMAP_NEAREST => 0x2700,
+  COGL_PIPELINE_FILTER_LINEAR_MIPMAP_NEAREST  => 0x2701,
+  COGL_PIPELINE_FILTER_NEAREST_MIPMAP_LINEAR  => 0x2702,
+  COGL_PIPELINE_FILTER_LINEAR_MIPMAP_LINEAR   => 0x2703,
+);
+
+constant CoglPollFDEvent is export := guint32;
+our enum CoglPollFDEventEnum is export (
+  COGL_POLL_FD_EVENT_IN   =>   COGL_SYSDEF_POLLIN,
+  COGL_POLL_FD_EVENT_PRI  =>  COGL_SYSDEF_POLLPRI,
+  COGL_POLL_FD_EVENT_OUT  =>  COGL_SYSDEF_POLLOUT,
+  COGL_POLL_FD_EVENT_ERR  =>  COGL_SYSDEF_POLLERR,
+  COGL_POLL_FD_EVENT_HUP  =>  COGL_SYSDEF_POLLHUP,
+  COGL_POLL_FD_EVENT_NVAL => COGL_SYSDEF_POLLNVAL,
+);
+
+constant CoglReadPixelsFlags is export := guint64;
+our enum CoglReadPixelsFlagsEnum is export (
+  COGL_READ_PIXELS_COLOR_BUFFER => 1L +< 0,
+);
+
+constant CoglRendererError is export := guint32;
+our enum CoglRendererErrorEnum is export <
+  COGL_RENDERER_ERROR_XLIB_DISPLAY_OPEN
+  COGL_RENDERER_ERROR_BAD_CONSTRAINT
+>;
+
+constant CoglScanoutError is export := guint32;
+our enum CoglScanoutErrorEnum is export <
+  COGL_SCANOUT_ERROR_INHIBITED
+>;
+
+constant CoglShaderType is export := guint32;
+our enum CoglShaderTypeEnum is export <
+  COGL_SHADER_TYPE_VERTEX
+  COGL_SHADER_TYPE_FRAGMENT
+>;
+
+constant CoglSnippetHook is export := guint32;
+our enum CoglSnippetHookEnum is export (
+  COGL_SNIPPET_HOOK_VERTEX                  =>    0,
+  'COGL_SNIPPET_HOOK_VERTEX_TRANSFORM',
+  'COGL_SNIPPET_HOOK_VERTEX_GLOBALS',
+  'COGL_SNIPPET_HOOK_POINT_SIZE',
+  COGL_SNIPPET_HOOK_FRAGMENT                => 2048,
+  'COGL_SNIPPET_HOOK_FRAGMENT_GLOBALS',
+  COGL_SNIPPET_HOOK_TEXTURE_COORD_TRANSFORM => 4096,
+  COGL_SNIPPET_HOOK_LAYER_FRAGMENT          => 6144,
+  'COGL_SNIPPET_HOOK_TEXTURE_LOOKUP'
+);
+
+constant CoglStereoMode is export := guint32;
+our enum CoglStereoModeEnum is export <
+  COGL_STEREO_BOTH
+  COGL_STEREO_LEFT
+  COGL_STEREO_RIGHT
+>;
+
+constant CoglSubpixelOrder is export := guint32;
+our enum CoglSubpixelOrderEnum is export <
+  COGL_SUBPIXEL_ORDER_UNKNOWN
+  COGL_SUBPIXEL_ORDER_NONE
+  COGL_SUBPIXEL_ORDER_HORIZONTAL_RGB
+  COGL_SUBPIXEL_ORDER_HORIZONTAL_BGR
+  COGL_SUBPIXEL_ORDER_VERTICAL_RGB
+  COGL_SUBPIXEL_ORDER_VERTICAL_BGR
+>;
+
+constant CoglSystemError is export := guint32;
+our enum CoglSystemErrorEnum is export <
+  COGL_SYSTEM_ERROR_UNSUPPORTED
+  COGL_SYSTEM_ERROR_NO_MEMORY
+>;
+
+constant CoglTextureComponents is export := guint32;
+our enum CoglTextureComponentsEnum is export (
+  COGL_TEXTURE_COMPONENTS_A     => 1,
+  'COGL_TEXTURE_COMPONENTS_RG',
+  'COGL_TEXTURE_COMPONENTS_RGB',
+  'COGL_TEXTURE_COMPONENTS_RGBA',
+  'COGL_TEXTURE_COMPONENTS_DEPTH'
+);
+
+constant CoglTextureError is export := guint32;
+our enum CoglTextureErrorEnum is export <
+  COGL_TEXTURE_ERROR_SIZE
+  COGL_TEXTURE_ERROR_FORMAT
+  COGL_TEXTURE_ERROR_BAD_PARAMETER
+  COGL_TEXTURE_ERROR_TYPE
+>;
+
+constant CoglTextureFlags is export := guint32;
+our enum CoglTextureFlagsEnum is export (
+  COGL_TEXTURE_NONE           =>      0,
+  COGL_TEXTURE_NO_AUTO_MIPMAP => 1 +< 0,
+  COGL_TEXTURE_NO_SLICING     => 1 +< 1,
+  COGL_TEXTURE_NO_ATLAS       => 1 +< 2,
+);
+
+constant CoglVerticesMode is export := guint32;
+our enum CoglVerticesModeEnum is export (
+  COGL_VERTICES_MODE_POINTS         => 0x0000,
+  COGL_VERTICES_MODE_LINES          => 0x0001,
+  COGL_VERTICES_MODE_LINE_LOOP      => 0x0002,
+  COGL_VERTICES_MODE_LINE_STRIP     => 0x0003,
+  COGL_VERTICES_MODE_TRIANGLES      => 0x0004,
+  COGL_VERTICES_MODE_TRIANGLE_STRIP => 0x0005,
+  COGL_VERTICES_MODE_TRIANGLE_FAN   => 0x0006,
+);
+
+constant CoglWinding is export := guint32;
+our enum CoglWindingEnum is export <
+  COGL_WINDING_CLOCKWISE
+  COGL_WINDING_COUNTER_CLOCKWISE
+>;
+
+constant CoglWinsysFeature is export := guint32;
+our enum CoglWinsysFeatureEnum is export <
+  COGL_WINSYS_FEATURE_VBLANK_COUNTER
+  COGL_WINSYS_FEATURE_VBLANK_WAIT
+  COGL_WINSYS_FEATURE_TEXTURE_FROM_PIXMAP
+  COGL_WINSYS_FEATURE_SWAP_BUFFERS_EVENT
+  COGL_WINSYS_FEATURE_SWAP_REGION
+  COGL_WINSYS_FEATURE_SWAP_REGION_THROTTLE
+  COGL_WINSYS_FEATURE_SWAP_REGION_SYNCHRONIZED
+  COGL_WINSYS_FEATURE_BUFFER_AGE
+  COGL_WINSYS_FEATURE_SYNC_AND_COMPLETE_EVENT
+  COGL_WINSYS_FEATURE_N_FEATURES
+>;
+
+constant CoglWinsysID is export := guint32;
+our enum CoglWinsysIDEnum is export <
+  COGL_WINSYS_ID_ANY
+  COGL_WINSYS_ID_STUB
+  COGL_WINSYS_ID_GLX
+  COGL_WINSYS_ID_EGL_XLIB
+  COGL_WINSYS_ID_CUSTOM
+>;
+
+constant MetaBarrierDirection is export := guint32;
+our enum MetaBarrierDirectionEnum is export (
+  META_BARRIER_DIRECTION_POSITIVE_X => 1 +< 0,
+  META_BARRIER_DIRECTION_POSITIVE_Y => 1 +< 1,
+  META_BARRIER_DIRECTION_NEGATIVE_X => 1 +< 2,
+  META_BARRIER_DIRECTION_NEGATIVE_Y => 1 +< 3,
+);
+
+constant MetaButtonFunction is export := guint32;
+our enum MetaButtonFunctionEnum is export <
+  META_BUTTON_FUNCTION_MENU
+  META_BUTTON_FUNCTION_MINIMIZE
+  META_BUTTON_FUNCTION_MAXIMIZE
+  META_BUTTON_FUNCTION_CLOSE
+  META_BUTTON_FUNCTION_LAST
+>;
+
+constant MetaCloseDialogResponse is export := guint32;
+our enum MetaCloseDialogResponseEnum is export <
+  META_CLOSE_DIALOG_RESPONSE_WAIT
+  META_CLOSE_DIALOG_RESPONSE_FORCE_CLOSE
+>;
+
+constant MetaCompEffect is export := guint32;
+our enum MetaCompEffectEnum is export <
+  META_COMP_EFFECT_CREATE
+  META_COMP_EFFECT_UNMINIMIZE
+  META_COMP_EFFECT_DESTROY
+  META_COMP_EFFECT_MINIMIZE
+  META_COMP_EFFECT_NONE
+>;
+
+constant MetaCursor is export := guint32;
+our enum MetaCursorEnum is export (
+  META_CURSOR_NONE                   => 0,
+  'META_CURSOR_DEFAULT',
+  'META_CURSOR_NORTH_RESIZE',
+  'META_CURSOR_SOUTH_RESIZE',
+  'META_CURSOR_WEST_RESIZE',
+  'META_CURSOR_EAST_RESIZE',
+  'META_CURSOR_SE_RESIZE',
+  'META_CURSOR_SW_RESIZE',
+  'META_CURSOR_NE_RESIZE',
+  'META_CURSOR_NW_RESIZE',
+  'META_CURSOR_MOVE_OR_RESIZE_WINDOW',
+  'META_CURSOR_BUSY',
+  'META_CURSOR_DND_IN_DRAG',
+  'META_CURSOR_DND_MOVE',
+  'META_CURSOR_DND_COPY',
+  'META_CURSOR_DND_UNSUPPORTED_TARGET',
+  'META_CURSOR_POINTING_HAND',
+  'META_CURSOR_CROSSHAIR',
+  'META_CURSOR_IBEAM',
+  'META_CURSOR_BLANK',
+  'META_CURSOR_LAST'
+);
+
+constant MetaDebugPaintFlag is export := guint32;
+our enum MetaDebugPaintFlagEnum is export (
+  META_DEBUG_PAINT_NONE          =>      0,
+  META_DEBUG_PAINT_OPAQUE_REGION => 1 +< 0,
+);
+
+constant MetaDebugTopic is export := gint32;
+our enum MetaDebugTopicEnum is export (
+  META_DEBUG_VERBOSE         =>      -1,
+  META_DEBUG_FOCUS           =>  1 +< 0,
+  META_DEBUG_WORKAREA        =>  1 +< 1,
+  META_DEBUG_STACK           =>  1 +< 2,
+  META_DEBUG_SM              =>  1 +< 3,
+  META_DEBUG_EVENTS          =>  1 +< 4,
+  META_DEBUG_WINDOW_STATE    =>  1 +< 5,
+  META_DEBUG_WINDOW_OPS      =>  1 +< 6,
+  META_DEBUG_GEOMETRY        =>  1 +< 7,
+  META_DEBUG_PLACEMENT       =>  1 +< 8,
+  META_DEBUG_PING            =>  1 +< 9,
+  META_DEBUG_KEYBINDINGS     => 1 +< 10,
+  META_DEBUG_SYNC            => 1 +< 11,
+  META_DEBUG_STARTUP         => 1 +< 12,
+  META_DEBUG_PREFS           => 1 +< 13,
+  META_DEBUG_GROUPS          => 1 +< 14,
+  META_DEBUG_RESIZING        => 1 +< 15,
+  META_DEBUG_SHAPES          => 1 +< 16,
+  META_DEBUG_EDGE_RESISTANCE => 1 +< 17,
+  META_DEBUG_DBUS            => 1 +< 18,
+  META_DEBUG_INPUT           => 1 +< 19,
+  META_DEBUG_WAYLAND         => 1 +< 20,
+  META_DEBUG_KMS             => 1 +< 21,
+  META_DEBUG_SCREEN_CAST     => 1 +< 22,
+  META_DEBUG_REMOTE_DESKTOP  => 1 +< 23,
+  META_DEBUG_BACKEND         => 1 +< 24,
+  META_DEBUG_RENDER          => 1 +< 25,
+);
+
+constant MetaDisplayCorner is export := guint32;
+our enum MetaDisplayCornerEnum is export <
+  META_DISPLAY_TOPLEFT
+  META_DISPLAY_TOPRIGHT
+  META_DISPLAY_BOTTOMLEFT
+  META_DISPLAY_BOTTOMRIGHT
+>;
+
+constant MetaDisplayDirection is export := guint32;
+our enum MetaDisplayDirectionEnum is export <
+  META_DISPLAY_UP
+  META_DISPLAY_DOWN
+  META_DISPLAY_LEFT
+  META_DISPLAY_RIGHT
+>;
+
+constant MetaEdgeType is export := guint32;
+our enum MetaEdgeTypeEnum is export <
+  META_EDGE_WINDOW
+  META_EDGE_MONITOR
+  META_EDGE_SCREEN
+>;
+
+constant MetaExitCode is export := guint32;
+our enum MetaExitCodeEnum is export <
+  META_EXIT_SUCCESS
+  META_EXIT_ERROR
+>;
+
+constant MetaFrameFlags is export := guint32;
+our enum MetaFrameFlagsEnum is export (
+  META_FRAME_ALLOWS_DELETE            =>  1 +< 0,
+  META_FRAME_ALLOWS_MENU              =>  1 +< 1,
+  META_FRAME_ALLOWS_MINIMIZE          =>  1 +< 2,
+  META_FRAME_ALLOWS_MAXIMIZE          =>  1 +< 3,
+  META_FRAME_ALLOWS_VERTICAL_RESIZE   =>  1 +< 4,
+  META_FRAME_ALLOWS_HORIZONTAL_RESIZE =>  1 +< 5,
+  META_FRAME_HAS_FOCUS                =>  1 +< 6,
+  META_FRAME_SHADED                   =>  1 +< 7,
+  META_FRAME_STUCK                    =>  1 +< 8,
+  META_FRAME_MAXIMIZED                =>  1 +< 9,
+  META_FRAME_ALLOWS_SHADE             => 1 +< 10,
+  META_FRAME_ALLOWS_MOVE              => 1 +< 11,
+  META_FRAME_FULLSCREEN               => 1 +< 12,
+  META_FRAME_ABOVE                    => 1 +< 13,
+  META_FRAME_TILED_LEFT               => 1 +< 14,
+  META_FRAME_TILED_RIGHT              => 1 +< 15,
+);
+
+constant MetaFrameType is export := guint32;
+our enum MetaFrameTypeEnum is export <
+  META_FRAME_TYPE_NORMAL
+  META_FRAME_TYPE_DIALOG
+  META_FRAME_TYPE_MODAL_DIALOG
+  META_FRAME_TYPE_UTILITY
+  META_FRAME_TYPE_MENU
+  META_FRAME_TYPE_BORDER
+  META_FRAME_TYPE_ATTACHED
+  META_FRAME_TYPE_LAST
+>;
+
+constant MetaGravity is export := guint32;
+our enum MetaGravityEnum is export (
+  META_GRAVITY_NONE       =>  0,
+  META_GRAVITY_NORTH_WEST =>  1,
+  META_GRAVITY_NORTH      =>  2,
+  META_GRAVITY_NORTH_EAST =>  3,
+  META_GRAVITY_WEST       =>  4,
+  META_GRAVITY_CENTER     =>  5,
+  META_GRAVITY_EAST       =>  6,
+  META_GRAVITY_SOUTH_WEST =>  7,
+  META_GRAVITY_SOUTH      =>  8,
+  META_GRAVITY_SOUTH_EAST =>  9,
+  META_GRAVITY_STATIC     => 10,
+);
+
+constant MetaInhibitShortcutsDialogResponse is export := guint32;
+our enum MetaInhibitShortcutsDialogResponseEnum is export <
+  META_INHIBIT_SHORTCUTS_DIALOG_RESPONSE_ALLOW
+  META_INHIBIT_SHORTCUTS_DIALOG_RESPONSE_DENY
+>;
+
+constant MetaKeyBindingFlags is export := guint32;
+our enum MetaKeyBindingFlagsEnum is export (
+  'META_KEY_BINDING_NONE',
+  META_KEY_BINDING_PER_WINDOW        => 1 +< 0,
+  META_KEY_BINDING_BUILTIN           => 1 +< 1,
+  META_KEY_BINDING_IS_REVERSED       => 1 +< 2,
+  META_KEY_BINDING_NON_MASKABLE      => 1 +< 3,
+  META_KEY_BINDING_IGNORE_AUTOREPEAT => 1 +< 4,
+  META_KEY_BINDING_NO_AUTO_GRAB      => 1 +< 5,
+);
+
+constant MetaLaterType is export := guint32;
+our enum MetaLaterTypeEnum is export <
+  META_LATER_RESIZE
+  META_LATER_CALC_SHOWING
+  META_LATER_CHECK_FULLSCREEN
+  META_LATER_SYNC_STACK
+  META_LATER_BEFORE_REDRAW
+  META_LATER_IDLE
+>;
+
+constant MetaLocaleDirection is export := guint32;
+our enum MetaLocaleDirectionEnum is export <
+  META_LOCALE_DIRECTION_LTR
+  META_LOCALE_DIRECTION_RTL
+>;
+
+constant MetaMonitorSwitchConfigType is export := guint32;
+our enum MetaMonitorSwitchConfigTypeEnum is export <
+  META_MONITOR_SWITCH_CONFIG_ALL_MIRROR
+  META_MONITOR_SWITCH_CONFIG_ALL_LINEAR
+  META_MONITOR_SWITCH_CONFIG_EXTERNAL
+  META_MONITOR_SWITCH_CONFIG_BUILTIN
+  META_MONITOR_SWITCH_CONFIG_UNKNOWN
+>;
+
+constant MetaMotionDirection is export := gint32;
+our enum MetaMotionDirectionEnum is export (
+  META_MOTION_UP         => -1,
+  META_MOTION_DOWN       => -2,
+  META_MOTION_LEFT       => -3,
+  META_MOTION_RIGHT      => -4,
+  META_MOTION_UP_LEFT    => -5,
+  META_MOTION_UP_RIGHT   => -6,
+  META_MOTION_DOWN_LEFT  => -7,
+  META_MOTION_DOWN_RIGHT => -8,
+);
+
+constant MetaPadActionType is export := guint32;
+our enum MetaPadActionTypeEnum is export <
+  META_PAD_ACTION_BUTTON
+  META_PAD_ACTION_RING
+  META_PAD_ACTION_STRIP
+>;
+
+constant MetaPreference is export := guint32;
+our enum MetaPreferenceEnum is export <
+  META_PREF_MOUSE_BUTTON_MODS
+  META_PREF_FOCUS_MODE
+  META_PREF_FOCUS_NEW_WINDOWS
+  META_PREF_ATTACH_MODAL_DIALOGS
+  META_PREF_RAISE_ON_CLICK
+  META_PREF_ACTION_DOUBLE_CLICK_TITLEBAR
+  META_PREF_ACTION_MIDDLE_CLICK_TITLEBAR
+  META_PREF_ACTION_RIGHT_CLICK_TITLEBAR
+  META_PREF_AUTO_RAISE
+  META_PREF_AUTO_RAISE_DELAY
+  META_PREF_FOCUS_CHANGE_ON_POINTER_REST
+  META_PREF_TITLEBAR_FONT
+  META_PREF_NUM_WORKSPACES
+  META_PREF_DYNAMIC_WORKSPACES
+  META_PREF_KEYBINDINGS
+  META_PREF_DISABLE_WORKAROUNDS
+  META_PREF_BUTTON_LAYOUT
+  META_PREF_WORKSPACE_NAMES
+  META_PREF_VISUAL_BELL
+  META_PREF_AUDIBLE_BELL
+  META_PREF_VISUAL_BELL_TYPE
+  META_PREF_GNOME_ACCESSIBILITY
+  META_PREF_GNOME_ANIMATIONS
+  META_PREF_CURSOR_THEME
+  META_PREF_CURSOR_SIZE
+  META_PREF_RESIZE_WITH_RIGHT_BUTTON
+  META_PREF_EDGE_TILING
+  META_PREF_FORCE_FULLSCREEN
+  META_PREF_WORKSPACES_ONLY_ON_PRIMARY
+  META_PREF_DRAGGABLE_BORDER_WIDTH
+  META_PREF_AUTO_MAXIMIZE
+  META_PREF_CENTER_NEW_WINDOWS
+  META_PREF_DRAG_THRESHOLD
+  META_PREF_LOCATE_POINTER
+  META_PREF_CHECK_ALIVE_TIMEOUT
+>;
+
+constant MetaSelectionType is export := guint32;
+our enum MetaSelectionTypeEnum is export <
+  META_SELECTION_PRIMARY
+  META_SELECTION_CLIPBOARD
+  META_SELECTION_DND
+  META_N_SELECTION_TYPES
+>;
+
+constant MetaShadowMode is export := guint32;
+our enum MetaShadowModeEnum is export <
+  META_SHADOW_MODE_AUTO
+  META_SHADOW_MODE_FORCED_OFF
+  META_SHADOW_MODE_FORCED_ON
+>;
+
+constant MetaSide is export := guint32;
+our enum MetaSideEnum is export (
+  META_SIDE_LEFT   =>   META_DIRECTION_LEFT,
+  META_SIDE_RIGHT  =>  META_DIRECTION_RIGHT,
+  META_SIDE_TOP    =>    META_DIRECTION_TOP,
+  META_SIDE_BOTTOM => META_DIRECTION_BOTTOM,
+);
+
+constant MetaSizeChange is export := guint32;
+our enum MetaSizeChangeEnum is export <
+  META_SIZE_CHANGE_MAXIMIZE
+  META_SIZE_CHANGE_UNMAXIMIZE
+  META_SIZE_CHANGE_FULLSCREEN
+  META_SIZE_CHANGE_UNFULLSCREEN
+>;
+
+constant MetaStackLayer is export := guint32;
+our enum MetaStackLayerEnum is export (
+  META_LAYER_DESKTOP           => 0,
+  META_LAYER_BOTTOM            => 1,
+  META_LAYER_NORMAL            => 2,
+  META_LAYER_TOP               => 4,
+  META_LAYER_DOCK              => 4,
+  META_LAYER_OVERRIDE_REDIRECT => 7,
+  META_LAYER_LAST              => 8,
+);
+
+constant MetaTabList is export := guint32;
+our enum MetaTabListEnum is export <
+  META_TAB_LIST_NORMAL
+  META_TAB_LIST_DOCKS
+  META_TAB_LIST_GROUP
+  META_TAB_LIST_NORMAL_ALL
+>;
+
+constant MetaTabShowType is export := guint32;
+our enum MetaTabShowTypeEnum is export <
+  META_TAB_SHOW_ICON
+  META_TAB_SHOW_INSTANTLY
+>;
+
+constant MetaWindowMenuType is export := guint32;
+our enum MetaWindowMenuTypeEnum is export <
+  META_WINDOW_MENU_WM
+  META_WINDOW_MENU_APP
+>;
+
+constant MetaWindowType is export := guint32;
+our enum MetaWindowTypeEnum is export <
+  META_WINDOW_NORMAL
+  META_WINDOW_DESKTOP
+  META_WINDOW_DOCK
+  META_WINDOW_DIALOG
+  META_WINDOW_MODAL_DIALOG
+  META_WINDOW_TOOLBAR
+  META_WINDOW_MENU
+  META_WINDOW_UTILITY
+  META_WINDOW_SPLASHSCREEN
+  META_WINDOW_DROPDOWN_MENU
+  META_WINDOW_POPUP_MENU
+  META_WINDOW_TOOLTIP
+  META_WINDOW_NOTIFICATION
+  META_WINDOW_COMBO
+  META_WINDOW_DND
+  META_WINDOW_OVERRIDE_OTHER
+>;
