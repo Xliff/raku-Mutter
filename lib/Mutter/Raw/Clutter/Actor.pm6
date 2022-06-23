@@ -1359,9 +1359,80 @@ sub clutter_actor_unrealize (MutterClutterActor $self)
 { * }
 
 sub clutter_actor_unset_flags (
-  MutterClutterActor      $self, 
+  MutterClutterActor      $self,
   MutterClutterActorFlags $flags
 )
+  is native(mutter-clutter)
+  is export
+{ * }
+
+sub clutter_actor_get_type
+  returns GType
+  is native(mutter-clutter)
+  is export
+{ * }
+
+### /usr/src/mutter-42.1/clutter/clutter/clutter-action.h
+
+sub clutter_actor_add_action (ClutterActor $self, ClutterAction $action)
+  is native(mutter-clutter)
+  is export
+{ * }
+
+sub clutter_actor_add_action_full (
+  ClutterActor      $self,
+  Str               $name,
+  ClutterEventPhase $phase,
+  ClutterAction     $action
+)
+  is native(mutter-clutter)
+  is export
+{ * }
+
+sub clutter_actor_add_action_with_name (
+  ClutterActor  $self,
+  Str           $name,
+  ClutterAction $action
+)
+  is native(mutter-clutter)
+  is export
+{ * }
+
+sub clutter_actor_clear_actions (ClutterActor $self)
+  is native(mutter-clutter)
+  is export
+{ * }
+
+sub clutter_action_get_phase (ClutterAction $action)
+  returns ClutterEventPhase
+  is native(mutter-clutter)
+  is export
+{ * }
+
+sub clutter_actor_get_action (ClutterActor $self, Str $name)
+  returns ClutterAction
+  is native(mutter-clutter)
+  is export
+{ * }
+
+sub clutter_actor_get_actions (ClutterActor $self)
+  returns GList
+  is native(mutter-clutter)
+  is export
+{ * }
+
+sub clutter_actor_has_actions (ClutterActor $self)
+  returns uint32
+  is native(mutter-clutter)
+  is export
+{ * }
+
+sub clutter_actor_remove_action (ClutterActor $self, ClutterAction $action)
+  is native(mutter-clutter)
+  is export
+{ * }
+
+sub clutter_actor_remove_action_by_name (ClutterActor $self, Str $name)
   is native(mutter-clutter)
   is export
 { * }

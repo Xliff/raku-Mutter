@@ -41,7 +41,7 @@ class Mutter::Clutter::Actor {
   also does Mutter::Clutter::Roles::Signals::Actor;
   also does Mutter::Clutter::Roles::Signals::Generic;
 
-  has MutterClutterActor $!ca;
+  has MutterClutterActor $!mca;
 
   submethod BUILD (:$mutter-clutter-actor) {
     self.setMutterClutterActor($mutter-clutter-actor)
@@ -107,168 +107,168 @@ class Mutter::Clutter::Actor {
   #   gpointer
   #   --> void
   method allocation-changed is also<allocation_changed> {
-    self.connect-allocation-changed($!ca);
+    self.connect-allocation-changed($!mca);
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
   method button-press-event is also<button_press_event> {
-    self.connect-clutter-event($!ca, 'button-press-event');
+    self.connect-clutter-event($!mca, 'button-press-event');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
   method button-release-event is also<button_release_event> {
-    self.connect-clutter-event($!ca, 'button-release-event');
+    self.connect-clutter-event($!mca, 'button-release-event');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
   method captured-event is also<captured_event> {
-    self.connect-clutter-event($!ca, 'captured-event');
+    self.connect-clutter-event($!mca, 'captured-event');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
   method destroy {
-    self.connect($!ca, 'destroy');
+    self.connect($!mca, 'destroy');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
   method enter-event is also<enter_event> {
-    self.connect-clutter-event($!ca, 'enter-event');
+    self.connect-clutter-event($!mca, 'enter-event');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
   method event {
-    self.connect-clutter-event($!ca, 'event');
+    self.connect-clutter-event($!mca, 'event');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
   method hide {
-    self.connect($!ca, 'hide');
+    self.connect($!mca, 'hide');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
   method key-focus-in is also<key_focus_in> {
-    self.connect($!ca, 'key-focus-in');
+    self.connect($!mca, 'key-focus-in');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
   method key-focus-out is also<key_focus_out> {
-    self.connect($!ca, 'key-focus-out');
+    self.connect($!mca, 'key-focus-out');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
   method key-press-event is also<key_press_event> {
-    self.connect-clutter-event($!ca, 'key-press-event');
+    self.connect-clutter-event($!mca, 'key-press-event');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
   method key-release-event is also<key_release_event> {
-    self.connect-clutter-event($!ca, 'key-release-event');
+    self.connect-clutter-event($!mca, 'key-release-event');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
   method leave-event is also<leave_event> {
-    self.connect-clutter-event($!ca, 'leave-event');
+    self.connect-clutter-event($!mca, 'leave-event');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
   method motion-event is also<motion_event> {
-    self.connect-clutter-event($!ca, 'motion-event');
+    self.connect-clutter-event($!mca, 'motion-event');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
   method paint {
-    self.connect($!ca, 'paint');
+    self.connect($!mca, 'paint');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterActor, gpointer --> void
   method parent-set is also<parent_set> {
-    self.connect-parent-set($!ca);
+    self.connect-parent-set($!mca);
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterColor, gpointer --> void
   method pick {
-    self.connect-pick($!ca);
+    self.connect-pick($!mca);
   }
 
   # Is originally:
   # void, void
   method queue-redraw {
-    self.connect($!ca, 'queue-redraw');
+    self.connect($!mca, 'queue-redraw');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
   method queue-relayout is also<queue_relayout> {
-    self.connect($!ca, 'queue-relayout');
+    self.connect($!mca, 'queue-relayout');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
   method realize {
-    self.connect($!ca, 'realize');
+    self.connect($!mca, 'realize');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
   method scroll-event is also<scroll_event> {
-    self.connect-clutter-event($!ca, 'scroll-event');
+    self.connect-clutter-event($!mca, 'scroll-event');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
   method show {
-    self.connect($!ca, 'show');
+    self.connect($!mca, 'show');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
   method touch-event is also<touch_event> {
-    self.connect-clutter-event($!ca, 'touch-event');
+    self.connect-clutter-event($!mca, 'touch-event');
   }
 
   # Is originally:
   # MutterClutterActor, gchar, gboolean, gpointer --> void
   method transition-stopped is also<transition_stopped> {
-    self.connect-transition-stopped($!ca);
+    self.connect-transition-stopped($!mca);
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
   method transitions-completed is also<transitions_completed> {
-    self.connect($!ca, 'transitions-completed');
+    self.connect($!mca, 'transitions-completed');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
   method unrealize {
-    self.connect($!ca, 'unrealize');
+    self.connect($!mca, 'unrealize');
   }
 
   method opacity is rw {
     Proxy.new(
       FETCH => sub ($) {
-        clutter_actor_get_opacity($!ca);
+        clutter_actor_get_opacity($!mca);
       },
       STORE => sub ($, Int() $opacity is copy) {
         my guint8 $o = $opacity;
 
-        clutter_actor_set_opacity($!ca, $o);
+        clutter_actor_set_opacity($!mca, $o);
       }
     );
   }
@@ -276,12 +276,12 @@ class Mutter::Clutter::Actor {
   method opacity-override is rw is also<opacity_override> {
     Proxy.new(
       FETCH => sub ($) {
-        clutter_actor_get_opacity_override($!ca);
+        clutter_actor_get_opacity_override($!mca);
       },
       STORE => sub ($, Int() $opacity is copy) {
         my gint $o = $opacity;
 
-        clutter_actor_set_opacity_override($!ca, $o);
+        clutter_actor_set_opacity_override($!mca, $o);
       }
     );
   }
@@ -289,10 +289,10 @@ class Mutter::Clutter::Actor {
   method pivot-point-z is rw is also<pivot_point_z> {
     Proxy.new(
       FETCH => sub ($) {
-        clutter_actor_get_pivot_point_z($!ca);
+        clutter_actor_get_pivot_point_z($!mca);
       },
       STORE => sub ($, $pivot_z is copy) {
-        clutter_actor_set_pivot_point_z($!ca, $pivot_z);
+        clutter_actor_set_pivot_point_z($!mca, $pivot_z);
       }
     );
   }
@@ -300,12 +300,12 @@ class Mutter::Clutter::Actor {
   method reactive is rw {
     Proxy.new(
       FETCH => sub ($) {
-        so clutter_actor_get_reactive($!ca);
+        so clutter_actor_get_reactive($!mca);
       },
       STORE => sub ($, Int() $reactive is copy) {
         my gboolean $r = $reactive.so.Int;
 
-        clutter_actor_set_reactive($!ca, $r);
+        clutter_actor_set_reactive($!mca, $r);
       }
     );
   }
@@ -313,12 +313,12 @@ class Mutter::Clutter::Actor {
   method request_mode is rw is also<request-mode> {
     Proxy.new(
       FETCH => sub ($) {
-        ClutterRequestModeEnum( clutter_actor_get_request_mode($!ca) );
+        ClutterRequestModeEnum( clutter_actor_get_request_mode($!mca) );
       },
       STORE => sub ($, Int() $mode is copy) {
         my guint $m = $mode;
 
-        clutter_actor_set_request_mode($!ca, $m);
+        clutter_actor_set_request_mode($!mca, $m);
       }
     );
   }
@@ -326,10 +326,10 @@ class Mutter::Clutter::Actor {
   method scale_z is rw is also<scale-z> {
     Proxy.new(
       FETCH => sub ($) {
-        clutter_actor_get_scale_z($!ca);
+        clutter_actor_get_scale_z($!mca);
       },
       STORE => sub ($, $scale_z is copy) {
-        clutter_actor_set_scale_z($!ca, $scale_z);
+        clutter_actor_set_scale_z($!mca, $scale_z);
       }
     );
   }
@@ -337,11 +337,11 @@ class Mutter::Clutter::Actor {
   method text_direction is rw is also<text-direction> {
     Proxy.new(
       FETCH => sub ($) {
-        ClutterTextDirectionEnum( clutter_actor_get_text_direction($!ca) );
+        ClutterTextDirectionEnum( clutter_actor_get_text_direction($!mca) );
       },
       STORE => sub ($, Int() $text_dir is copy) {
         my guint $d = $text_dir;
-        clutter_actor_set_text_direction($!ca, $d);
+        clutter_actor_set_text_direction($!mca, $d);
       }
     );
   }
@@ -349,12 +349,12 @@ class Mutter::Clutter::Actor {
   method width is rw {
     Proxy.new(
       FETCH => sub ($) {
-        clutter_actor_get_width($!ca);
+        clutter_actor_get_width($!mca);
       },
       STORE => sub ($, Num() $width is copy) {
         my gfloat $w = $width;
 
-        clutter_actor_set_width($!ca, $w);
+        clutter_actor_set_width($!mca, $w);
       }
     );
   }
@@ -362,12 +362,12 @@ class Mutter::Clutter::Actor {
   method x is rw {
     Proxy.new(
       FETCH => sub ($) {
-        clutter_actor_get_x($!ca);
+        clutter_actor_get_x($!mca);
       },
       STORE => sub ($, Num() $x is copy) {
         my gfloat $xx = $x;
 
-        clutter_actor_set_x($!ca, $xx);
+        clutter_actor_set_x($!mca, $xx);
       }
     );
   }
@@ -375,12 +375,12 @@ class Mutter::Clutter::Actor {
   method x-align is rw is also<x_align> {
     Proxy.new(
       FETCH => sub ($) {
-        ClutterActorAlignEnum( clutter_actor_get_x_align($!ca) );
+        ClutterActorAlignEnum( clutter_actor_get_x_align($!mca) );
       },
       STORE => sub ($, Int() $x_align is copy) {
         my ClutterActorAlign $xa = $x_align;
 
-        clutter_actor_set_x_align($!ca, $xa);
+        clutter_actor_set_x_align($!mca, $xa);
       }
     );
   }
@@ -388,12 +388,12 @@ class Mutter::Clutter::Actor {
   method x-expand is rw is also<x_expand> {
     Proxy.new(
       FETCH => sub ($) {
-        so clutter_actor_get_x_expand($!ca);
+        so clutter_actor_get_x_expand($!mca);
       },
       STORE => sub ($, Int() $expand is copy) {
         my gboolean $e = $expand.so.Int;
 
-        clutter_actor_set_x_expand($!ca, $expand);
+        clutter_actor_set_x_expand($!mca, $expand);
       }
     );
   }
@@ -401,12 +401,12 @@ class Mutter::Clutter::Actor {
   method y is rw {
     Proxy.new(
       FETCH => sub ($) {
-        clutter_actor_get_y($!ca);
+        clutter_actor_get_y($!mca);
       },
       STORE => sub ($, Num() $y is copy) {
         my gfloat $yy = $y;
 
-        clutter_actor_set_y($!ca, $yy);
+        clutter_actor_set_y($!mca, $yy);
       }
     );
   }
@@ -414,12 +414,12 @@ class Mutter::Clutter::Actor {
   method y-align is rw is also<y_align> {
     Proxy.new(
       FETCH => sub ($) {
-        ClutterActorAlignEnum( clutter_actor_get_y_align($!ca) );
+        ClutterActorAlignEnum( clutter_actor_get_y_align($!mca) );
       },
       STORE => sub ($, Int() $y_align is copy) {
         my ClutterActorAlign $ya = $y_align;
 
-        clutter_actor_set_y_align($!ca, $ya);
+        clutter_actor_set_y_align($!mca, $ya);
       }
     );
   }
@@ -427,12 +427,12 @@ class Mutter::Clutter::Actor {
   method y-expand is rw is also<y_expand> {
     Proxy.new(
       FETCH => sub ($) {
-        so clutter_actor_get_y_expand($!ca);
+        so clutter_actor_get_y_expand($!mca);
       },
       STORE => sub ($, Int() $expand is copy) {
         my gboolean $e = $expand.so.Int;
 
-        clutter_actor_set_y_expand($!ca, $expand);
+        clutter_actor_set_y_expand($!mca, $expand);
       }
     );
   }
@@ -440,19 +440,19 @@ class Mutter::Clutter::Actor {
   method z-position is rw is also<z_position> {
     Proxy.new(
       FETCH => sub ($) {
-        clutter_actor_get_z_position($!ca);
+        clutter_actor_get_z_position($!mca);
       },
       STORE => sub ($, Num() $z_position is copy) {
         my gfloat $z = $z_position;
 
-        clutter_actor_set_z_position($!ca, $z_position);
+        clutter_actor_set_z_position($!mca, $z_position);
       }
     );
   }
 
   # Type: ClutterAction
   method actions is rw  {
-    my GLib::Value $gv .= new( Clutter::Action.get_type );
+    my GLib::Value $gv .= new( Mutter::Clutter::Action.get_type );
     Proxy.new(
       FETCH => sub ($) {
         warn "'actions' does not allow reading" if $DEBUG;
@@ -686,7 +686,7 @@ class Mutter::Clutter::Actor {
 
   # Type: ClutterScalingFilter
   method magnification-filter is rw is also<magification_filter> {
-    my GLib::Value $gv .= new( Clutter::Raw::Enums.scaling_filter_get_type );
+    my GLib::Value $gv .= new( Mutter::Raw::Enums.scaling_filter_get_type );
     Proxy.new(
       FETCH => sub ($) {
         self.prop_get('magnification-filter', $gv);
@@ -824,7 +824,7 @@ class Mutter::Clutter::Actor {
 
   # Type: ClutterScalingFilter
   method minification-filter is rw is also<minification_filter> {
-    my GLib::Value $gv .= new( Clutter::Raw::Enums.scaling_filter_get_type );
+    my GLib::Value $gv .= new( Mutter::Raw::Enums.scaling_filter_get_type );
     Proxy.new(
       FETCH => sub ($) {
         self.prop_get('minification-filter', $gv);
@@ -1004,7 +1004,7 @@ class Mutter::Clutter::Actor {
   method rotation-center-x (:$raw = False) is rw is also<rotation_center_x>
     is DEPRECATED( 'pivot-point' )
   {
-    my GLib::Value $gv .= new( Clutter::Vertex.get_type );
+    my GLib::Value $gv .= new( Mutter::Clutter::Vertex.get_type );
     Proxy.new(
       FETCH => sub ($) {
         self.prop_get('rotation-center-x', $gv);
@@ -1069,7 +1069,7 @@ class Mutter::Clutter::Actor {
 
   # Type: ClutterSize
   method size (:$raw = False) is rw  {
-    my GLib::Value $gv .= new( Clutter::Size.get_type );
+    my GLib::Value $gv .= new( Mutter::Clutter::Size.get_type );
     Proxy.new(
       FETCH => sub ($) {
         self.prop_get('size', $gv);
@@ -1185,7 +1185,7 @@ class Mutter::Clutter::Actor {
     my gdouble ($xa, $ya)  = ($x_align, $y_align);
     my gboolean ($xf, $yf) = ($x_fill, $y_fill).map( *.so.Int);
 
-    clutter_actor_allocate_align_fill($!ca, $box, $xa, $ya, $xf, $yf);
+    clutter_actor_allocate_align_fill($!mca, $box, $xa, $ya, $xf, $yf);
   }
 
   method allocate_available_size (
@@ -1199,7 +1199,7 @@ class Mutter::Clutter::Actor {
     my gfloat ($xx, $yy, $aw, $ah)
       = ($x, $y, $available_width, $available_height);
 
-    clutter_actor_allocate_available_size($!ca, $xx, $yy, $aw, $ah, $f);
+    clutter_actor_allocate_available_size($!mca, $xx, $yy, $aw, $ah, $f);
   }
 
   method allocate_preferred_size (Num() $x, Num() $y) {
@@ -1316,7 +1316,7 @@ class Mutter::Clutter::Actor {
   {
     my gboolean $c = $capture.so.Int;
 
-    clutter_actor_event($!ca, $event, $capture);
+    clutter_actor_event($!mca, $event, $capture);
   }
 
   method get_abs_allocation_vertices (graphene_point3d_t $verts) {
@@ -1368,116 +1368,208 @@ class Mutter::Clutter::Actor {
     clutter_actor_get_child_transform($!mca, $transform);
   }
 
-  method get_children {
-    clutter_actor_get_children($!mca);
+  method get_children :$glist = False, :$raw = False)
+    is also<
+      get-children
+      children
+    >
+  {
+    returnGList(
+      clutter_actor_get_children($!mca),
+      $raw,
+      $glist,
+      |self.getTypePair`
+    );
   }
 
-  method get_clip (gfloat $xoff is rw, gfloat $yoff is rw, gfloat $width is rw, gfloat $height is rw) {
-    clutter_actor_get_clip($!mca, $xoff is rw, $yoff is rw, $width is rw, $height is rw);
+  proto method get_clip (|)
+    is also<get-clip>
+  { * }
+
+  multi method get_clip {
+    samewith($, $, $, $);
+  }
+  multi method get_clip (
+    $xoff   is rw,
+    $yoff   is rw,
+    $width  is rw,
+    $height is rw
+  ) {
+    my num32 ($xo, $yo, $w, $h) = 0e0 xx 4;
+
+    clutter_actor_get_clip($!mca, $xo, $yo, $w, $h);
+    ($xoff, $yoff, $width, $height) = ($xo, $yo, $w, $h);
   }
 
-  method get_clip_to_allocation {
+  method get_clip_to_allocation
+    is also<get-clip-to-allocation>
+  {
     clutter_actor_get_clip_to_allocation($!mca);
   }
 
-  method get_content {
-    clutter_actor_get_content($!mca);
+  method get_content is also<get-content> {
+    Mutter::Clutter:Content.new(
+      clutter_actor_get_content($!mca)
+    );
   }
 
-  method get_content_box (MutterClutterActorBox $box) {
+  method get_content_box (ClutterActorBox() $box) is also<get-content-box> {
     clutter_actor_get_content_box($!mca, $box);
   }
 
-  method get_content_gravity {
-    clutter_actor_get_content_gravity($!mca);
+  method get_content_gravity is also<get-content-gravity> {
+    MutterClutterContentGravityEnum( clutter_actor_get_content_gravity($!mca) );
   }
 
-  method get_content_repeat {
-    clutter_actor_get_content_repeat($!mca);
+  method get_content_repeat is also<get-content-repeat> {
+    MutterClutterContentRepeatEnum( clutter_actor_get_content_repeat($!mca) );
   }
 
-  method get_content_scaling_filters (MutterClutterScalingFilter $min_filter, MutterClutterScalingFilter $mag_filter) {
+  method get_content_scaling_filters (
+    MutterClutterScalingFilter() $min_filter,
+    MutterClutterScalingFilter() $mag_filter
+  )
+    is also<get-content-scaling-filters>
+  {
     clutter_actor_get_content_scaling_filters($!mca, $min_filter, $mag_filter);
   }
 
-  method get_default_paint_volume {
-    clutter_actor_get_default_paint_volume($!mca);
+  method get_default_paint_volume (:$raw = False)
+    is also<
+      get-default-paint-volume
+      default_paint_volume
+      default-paint-volume
+    >
+  {
+    propReturnObject(
+      clutter_actor_get_default_paint_volume($!mca),
+      $raw,
+      |Mutter::Clutter::PaintVolume.getTypePair
+    );
   }
 
-  method get_easing_delay {
+  method get_easing_delay is also<get-easing-delay> {
     clutter_actor_get_easing_delay($!mca);
   }
 
-  method get_easing_duration {
+  method get_easing_duration is also<get-easing-duration> {
     clutter_actor_get_easing_duration($!mca);
   }
 
-  method get_easing_mode {
-    clutter_actor_get_easing_mode($!mca);
+  method get_easing_mode is also<get-easing-mode> {
+    MutterClutterAnimationModeEnum( clutter_actor_get_easing_mode($!mca) );
   }
 
-  method get_first_child {
-    clutter_actor_get_first_child($!mca);
+  method get_first_child (:$raw = False)
+    is also<
+      get-first-child
+      first_child
+      first-child
+    >
+  {
+    propReturnObject(
+      clutter_actor_get_first_child($!mca),
+      $raw,
+      |self.getTypePair
+    );
   }
 
   method get_fixed_position (gfloat $x is rw, gfloat $y is rw) {
     clutter_actor_get_fixed_position($!mca, $x is rw, $y is rw);
   }
 
-  method get_fixed_position_set {
+  method get_fixed_position_set is also<get-fixed-position-set> {
     clutter_actor_get_fixed_position_set($!mca);
   }
 
-  method get_flags {
-    clutter_actor_get_flags($!mca);
+  method get_flags
+    is also<
+      get-flags
+      flags
+    >
+  {
+    ClutterActorFlagsEnum( clutter_actor_get_flags($!mca);
   }
 
-  method get_height {
+  method get_height is also<get-height> {
     clutter_actor_get_height($!mca);
   }
 
-  method get_last_child {
-    clutter_actor_get_last_child($!mca);
+  method get_last_child (:$raw = False)
+    is also<
+      get-last-child
+      last_child
+      last-child
+    >
+  {
+    propReturnObject(
+      clutter_actor_get_last_child($!mca),
+      $raw,
+      |self.getTypePair
+    );
   }
 
-  method get_layout_manager {
-    clutter_actor_get_layout_manager($!mca);
+  method get_layout_manager(:$raw = False) is also<get-layout-manager> {
+    propReturnObject(
+      clutter_actor_get_layout_manager($!mca),
+      $raw,
+      |Mutter::Clutter::LayoutManager.getTypePair
+    );
   }
 
-  method get_margin (MutterClutterMargin $margin) {
+  method get_margin (MutterClutterMargin() $margin) is also<get-margin> {
     clutter_actor_get_margin($!mca, $margin);
   }
 
-  method get_margin_bottom {
+  method get_margin_bottom is also<get-margin-bottom> {
     clutter_actor_get_margin_bottom($!mca);
   }
 
-  method get_margin_left {
+  method get_margin_left is also<get-margin-left> {
     clutter_actor_get_margin_left($!mca);
   }
 
-  method get_margin_right {
+  method get_margin_right is also<get-margin-right> {
     clutter_actor_get_margin_right($!mca);
   }
 
-  method get_margin_top {
+  method get_margin_top is also<get-margin-top> {
     clutter_actor_get_margin_top($!mca);
   }
 
-  method get_n_children {
+  method get_n_children
+    is also<
+      get-n-children
+      n_children
+      n-children
+      elems
+    >
+  {
     clutter_actor_get_n_children($!mca);
   }
 
-  method get_name {
+  method get_name is also<get-name> {
     clutter_actor_get_name($!mca);
   }
 
-  method get_next_sibling {
-    clutter_actor_get_next_sibling($!mca);
+  method get_next_sibling (:$raw = False)
+    is also<
+      get-next-sibling
+      next_sibling
+      next-sibling
+    >
+  {
+    propReturnObject(
+      clutter_actor_get_next_sibling($!mca),
+      $raw,
+      |self.getTypePair
+    );
   }
 
-  method get_offscreen_redirect {
-    clutter_actor_get_offscreen_redirect($!mca);
+  method get_offscreen_redirect is also<get-offscreen-redirect> {
+    ClutterOffscreenRedirectEnum(
+      clutter_actor_get_offscreen_redirect($!mca)
+    );
   }
 
   method get_opacity {
@@ -1488,92 +1580,248 @@ class Mutter::Clutter::Actor {
     clutter_actor_get_opacity_override($!mca);
   }
 
-  method get_paint_box (MutterClutterActorBox $box) {
+  method get_paint_box (MutterClutterActorBox() $box) {
     clutter_actor_get_paint_box($!mca, $box);
   }
 
-  method get_paint_opacity {
+  method get_paint_opacity
+    is also<
+      get-paint-opacity
+      paint_opacity
+      paint-opacity
+    >
+  {
     clutter_actor_get_paint_opacity($!mca);
   }
 
-  method get_paint_visibility {
+  method get_paint_visibility
+    is also<
+      get-paint-visibility
+      paint_visibility
+      paint-visibility
+    >
+  {
     clutter_actor_get_paint_visibility($!mca);
   }
 
-  method get_paint_volume {
-    clutter_actor_get_paint_volume($!mca);
+  method get_paint_volume (:$raw = False)
+    is also<
+      get-paint-volume
+      paint_volume
+      paint-volume
+    >
+  {
+    propReturnObject(
+      clutter_actor_get_paint_volume($!mca),
+      $raw,
+      |Mutter::Clutter::PaintVolume.getTypePair
+    );
   }
 
-  method get_pango_context {
-    clutter_actor_get_pango_context($!mca);
+  method get_pango_context (:$raw = False)
+    is also<
+      get-pango-context
+      pango_context
+      pango-context
+    >
+  {
+    propReturnObject(
+      clutter_actor_get_pango_context($!mca),
+      $raw,
+      |Pango::Context.getTypePair
+    );
   }
 
-  method get_parent {
-    clutter_actor_get_parent($!mca);
+  method get_parent (:$raw = False)
+    is also<
+      get-parent
+      parent
+    >
+  {
+    propReturnObject(
+      clutter_actor_get_parent($!mca),
+      $raw,
+      |self.getTypePair
+    );
   }
 
-  method get_pivot_point (gfloat $pivot_x is rw, gfloat $pivot_y is rw) {
-    clutter_actor_get_pivot_point($!mca, $pivot_x is rw, $pivot_y is rw);
+  multi method get_pivot_point {
+    samewith($, $);
+  }
+  multi method get_pivot_point ($pivot_x is rw, $pivot_y is rw)
+    is also<get-pivot-point>
+  {
+    my gfloat ($px, $py) = 0e0 xx 2;
+
+    clutter_actor_get_pivot_point($!mca, $px, $py);
+    ($pivot_x, $pivot_y) = ($px, $py);
   }
 
-  method get_pivot_point_z {
+  method get_pivot_point_z is also<get-pivot-point-z> {
     clutter_actor_get_pivot_point_z($!mca);
   }
 
-  method get_position (gfloat $x is rw, gfloat $y is rw) {
-    clutter_actor_get_position($!mca, $x is rw, $y is rw);
+  proto method get_position (|)
+      is also<get-position>
+    { * }
+
+  multi method get_position {
+    samewith($, $);
+  }
+  multi method get_position ($x is rw, $y is rw) {
+    my gfloat ($xx, $yy) = 0e0 xx 2;
+
+    clutter_actor_get_position($!mca, $xx, $yy);
+    ($x, $y) = ($xx, $yy);
   }
 
-  method get_preferred_height (gfloat $for_width, gfloat $min_height_p is rw, gfloat $natural_height_p is rw) {
-    clutter_actor_get_preferred_height($!mca, $for_width, $min_height_p is rw, $natural_height_p is rw);
+  proto method get_preferred_height (|)
+    is also<get-preferred-height>
+  { * }
+
+  multi method get_preferred_height (Num() $for_width) {
+    samewith($for_width, $, $);
+  }
+  multi method get_preferred_height (
+    Num() $for_width,
+          $min_height_p     is rw,
+          $natural_height_p is rw
+  ) {
+    my gfloat ($fw, $mh, $nh) = ($for_width, 0e0, 0e0);
+
+    clutter_actor_get_preferred_height($!mca, $fw, $mh, $nh);
+    ($min_height_p, $natural_height_p) = ($mh, $nh);
   }
 
-  method get_preferred_size (gfloat $min_width_p is rw, gfloat $min_height_p is rw, gfloat $natural_width_p is rw, gfloat $natural_height_p is rw) {
-    clutter_actor_get_preferred_size($!mca, $min_width_p is rw, $min_height_p is rw, $natural_width_p is rw, $natural_height_p is rw);
+  proto method get_preferred_size (|)
+    is also<get-preferred-size>
+  { * }
+
+  multi method get_preferred_size {
+    samewith($, $, $, $);
+  }
+  multi method get_preferred_size (
+    $min_width_p      is rw,
+    $min_height_p     is rw,
+    $natural_width_p  is rw,
+    $natural_height_p is rw
+  ) {
+    my gfloat ($mw, $mh, $nw, $nh) = 0e0 xx 4;
+
+    clutter_actor_get_preferred_size($!mca, $mw, $mh, $nw, $nh);
+    ($min_width_p, $min_height_p, $natural_width_p, $natural_height_p) =
+      ($mw, $mh, $nw, $nh);
   }
 
-  method get_preferred_width (gfloat $for_height, gfloat $min_width_p is rw, gfloat $natural_width_p is rw) {
-    clutter_actor_get_preferred_width($!mca, $for_height, $min_width_p is rw, $natural_width_p is rw);
+  proto method get_preferred_width (|)
+    is also<get-preferred-width>
+  { * }
+
+  multi method get_preferred_width (Num() $for_height) {
+    samewith($for_height, $, $);
+  }
+  multi method get_preferred_width (
+    Num() $for_height,
+    $min_width_p       is rw,
+    $natural_width_p   is rw
+  ) {
+    my ($fh, $mw, $nw) = ($fh, 0e0, 0e0);
+
+    clutter_actor_get_preferred_width($!mca, $fh, $mw, $nw);
+    ($min_width_p, $natural_width_p) = ($mw, $nw);
   }
 
-  method get_previous_sibling {
-    clutter_actor_get_previous_sibling($!mca);
+  method get_previous_sibling (:$raw = False)
+    is also<
+      get-previous-sibling
+      previous_sibling
+      previous-sibling
+    >
+  {
+    propReturnObject(
+      clutter_actor_get_previous_sibling($!mca),
+      $raw,
+      |self.getTypePair
+    );
   }
 
   method get_reactive {
-    clutter_actor_get_reactive($!mca);
+    so clutter_actor_get_reactive($!mca);
   }
 
   method get_request_mode {
-    clutter_actor_get_request_mode($!mca);
+    MutterClutterRequestModeEnum( clutter_actor_get_request_mode($!mca) );
   }
 
   method get_resource_scale {
     clutter_actor_get_resource_scale($!mca);
   }
 
-  method get_rotation_angle (MutterClutterRotateAxis $axis) {
-    clutter_actor_get_rotation_angle($!mca, $axis);
+  method get_rotation_angle (
+    Int() $axis # ClutterRotateAxis $axis
+  )
+    is also<get-rotation-angle>
+  {
+    my guint $a = $axis;
+
+    clutter_actor_get_rotation_angle($!mca, $a);
   }
 
-  method get_scale (gdouble $scale_x is rw, gdouble $scale_y is rw) {
-    clutter_actor_get_scale($!mca, $scale_x is rw, $scale_y is rw);
+  proto method get_scale (|)
+    is also<get-scale>
+  { * }
+
+  multi method get_scale {
+    samewith($, $);
+  }
+  multi method get_scale (
+    $scale_x is rw,
+    $scale_y is rw
+  ) {
+    my gdouble ($sx, $sy) = 0e0 xx 2;
+
+    clutter_actor_get_scale($!mca, $sx, $sy);
+    ($scale_x, $scale_y) = ($sx, $sy);
   }
 
-  method get_scale_z {
+  method get_scale_z is also<get-scale-z> {
     clutter_actor_get_scale_z($!mca);
   }
 
-  method get_size (gfloat $width is rw, gfloat $height is rw) {
-    clutter_actor_get_size($!mca, $width is rw, $height is rw);
+  proto method get_size (|)
+    is also<get-size>
+  { * }
+
+  multi method get_size {
+    samewith($, $);
+  }
+  multi method get_size (
+    $width  is rw,
+    $height is rw
+  ) {
+    my gfloat ($w, $h) = 0e0 xx 2;
+
+    clutter_actor_get_size($!mca, $w, $h);
+    ($width, $height) = ($w, $h);
   }
 
-  method get_stage {
-    clutter_actor_get_stage($!mca);
+  method get_stage (:$raw = False)
+    is also<
+      get-stage
+      stage
+    >
+  {
+    propReturnObject(
+      clutter_actor_get_stage($!mca),
+      $raw,
+      |Mutter::Clutter::Stage.getTypePair
+    );
   }
 
   method get_text_direction {
-    clutter_actor_get_text_direction($!mca);
+    MutterClutterTextDirectionEnum(
+      clutter_actor_get_text_direction($!mca)
+    );
   }
 
   method get_transform (graphene_matrix_t $transform) {
@@ -1584,91 +1832,153 @@ class Mutter::Clutter::Actor {
     clutter_actor_get_transformed_extents($!mca, $rect);
   }
 
-  method get_transformed_paint_volume (MutterClutterActor $relative_to_ancestor) {
-    clutter_actor_get_transformed_paint_volume($!mca, $relative_to_ancestor);
+  method get_transformed_paint_volume (
+    MutterClutterActor()  $relative_to_ancestor,
+                         :$raw                   = False
+  )
+    is also<get-transformed-paint-volume>
+  {
+    propReturnObject(
+      clutter_actor_get_transformed_paint_volume(
+        $!mca,
+        $relative_to_ancestor
+      ),
+      $raw,
+      |Mutter::Clutter::PaintVolume.getTypePair
+    );
   }
 
-  method get_transformed_position (gfloat $x is rw, gfloat $y is rw) {
-    clutter_actor_get_transformed_position($!mca, $x is rw, $y is rw);
+  proto method get_transformed_position (|)
+    is also<get-transformed-position>
+  { * }
+
+  multi method get_transformed_position {
+    samewith($, $);
+  }
+  multi method get_transformed_position (
+    $x is rw,
+    $y is rw
+  ) {
+    my gfloat ($xx, $yy) = 0e0 xx 2;
+
+    clutter_actor_get_transformed_position($!mca, $xx, $yy);
+    ($x, $y) = ($xx, $yy);
   }
 
-  method get_transformed_size (gfloat $width is rw, gfloat $height is rw) {
-    clutter_actor_get_transformed_size($!mca, $width is rw, $height is rw);
+  proto method get_transformed_size (|)
+    is also<get-transformed-size>
+  { * }
+
+  multi method get_transformed_size {
+    samewith($, $);
+  }
+  multi method get_transformed_size (
+    $width  is rw,
+    $height is rw
+  ) {
+    my gfloat ($w, $h) = 0e0 xx 2;
+
+    clutter_actor_get_transformed_size($!mca, $w, $h);
+    ($width, $height) = ($w, $h);
   }
 
-  method get_transition (Str $name) {
-    clutter_actor_get_transition($!mca, $name);
+  method get_transition (Str() $name, :$raw = False) is also<get-transition> {
+    propReturnObject(
+      clutter_actor_get_transition($!mca, $name),
+      $raw,
+      |Mutter::Clutter::Transition.getTypePair
+    );
   }
 
-  method get_translation (gfloat $translate_x is rw, gfloat $translate_y is rw, gfloat $translate_z is rw) {
-    clutter_actor_get_translation($!mca, $translate_x is rw, $translate_y is rw, $translate_z is rw);
+  proto method get_translation (|)
+    is also<get-translation>
+  { * }
+
+  multi method get_translation {
+    samewith($, $, $);
+  }
+  multi method get_translation (
+    $translate_x is rw,
+    $translate_y is rw,
+    $translate_z is rw
+  ) {
+    my gfloat ($tx, $ty, $tz) = 0e0 xx 3;
+
+    clutter_actor_get_translation($!mca, $tx, $ty, $tz);
+    ($translate_x, $translate_y, $translate_z) = ($tx, $ty, $tz);
   }
 
-  method get_width {
+  method get_type is also<get-type> {
+    state ($n, $t);
+
+    unstable_get_type( self.^name, &clutter_actor_get_type, $n, $t );
+  }
+
+  method get_width is also<get-width> {
     clutter_actor_get_width($!mca);
   }
 
-  method get_x {
+  method get_x is also<get-x> {
     clutter_actor_get_x($!mca);
   }
 
-  method get_x_align {
+  method get_x_align is also<get-x-align> {
     clutter_actor_get_x_align($!mca);
   }
 
-  method get_x_expand {
+  method get_x_expand is also<get-x-expand> {
     clutter_actor_get_x_expand($!mca);
   }
 
-  method get_y {
+  method get_y is also<get-y> {
     clutter_actor_get_y($!mca);
   }
 
-  method get_y_align {
+  method get_y_align is also<get-y-align> {
     clutter_actor_get_y_align($!mca);
   }
 
-  method get_y_expand {
+  method get_y_expand is also<get-y-expand> {
     clutter_actor_get_y_expand($!mca);
   }
 
-  method get_z_position {
+  method get_z_position is also<get-z-position> {
     clutter_actor_get_z_position($!mca);
   }
 
-  method grab_key_focus {
+  method grab_key_focus is also<grab-key-focus> {
     clutter_actor_grab_key_focus($!mca);
   }
 
-  method has_accessible {
-    clutter_actor_has_accessible($!mca);
+  method has_accessible is also<has-accessible> {
+    so clutter_actor_has_accessible($!mca);
   }
 
-  method has_allocation {
-    clutter_actor_has_allocation($!mca);
+  method has_allocation is also<has-allocation> {
+    so clutter_actor_has_allocation($!mca);
   }
 
-  method has_clip {
-    clutter_actor_has_clip($!mca);
+  method has_clip is also<has-clip> {
+    so clutter_actor_has_clip($!mca);
   }
 
-  method has_key_focus {
-    clutter_actor_has_key_focus($!mca);
+  method has_key_focus is also<has-key-focus> {
+    so clutter_actor_has_key_focus($!mca);
   }
 
-  method has_mapped_clones {
-    clutter_actor_has_mapped_clones($!mca);
+  method has_mapped_clones is also<has-mapped-clones> {
+    so clutter_actor_has_mapped_clones($!mca);
   }
 
-  method has_overlaps {
-    clutter_actor_has_overlaps($!mca);
+  method has_overlaps is also<has-overlaps> {
+    so clutter_actor_has_overlaps($!mca);
   }
 
-  method has_pointer {
-    clutter_actor_has_pointer($!mca);
+  method has_pointer is also<has-pointer> {
+    so clutter_actor_has_pointer($!mca);
   }
 
-  method hide {
+  method hide_actor is also<hide-actor> {
     clutter_actor_hide($!mca);
   }
 
@@ -1676,15 +1986,23 @@ class Mutter::Clutter::Actor {
     clutter_actor_inhibit_culling($!mca);
   }
 
-  method insert_child_above (MutterClutterActor $child, MutterClutterActor $sibling) {
+  method insert_child_above (
+    MutterClutterActor() $child,
+    MutterClutterActor() $sibling
+  ) {
     clutter_actor_insert_child_above($!mca, $child, $sibling);
   }
 
-  method insert_child_at_index (MutterClutterActor $child, gint $index_) {
-    clutter_actor_insert_child_at_index($!mca, $child, $index_);
+  method insert_child_at_index (MutterClutterActor() $child, Int() $index) {
+    my gint $i = $index;
+
+    clutter_actor_insert_child_at_index($!mca, $child, $i);
   }
 
-  method insert_child_below (MutterClutterActor $child, MutterClutterActor $sibling) {
+  method insert_child_below (
+    MutterClutterActor() $child,
+    MutterClutterActor() $sibling
+  ) {
     clutter_actor_insert_child_below($!mca, $child, $sibling);
   }
 
@@ -1696,73 +2014,51 @@ class Mutter::Clutter::Actor {
     clutter_actor_invalidate_transform($!mca);
   }
 
-  method is_in_clone_paint {
-    clutter_actor_is_in_clone_paint($!mca);
+  method is_in_clone_paint is also<is-in-clone-paint> {
+    so clutter_actor_is_in_clone_paint($!mca);
   }
 
-  method is_mapped {
-    clutter_actor_is_mapped($!mca);
+  method is_mapped is also<is-mapped> {
+    so clutter_actor_is_mapped($!mca);
   }
 
-  method is_realized {
-    clutter_actor_is_realized($!mca);
+  method is_realized is also<is-realized> {
+    so clutter_actor_is_realized($!mca);
   }
 
-  method is_rotated {
-    clutter_actor_is_rotated($!mca);
+  method is_rotated is also<is-rotated> {
+    so clutter_actor_is_rotated($!mca);
   }
 
-  method is_scaled {
-    clutter_actor_is_scaled($!mca);
+  method is_scaled is also<is-scaled> {
+    so clutter_actor_is_scaled($!mca);
   }
 
-  method is_visible {
-    clutter_actor_is_visible($!mca);
-  }
-
-  method iter_destroy {
-    clutter_actor_iter_destroy($!mca);
-  }
-
-  method iter_init (MutterClutterActor $root) {
-    clutter_actor_iter_init($!mca, $root);
-  }
-
-  method iter_is_valid {
-    clutter_actor_iter_is_valid($!mca);
-  }
-
-  method iter_next (CArray[MutterClutterActor] $child) {
-    clutter_actor_iter_next($!mca, $child);
-  }
-
-  method iter_prev (CArray[MutterClutterActor] $child) {
-    clutter_actor_iter_prev($!mca, $child);
-  }
-
-  method iter_remove {
-    clutter_actor_iter_remove($!mca);
+  method is_visible is also<is-visible> {
+    so clutter_actor_is_visible($!mca);
   }
 
   method map {
     clutter_actor_map($!mca);
   }
 
-  method move_by (gfloat $dx, gfloat $dy) {
-    clutter_actor_move_by($!mca, $dx, $dy);
+  method move_by (Num() $dx, Num() $dy) is also<move-by> {
+      my gfloat ($ddx, $ddy) = ($dx, $dy);
+
+      clutter_actor_move_by($!mca, $ddx, $ddy);
+    }
+
+  method needs_expand (Int() $orientation) {
+    my MutterClutterOrientation $o = $orientation;
+
+    clutter_actor_needs_expand($!mca, $o);
   }
 
-  method needs_expand (MutterClutterOrientation $orientation) {
-    clutter_actor_needs_expand($!mca, $orientation);
-  }
-
-  method new {
-    clutter_actor_new();
-  }
-
-  method paint (MutterClutterPaintContext $paint_context) {
+  method paint (MutterClutterPaintContext() $paint_context) {
     clutter_actor_paint($!mca, $paint_context);
   }
+
+  # ...
 
   method peek_stage_views {
     clutter_actor_peek_stage_views($!mca);
@@ -1776,259 +2072,415 @@ class Mutter::Clutter::Actor {
     clutter_actor_pick_box($!mca, $pick_context, $box);
   }
 
-  method queue_redraw {
+  method queue_redraw_actor is also<queue-redraw-actor> {
     clutter_actor_queue_redraw($!mca);
   }
 
-  method queue_redraw_with_clip (cairo_rectangle_int_t $clip) {
+  method queue_redraw_with_clip (cairo_rectangle_int_t $clip)
+    is also<queue-redraw-actor>
+  {
     clutter_actor_queue_redraw_with_clip($!mca, $clip);
   }
 
-  method queue_relayout {
+  method queue_relayout is also<queue-relayout-actor> {
     clutter_actor_queue_relayout($!mca);
   }
 
-  method realize {
+  method realize-actor is also<realize_actor> {
     clutter_actor_realize($!mca);
   }
 
-  method remove_all_children {
+  method remove_all_children is also<remove-all-children> {
     clutter_actor_remove_all_children($!mca);
   }
 
-  method remove_all_transitions {
+  method remove_all_transitions is also<remove-all-transitions> {
     clutter_actor_remove_all_transitions($!mca);
   }
 
-  method remove_child (MutterClutterActor $child) {
+  method remove_child (MutterClutterActor() $child) is also<remove-child> {
     clutter_actor_remove_child($!mca, $child);
   }
 
-  method remove_clip {
+  method remove_clip is also<remove-clip> {
     clutter_actor_remove_clip($!mca);
   }
 
-  method remove_transition (Str $name) {
+  method remove_transition (Str $name) is also<remove-transition> {
     clutter_actor_remove_transition($!mca, $name);
   }
 
-  method replace_child (MutterClutterActor $old_child, MutterClutterActor $new_child) {
+  method replace_child method replace_child (
+    ClutterActor() $old_child,
+    ClutterActor() $new_child
+  )
+    is also<replace-child>
+  {
     clutter_actor_replace_child($!mca, $old_child, $new_child);
   }
 
-  method restore_easing_state {
+  method restore_easing_state is also<restore-easing-state> {
     clutter_actor_restore_easing_state($!mca);
   }
 
-  method save_easing_state {
+  method save_easing_state is also<save-easing-state> {
     clutter_actor_save_easing_state($!mca);
   }
 
-  method set_allocation (MutterClutterActorBox $box) {
+  method set_allocation (MutterClutterActorBox() $box)
+    is also<set-allocation>
+  {
     clutter_actor_set_allocation($!mca, $box);
   }
 
-  method set_background_color (MutterClutterColor $color) {
+  method set_background_color (MutterClutterColor() $color)
+    is also<set-background-color>
+  {
     clutter_actor_set_background_color($!mca, $color);
   }
 
-  method set_child_above_sibling (MutterClutterActor $child, MutterClutterActor $sibling) {
+  method set_child_above_sibling (
+    MutterClutterActor() $child,
+    MutterClutterActor() $sibling
+  )
+    is also<set-child-above-sibling>
+  {
     clutter_actor_set_child_above_sibling($!mca, $child, $sibling);
   }
 
-  method set_child_at_index (MutterClutterActor $child, gint $index_) {
-    clutter_actor_set_child_at_index($!mca, $child, $index_);
+  method set_child_at_index (MutterClutterActor() $child, Int() $index)
+    is also<set-child-at-index>
+  {
+    my gint $i = $index;
+
+    clutter_actor_set_child_at_index($!mca, $child, $i);
   }
 
-  method set_child_below_sibling (MutterClutterActor $child, MutterClutterActor $sibling) {
+  method set_child_below_sibling (
+    MutterClutterActor() $child,
+    MutterClutterActor() $sibling
+  ) {
     clutter_actor_set_child_below_sibling($!mca, $child, $sibling);
   }
 
-  method set_child_transform (graphene_matrix_t $transform) {
+  method set_child_transform (graphene_matrix_t $transform)
+    is also<set-child-transform>
+  {
     clutter_actor_set_child_transform($!mca, $transform);
   }
 
-  method set_clip (gfloat $xoff, gfloat $yoff, gfloat $width, gfloat $height) {
-    clutter_actor_set_clip($!mca, $xoff, $yoff, $width, $height);
+  method set_clip (
+    Num() $xoff,
+    Num() $yoff,
+    Num() $width,
+    Num() $height
+  )
+    is also<set-clip>
+  {
+    my gfloat ($xo, $yo, $w, $h) = ($xoff, $yoff, $width, $height);
+
+    clutter_actor_set_clip($!mca, $xo, $yo, $w, $h);
   }
 
-  method set_clip_to_allocation (gboolean $clip_set) {
-    clutter_actor_set_clip_to_allocation($!mca, $clip_set);
+  method set_clip_to_allocation (Int() $clip_set)
+    is also<set-clip-to-allocation>
+  {
+    my gboolean $c = $clip_set.so.Int;
+
+    clutter_actor_set_clip_to_allocation($!mca, $c);
   }
 
-  method set_content (MutterClutterContent $content) {
+  method set_content (MutterClutterContent() $content) is also<set-content> {
     clutter_actor_set_content($!mca, $content);
   }
 
-  method set_content_gravity (MutterClutterContentGravity $gravity) {
-    clutter_actor_set_content_gravity($!mca, $gravity);
+  method set_content_gravity (
+    Int() $gravity
+  )
+    is also<set-content-gravity>
+  {
+    my MutterClutterContentGravity $g = $gravity;
+
+    clutter_actor_set_content_gravity($!mca, $g);
   }
 
-  method set_content_repeat (MutterClutterContentRepeat $repeat) {
-    clutter_actor_set_content_repeat($!mca, $repeat);
+  method set_content_repeat (Int() $repeat) {
+    my MutterClutterContentRepeat $r = $repeat;
+
+    clutter_actor_set_content_repeat($!mca, $r);
   }
 
-  method set_content_scaling_filters (MutterClutterScalingFilter $min_filter, MutterClutterScalingFilter $mag_filter) {
-    clutter_actor_set_content_scaling_filters($!mca, $min_filter, $mag_filter);
+  method set_content_scaling_filters (
+    Int() $min_filter,
+    Int() $mag_filter
+  )
+    is also<set-content-scaling-filters>
+  {
+    my MutterClutterScalingFilter ($mnf, $mgf) = ($min_filter, $mag_filter);
+
+    clutter_actor_set_content_scaling_filters($!mca, $mnf, $mgf);
   }
 
-  method set_easing_delay (guint $msecs) {
-    clutter_actor_set_easing_delay($!mca, $msecs);
+  method set_easing_delay (Int() $msecs) is also<set-easing-delay> {
+    my guint $ms = $msecs;
+
+    clutter_actor_set_easing_delay($!mca, $ms);
   }
 
-  method set_easing_duration (guint $msecs) {
-    clutter_actor_set_easing_duration($!mca, $msecs);
+  method set_easing_duration (Int() $msecs) is also<set-easing-duration> {
+    my guint $ms = $msecs;
+
+    clutter_actor_set_easing_duration($!mca, $ms);
   }
 
-  method set_easing_mode (MutterClutterAnimationMode $mode) {
-    clutter_actor_set_easing_mode($!mca, $mode);
+  method set_easing_mode (Int() $mode) {
+    my MutterClutterAnimationMode $m = $mode;
+
+    clutter_actor_set_easing_mode($!mca, $m);
   }
 
-  method set_fixed_position_set (gboolean $is_set) {
-    clutter_actor_set_fixed_position_set($!mca, $is_set);
+  method set_fixed_position_set (Int() $is_set)
+    is also<set-fixed-position-set>
+  {
+    my gboolean $is = $is_set.so.Int;
+
+    clutter_actor_set_fixed_position_set($!mca, $is);
   }
 
-  method set_flags (MutterClutterActorFlags $flags) {
+  method set_flags (Int() $flags) {
+    my MutterClutterActorFlags $f = $flags;
+
     clutter_actor_set_flags($!mca, $flags);
   }
 
-  method set_height (gfloat $height) {
-    clutter_actor_set_height($!mca, $height);
+  method set_height (Num() $height) is also<set-height> {
+    my gfloat $h = $height;
+
+    clutter_actor_set_height($!mca, $h);
   }
 
-  method set_layout_manager (MutterClutterLayoutManager $manager) {
+  method set_layout_manager (MutterClutterLayoutManager() $manager) {
     clutter_actor_set_layout_manager($!mca, $manager);
   }
 
-  method set_margin (MutterClutterMargin $margin) {
+  method set_margin (MutterClutterMargin() $margin) is also<set-margin> {
     clutter_actor_set_margin($!mca, $margin);
   }
 
-  method set_margin_bottom (gfloat $margin) {
-    clutter_actor_set_margin_bottom($!mca, $margin);
+  method set_margin_bottom (Num() $margin) is also<set-margin-bottom> {
+    my gfloat $m = $margin;
+
+    clutter_actor_set_margin_bottom($!mca, $m);
   }
 
-  method set_margin_left (gfloat $margin) {
-    clutter_actor_set_margin_left($!mca, $margin);
+  method set_margin_bottom (Num() $margin) is also<set-margin-bottom> {
+    my gfloat $m = $margin;
+
+    clutter_actor_set_margin_left($!mca, $m);
   }
 
-  method set_margin_right (gfloat $margin) {
-    clutter_actor_set_margin_right($!mca, $margin);
+  method set_margin_right (Num() $margin) is also<set-margin-right> {
+    my gfloat $m = $margin;
+
+    clutter_actor_set_margin_right($!mca, $m);
   }
 
-  method set_margin_top (gfloat $margin) {
-    clutter_actor_set_margin_top($!mca, $margin);
+  method set_margin_right (Num() $margin) is also<set-margin-right> {
+    my gfloat $m = $margin;
+
+    clutter_actor_set_margin_top($!mca, $m);
   }
 
-  method set_name (Str $name) {
+  method set_name (Str() $name) {
     clutter_actor_set_name($!mca, $name);
   }
 
-  method set_offscreen_redirect (MutterClutterOffscreenRedirect $redirect) {
-    clutter_actor_set_offscreen_redirect($!mca, $redirect);
+  method set_offscreen_redirect (Int() $redirect)
+    is also<set-offscreen-redirect>
+  {
+    my MutterClutterOffscreenRedirect $r = $redirect;
+
+    clutter_actor_set_offscreen_redirect($!mca, $r);
   }
 
-  method set_opacity (guint8 $opacity) {
-    clutter_actor_set_opacity($!mca, $opacity);
+  method set_opacity (Int() $opacity) is also<set-opacity> {
+    my guint8 $o = $opacity;
+
+    clutter_actor_set_opacity($!mca, $o);
   }
 
-  method set_opacity_override (gint $opacity) {
-    clutter_actor_set_opacity_override($!mca, $opacity);
+  method set_opacity_override (Int() $opacity) is also<set-opacity-override> {
+    my gint $o = $opacity;
+
+    clutter_actor_set_opacity_override($!mca, $o);
   }
 
-  method set_pivot_point (gfloat $pivot_x, gfloat $pivot_y) {
-    clutter_actor_set_pivot_point($!mca, $pivot_x, $pivot_y);
+  method set_pivot_point (Num() $pivot_x, Num() $pivot_y)
+    is also<set-pivot-point>
+  {
+    my gfloat ($px, $py) = ($pivot_x, $pivot_y);
+
+    clutter_actor_set_pivot_point($!mca, $px, $py);
   }
 
-  method set_pivot_point_z (gfloat $pivot_z) {
+  method set_pivot_point_z (Num() $pivot_z) is also<set-pivot-point-z> {
+    my gfloat $pz = $pivot_z;
+
     clutter_actor_set_pivot_point_z($!mca, $pivot_z);
   }
 
-  method set_position (gfloat $x, gfloat $y) {
-    clutter_actor_set_position($!mca, $x, $y);
+  proto method set_position (|)
+    is also<set-position>
+  { * }
+
+  multi method set_position (MutterClutterPoint() $p) {
+    samewith($p.x, $p.y);
+  }
+  multi method set_position (Num() $x, Num() $y)  {
+    my gfloat ($xx, $yy) = ($x, $y);
+
+    clutter_actor_set_position($!mca, $xx, $yy);
   }
 
-  method set_reactive (gboolean $reactive) {
-    clutter_actor_set_reactive($!mca, $reactive);
+  method set_reactive (Int() $reactive) is also<set-reactive> {
+    my gboolean $r = $reactive.so.Int;
+
+    clutter_actor_set_reactive($!mca, $rs);
   }
 
-  method set_request_mode (MutterClutterRequestMode $mode) {
-    clutter_actor_set_request_mode($!mca, $mode);
+  method set_request_mode (Int() $mode) is also<set-request-mode> {
+    my MutterClutterRequestMode $m = $mode;
+
+    clutter_actor_set_request_mode($!mca, $m);
   }
 
-  method set_rotation_angle (MutterClutterRotateAxis $axis, gdouble $angle) {
-    clutter_actor_set_rotation_angle($!mca, $axis, $angle);
+  method set_rotation_angle (Int() $axis, Num() $angle)
+    is also<set-rotation-angle>
+  {
+    my MutterClutterRotateAxis $a  = $axis;
+    my gdouble                 $an = $angle;
+
+    clutter_actor_set_rotation_angle($!mca, $a, $an);
   }
 
-  method set_scale (gdouble $scale_x, gdouble $scale_y) {
-    clutter_actor_set_scale($!mca, $scale_x, $scale_y);
+  method set_scale (Num() $scale_x, Num() $scale_y)
+    is also<set-scale>
+  {
+    my gdouble ($sx, $sy) = ($scale_x, $scale_y);
+
+    clutter_actor_set_scale($!mca, $sx, $sy);
   }
 
-  method set_scale_z (gdouble $scale_z) {
-    clutter_actor_set_scale_z($!mca, $scale_z);
+  method set_scale_z (Num() $scale_z) is also<set-scale-z> {
+    my gdouble $sz = $scale_z;
+
+    clutter_actor_set_scale_z($!mca, $sz);
   }
 
-  method set_size (gfloat $width, gfloat $height) {
-    clutter_actor_set_size($!mca, $width, $height);
+  method set_size (Num() $width, Num() $height) is also<set-size> {
+    my gfloat ($w, $h) = ($width, $height);
+
+    clutter_actor_set_size($!mca, $w, $h);
   }
 
-  method set_text_direction (MutterClutterTextDirection $text_dir) {
-    clutter_actor_set_text_direction($!mca, $text_dir);
+  method set_text_direction (Int() $text_dir) {
+    my MutterClutterTextDirection $t = $text_dir;
+
+    clutter_actor_set_text_direction($!mca, $t);
   }
 
   method set_transform (graphene_matrix_t $transform) {
     clutter_actor_set_transform($!mca, $transform);
   }
 
-  method set_translation (gfloat $translate_x, gfloat $translate_y, gfloat $translate_z) {
-    clutter_actor_set_translation($!mca, $translate_x, $translate_y, $translate_z);
+  method set_translation (
+    Num() $translate_x,
+    Num() $translate_y,
+    Num() $translate_z
+  )
+    is also<set-translation>
+  {
+    my gfloat ($tx, $ty, $tz) = ($translate_x, $translate_y, $translate_z);
+
+    clutter_actor_set_translation($!mca, $tx, $ty, $tz);
   }
 
-  method set_width (gfloat $width) {
-    clutter_actor_set_width($!mca, $width);
+  method set_width (Num() $width) is also<set-width> {
+    my gfloat $w = $width;
+
+    clutter_actor_set_width($!mca, $w);
   }
 
-  method set_x (gfloat $x) {
-    clutter_actor_set_x($!mca, $x);
+  method set_x (Num() $x) is also<set-x> {
+    my gfloat $xx = $x;
+
+    clutter_actor_set_x($!mca, $xx);
   }
 
-  method set_x_align (MutterClutterActorAlign $x_align) {
-    clutter_actor_set_x_align($!mca, $x_align);
+  method set_x_align (Int() $x_align) is also<set-x-align> {
+    my MutterClutterActorAlign $xa = $x_align;
+
+    clutter_actor_set_x_align($!mca, $xa);
   }
 
-  method set_x_expand (gboolean $expand) {
-    clutter_actor_set_x_expand($!mca, $expand);
+  method set_x_expand (Num() $expand) is also<set-x-expand> {
+    my gboolean $e = $expand.so.Int;
+
+    clutter_actor_set_x_expand($!mca, $e);
   }
 
-  method set_y (gfloat $y) {
-    clutter_actor_set_y($!mca, $y);
+  method set_y (Num() $y) is also<set-y> {
+    my gfloat $yy = $y;
+
+    clutter_actor_set_y($!mca, $yy);
   }
 
-  method set_y_align (MutterClutterActorAlign $y_align) {
-    clutter_actor_set_y_align($!mca, $y_align);
+  method set_y_align (Int() $y_align) {
+    my MutterClutterActorAlign $ya = $y_align;
+
+    clutter_actor_set_y_align($!mca, $ya);
   }
 
-  method set_y_expand (gboolean $expand) {
-    clutter_actor_set_y_expand($!mca, $expand);
+  method set_y_expand (Int() $expand) is also<set-y-expand> {
+    my gboolean $e = $expand.so.Int;
+
+    clutter_actor_set_y_expand($!mca, $e);
   }
 
-  method set_z_position (gfloat $z_position) {
-    clutter_actor_set_z_position($!mca, $z_position);
+  method set_z_position (Num() $z_position) is also<set-z-position> {
+    my gfloat $zp = $z_position;
+
+    clutter_actor_set_z_position($!mca, $zp);
   }
 
   method should_pick (MutterClutterPickContext $pick_context) {
     clutter_actor_should_pick($!mca, $pick_context);
   }
 
-  method show {
+  method show_actor is also<show-actor> {
     clutter_actor_show($!mca);
   }
 
-  method transform_stage_point (gfloat $x, gfloat $y, gfloat $x_out is rw, gfloat $y_out is rw) {
-    clutter_actor_transform_stage_point($!mca, $x, $y, $x_out is rw, $y_out is rw);
+  proto method transform_stage_point (|)
+      is also<transform-stage-point>
+    { * }
+
+  multi method transform_stage_point (Num() $x, Num() $y) {
+    samewith($x, $y, $, $);
+  }
+  multi method transform_stage_point (
+    Num() $x,
+    Num() $y,
+          $x_out is rw,
+          $y_out is rw
+  ) {
+    my gfloat ($xx, $yy, $xo, $yo) = ($x, $y, 0e0, 0e0);
+
+    clutter_actor_transform_stage_point($!mca, $xx, $yy, $xo, $yo);
+    ($x_out, $y_out) = ($xo, $yo);
   }
 
-  method uninhibit_culling {
+  method uninhibit_culling is also<uninhibit-culling> {
     clutter_actor_uninhibit_culling($!mca);
   }
 
@@ -2036,11 +2488,142 @@ class Mutter::Clutter::Actor {
     clutter_actor_unmap($!mca);
   }
 
-  method unrealize {
+  method unrealize_actor is also<unrealize-actor> {
     clutter_actor_unrealize($!mca);
   }
 
-  method unset_flags (MutterClutterActorFlags $flags) {
-    clutter_actor_unset_flags($!mca, $flags);
+  method unset_flags (Int() $flags) is also<unset-flags> {
+    my MutterClutterActorFlags $f = $flags;
+
+    clutter_actor_unset_flags($!mca, $f);
+  }
+
+  # ACTIONS
+
+  method add_action (MutterlutterAction() $action) is also<add-action> {
+    clutter_actor_add_action($!mca, $action);
+  }
+
+  method add_actions (*@actions) is also<add-actions> {
+    for @actions {
+      unless $_ ~~ Clutter::Action || .^lookup('ClutterAction') {
+        die 'actions value must only contain Clutter::Action compatible types!'
+      }
+      self.add_action($_);
+    }
+  }
+
+  method add_action_with_name (Str() $name, MutterClutterAction() $action)
+    is also<
+      add-action-with-name
+      add_action_by_name
+      add-action-by-name
+    >
+  {
+    clutter_actor_add_action_with_name($!mca, $name, $action);
+  }
+
+  method add_actions_with_name (*@actions)
+    is also<
+      add-actions-with-name
+      add_actions_by_name
+      add-actions-by-name
+    >
+  {
+    unless .[1] ~~ Clutter::Action || .[1].^lookup('ClutterAction') {
+      die qq:to/DIE/;
+        'constraints-with-name' value must only contain Clutter::Action {''
+        }compatible types
+        DIE
+    }
+    say "Action: { .[0] }" if $DEBUG;
+    self.add-action-with-name(|$_);
+  }
+
+  method clear_actions is also<clear-action> {
+    clutter_actor_clear_actions($!mca);
+  }
+
+  method get_action (Str() $name, :$raw = False) is also<get-action> {
+    propReturnObject(
+      clutter_actor_get_action($!mca, $name),
+      $raw,
+      |Mutter::Clutter::Action.getTypePair
+    );
+  }
+
+  method get_actions (:$glist = False, :$raw = False) is also<get-actions> {
+    propReturnObject(
+      clutter_actor_get_actions($!mca),
+      $raw,
+      $glist,
+      |Mutter::Clutter::Action.getTypePair
+    )
+  }
+
+  method has_actions is also<has-action> {
+    so clutter_actor_has_actions($!mca);
+  }
+
+  method remove_action (MutterClutterAction() $action) is also<remove-action> {
+    clutter_actor_remove_action($!mca, $action);
+  }
+
+  method remove_action_by_name (Str() $name) is also<remove-action-by-name> {
+    clutter_actor_remove_action_by_name($!mca, $name);
+  }
+
+}
+
+class Mutter::Clutter::Actor::Iter {
+  has MutterClutterActorIter $!mcai is implementor;
+
+  submethod BUILD ( :$mutter-actor-iter ) {
+    $!mcai = $mutter-actor-iter;
+  }
+
+  method init (MutterClutterActor() $root) {
+    my $mutter-actor-iter = clutter_actor_iter_init($!mca, $root);
+
+    $mutter-actor-iter ?? self.bless( :$mutter-actor-iter ) !! Nil;
+  }
+
+  method destroy {
+    clutter_actor_iter_destroy($!mcai);
+  }
+
+  method is_valid {
+    so clutter_actor_iter_is_valid($!mcai);
+  }
+
+  multi method next ( :$raw = False ) {
+    samewith( newCArray(MutterClutterActor), :$raw )
+  }
+  multi method next (CArray[MutterClutterActor] $child, :$raw = False) {
+    clutter_actor_iter_next($!mcai, $child);
+    propReturnObject( ppr($child), $raw, |self.getTypePair );
+  }
+
+  method prev ( :$raw = False ) {
+    samewith( newCArray(MutterClutterActor), :$raw )
+  }
+  method prev (CArray[MutterClutterActor] $child, :$raw = False) {
+    clutter_actor_iter_prev($!mcai, $child);
+    propReturnObject( ppr($child), $raw, |self.getTypePair );
+  }
+
+  method remove {
+    clutter_actor_iter_remove($!mcai);
+  }
+}
+
+use GLib::Object::Type;
+use GLib::Class::Object;
+INIT {
+  unless %*ENV<P6_GLIB_COMPILE_PROCESS> {
+    my $o = GLib::Object.new-object(Mutter::Clutter::Actor.get-type);
+    %properties = $o.getClass.getProperties;
+    my $np = %properties.elems;
+    say "Clutter::Actor - { $np } property entr{ $np == 1 ?? 'y' !! 'ies' }";
   }
 }
