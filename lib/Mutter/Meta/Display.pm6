@@ -343,4 +343,63 @@ class Mutter::Meta::Display {
     meta_display_xserver_time_is_before($!md, $t1, $t2);
   }
 
+  # Compositor Mutter
+
+  method disable_unredirect_for_display {
+    meta_disable_unredirect_for_display($!md);
+  }
+
+  method enable_unredirect_for_display {
+    meta_enable_unredirect_for_display($!md);
+  }
+
+  method focus_stage_window (guint32 $timestamp) {
+    meta_focus_stage_window($!md, $timestamp);
+  }
+
+  method get_feedback_group_for_display ( :$raw = False ) {
+    propReturnObject(
+      meta_get_feedback_group_for_display($!md),
+      $raw,
+      |Mutter::Clutter::Actor.getTypePair
+    )
+  }
+
+  method get_stage_for_display ( :$raw = False ) {
+    propReturnObject(
+      meta_get_stage_for_display($!md),
+      $raw,
+      |Mutter::Clutter::Actor.getTypePair
+    );
+  }
+
+  method get_top_window_group_for_display ( :$raw = False ) {
+    propReturnObject(
+      meta_get_top_window_group_for_display($!md),
+      $raw,
+      |Mutter::Clutter::Actor.getTypePair
+    );
+  }
+
+  method get_window_actors ( :$raw = False, :$glist = False ) {
+    returnGList(
+      meta_get_window_actors($!md),
+      $raw,
+      $glist,
+      |Mutter::Clutter::Actor.getTypePair
+    );
+  }
+
+  method get_window_group_for_display ( :$raw = False ) {
+    propReturnObject(
+      meta_get_window_group_for_display($!md),
+      $raw,
+      |Mutter::Clutter::Actor.getTypePair
+    );
+  }
+
+  method stage_is_focused {
+    so meta_stage_is_focused($!md);
+  }
+
 }

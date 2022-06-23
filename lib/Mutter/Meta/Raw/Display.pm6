@@ -409,3 +409,57 @@ sub meta_display_xserver_time_is_before (
   is native(mutter)
   is export
 { * }
+
+
+### /usr/src/mutter-42.1/src/meta/compositor-mutter.h
+
+sub meta_disable_unredirect_for_display (MetaDisplay $display)
+  is native(mutter)
+  is export
+{ * }
+
+sub meta_enable_unredirect_for_display (MetaDisplay $display)
+  is native(mutter)
+  is export
+{ * }
+
+sub meta_focus_stage_window (MetaDisplay $display, guint32 $timestamp)
+  is native(mutter)
+  is export
+{ * }
+
+sub meta_get_feedback_group_for_display (MetaDisplay $display)
+  returns ClutterActor
+  is native(mutter)
+  is export
+{ * }
+
+sub meta_get_stage_for_display (MetaDisplay $display)
+  returns ClutterActor
+  is native(mutter)
+  is export
+{ * }
+
+sub meta_get_top_window_group_for_display (MetaDisplay $display)
+  returns ClutterActor
+  is native(mutter)
+  is export
+{ * }
+
+sub meta_get_window_actors (MetaDisplay $display)
+  returns GList
+  is native(mutter)
+  is export
+{ * }
+
+sub meta_get_window_group_for_display (MetaDisplay $display)
+  returns ClutterActor
+  is native(mutter)
+  is export
+{ * }
+
+sub meta_stage_is_focused (MetaDisplay $display)
+  returns uint32
+  is native(mutter)
+  is export
+{ * }
