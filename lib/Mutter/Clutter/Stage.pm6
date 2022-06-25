@@ -1,11 +1,11 @@
 use v6.c;
 
 use Mutter::Raw::Types;
-use Mutter::Raw::Clutter::Boxed;
+#use Mutter::Raw::Clutter::Boxed;
 use Mutter::Raw::Clutter::Stage;
 
 use GLib::Value;
-use MutterClutter::Actor;
+use Mutter::Clutter::Actor;
 
 use Mutter::Clutter::Roles::Signals::Stage;
 
