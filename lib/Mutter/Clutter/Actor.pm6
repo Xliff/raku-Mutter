@@ -33,6 +33,8 @@ our subset MutterClutterActorAncestry is export of Mu
   where MutterClutterAnimatable | MutterClutterContainer |
         MutterClutterScriptable | MutterClutterActor     | GObject;
 
+my (@set_methods, @add_methods, %properties);
+
 class Mutter::Clutter::Actor {
   also does GLib::Roles::Object;
   also does Mutter::Clutter::Roles::Animatable;
@@ -260,7 +262,7 @@ class Mutter::Clutter::Actor {
     self.connect($!mca, 'unrealize');
   }
 
-  method opacity is rw {
+  method opacity is rw is animatable {
     Proxy.new(
       FETCH => sub ($) {
         clutter_actor_get_opacity($!mca);
@@ -286,7 +288,7 @@ class Mutter::Clutter::Actor {
     );
   }
 
-  method pivot-point-z is rw is also<pivot_point_z> {
+  method pivot-point-z is rw is also<pivot_point_z> is animatable {
     Proxy.new(
       FETCH => sub ($) {
         clutter_actor_get_pivot_point_z($!mca);
@@ -323,7 +325,7 @@ class Mutter::Clutter::Actor {
     );
   }
 
-  method scale_z is rw is also<scale-z> {
+  method scale_z is rw is also<scale-z> is animatable {
     Proxy.new(
       FETCH => sub ($) {
         clutter_actor_get_scale_z($!mca);
@@ -359,7 +361,7 @@ class Mutter::Clutter::Actor {
     );
   }
 
-  method x is rw {
+  method x is rw is animatable {
     Proxy.new(
       FETCH => sub ($) {
         clutter_actor_get_x($!mca);
@@ -398,7 +400,7 @@ class Mutter::Clutter::Actor {
     );
   }
 
-  method y is rw {
+  method y is rw is animatable {
     Proxy.new(
       FETCH => sub ($) {
         clutter_actor_get_y($!mca);
@@ -437,7 +439,7 @@ class Mutter::Clutter::Actor {
     );
   }
 
-  method z-position is rw is also<z_position> {
+  method z-position is rw is also<z_position>  is animatable {
     Proxy.new(
       FETCH => sub ($) {
         clutter_actor_get_z_position($!mca);
@@ -637,7 +639,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: gfloat
-  method fixed-x is rw is also<fixed_x> {
+  method fixed-x is rw is also<fixed_x> is animatable {
     my GLib::Value $gv .= new( G_TYPE_FLOAT );
     Proxy.new(
       FETCH => sub ($) {
@@ -652,7 +654,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: gfloat
-  method fixed-y is rw is also<fixed_y> {
+  method fixed-y is rw is also<fixed_y> is animatable {
     my GLib::Value $gv .= new( G_TYPE_FLOAT );
     Proxy.new(
       FETCH => sub ($) {
@@ -667,7 +669,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: gfloat
-  method height is rw {
+  method height is rw is animatable {
     Proxy.new:
       FETCH => sub ($)          { self.get-height },
       STORE => -> $, Num() \val { self.set-height(val) };
@@ -735,35 +737,35 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: gfloat
-  method margin-bottom is rw is also<margin_bottom> {
+  method margin-bottom is rw is also<margin_bottom> is animatable {
     Proxy.new:
       FETCH => sub ($)          { self.get-margin-bottom },
       STORE => -> $, Num() \val { self.set-margin-bottom(val) };
   }
 
   # Type: gfloat
-  method margin-left is rw is also<margin_left> {
+  method margin-left is rw is also<margin_left> is animatable {
     Proxy.new:
       FETCH => sub ($)          { self.get-margin-left },
       STORE => -> $, Num() \val { self.set-margin-left(val) };
   }
 
   # Type: gfloat
-  method margin-right is rw is also<margin_right> {
+  method margin-right is rw is also<margin_right> is animatable {
   Proxy.new:
     FETCH => sub ($)          { self.get-margin-right },
     STORE => -> $, Num() \val { self.set-margin-right(val) };
   }
 
   # Type: gfloat
-  method margin-top is rw is also<margin_top> {
+  method margin-top is rw is also<margin_top> is animatable {
     Proxy.new:
       FETCH => sub ($)          { self.get-margin-top },
       STORE => -> $, Num() \val { self.set-margin-top(val) };
   }
 
   # Type: gfloat
-  method min-height is rw is also<min_height> {
+  method min-height is rw is also<min_height> is animatable {
     my GLib::Value $gv .= new( G_TYPE_FLOAT );
     Proxy.new(
       FETCH => sub ($) {
@@ -793,7 +795,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: gfloat
-  method min-width is rw is also<min_width> {
+  method min-width is rw is also<min_width> is animatable {
     my GLib::Value $gv .= new( G_TYPE_FLOAT );
     Proxy.new(
       FETCH => sub ($) {
@@ -845,7 +847,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: gfloat
-  method natural-height is rw is also<natural_height> {
+  method natural-height is rw is also<natural_height> is animatable {
     my GLib::Value $gv .= new( G_TYPE_FLOAT );
     Proxy.new(
       FETCH => sub ($) {
@@ -875,7 +877,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: gfloat
-  method natural-width is rw is also<natural_width> {
+  method natural-width is rw is also<natural_width> is animatable {
     my GLib::Value $gv .= new( G_TYPE_FLOAT );
     Proxy.new(
       FETCH => sub ($) {
@@ -912,7 +914,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: ClutterPoint
-  method pivot-point is rw is also<pivot_point> {
+  method pivot-point is rw is also<pivot_point> is animatable {
     my GLib::Value $gv .= new( Mutter::Clutter::Point.get_type );
     Proxy.new(
       FETCH => sub ($) {
@@ -956,7 +958,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: gdouble
-  method rotation-angle-x is rw is also<rotation_angle_x> {
+  method rotation-angle-x is rw is also<rotation_angle_x> is animatable {
     my GLib::Value $gv .= new( G_TYPE_DOUBLE );
     Proxy.new(
       FETCH => sub ($) {
@@ -971,7 +973,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: gdouble
-  method rotation-angle-y is rw is also<rotation_angle_y> {
+  method rotation-angle-y is rw is also<rotation_angle_y> is animatable {
     my GLib::Value $gv .= new( G_TYPE_DOUBLE );
     Proxy.new(
       FETCH => sub ($) {
@@ -986,7 +988,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: gdouble
-  method rotation-angle-z is rw is also<rotation_angle_z> {
+  method rotation-angle-z is rw is also<rotation_angle_z> is animatable {
     my GLib::Value $gv .= new( G_TYPE_DOUBLE );
     Proxy.new(
       FETCH => sub ($) {
@@ -1000,30 +1002,8 @@ class Mutter::Clutter::Actor {
     );
   }
 
-  # Type: ClutterVertex
-  method rotation-center-x (:$raw = False) is rw is also<rotation_center_x>
-    is DEPRECATED( 'pivot-point' )
-  {
-    my GLib::Value $gv .= new( Mutter::Clutter::Vertex.get_type );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('rotation-center-x', $gv);
-
-        propReturnObject(
-          $gv.boxed,
-          $raw,
-          |Mutter::Clutter::Vertex.getTypePair
-        );
-      },
-      STORE => -> $, ClutterVertex() $val is copy {
-        $gv.boxed = $val;
-        self.prop_set('rotation-center-x', $gv);
-      }
-    );
-  }
-
   # Type: gdouble
-  method scale-x is rw is also<scale_x> {
+  method scale-x is rw is also<scale_x> is animatable {
     my GLib::Value $gv .= new( G_TYPE_DOUBLE );
     Proxy.new(
       FETCH => sub ($) {
@@ -1038,7 +1018,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: gdouble
-  method scale-y is rw is also<scale_y> {
+  method scale-y is rw is also<scale_y> is animatable {
     my GLib::Value $gv .= new( G_TYPE_DOUBLE );
     Proxy.new(
       FETCH => sub ($) {
@@ -1102,7 +1082,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: gfloat
-  method translation-x is rw is also<translation_x> {
+  method translation-x is rw is also<translation_x> is animatable {
     my GLib::Value $gv .= new( G_TYPE_FLOAT );
     Proxy.new(
       FETCH => sub ($) {
@@ -1117,7 +1097,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: gfloat
-  method translation-y is rw is also<translation_y> {
+  method translation-y is rw is also<translation_y> is animatable {
     my GLib::Value $gv .= new( G_TYPE_FLOAT );
     Proxy.new(
       FETCH => sub ($) {
@@ -1132,7 +1112,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: gfloat
-  method translation-z is rw is also<translation_z> {
+  method translation-z is rw is also<translation_z> is animatable {
     my GLib::Value $gv .= new( G_TYPE_FLOAT );
     Proxy.new(
       FETCH => sub ($) {
@@ -2615,10 +2595,161 @@ class Mutter::Clutter::Actor::Iter {
   method remove {
     clutter_actor_iter_remove($!mcai);
   }
+
+  # CONSTRAINTS
+
+  method add_constraints (*@constraints) is also<add-constraints> {
+    for @constraints {
+      die "\@constraints must contain only Mutter::Clutter::Constraint {
+           '' }compatible values"
+      unless $_ ~~ ClutterConstraint || .^lookup('ClutterConstraint')
+    }
+
+    self.add_constraint($_) for @constraints;
+  }
+
+  method add_constraint (ClutterConstraint() $constraint)
+    is also<add-constraint>
+  {
+    clutter_actor_add_constraint($!mca, $constraint);
+  }
+
+  method add_constraint_with_name (
+    Str()               $name,
+    ClutterConstraint() $constraint
+  )
+    is also<
+      add-constraint-with-name
+      add_constraint_by_name
+      add-constraint-by-name
+    >
+  {
+    clutter_actor_add_constraint_with_name($!mca, $name, $constraint);
+  }
+
+  method add_constraints_with_name (*@constraints)
+    is also<
+      add-constraints-with-name
+      add_constraints_by_name
+      add-constraints-by-name
+    >
+  {
+    # Turn back into proper pairs
+    for @constraints.rotor(2) {
+      die "'constraints-with-name' value must only contain {
+          '' }MutterClutterConstraint compatible types"
+      unless .[1] ~~ MutterClutterConstraint ||
+             .[1].^lookup('ClutterConstraint').elems;
+
+      say "Constraint: { .[0] }" if $DEBUG;
+      self.add-constraint-with-name(|$_);
+    }
+  }
+
+  method clear_constraints {
+    clutter_actor_clear_constraints($!mca);
+  }
+
+  method get_constraint (Str() $name, :$raw = False) is also<get-constraint> {
+    propReturnObject(
+      clutter_actor_get_constraint($!mca, $name),
+      $raw,
+      |Mutter::Clutter::Constraint.getTypePair
+    )
+  }
+
+  method get_constraints (:$raw = False, :$glist = False)
+    is also<get-constraints>
+  {
+    returnGList(
+      clutter_actor_get_constraints($!mca),
+      $raw,
+      $glist,
+      |Mutter::Clutter::Constraint.getTypePair
+    );
+  }
+
+  method has_constraints is also<has-constraints> {
+    so clutter_actor_has_constraints($!mca);
+  }
+
+  method remove_constraint (ClutterConstraint() $constraint)
+    is also<remove-constraint>
+  {
+    clutter_actor_remove_constraint($!mca, $constraint);
+  }
+
+  method remove_constraint_by_name (Str() $name)
+    is also<remove-constraint-by-name>
+  {
+    clutter_actor_remove_constraint_by_name($!mca, $name);
+  }
+
+  # EFFECTS
+
+  method add_effect (MutterClutterEffect() $effect) is also<add-effect> {
+    clutter_actor_add_effect($!mca, $effect);
+  }
+
+  method add_effect_with_name (Str() $name, MutterClutterEffect() $effect)
+    is also<
+      add-effect-with-name
+      add_effect_by_name
+      add-effect-by-name
+    >
+    clutter_actor_add_effect_with_name($!mca, $name, $effect);
+  }
+
+  method clear_effects {
+    clutter_actor_clear_effects($!mca);
+  }
+
+  method clutter_effect_queue_repaint {
+    clutter_effect_queue_repaint($!mca);
+  }
+
+  method get_effect (Str() $name, :$raw = False) is also<get-effect> {
+    propReturnObject(
+      clutter_actor_get_effect($!mca, $name),
+      $raw,
+      |Mutter::Clutter::Effect.getTypePair
+    );
+  }
+
+  method get_effects (:$glist = False, :$raw = False) is also<get-effects> {
+    returnGList(
+      clutter_actor_get_effects($!ca),
+      $raw,
+      $glist,
+      |Mutter::Clutter::Effect.getTypePair
+    );
+  }
+
+  method has_effects is also<has-effects> {
+    so clutter_actor_has_effects($!mca);
+  }
+
+  method remove_effect (ClutterEffect() $effect) is also<remove-effect> {
+    clutter_actor_remove_effect($!mca, $effect);
+  }
+
+  method remove_effect_by_name (Str() $name) is also<remove-effect-by-name> {
+    clutter_actor_remove_effect_by_name($!mca, $name);
+  }
+
 }
 
 use GLib::Object::Type;
 use GLib::Class::Object;
+
+BEGIN {
+  @animatables = self.&findMethodsWithRole(AnimatablePropertyMethod);
+  @set-methods = self.&findMethodsWithPrefix('set_');
+  @add-methods = self.&findMethodsWithPrefix('add_');
+  say "{ ::?CLASS.^name } - { +@animatables } animatables, {
+         +@set-methods } set methods, and { +@add-methods } add methods";
+}
+
 INIT {
   unless %*ENV<P6_GLIB_COMPILE_PROCESS> {
     my $o = GLib::Object.new-object(Mutter::Clutter::Actor.get-type);
@@ -2627,3 +2758,11 @@ INIT {
     say "Clutter::Actor - { $np } property entr{ $np == 1 ?? 'y' !! 'ies' }";
   }
 }
+
+# method clutter_constraint_update_preferred_size (ClutterActor $actor, ClutterOrientation $direction, gfloat $for_size, gfloat $minimum_size is rw, gfloat $natural_size is rw) {
+#   clutter_constraint_update_preferred_size($!mca, $actor, $direction, $for_size, $minimum_size is rw, $natural_size is rw);
+# }
+#
+# method clutter_constraint_get_type {
+#   clutter_constraint_get_type();
+# }
