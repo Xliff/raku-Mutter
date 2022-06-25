@@ -1,7 +1,7 @@
 use v6.c;
 
-use GLib::Raw::Definition;
-use Mutter::Raw::Definition;
+use GLib::Raw::Definitions;
+use Mutter::Raw::Definitions;
 
 unit package Mutter::Raw::Clutter::LayoutManager;
 
