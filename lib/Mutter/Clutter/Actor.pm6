@@ -14,20 +14,20 @@ use Mutter::Clutter::Constraint;
 use Mutter::Clutter::Effect;
 use Mutter::Clutter::LayoutManager;
 use Mutter::Clutter::PaintVolume;
-use Mutter::Clutter::Point;
+#use Mutter::Clutter::Point;
 use Mutter::Clutter::Rect;
-use Mutter::Clutter::Size;
+#use Mutter::Clutter::Size;
 use Mutter::Clutter::Transition;
-use Mutter::Clutter::Vertex;
+#use Mutter::Clutter::Vertex;
 
 use GLib::Roles::Object;
 
 use Mutter::Clutter::Roles::Animatable;
-use Mutter::Clutter::Roles::Container;
-use Mutter::Clutter::Roles::Content;
-use Mutter::Clutter::Roles::Scriptable;
-use Mutter::Clutter::Roles::Signals::Actor;
-use Mutter::Clutter::Roles::Signals::Generic;
+# use Mutter::Clutter::Roles::Container;
+# use Mutter::Clutter::Roles::Content;
+# use Mutter::Clutter::Roles::Scriptable;
+# use Mutter::Clutter::Roles::Signals::Actor;
+# use Mutter::Clutter::Roles::Signals::Generic;
 
 our subset MutterClutterActorAncestry is export of Mu
   where MutterClutterAnimatable | MutterClutterContainer |
@@ -43,7 +43,7 @@ class Mutter::Clutter::Actor {
   also does Mutter::Clutter::Roles::Signals::Actor;
   also does Mutter::Clutter::Roles::Signals::Generic;
 
-  has MutterClutterActor $!mca;
+  has MutterClutterActor $!mca is implementor;
 
   submethod BUILD (:$mutter-clutter-actor) {
     self.setMutterClutterActor($mutter-clutter-actor)
@@ -913,35 +913,35 @@ class Mutter::Clutter::Actor {
       STORE => -> $, Num() \val { self.set-offscreen-redirect(val) };
   }
 
-  # Type: ClutterPoint
-  method pivot-point is rw is also<pivot_point> is animatable {
-    my GLib::Value $gv .= new( Mutter::Clutter::Point.get_type );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('pivot-point', $gv);
-        propReturnObject($gv.boxed, True, MutterClutterPoint);
-      },
-      STORE => -> $, MutterClutterPoint() $val is copy {
-        $gv.boxed = $val;
-        self.prop_set('pivot-point', $gv);
-      }
-    );
-  }
+  # # Type: ClutterPoint
+  # method pivot-point is rw is also<pivot_point> is animatable {
+  #   my GLib::Value $gv .= new( Mutter::Clutter::Point.get_type );
+  #   Proxy.new(
+  #     FETCH => sub ($) {
+  #       self.prop_get('pivot-point', $gv);
+  #       propReturnObject($gv.boxed, True, MutterClutterPoint);
+  #     },
+  #     STORE => -> $, MutterClutterPoint() $val is copy {
+  #       $gv.boxed = $val;
+  #       self.prop_set('pivot-point', $gv);
+  #     }
+  #   );
+  # }
 
-  # Type: ClutterPoint
-  method position is rw  {
-    my GLib::Value $gv .= new( Mutter::Clutter::Point.get_type );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('position', $gv);
-        propReturnObject($gv.boxed, True, MutterClutterPoint);
-      },
-      STORE => -> $, MutterClutterPoint() $val is copy {
-        $gv.boxed = $val;
-        self.prop_set('position', $gv);
-      }
-    );
-  }
+  # # Type: ClutterPoint
+  # method position is rw  {
+  #   my GLib::Value $gv .= new( Mutter::Clutter::Point.get_type );
+  #   Proxy.new(
+  #     FETCH => sub ($) {
+  #       self.prop_get('position', $gv);
+  #       propReturnObject($gv.boxed, True, MutterClutterPoint);
+  #     },
+  #     STORE => -> $, MutterClutterPoint() $val is copy {
+  #       $gv.boxed = $val;
+  #       self.prop_set('position', $gv);
+  #     }
+  #   );
+  # }
 
   # Type: gboolean
   method realized is rw  {
@@ -1048,24 +1048,24 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: ClutterSize
-  method size (:$raw = False) is rw  {
-    my GLib::Value $gv .= new( Mutter::Clutter::Size.get_type );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('size', $gv);
-
-        propReturnObject(
-          $gv.boxed,
-          $raw,
-          |Mutter::Clutter::Size.getTypePair
-        );
-      },
-      STORE => -> $, ClutterSize() $val is copy {
-        $gv.boxed = $val;
-        self.prop_set('size', $gv);
-      }
-    );
-  }
+  # method size (:$raw = False) is rw  {
+  #   my GLib::Value $gv .= new( Mutter::Clutter::Size.get_type );
+  #   Proxy.new(
+  #     FETCH => sub ($) {
+  #       self.prop_get('size', $gv);
+  #
+  #       propReturnObject(
+  #         $gv.boxed,
+  #         $raw,
+  #         |Mutter::Clutter::Size.getTypePair
+  #       );
+  #     },
+  #     STORE => -> $, ClutterSize() $val is copy {
+  #       $gv.boxed = $val;
+  #       self.prop_set('size', $gv);
+  #     }
+  #   );
+  # }
 
   # Type: gboolean
   method transform-set is rw is also<transform_set> {
@@ -2313,9 +2313,6 @@ class Mutter::Clutter::Actor {
     is also<set-position>
   { * }
 
-  multi method set_position (MutterClutterPoint() $p) {
-    samewith($p.x, $p.y);
-  }
   multi method set_position (Num() $x, Num() $y)  {
     my gfloat ($xx, $yy) = ($x, $y);
 
