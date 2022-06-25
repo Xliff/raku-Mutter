@@ -20,6 +20,7 @@ need GLib::Roles::Pointers;
 need ATK::Raw::Definitions;
 need ATK::Raw::Enums;
 need ATK::Raw::Structs;
+need JSON::GLib::Raw::Definitions;
 need GIO::Raw::Definitions;
 need GIO::Raw::Enums;
 need GIO::Raw::Quarks;
@@ -39,6 +40,7 @@ need Mutter::Raw::Structs;
 BEGIN {
   glib-re-export($_) for |@glib-exports,
                          |@atk-exports,
+                         |@jg-exports,
                          |@gio-exports,
                          |@pango-exports,
                          |@mlutter-exports;
