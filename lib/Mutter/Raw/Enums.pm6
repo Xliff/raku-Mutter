@@ -4,16 +4,16 @@ use GLib::Raw::Definitions;
 
 unit package Mutter::Raw::Enums;
 
-constant ClutterActorAlign is export := guint32;
-our enum ClutterActorAlignEnum is export <
+constant MutterClutterActorAlign is export := guint32;
+our enum MutterClutterActorAlignEnum is export <
   CLUTTER_ACTOR_ALIGN_FILL
   CLUTTER_ACTOR_ALIGN_START
   CLUTTER_ACTOR_ALIGN_CENTER
   CLUTTER_ACTOR_ALIGN_END
 >;
 
-constant ClutterActorFlags is export := guint32;
-our enum ClutterActorFlagsEnum is export (
+constant MutterClutterActorFlags is export := guint32;
+our enum MutterClutterActorFlagsEnum is export (
   CLUTTER_ACTOR_MAPPED    => 1 +< 1,
   CLUTTER_ACTOR_REALIZED  => 1 +< 2,
   CLUTTER_ACTOR_REACTIVE  => 1 +< 3,
@@ -21,15 +21,15 @@ our enum ClutterActorFlagsEnum is export (
   CLUTTER_ACTOR_NO_LAYOUT => 1 +< 5,
 );
 
-constant ClutterAlignAxis is export := guint32;
-our enum ClutterAlignAxisEnum is export <
+constant MutterClutterAlignAxis is export := guint32;
+our enum MutterClutterAlignAxisEnum is export <
   CLUTTER_ALIGN_X_AXIS
   CLUTTER_ALIGN_Y_AXIS
   CLUTTER_ALIGN_BOTH
 >;
 
-constant ClutterAnimationMode is export := guint32;
-our enum ClutterAnimationModeEnum is export (
+constant MutterClutterAnimationMode is export := guint32;
+our enum MutterClutterAnimationModeEnum is export (
   CLUTTER_CUSTOM_MODE         => 0,
   'CLUTTER_LINEAR',
   'CLUTTER_EASE_IN_QUAD',
@@ -73,8 +73,8 @@ our enum ClutterAnimationModeEnum is export (
   'CLUTTER_ANIMATION_LAST'
 );
 
-constant ClutterBinAlignment is export := guint32;
-our enum ClutterBinAlignmentEnum is export <
+constant MutterClutterBinAlignment is export := guint32;
+our enum MutterClutterBinAlignmentEnum is export <
   CLUTTER_BIN_ALIGNMENT_FIXED
   CLUTTER_BIN_ALIGNMENT_FILL
   CLUTTER_BIN_ALIGNMENT_START
@@ -82,8 +82,8 @@ our enum ClutterBinAlignmentEnum is export <
   CLUTTER_BIN_ALIGNMENT_CENTER
 >;
 
-constant ClutterBindCoordinate is export := guint32;
-our enum ClutterBindCoordinateEnum is export <
+constant MutterClutterBindCoordinate is export := guint32;
+our enum MutterClutterBindCoordinateEnum is export <
   CLUTTER_BIND_X
   CLUTTER_BIND_Y
   CLUTTER_BIND_WIDTH
@@ -93,21 +93,21 @@ our enum ClutterBindCoordinateEnum is export <
   CLUTTER_BIND_ALL
 >;
 
-constant ClutterBoxAlignment is export := guint32;
-our enum ClutterBoxAlignmentEnum is export <
+constant MutterClutterBoxAlignment is export := guint32;
+our enum MutterClutterBoxAlignmentEnum is export <
   CLUTTER_BOX_ALIGNMENT_START
   CLUTTER_BOX_ALIGNMENT_END
   CLUTTER_BOX_ALIGNMENT_CENTER
 >;
 
-constant ClutterButtonState is export := guint32;
-our enum ClutterButtonStateEnum is export <
+constant MutterClutterButtonState is export := guint32;
+our enum MutterClutterButtonStateEnum is export <
   CLUTTER_BUTTON_STATE_RELEASED
   CLUTTER_BUTTON_STATE_PRESSED
 >;
 
-constant ClutterContentGravity is export := guint32;
-our enum ClutterContentGravityEnum is export <
+constant MutterClutterContentGravity is export := guint32;
+our enum MutterClutterContentGravityEnum is export <
   CLUTTER_CONTENT_GRAVITY_TOP_LEFT
   CLUTTER_CONTENT_GRAVITY_TOP
   CLUTTER_CONTENT_GRAVITY_TOP_RIGHT
@@ -121,8 +121,8 @@ our enum ClutterContentGravityEnum is export <
   CLUTTER_CONTENT_GRAVITY_RESIZE_ASPECT
 >;
 
-constant ClutterDebugFlag is export := guint32;
-our enum ClutterDebugFlagEnum is export (
+constant MutterClutterDebugFlag is export := guint32;
+our enum MutterClutterDebugFlagEnum is export (
   CLUTTER_DEBUG_MISC           =>  1 +< 0,
   CLUTTER_DEBUG_ACTOR          =>  1 +< 1,
   CLUTTER_DEBUG_TEXTURE        =>  1 +< 2,
@@ -144,15 +144,15 @@ our enum ClutterDebugFlagEnum is export (
   CLUTTER_DEBUG_DETAILED_TRACE => 1 +< 18,
 );
 
-constant ClutterDragAxis is export := guint32;
-our enum ClutterDragAxisEnum is export (
+constant MutterClutterDragAxis is export := guint32;
+our enum MutterClutterDragAxisEnum is export (
   CLUTTER_DRAG_AXIS_NONE => 0,
   'CLUTTER_DRAG_X_AXIS',
   'CLUTTER_DRAG_Y_AXIS'
 );
 
-constant ClutterDrawDebugFlag is export := guint32;
-our enum ClutterDrawDebugFlagEnum is export (
+constant MutterClutterDrawDebugFlag is export := guint32;
+our enum MutterClutterDrawDebugFlagEnum is export (
   CLUTTER_DEBUG_DISABLE_SWAP_EVENTS             =>  1 +< 0,
   CLUTTER_DEBUG_DISABLE_CLIPPED_REDRAWS         =>  1 +< 1,
   CLUTTER_DEBUG_REDRAWS                         =>  1 +< 2,
@@ -166,14 +166,14 @@ our enum ClutterDrawDebugFlagEnum is export (
   CLUTTER_DEBUG_PAINT_MAX_RENDER_TIME           => 1 +< 10,
 );
 
-constant ClutterEffectPaintFlags is export := guint32;
-our enum ClutterEffectPaintFlagsEnum is export (
+constant MutterClutterEffectPaintFlags is export := guint32;
+our enum MutterClutterEffectPaintFlagsEnum is export (
   CLUTTER_EFFECT_PAINT_ACTOR_DIRTY   => (1 +< 0),
   CLUTTER_EFFECT_PAINT_BYPASS_EFFECT => (1 +< 1),
 );
 
-constant ClutterEventFlags is export := guint32;
-our enum ClutterEventFlagsEnum is export (
+constant MutterClutterEventFlags is export := guint32;
+our enum MutterClutterEventFlagsEnum is export (
   CLUTTER_EVENT_NONE                 =>      0,
   CLUTTER_EVENT_FLAG_SYNTHETIC       => 1 +< 0,
   CLUTTER_EVENT_FLAG_INPUT_METHOD    => 1 +< 1,
@@ -182,14 +182,14 @@ our enum ClutterEventFlagsEnum is export (
   CLUTTER_EVENT_FLAG_GRAB_NOTIFY     => 1 +< 4,
 );
 
-constant ClutterEventPhase is export := guint32;
-our enum ClutterEventPhaseEnum is export <
+constant MutterClutterEventPhase is export := guint32;
+our enum MutterClutterEventPhaseEnum is export <
   CLUTTER_PHASE_CAPTURE
   CLUTTER_PHASE_BUBBLE
 >;
 
-constant ClutterEventType is export := guint32;
-our enum ClutterEventTypeEnum is export (
+constant MutterClutterEventType is export := guint32;
+our enum MutterClutterEventTypeEnum is export (
   CLUTTER_NOTHING            => 0,
   'CLUTTER_KEY_PRESS',
   'CLUTTER_KEY_RELEASE',
@@ -220,46 +220,46 @@ our enum ClutterEventTypeEnum is export (
   'CLUTTER_EVENT_LAST'
 );
 
-constant ClutterFeatureFlags is export := guint32;
-our enum ClutterFeatureFlagsEnum is export (
+constant MutterClutterFeatureFlags is export := guint32;
+our enum MutterClutterFeatureFlagsEnum is export (
   CLUTTER_FEATURE_SHADERS_GLSL => (1 +< 9),
 );
 
-constant ClutterFlowOrientation is export := guint32;
-our enum ClutterFlowOrientationEnum is export <
+constant MutterClutterFlowOrientation is export := guint32;
+our enum MutterClutterFlowOrientationEnum is export <
   CLUTTER_FLOW_HORIZONTAL
   CLUTTER_FLOW_VERTICAL
 >;
 
-constant ClutterFrameHint is export := guint32;
-our enum ClutterFrameHintEnum is export (
+constant MutterClutterFrameHint is export := guint32;
+our enum MutterClutterFrameHintEnum is export (
   CLUTTER_FRAME_HINT_NONE                     =>      0,
   CLUTTER_FRAME_HINT_DIRECT_SCANOUT_ATTEMPTED => 1 +< 0,
 );
 
-constant ClutterFrameInfoFlag is export := guint32;
-our enum ClutterFrameInfoFlagEnum is export (
+constant MutterClutterFrameInfoFlag is export := guint32;
+our enum MutterClutterFrameInfoFlagEnum is export (
   CLUTTER_FRAME_INFO_FLAG_NONE      =>      0,
   CLUTTER_FRAME_INFO_FLAG_HW_CLOCK  => 1 +< 0,
   CLUTTER_FRAME_INFO_FLAG_ZERO_COPY => 1 +< 1,
   CLUTTER_FRAME_INFO_FLAG_VSYNC     => 1 +< 2,
 );
 
-constant ClutterFrameResult is export := guint32;
-our enum ClutterFrameResultEnum is export <
+constant MutterClutterFrameResult is export := guint32;
+our enum MutterClutterFrameResultEnum is export <
   CLUTTER_FRAME_RESULT_PENDING_PRESENTED
   CLUTTER_FRAME_RESULT_IDLE
 >;
 
-constant ClutterGestureTriggerEdge is export := guint32;
-our enum ClutterGestureTriggerEdgeEnum is export (
+constant MutterClutterGestureTriggerEdge is export := guint32;
+our enum MutterClutterGestureTriggerEdgeEnum is export (
   CLUTTER_GESTURE_TRIGGER_EDGE_NONE   => 0,
   'CLUTTER_GESTURE_TRIGGER_EDGE_AFTER',
   'CLUTTER_GESTURE_TRIGGER_EDGE_BEFORE'
 );
 
-constant ClutterGravity is export := guint32;
-our enum ClutterGravityEnum is export (
+constant MutterClutterGravity is export := guint32;
+our enum MutterClutterGravityEnum is export (
   CLUTTER_GRAVITY_NONE       => 0,
   'CLUTTER_GRAVITY_NORTH',
   'CLUTTER_GRAVITY_NORTH_EAST',
@@ -272,21 +272,21 @@ our enum ClutterGravityEnum is export (
   'CLUTTER_GRAVITY_CENTER'
 );
 
-constant ClutterGridPosition is export := guint32;
-our enum ClutterGridPositionEnum is export <
+constant MutterClutterGridPosition is export := guint32;
+our enum MutterClutterGridPositionEnum is export <
   CLUTTER_GRID_POSITION_LEFT
   CLUTTER_GRID_POSITION_RIGHT
   CLUTTER_GRID_POSITION_TOP
   CLUTTER_GRID_POSITION_BOTTOM
 >;
 
-constant ClutterImageError is export := guint32;
-our enum ClutterImageErrorEnum is export <
+constant MutterClutterImageError is export := guint32;
+our enum MutterClutterImageErrorEnum is export <
   CLUTTER_IMAGE_ERROR_INVALID_DATA
 >;
 
-constant ClutterInputAxis is export := guint32;
-our enum ClutterInputAxisEnum is export <
+constant MutterClutterInputAxis is export := guint32;
+our enum MutterClutterInputAxisEnum is export <
   CLUTTER_INPUT_AXIS_IGNORE
   CLUTTER_INPUT_AXIS_X
   CLUTTER_INPUT_AXIS_Y
@@ -300,22 +300,22 @@ our enum ClutterInputAxisEnum is export <
   CLUTTER_INPUT_AXIS_LAST
 >;
 
-constant ClutterInputAxisFlags is export := guint32;
-our enum ClutterInputAxisFlagsEnum is export (
-  CLUTTER_INPUT_AXIS_FLAG_NONE     =>                                0,
-  CLUTTER_INPUT_AXIS_FLAG_X        =>        1 +< CLUTTER_INPUT_AXIS_X,
-  CLUTTER_INPUT_AXIS_FLAG_Y        =>        1 +< CLUTTER_INPUT_AXIS_Y,
+constant MutterClutterInputAxisFlags is export := guint32;
+our enum MutterClutterInputAxisFlagsEnum is export (
+  CLUTTER_INPUT_AXIS_FLAG_NONE     => 0,
+  CLUTTER_INPUT_AXIS_FLAG_X        => 1 +< CLUTTER_INPUT_AXIS_X,
+  CLUTTER_INPUT_AXIS_FLAG_Y        => 1 +< CLUTTER_INPUT_AXIS_Y,
   CLUTTER_INPUT_AXIS_FLAG_PRESSURE => 1 +< CLUTTER_INPUT_AXIS_PRESSURE,
-  CLUTTER_INPUT_AXIS_FLAG_XTILT    =>    1 +< CLUTTER_INPUT_AXIS_XTILT,
-  CLUTTER_INPUT_AXIS_FLAG_YTILT    =>    1 +< CLUTTER_INPUT_AXIS_YTILT,
-  CLUTTER_INPUT_AXIS_FLAG_WHEEL    =>    1 +< CLUTTER_INPUT_AXIS_WHEEL,
+  CLUTTER_INPUT_AXIS_FLAG_XTILT    => 1 +< CLUTTER_INPUT_AXIS_XTILT,
+  CLUTTER_INPUT_AXIS_FLAG_YTILT    => 1 +< CLUTTER_INPUT_AXIS_YTILT,
+  CLUTTER_INPUT_AXIS_FLAG_WHEEL    => 1 +< CLUTTER_INPUT_AXIS_WHEEL,
   CLUTTER_INPUT_AXIS_FLAG_DISTANCE => 1 +< CLUTTER_INPUT_AXIS_DISTANCE,
   CLUTTER_INPUT_AXIS_FLAG_ROTATION => 1 +< CLUTTER_INPUT_AXIS_ROTATION,
-  CLUTTER_INPUT_AXIS_FLAG_SLIDER   =>   1 +< CLUTTER_INPUT_AXIS_SLIDER,
+  CLUTTER_INPUT_AXIS_FLAG_SLIDER   => 1 +< CLUTTER_INPUT_AXIS_SLIDER,
 );
 
-constant ClutterInputCapabilities is export := guint32;
-our enum ClutterInputCapabilitiesEnum is export (
+constant MutterClutterInputCapabilities is export := guint32;
+our enum MutterClutterInputCapabilitiesEnum is export (
   CLUTTER_INPUT_CAPABILITY_NONE        =>      0,
   CLUTTER_INPUT_CAPABILITY_POINTER     => 1 +< 0,
   CLUTTER_INPUT_CAPABILITY_KEYBOARD    => 1 +< 1,
@@ -325,8 +325,8 @@ our enum ClutterInputCapabilitiesEnum is export (
   CLUTTER_INPUT_CAPABILITY_TABLET_PAD  => 1 +< 5,
 );
 
-constant ClutterInputContentHintFlags is export := guint32;
-our enum ClutterInputContentHintFlagsEnum is export (
+constant MutterClutterInputContentHintFlags is export := guint32;
+our enum MutterClutterInputContentHintFlagsEnum is export (
   CLUTTER_INPUT_CONTENT_HINT_COMPLETION          => 1 +< 0,
   CLUTTER_INPUT_CONTENT_HINT_SPELLCHECK          => 1 +< 1,
   CLUTTER_INPUT_CONTENT_HINT_AUTO_CAPITALIZATION => 1 +< 2,
@@ -339,8 +339,8 @@ our enum ClutterInputContentHintFlagsEnum is export (
   CLUTTER_INPUT_CONTENT_HINT_MULTILINE           => 1 +< 9,
 );
 
-constant ClutterInputContentPurpose is export := guint32;
-our enum ClutterInputContentPurposeEnum is export <
+constant MutterClutterInputContentPurpose is export := guint32;
+our enum MutterClutterInputContentPurposeEnum is export <
   CLUTTER_INPUT_CONTENT_PURPOSE_NORMAL
   CLUTTER_INPUT_CONTENT_PURPOSE_ALPHA
   CLUTTER_INPUT_CONTENT_PURPOSE_DIGITS
@@ -356,21 +356,21 @@ our enum ClutterInputContentPurposeEnum is export <
   CLUTTER_INPUT_CONTENT_PURPOSE_TERMINAL
 >;
 
-constant ClutterInputDevicePadFeature is export := guint32;
-our enum ClutterInputDevicePadFeatureEnum is export <
+constant MutterClutterInputDevicePadFeature is export := guint32;
+our enum MutterClutterInputDevicePadFeatureEnum is export <
   CLUTTER_PAD_FEATURE_BUTTON
   CLUTTER_PAD_FEATURE_RING
   CLUTTER_PAD_FEATURE_STRIP
 >;
 
-constant ClutterInputDevicePadSource is export := guint32;
-our enum ClutterInputDevicePadSourceEnum is export <
+constant MutterClutterInputDevicePadSource is export := guint32;
+our enum MutterClutterInputDevicePadSourceEnum is export <
   CLUTTER_INPUT_DEVICE_PAD_SOURCE_UNKNOWN
   CLUTTER_INPUT_DEVICE_PAD_SOURCE_FINGER
 >;
 
-constant ClutterInputDeviceToolType is export := guint32;
-our enum ClutterInputDeviceToolTypeEnum is export <
+constant MutterClutterInputDeviceToolType is export := guint32;
+our enum MutterClutterInputDeviceToolTypeEnum is export <
   CLUTTER_INPUT_DEVICE_TOOL_NONE
   CLUTTER_INPUT_DEVICE_TOOL_PEN
   CLUTTER_INPUT_DEVICE_TOOL_ERASER
@@ -381,8 +381,8 @@ our enum ClutterInputDeviceToolTypeEnum is export <
   CLUTTER_INPUT_DEVICE_TOOL_LENS
 >;
 
-constant ClutterInputDeviceType is export := guint32;
-our enum ClutterInputDeviceTypeEnum is export <
+constant MutterClutterInputDeviceType is export := guint32;
+our enum MutterClutterInputDeviceTypeEnum is export <
   CLUTTER_POINTER_DEVICE
   CLUTTER_KEYBOARD_DEVICE
   CLUTTER_EXTENSION_DEVICE
@@ -397,128 +397,128 @@ our enum ClutterInputDeviceTypeEnum is export <
   CLUTTER_N_DEVICE_TYPES
 >;
 
-constant ClutterInputMode is export := guint32;
-our enum ClutterInputModeEnum is export <
+constant MutterClutterInputMode is export := guint32;
+our enum MutterClutterInputModeEnum is export <
   CLUTTER_INPUT_MODE_LOGICAL
   CLUTTER_INPUT_MODE_PHYSICAL
   CLUTTER_INPUT_MODE_FLOATING
 >;
 
-constant ClutterInputPanelState is export := guint32;
-our enum ClutterInputPanelStateEnum is export <
+constant MutterClutterInputPanelState is export := guint32;
+our enum MutterClutterInputPanelStateEnum is export <
   CLUTTER_INPUT_PANEL_STATE_OFF
   CLUTTER_INPUT_PANEL_STATE_ON
   CLUTTER_INPUT_PANEL_STATE_TOGGLE
 >;
 
-constant ClutterInterpolation is export := guint32;
-our enum ClutterInterpolationEnum is export <
+constant MutterClutterInterpolation is export := guint32;
+our enum MutterClutterInterpolationEnum is export <
   CLUTTER_INTERPOLATION_LINEAR
   CLUTTER_INTERPOLATION_CUBIC
 >;
 
-constant ClutterKeyState is export := guint32;
-our enum ClutterKeyStateEnum is export <
+constant MutterClutterKeyState is export := guint32;
+our enum MutterClutterKeyStateEnum is export <
   CLUTTER_KEY_STATE_RELEASED
   CLUTTER_KEY_STATE_PRESSED
 >;
 
-constant ClutterLongPressState is export := guint32;
-our enum ClutterLongPressStateEnum is export <
+constant MutterClutterLongPressState is export := guint32;
+our enum MutterClutterLongPressStateEnum is export <
   CLUTTER_LONG_PRESS_QUERY
   CLUTTER_LONG_PRESS_ACTIVATE
   CLUTTER_LONG_PRESS_CANCEL
 >;
 
-constant ClutterOffscreenRedirect is export := guint32;
-our enum ClutterOffscreenRedirectEnum is export (
+constant MutterClutterOffscreenRedirect is export := guint32;
+our enum MutterClutterOffscreenRedirectEnum is export (
   CLUTTER_OFFSCREEN_REDIRECT_AUTOMATIC_FOR_OPACITY => 1 +< 0,
   CLUTTER_OFFSCREEN_REDIRECT_ALWAYS                => 1 +< 1,
   CLUTTER_OFFSCREEN_REDIRECT_ON_IDLE               => 1 +< 2,
 );
 
-constant ClutterOrientation is export := guint32;
-our enum ClutterOrientationEnum is export <
+constant MutterClutterOrientation is export := guint32;
+our enum MutterClutterOrientationEnum is export <
   CLUTTER_ORIENTATION_HORIZONTAL
   CLUTTER_ORIENTATION_VERTICAL
 >;
 
-constant ClutterPaintFlag is export := guint32;
-our enum ClutterPaintFlagEnum is export (
+constant MutterClutterPaintFlag is export := guint32;
+our enum MutterClutterPaintFlagEnum is export (
   CLUTTER_PAINT_FLAG_NONE          =>      0,
   CLUTTER_PAINT_FLAG_NO_CURSORS    => 1 +< 0,
   CLUTTER_PAINT_FLAG_FORCE_CURSORS => 1 +< 1,
   CLUTTER_PAINT_FLAG_CLEAR         => 1 +< 2,
 );
 
-constant ClutterPanAxis is export := guint32;
-our enum ClutterPanAxisEnum is export (
+constant MutterClutterPanAxis is export := guint32;
+our enum MutterClutterPanAxisEnum is export (
   CLUTTER_PAN_AXIS_NONE => 0,
   'CLUTTER_PAN_X_AXIS',
   'CLUTTER_PAN_Y_AXIS',
   'CLUTTER_PAN_AXIS_AUTO'
 );
 
-constant ClutterPickDebugFlag is export := guint32;
-our enum ClutterPickDebugFlagEnum is export (
+constant MutterClutterPickDebugFlag is export := guint32;
+our enum MutterClutterPickDebugFlagEnum is export (
   CLUTTER_DEBUG_NOP_PICKING => 1 +< 0,
 );
 
-constant ClutterPickMode is export := guint32;
-our enum ClutterPickModeEnum is export (
+constant MutterClutterPickMode is export := guint32;
+our enum MutterClutterPickModeEnum is export (
   CLUTTER_PICK_NONE     => 0,
   'CLUTTER_PICK_REACTIVE',
   'CLUTTER_PICK_ALL'
 );
 
-constant ClutterPreeditResetMode is export := guint32;
-our enum ClutterPreeditResetModeEnum is export <
+constant MutterClutterPreeditResetMode is export := guint32;
+our enum MutterClutterPreeditResetModeEnum is export <
   CLUTTER_PREEDIT_RESET_CLEAR
   CLUTTER_PREEDIT_RESET_COMMIT
 >;
 
-constant ClutterRepaintFlags is export := guint32;
-our enum ClutterRepaintFlagsEnum is export (
+constant MutterClutterRepaintFlags is export := guint32;
+our enum MutterClutterRepaintFlagsEnum is export (
   CLUTTER_REPAINT_FLAGS_PRE_PAINT  => 1 +< 0,
   CLUTTER_REPAINT_FLAGS_POST_PAINT => 1 +< 1,
 );
 
-constant ClutterRequestMode is export := guint32;
-our enum ClutterRequestModeEnum is export <
+constant MutterClutterRequestMode is export := guint32;
+our enum MutterClutterRequestModeEnum is export <
   CLUTTER_REQUEST_HEIGHT_FOR_WIDTH
   CLUTTER_REQUEST_WIDTH_FOR_HEIGHT
   CLUTTER_REQUEST_CONTENT_SIZE
 >;
 
-constant ClutterRotateAxis is export := guint32;
-our enum ClutterRotateAxisEnum is export <
+constant MutterClutterRotateAxis is export := guint32;
+our enum MutterClutterRotateAxisEnum is export <
   CLUTTER_X_AXIS
   CLUTTER_Y_AXIS
   CLUTTER_Z_AXIS
 >;
 
-constant ClutterRotateDirection is export := guint32;
-our enum ClutterRotateDirectionEnum is export <
+constant MutterClutterRotateDirection is export := guint32;
+our enum MutterClutterRotateDirectionEnum is export <
   CLUTTER_ROTATE_CW
   CLUTTER_ROTATE_CCW
 >;
 
-constant ClutterScalingFilter is export := guint32;
-our enum ClutterScalingFilterEnum is export <
+constant MutterClutterScalingFilter is export := guint32;
+our enum MutterClutterScalingFilterEnum is export <
   CLUTTER_SCALING_FILTER_LINEAR
   CLUTTER_SCALING_FILTER_NEAREST
   CLUTTER_SCALING_FILTER_TRILINEAR
 >;
 
-constant ClutterScriptError is export := guint32;
-our enum ClutterScriptErrorEnum is export <
+constant MutterClutterScriptError is export := guint32;
+our enum MutterClutterScriptErrorEnum is export <
   CLUTTER_SCRIPT_ERROR_INVALID_TYPE_FUNCTION
   CLUTTER_SCRIPT_ERROR_INVALID_PROPERTY
   CLUTTER_SCRIPT_ERROR_INVALID_VALUE
 >;
 
-constant ClutterScrollDirection is export := guint32;
-our enum ClutterScrollDirectionEnum is export <
+constant MutterClutterScrollDirection is export := guint32;
+our enum MutterClutterScrollDirectionEnum is export <
   CLUTTER_SCROLL_UP
   CLUTTER_SCROLL_DOWN
   CLUTTER_SCROLL_LEFT
@@ -526,79 +526,79 @@ our enum ClutterScrollDirectionEnum is export <
   CLUTTER_SCROLL_SMOOTH
 >;
 
-constant ClutterScrollFinishFlags is export := guint32;
-our enum ClutterScrollFinishFlagsEnum is export (
+constant MutterClutterScrollFinishFlags is export := guint32;
+our enum MutterClutterScrollFinishFlagsEnum is export (
   CLUTTER_SCROLL_FINISHED_NONE       =>      0,
   CLUTTER_SCROLL_FINISHED_HORIZONTAL => 1 +< 0,
   CLUTTER_SCROLL_FINISHED_VERTICAL   => 1 +< 1,
 );
 
-constant ClutterScrollSource is export := guint32;
-our enum ClutterScrollSourceEnum is export <
+constant MutterClutterScrollSource is export := guint32;
+our enum MutterClutterScrollSourceEnum is export <
   CLUTTER_SCROLL_SOURCE_UNKNOWN
   CLUTTER_SCROLL_SOURCE_WHEEL
   CLUTTER_SCROLL_SOURCE_FINGER
   CLUTTER_SCROLL_SOURCE_CONTINUOUS
 >;
 
-constant ClutterShaderType is export := guint32;
-our enum ClutterShaderTypeEnum is export <
+constant MutterClutterShaderType is export := guint32;
+our enum MutterClutterShaderTypeEnum is export <
   CLUTTER_VERTEX_SHADER
   CLUTTER_FRAGMENT_SHADER
 >;
 
-constant ClutterSnapEdge is export := guint32;
-our enum ClutterSnapEdgeEnum is export <
+constant MutterClutterSnapEdge is export := guint32;
+our enum MutterClutterSnapEdgeEnum is export <
   CLUTTER_SNAP_EDGE_TOP
   CLUTTER_SNAP_EDGE_RIGHT
   CLUTTER_SNAP_EDGE_BOTTOM
   CLUTTER_SNAP_EDGE_LEFT
 >;
 
-constant ClutterStepMode is export := guint32;
-our enum ClutterStepModeEnum is export <
+constant MutterClutterStepMode is export := guint32;
+our enum MutterClutterStepModeEnum is export <
   CLUTTER_STEP_MODE_START
   CLUTTER_STEP_MODE_END
 >;
 
-constant ClutterSwipeDirection is export := guint32;
-our enum ClutterSwipeDirectionEnum is export (
+constant MutterClutterSwipeDirection is export := guint32;
+our enum MutterClutterSwipeDirectionEnum is export (
   CLUTTER_SWIPE_DIRECTION_UP    => 1 +< 0,
   CLUTTER_SWIPE_DIRECTION_DOWN  => 1 +< 1,
   CLUTTER_SWIPE_DIRECTION_LEFT  => 1 +< 2,
   CLUTTER_SWIPE_DIRECTION_RIGHT => 1 +< 3,
 );
 
-constant ClutterTextDirection is export := guint32;
-our enum ClutterTextDirectionEnum is export <
+constant MutterClutterTextDirection is export := guint32;
+our enum MutterClutterTextDirectionEnum is export <
   CLUTTER_TEXT_DIRECTION_DEFAULT
   CLUTTER_TEXT_DIRECTION_LTR
   CLUTTER_TEXT_DIRECTION_RTL
 >;
 
-constant ClutterTextureQuality is export := guint32;
-our enum ClutterTextureQualityEnum is export <
+constant MutterClutterTextureQuality is export := guint32;
+our enum MutterClutterTextureQualityEnum is export <
   CLUTTER_TEXTURE_QUALITY_LOW
   CLUTTER_TEXTURE_QUALITY_MEDIUM
   CLUTTER_TEXTURE_QUALITY_HIGH
 >;
 
-constant ClutterTimelineDirection is export := guint32;
-our enum ClutterTimelineDirectionEnum is export <
+constant MutterClutterTimelineDirection is export := guint32;
+our enum MutterClutterTimelineDirectionEnum is export <
   CLUTTER_TIMELINE_FORWARD
   CLUTTER_TIMELINE_BACKWARD
 >;
 
-constant ClutterTouchpadGesturePhase is export := guint32;
-our enum ClutterTouchpadGesturePhaseEnum is export <
+constant MutterClutterTouchpadGesturePhase is export := guint32;
+our enum MutterClutterTouchpadGesturePhaseEnum is export <
   CLUTTER_TOUCHPAD_GESTURE_PHASE_BEGIN
   CLUTTER_TOUCHPAD_GESTURE_PHASE_UPDATE
   CLUTTER_TOUCHPAD_GESTURE_PHASE_END
   CLUTTER_TOUCHPAD_GESTURE_PHASE_CANCEL
 >;
 
-constant ClutterUnitType is export := guint32;
-our enum ClutterUnitTypeEnum is export <
+constant MutterClutterUnitType is export := guint32;
+our enum MutterClutterUnitTypeEnum is export <
   CLUTTER_UNIT_PIXEL
   CLUTTER_UNIT_EM
   CLUTTER_UNIT_MM
@@ -606,8 +606,8 @@ our enum ClutterUnitTypeEnum is export <
   CLUTTER_UNIT_CM
 >;
 
-constant ClutterVirtualDeviceType is export := guint32;
-our enum ClutterVirtualDeviceTypeEnum is export (
+constant MutterClutterVirtualDeviceType is export := guint32;
+our enum MutterClutterVirtualDeviceTypeEnum is export (
   CLUTTER_VIRTUAL_DEVICE_TYPE_NONE        =>      0,
   CLUTTER_VIRTUAL_DEVICE_TYPE_KEYBOARD    => 1 +< 0,
   CLUTTER_VIRTUAL_DEVICE_TYPE_POINTER     => 1 +< 1,
@@ -640,9 +640,9 @@ our enum CoglBlendStringErrorEnum is export <
 
 constant CoglBufferBit is export := guint64;
 our enum CoglBufferBitEnum is export (
-  COGL_BUFFER_BIT_COLOR   => 1L+<0,
-  COGL_BUFFER_BIT_DEPTH   => 1L+<1,
-  COGL_BUFFER_BIT_STENCIL => 1L+<2,
+  COGL_BUFFER_BIT_COLOR   => 1 +< 0,
+  COGL_BUFFER_BIT_DEPTH   => 1 +< 1,
+  COGL_BUFFER_BIT_STENCIL => 1 +< 2,
 );
 
 constant CoglBufferError is export := guint32;
@@ -698,7 +698,7 @@ our enum CoglFeatureIDEnum is export <
   COGL_FEATURE_ID_TEXTURE_EGL_IMAGE_EXTERNAL
   COGL_FEATURE_ID_BLIT_FRAMEBUFFER
   COGL_FEATURE_ID_TIMESTAMP_QUERY
-  _COGL_N_FEATURE_IDS
+  COGL_N_FEATURE_IDS
 >;
 
 constant CoglFilterReturn is export := guint32;
@@ -766,17 +766,17 @@ our enum CoglPipelineFilterEnum is export (
 
 constant CoglPollFDEvent is export := guint32;
 our enum CoglPollFDEventEnum is export (
-  COGL_POLL_FD_EVENT_IN   =>   COGL_SYSDEF_POLLIN,
-  COGL_POLL_FD_EVENT_PRI  =>  COGL_SYSDEF_POLLPRI,
-  COGL_POLL_FD_EVENT_OUT  =>  COGL_SYSDEF_POLLOUT,
-  COGL_POLL_FD_EVENT_ERR  =>  COGL_SYSDEF_POLLERR,
-  COGL_POLL_FD_EVENT_HUP  =>  COGL_SYSDEF_POLLHUP,
+  COGL_POLL_FD_EVENT_IN   => COGL_SYSDEF_POLLIN,
+  COGL_POLL_FD_EVENT_PRI  => COGL_SYSDEF_POLLPRI,
+  COGL_POLL_FD_EVENT_OUT  => COGL_SYSDEF_POLLOUT,
+  COGL_POLL_FD_EVENT_ERR  => COGL_SYSDEF_POLLERR,
+  COGL_POLL_FD_EVENT_HUP  => COGL_SYSDEF_POLLHUP,
   COGL_POLL_FD_EVENT_NVAL => COGL_SYSDEF_POLLNVAL,
 );
 
 constant CoglReadPixelsFlags is export := guint64;
 our enum CoglReadPixelsFlagsEnum is export (
-  COGL_READ_PIXELS_COLOR_BUFFER => 1L +< 0,
+  COGL_READ_PIXELS_COLOR_BUFFER => 1 +< 0,
 );
 
 constant CoglRendererError is export := guint32;
@@ -963,16 +963,16 @@ our enum MetaDebugPaintFlagEnum is export (
 constant MetaDebugTopic is export := gint32;
 our enum MetaDebugTopicEnum is export (
   META_DEBUG_VERBOSE         =>      -1,
-  META_DEBUG_FOCUS           =>  1 +< 0,
-  META_DEBUG_WORKAREA        =>  1 +< 1,
-  META_DEBUG_STACK           =>  1 +< 2,
-  META_DEBUG_SM              =>  1 +< 3,
-  META_DEBUG_EVENTS          =>  1 +< 4,
-  META_DEBUG_WINDOW_STATE    =>  1 +< 5,
-  META_DEBUG_WINDOW_OPS      =>  1 +< 6,
-  META_DEBUG_GEOMETRY        =>  1 +< 7,
-  META_DEBUG_PLACEMENT       =>  1 +< 8,
-  META_DEBUG_PING            =>  1 +< 9,
+  META_DEBUG_FOCUS           => 1 +<  0,
+  META_DEBUG_WORKAREA        => 1 +<  1,
+  META_DEBUG_STACK           => 1 +<  2,
+  META_DEBUG_SM              => 1 +<  3,
+  META_DEBUG_EVENTS          => 1 +<  4,
+  META_DEBUG_WINDOW_STATE    => 1 +<  5,
+  META_DEBUG_WINDOW_OPS      => 1 +<  6,
+  META_DEBUG_GEOMETRY        => 1 +<  7,
+  META_DEBUG_PLACEMENT       => 1 +<  8,
+  META_DEBUG_PING            => 1 +<  9,
   META_DEBUG_KEYBINDINGS     => 1 +< 10,
   META_DEBUG_SYNC            => 1 +< 11,
   META_DEBUG_STARTUP         => 1 +< 12,
