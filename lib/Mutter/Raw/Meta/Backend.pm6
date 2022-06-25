@@ -3,7 +3,7 @@ use v6.c;
 use GLib::Raw::Definitions;
 use Mutter::Raw::Definitions;
 
-unit package Mutter::Meta::Raw::Backend;
+unit package Mutter::Raw::Meta::Backend;
 
 ### /usr/src/mutter-42.1/src/meta/meta-backend.h
 

@@ -3,10 +3,10 @@ use v6.c;
 use NativeCall;
 
 use GLib::Raw::Definitions;
-use Mutter::Meta::Raw::Definitions;
-use Mutter::Meta::Raw::Enums;
+use Mutter::Raw::Definitions;
+use Mutter::Raw::Enums;
 
-unit package Mutter::Meta::Raw::Prefs;
+unit package Mutter::Raw::Meta::Prefs;
 
 ### /usr/include/mutter-10/meta/prefs.h
 
@@ -257,7 +257,7 @@ sub meta_preference_to_string (MetaPreference $pref)
 { * }
 
 sub meta_prefs_remove_listener (
-           &func (MetaPreference, gpointer), 
+           &func (MetaPreference, gpointer),
   gpointer $user_data
 )
   is native(mutter)

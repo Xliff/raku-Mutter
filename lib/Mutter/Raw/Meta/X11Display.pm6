@@ -3,7 +3,7 @@ use v6.c;
 use GLib::Raw::Definitions;
 use Mutter::Raw::Definitions;
 
-unit package Mutter::Meta::Raw::X11Display;
+unit package Mutter::Raw::Meta::X11Display;
 
 ### /usr/src/mutter-42.1/src/meta/meta-x11-display.h
 

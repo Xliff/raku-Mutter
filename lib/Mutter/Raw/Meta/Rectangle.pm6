@@ -5,7 +5,7 @@ use NativeCall;
 use GLib::Raw::Definitions;
 use Meta::Raw::Definitions;
 
-unit package Mutter::Meta::Raw::Rectangle;
+unit package Mutter::Raw::Meta::Rectangle;
 
 ### /usr/include/mutter-10/meta/boxes.h
 

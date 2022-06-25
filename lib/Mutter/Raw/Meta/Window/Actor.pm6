@@ -5,7 +5,7 @@ use NativeCall;
 use GLib::Raw::Definitions;
 use Mutter::Raw::Definitions;
 
-unit package Mutter::Meta::Raw::Window::Actor;
+unit package Mutter::Raw::Meta::Window::Actor;
 
 ### /usr/src/mutter-42.1/src/meta/meta-window-actor.h
 

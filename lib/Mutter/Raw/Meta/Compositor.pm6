@@ -3,7 +3,7 @@ use v6.c;
 use GLib::Raw::Definitions;
 use Mutter::Raw::Definitions;
 
-unit package Mutter::Meta::Raw::Compositor;
+unit package Mutter::Raw::Meta::Compositor;
 
 ### /usr/include/mutter-10/meta/compositor.h
 

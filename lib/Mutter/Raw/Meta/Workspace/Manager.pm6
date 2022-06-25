@@ -3,7 +3,7 @@ use v6.c;
 use GLib::Raw::Definitions;
 use Mutter::Raw::Definitions;
 
-unit package Mutter::Meta::Raw::Workspace::Manager;
+unit package Mutter::Raw::Meta::Workspace::Manager;
 
 ### /usr/src/mutter-42.1/src/meta/meta-workspace-manager.h
 

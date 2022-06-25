@@ -5,7 +5,7 @@ use NativeCall;
 use GLib::Raw::Definitions;
 use Mutter::Raw::Definitions;
 
-unit package Mutter::Meta::Raw::Keybindings;
+unit package Mutter::Raw::Meta::Keybindings;
 
 ### /usr/include/mutter-10/meta/keybindings.h
 

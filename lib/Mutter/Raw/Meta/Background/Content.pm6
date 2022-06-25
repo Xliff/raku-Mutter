@@ -5,7 +5,7 @@ use NativeCall;
 use GLib::Raw::Definitions;
 use Mutter::Raw::Definitions;
 
-class Mutter::Meta::Raw::Background::Content;
+class Mutter::Raw::Meta::Background::Content;
 
 ### /usr/src/mutter-42.1/src/meta/meta-background-content.h
 

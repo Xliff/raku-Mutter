@@ -5,7 +5,7 @@ use NativeCall;
 use GLib::Raw::Definitions;
 use Mutter::Raw::Definitions;
 
-unit package Mutter::Clutter::Raw::MiscTypes;
+unit package Mutter::Raw::Clutter::MiscTypes;
 
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-types.h
 

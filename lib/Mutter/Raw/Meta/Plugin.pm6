@@ -5,7 +5,7 @@ use NativeCall;
 use GLib::Raw::Definitions;
 use Mutter::Raw::Definitions;
 
-unit package Mutter::Meta::Raw::Plugin;
+unit package Mutter::Raw::Meta::Plugin;
 
 ### /usr/src/mutter-42.1/src/meta/meta-plugin.h
 

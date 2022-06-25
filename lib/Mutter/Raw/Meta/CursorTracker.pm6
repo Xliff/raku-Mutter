@@ -5,7 +5,7 @@ use NativeCall;
 use GLib::Raw::Definitions;
 use Mutter::Raw::Definitions;
 
-unit package Mutter::Meta::Raw::CursorTracker;
+unit package Mutter::Raw::Meta::CursorTracker;
 
 ### /usr/src/mutter-42.1/src/meta/meta-cursor-tracker.h
 
