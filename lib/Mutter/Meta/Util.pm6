@@ -1,7 +1,7 @@
 use v6.c;
 
 use Mutter::Raw::Types;
-use Mutter::Meta::Raw::Util;
+use Mutter::Raw::Meta::Util;
 
 use GLib::Roles::StaticClass;
 

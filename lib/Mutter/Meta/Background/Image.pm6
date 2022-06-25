@@ -1,7 +1,7 @@
 use v6.c;
 
 use Mutter::Raw::Types;
-use Mutter::Meta::Raw::Background::Image;
+use Mutter::Raw::Meta::Background::Image;
 
 class Mutter::Meta::Background::Image {
 

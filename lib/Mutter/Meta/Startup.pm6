@@ -1,7 +1,7 @@
 use v6.c;
 
 use Mutter::Raw::Types;
-use Mutter::Meta::Raw::StartupNotification;
+use Mutter::Raw::Meta::StartupNotification;
 
 use GLib::GSList;
 

@@ -1,7 +1,7 @@
 use v6.c;
 
 use Mutter::Raw::Types;
-use Mutter::Meta::Raw::WaylandClient;
+use Mutter::Raw::Meta::WaylandClient;
 
 use GLib::Roles::Object;
 

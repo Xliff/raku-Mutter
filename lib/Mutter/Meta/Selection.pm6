@@ -1,7 +1,7 @@
 use v6.c;
 
-use Mutter::Meta::Raw::Types;
-use Mutter::Meta::Raw::Selection;
+use Mutter::Raw::Types;
+use Mutter::Raw::Meta::Selection;
 
 class Mutter::Meta::Selection {
   also does GLib::Roles::Object;

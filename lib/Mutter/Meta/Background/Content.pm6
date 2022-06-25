@@ -1,7 +1,7 @@
 use v6.c;
 
 use Mutter::Raw::Types;
-use Mutter::Meta::Raw::Background::Content;
+use Mutter::Raw::Meta::Background::Content;
 
 class Mutter::Meta::Background::Content {
   has MetaBackgroundContent $!mbc is implementor;

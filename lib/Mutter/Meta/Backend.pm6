@@ -1,7 +1,7 @@
 use v6.c;
 
 use Mutter::Raw::Types;
-use Mutter::Meta::Raw::Backend;
+use Mutter::Raw::Meta::Backend;
 
 class GLib::Roles::Object;
 

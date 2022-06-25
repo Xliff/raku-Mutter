@@ -3,7 +3,7 @@ use v6.c;
 use Method::Also;
 
 use Mutter::Raw::Types;
-use Mutter::Meta::Raw::Rectangle;
+use Mutter::Raw::Meta::Rectangle;
 
 class Mutter::Meta::Rectangle {
   has MetaRectangle $!mr is implementor;

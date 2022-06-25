@@ -1,7 +1,7 @@
 use v6.c;
 
-use Mutter::Meta::Raw::Types;
-use Mutter::Meta::Raw::Window::Shape;
+use Mutter::Raw::Types;
+use Mutter::Raw::Meta::Window::Shape;
 
 class Mutter::Window::Shape {
   has MetaWindowShape $!mws is implementor;

@@ -3,7 +3,7 @@ use v6.c;
 use Method::Also;
 
 use Mutter::Raw::Types;
-use Mutter::Meta::Raw::X11Display;
+use Mutter::Raw::Meta::X11Display;
 
 has GLib::Roles::Object;
 

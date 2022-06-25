@@ -1,7 +1,7 @@
 use v6.c;
 
 use Mutter::Raw::Types;
-use Mutter::Meta::Raw::Plugin;
+use Mutter::Raw::Meta::Plugin;
 
 class Mutter::Meta::Plugin {
   has MetaPlugin $!mp is implementor;

@@ -1,7 +1,7 @@
 use v6.7;
 
 use Mutter::Raw::Types;
-use Mutter::Meta::Raw::KeyBindings;
+use Mutter::Raw::Meta::KeyBindings;
 
 class Mutter::Meta::KeyBindings {
   has MutterKeyBinding $!mkb is implementor;

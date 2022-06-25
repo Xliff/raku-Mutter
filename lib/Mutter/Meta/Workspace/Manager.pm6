@@ -3,7 +3,7 @@ use v6.c;
 use Method::Also;
 
 use Mutter::Raw::Types;
-use Mutter::Meta::Raw::Workspace::Manager;
+use Mutter::Raw::Meta::Workspace::Manager;
 
 use GLib::Roles::Object;
 use GLib::Roles::Signals::Generic;
@@ -37,7 +37,7 @@ class Mutter::Meta::Workspace::Manager {
     self!setObject($to-parent);
   }
 
-  method Mutter::Meta::Raw::Definitions::MetaWorkspaceManager
+  method Mutter::Raw::Definitions::MetaWorkspaceManager
     is also<MetaWorkspaceManager>
   { $!gfc }
 
