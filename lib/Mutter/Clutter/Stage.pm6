@@ -17,7 +17,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
 
   has MutterClutterStage $!mcs is implementor;
 
-  method MutterClutter::Raw::Definitions::MutterClutterStage
+  method Mutter::Raw::Definitions::MutterClutterStage
     is also<MutterClutterStage>
   { $!mcs }
 

@@ -3,7 +3,7 @@ use v6.c;
 use NativeCall;
 
 use GLib::Raw::Definitions;
-use Meta::Raw::Definitions;
+use Mutter::Raw::Definitions;
 
 unit package Mutter::Raw::Meta::Rectangle;
 

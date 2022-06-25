@@ -4,7 +4,7 @@ use NativeCall;
 
 use GLib::Raw::Definitions;
 use GLib::Raw::Object;
-use GTK::Raw::Defintions;
+use GTK::Raw::Definitions;
 use GTK::Raw::Structs;
 use Mutter::Raw::Definitions;
 use Mutter::Raw::Enums;

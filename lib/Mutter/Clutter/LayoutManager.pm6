@@ -35,7 +35,7 @@ class Mutter::Clutter::LayoutManager {
     self!setObject($to-parent);
   }
 
-  method Clutter::Raw::Definitions::ClutterLayoutManager
+  method Mutter::Raw::Definitions::ClutterLayoutManager
     is also<ClutterLayoutManager>
   { $!clm }
 

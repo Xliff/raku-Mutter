@@ -3,7 +3,7 @@ use v6.c;
 use NativeCall;
 
 use GLib::Raw::Definitions;
-use Clutter::Raw::Definitions;
+use Mutter::Raw::Definitions;
 
 unit package Mutter::Raw::Clutter::Color;
 

@@ -18,7 +18,7 @@ class Mutter::Clutter::Effect is Mutter::Clutter::ActorMeta {
       if $mutter-clutter-effect
   }
 
-  method Clutter::Raw::Definitions::MutterClutterEffect
+  method Mutter::Raw::Definitions::MutterClutterEffect
     is also<MutterClutterEffect>
   { $!mce }
 

@@ -23,7 +23,7 @@ class Mutter::Clutter::Constraint {
       if $mutter-clutter-constraint;
   }
 
-  method Mutter::Clutter::Raw::Definitions::MutterClutterConstraint
+  method Mutter::Raw::Definitions::MutterClutterConstraint
     is also<MutterClutterConstraint>
   { $!mc-con }
 
