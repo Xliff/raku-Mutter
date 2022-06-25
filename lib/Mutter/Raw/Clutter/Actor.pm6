@@ -1,5 +1,7 @@
 use v6.c;
 
+use NativeCall;
+
 use GLib::Raw::Definitions;
 use Mutter::Raw::Definitions;
 
@@ -1374,7 +1376,7 @@ sub clutter_actor_get_type
 
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-action.h
 
-sub clutter_actor_add_action (ClutterActor $self, ClutterAction $action)
+sub clutter_actor_add_action (MutterClutterActor $self, ClutterAction $action)
   is native(mutter-clutter)
   is export
 { * }
@@ -1398,41 +1400,41 @@ sub clutter_actor_add_action_with_name (
   is export
 { * }
 
-sub clutter_actor_clear_actions (ClutterActor $self)
+sub clutter_actor_clear_actions (MutterClutterActor $self)
   is native(mutter-clutter)
   is export
 { * }
 
-sub clutter_action_get_phase (ClutterAction $action)
+sub clutter_action_get_phase (MutterClutterAction $action)
   returns ClutterEventPhase
   is native(mutter-clutter)
   is export
 { * }
 
-sub clutter_actor_get_action (ClutterActor $self, Str $name)
+sub clutter_actor_get_action (MutterClutterActor $self, Str $name)
   returns ClutterAction
   is native(mutter-clutter)
   is export
 { * }
 
-sub clutter_actor_get_actions (ClutterActor $self)
+sub clutter_actor_get_actions (MutterClutterActor $self)
   returns GList
   is native(mutter-clutter)
   is export
 { * }
 
-sub clutter_actor_has_actions (ClutterActor $self)
+sub clutter_actor_has_actions (MutterClutterActor $self)
   returns uint32
   is native(mutter-clutter)
   is export
 { * }
 
-sub clutter_actor_remove_action (ClutterActor $self, ClutterAction $action)
+sub clutter_actor_remove_action (MutterClutterActor $self, ClutterAction $action)
   is native(mutter-clutter)
   is export
 { * }
 
-sub clutter_actor_remove_action_by_name (ClutterActor $self, Str $name)
+sub clutter_actor_remove_action_by_name (MutterClutterActor $self, Str $name)
   is native(mutter-clutter)
   is export
 { * }
@@ -1456,24 +1458,24 @@ sub clutter_actor_add_constraint_with_name (
   is export
 { * }
 
-sub clutter_actor_clear_constraints (ClutterActor $self)
+sub clutter_actor_clear_constraints (MutterClutterActor $self)
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_get_constraint (ClutterActor $self, Str $name)
+sub clutter_actor_get_constraint (MutterClutterActor $self, Str $name)
   returns ClutterConstraint
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_get_constraints (ClutterActor $self)
+sub clutter_actor_get_constraints (MutterClutterActor $self)
   returns GList
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_has_constraints (ClutterActor $self)
+sub clutter_actor_has_constraints (MutterClutterActor $self)
   returns uint32
   is native(mutter)
   is export
@@ -1487,7 +1489,7 @@ sub clutter_actor_remove_constraint (
   is export
 { * }
 
-sub clutter_actor_remove_constraint_by_name (ClutterActor $self, Str $name)
+sub clutter_actor_remove_constraint_by_name (MutterClutterActor $self, Str $name)
   is native(mutter)
   is export
 { * }
@@ -1495,21 +1497,24 @@ sub clutter_actor_remove_constraint_by_name (ClutterActor $self, Str $name)
 
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-effect.h
 
-sub clutter_actor_add_effect (ClutterActor $self, ClutterEffect $effect)
-  is native(mutter)
-  is export
-{ * }
-
-sub clutter_actor_add_effect_with_name (
-  ClutterActor  $self, 
-  Str           $name,
-  ClutterEffect $effect
+sub clutter_actor_add_effect (
+  MutterClutterActor  $self,
+  MutterClutterEffect $effect
 )
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_clear_effects (ClutterActor $self)
+sub clutter_actor_add_effect_with_name (
+  MutterClutterActor  $self,
+  Str                 $name,
+  MutterClutterEffect $effect
+)
+  is native(mutter)
+  is export
+{ * }
+
+sub clutter_actor_clear_effects (MutterClutterActor $self)
   is native(mutter)
   is export
 { * }
@@ -1520,46 +1525,49 @@ sub clutter_effect_get_type ()
   is export
 { * }
 
-sub clutter_effect_queue_repaint (ClutterEffect $effect)
+sub clutter_effect_queue_repaint (MutterClutterEffect $effect)
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_get_effect (ClutterActor $self, Str $name)
-  returns ClutterEffect
+sub clutter_actor_get_effect (MutterClutterActor $self, Str $name)
+  returns MutterClutterEffect
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_get_effects (ClutterActor $self)
+sub clutter_actor_get_effects (MutterClutterActor $self)
   returns GList
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_has_effects (ClutterActor $self)
+sub clutter_actor_has_effects (MutterClutterActor $self)
   returns uint32
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_remove_effect (ClutterActor $self, ClutterEffect $effect)
+sub clutter_actor_remove_effect (
+  MutterClutterActor  $self,
+  MutterClutterEffect $effect
+)
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_remove_effect_by_name (ClutterActor $self, Str $name)
+sub clutter_actor_remove_effect_by_name (MutterClutterActor $self, Str $name)
   is native(mutter)
   is export
 { * }
 
 sub clutter_constraint_update_preferred_size (
-  ClutterConstraint  $constraint,
-  ClutterActor       $actor,
-  ClutterOrientation $direction,
-  gfloat             $for_size,
-  gfloat             $minimum_size is rw,
-  gfloat             $natural_size is rw
+  MutterClutterConstraint  $constraint,
+  MutterClutterActor       $actor,
+  MutterClutterOrientation $direction,
+  gfloat                   $for_size,
+  gfloat                   $minimum_size is rw,
+  gfloat                   $natural_size is rw
 )
   is native(mutter)
   is export
