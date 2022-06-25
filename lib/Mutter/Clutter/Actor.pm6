@@ -15,7 +15,7 @@ use Mutter::Clutter::Effect;
 use Mutter::Clutter::LayoutManager;
 use Mutter::Clutter::PaintVolume;
 #use Mutter::Clutter::Point;
-use Mutter::Clutter::Rect;
+# use Mutter::Clutter::Rect;
 #use Mutter::Clutter::Size;
 use Mutter::Clutter::Transition;
 #use Mutter::Clutter::Vertex;
@@ -537,19 +537,19 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: MutterClutterRect
-  method clip-rect is rw is also<clip_rect> {
-    my GLib::Value $gv .= new( Mutter::Clutter::Rect.get_type );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('clip-rect', $gv);
-        propReturnObject($gv.boxed, True, MutterClutterRect);
-      },
-      STORE => -> $, MutterClutterRect() $val is copy {
-        $gv.boxed = $val;
-        self.prop_set('clip-rect', $gv);
-      }
-    );
-  }
+  # method clip-rect is rw is also<clip_rect> {
+  #   my GLib::Value $gv .= new( Mutter::Clutter::Rect.get_type );
+  #   Proxy.new(
+  #     FETCH => sub ($) {
+  #       self.prop_get('clip-rect', $gv);
+  #       propReturnObject($gv.boxed, True, MutterClutterRect);
+  #     },
+  #     STORE => -> $, MutterClutterRect() $val is copy {
+  #       $gv.boxed = $val;
+  #       self.prop_set('clip-rect', $gv);
+  #     }
+  #   );
+  # }
 
   # Type: gboolean
   method clip-to-allocation is rw is also<clip_to_allocation> {
