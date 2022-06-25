@@ -9,7 +9,7 @@ use GLib::Roles::Object;
 # Boxed
 
 class Mutter::Clutter::Color {
-  also does GLib::Roles::Implementor;;
+  also does GLib::Roles::Implementor;
 
   has MutterClutterColor $!mcc is implementor
     handles <red green blue alpha gist raku>;
