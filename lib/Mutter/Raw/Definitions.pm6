@@ -6,6 +6,11 @@ use GLib::Raw::Definitions;
 
 unit package Mutter::Raw::Definitions;
 
+constant mutter            is export = 'mutter-10',v0;
+constant mutter-clutter    is export = 'mutter-clutter-10',v0;
+constant mutter-cogl       is export = 'mutter-cogl-10',v0;
+constant mutter-cogl-pango is export = 'mutter-cogl-pango-10',v0;
+
 # Meta
 
 class MetaBackend                is repr<CPointer> does GLib::Roles::Pointers is export { }
