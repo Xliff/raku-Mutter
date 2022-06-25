@@ -4,9 +4,9 @@ use NativeCall;
 
 use Mutter::Raw::Types;
 
-use GLib::AppContext;
+use GIO::LaunchContext;
 
-class Mutter::Meta::LaunchContext is GLib::AppContext {
+class Mutter::Meta::LaunchContext is GIO::LaunchContext {
   has MetaLaunchContext $!mlc is implementor;
 
   method set_timestamp (Int() $timestamp) {
