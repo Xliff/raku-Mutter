@@ -3,7 +3,6 @@ use v6.c;
 use Method::Also;
 
 use Mutter::Raw::Types;
-use Mutter::Meta::Raw::Types;
 
 use GLib::Roles::Object;
 
@@ -17,9 +16,9 @@ class Mutter::Meta::Context {
       new
     >
   {
-      my $meta-context = meta_create_context($!mc);
+    my $meta-context = meta_create_context($!mc);
 
-      $meta-context ?? self.bless( :$meta-context ) !! Nil;
+    $meta-context ?? self.bless( :$meta-context ) !! Nil;
   }
 
   method add_option_entries (
