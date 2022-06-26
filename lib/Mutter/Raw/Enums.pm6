@@ -87,9 +87,9 @@ our enum CoglBufferBindTargetEnum is export <
 
 constant CoglBufferBit is export := guint64;
 our enum CoglBufferBitEnum is export (
-  COGL_BUFFER_BIT_COLOR   => 1L+<0,
-  COGL_BUFFER_BIT_DEPTH   => 1L+<1,
-  COGL_BUFFER_BIT_STENCIL => 1L+<2,
+  COGL_BUFFER_BIT_COLOR   => 1 +< 0,
+  COGL_BUFFER_BIT_DEPTH   => 1 +< 1,
+  COGL_BUFFER_BIT_STENCIL => 1 +< 2,
 );
 
 constant CoglBufferError is export := guint32;
@@ -375,19 +375,6 @@ our enum CoglPipelineGetLayerFlagsEnum is export (
   COGL_PIPELINE_GET_LAYER_NO_CREATE => 1+<0,
 );
 
-constant CoglPipelineLayerState is export := guint32;
-our enum CoglPipelineLayerStateEnum is export (
-  COGL_PIPELINE_LAYER_STATE_UNIT                =>                1L+<COGL_PIPELINE_LAYER_STATE_UNIT_INDEX,
-  COGL_PIPELINE_LAYER_STATE_TEXTURE_DATA        =>        1L+<COGL_PIPELINE_LAYER_STATE_TEXTURE_DATA_INDEX,
-  COGL_PIPELINE_LAYER_STATE_SAMPLER             =>             1L+<COGL_PIPELINE_LAYER_STATE_SAMPLER_INDEX,
-  COGL_PIPELINE_LAYER_STATE_COMBINE             =>             1L+<COGL_PIPELINE_LAYER_STATE_COMBINE_INDEX,
-  COGL_PIPELINE_LAYER_STATE_COMBINE_CONSTANT    =>    1L+<COGL_PIPELINE_LAYER_STATE_COMBINE_CONSTANT_INDEX,
-  COGL_PIPELINE_LAYER_STATE_USER_MATRIX         =>         1L+<COGL_PIPELINE_LAYER_STATE_USER_MATRIX_INDEX,
-  COGL_PIPELINE_LAYER_STATE_POINT_SPRITE_COORDS => 1L+<COGL_PIPELINE_LAYER_STATE_POINT_SPRITE_COORDS_INDEX,
-  COGL_PIPELINE_LAYER_STATE_VERTEX_SNIPPETS     =>     1L+<COGL_PIPELINE_LAYER_STATE_VERTEX_SNIPPETS_INDEX,
-  COGL_PIPELINE_LAYER_STATE_FRAGMENT_SNIPPETS   =>   1L+<COGL_PIPELINE_LAYER_STATE_FRAGMENT_SNIPPETS_INDEX,
-);
-
 constant CoglPipelineLayerStateIndex is export := guint32;
 our enum CoglPipelineLayerStateIndexEnum is export (
   'COGL_PIPELINE_LAYER_STATE_UNIT_INDEX',
@@ -400,32 +387,26 @@ our enum CoglPipelineLayerStateIndexEnum is export (
   'COGL_PIPELINE_LAYER_STATE_VERTEX_SNIPPETS_INDEX',
   'COGL_PIPELINE_LAYER_STATE_FRAGMENT_SNIPPETS_INDEX',
   'COGL_PIPELINE_LAYER_STATE_SPARSE_COUNT',
-  COGL_PIPELINE_LAYER_STATE_COUNT                     => COGL_PIPELINE_LAYER_STATE_SPARSE_COUNT,
+  COGL_PIPELINE_LAYER_STATE_COUNT                     => 9,
+);
+
+constant CoglPipelineLayerState is export := guint32;
+our enum CoglPipelineLayerStateEnum is export (
+  COGL_PIPELINE_LAYER_STATE_UNIT                => 1 +< COGL_PIPELINE_LAYER_STATE_UNIT_INDEX,
+  COGL_PIPELINE_LAYER_STATE_TEXTURE_DATA        => 1 +< COGL_PIPELINE_LAYER_STATE_TEXTURE_DATA_INDEX,
+  COGL_PIPELINE_LAYER_STATE_SAMPLER             => 1 +< COGL_PIPELINE_LAYER_STATE_SAMPLER_INDEX,
+  COGL_PIPELINE_LAYER_STATE_COMBINE             => 1 +< COGL_PIPELINE_LAYER_STATE_COMBINE_INDEX,
+  COGL_PIPELINE_LAYER_STATE_COMBINE_CONSTANT    => 1 +< COGL_PIPELINE_LAYER_STATE_COMBINE_CONSTANT_INDEX,
+  COGL_PIPELINE_LAYER_STATE_USER_MATRIX         => 1 +< COGL_PIPELINE_LAYER_STATE_USER_MATRIX_INDEX,
+  COGL_PIPELINE_LAYER_STATE_POINT_SPRITE_COORDS => 1 +< COGL_PIPELINE_LAYER_STATE_POINT_SPRITE_COORDS_INDEX,
+  COGL_PIPELINE_LAYER_STATE_VERTEX_SNIPPETS     => 1 +< COGL_PIPELINE_LAYER_STATE_VERTEX_SNIPPETS_INDEX,
+  COGL_PIPELINE_LAYER_STATE_FRAGMENT_SNIPPETS   => 1 +< COGL_PIPELINE_LAYER_STATE_FRAGMENT_SNIPPETS_INDEX,
 );
 
 constant CoglPipelineLayerType is export := guint32;
 our enum CoglPipelineLayerTypeEnum is export <
   COGL_PIPELINE_LAYER_TYPE_TEXTURE
 >;
-
-constant CoglPipelineState is export := guint32;
-our enum CoglPipelineStateEnum is export (
-  COGL_PIPELINE_STATE_COLOR                 =>                 1L+<COGL_PIPELINE_STATE_COLOR_INDEX,
-  COGL_PIPELINE_STATE_LAYERS                =>                1L+<COGL_PIPELINE_STATE_LAYERS_INDEX,
-  COGL_PIPELINE_STATE_ALPHA_FUNC            =>            1L+<COGL_PIPELINE_STATE_ALPHA_FUNC_INDEX,
-  COGL_PIPELINE_STATE_ALPHA_FUNC_REFERENCE  =>  1L+<COGL_PIPELINE_STATE_ALPHA_FUNC_REFERENCE_INDEX,
-  COGL_PIPELINE_STATE_BLEND                 =>                 1L+<COGL_PIPELINE_STATE_BLEND_INDEX,
-  COGL_PIPELINE_STATE_USER_SHADER           =>           1L+<COGL_PIPELINE_STATE_USER_SHADER_INDEX,
-  COGL_PIPELINE_STATE_DEPTH                 =>                 1L+<COGL_PIPELINE_STATE_DEPTH_INDEX,
-  COGL_PIPELINE_STATE_NON_ZERO_POINT_SIZE   =>   1L+<COGL_PIPELINE_STATE_NON_ZERO_POINT_SIZE_INDEX,
-  COGL_PIPELINE_STATE_POINT_SIZE            =>            1L+<COGL_PIPELINE_STATE_POINT_SIZE_INDEX,
-  COGL_PIPELINE_STATE_PER_VERTEX_POINT_SIZE => 1L+<COGL_PIPELINE_STATE_PER_VERTEX_POINT_SIZE_INDEX,
-  COGL_PIPELINE_STATE_CULL_FACE             =>             1L+<COGL_PIPELINE_STATE_CULL_FACE_INDEX,
-  COGL_PIPELINE_STATE_UNIFORMS              =>              1L+<COGL_PIPELINE_STATE_UNIFORMS_INDEX,
-  COGL_PIPELINE_STATE_VERTEX_SNIPPETS       =>       1L+<COGL_PIPELINE_STATE_VERTEX_SNIPPETS_INDEX,
-  COGL_PIPELINE_STATE_FRAGMENT_SNIPPETS     =>     1L+<COGL_PIPELINE_STATE_FRAGMENT_SNIPPETS_INDEX,
-  COGL_PIPELINE_STATE_REAL_BLEND_ENABLE     =>     1L+<COGL_PIPELINE_STATE_REAL_BLEND_ENABLE_INDEX,
-);
 
 constant CoglPipelineStateIndex is export := guint32;
 our enum CoglPipelineStateIndexEnum is export <
@@ -447,24 +428,43 @@ our enum CoglPipelineStateIndexEnum is export <
   COGL_PIPELINE_STATE_COUNT
 >;
 
-constant CoglPollFDEvent is export := guint32;
-our enum CoglPollFDEventEnum is export (
-  COGL_POLL_FD_EVENT_IN   =>   COGL_SYSDEF_POLLIN,
-  COGL_POLL_FD_EVENT_PRI  =>  COGL_SYSDEF_POLLPRI,
-  COGL_POLL_FD_EVENT_OUT  =>  COGL_SYSDEF_POLLOUT,
-  COGL_POLL_FD_EVENT_ERR  =>  COGL_SYSDEF_POLLERR,
-  COGL_POLL_FD_EVENT_HUP  =>  COGL_SYSDEF_POLLHUP,
-  COGL_POLL_FD_EVENT_NVAL => COGL_SYSDEF_POLLNVAL,
+constant CoglPipelineState is export := guint32;
+our enum CoglPipelineStateEnum is export (
+  COGL_PIPELINE_STATE_COLOR                 => 1 +< COGL_PIPELINE_STATE_COLOR_INDEX,
+  COGL_PIPELINE_STATE_LAYERS                => 1 +< COGL_PIPELINE_STATE_LAYERS_INDEX,
+  COGL_PIPELINE_STATE_ALPHA_FUNC            => 1 +< COGL_PIPELINE_STATE_ALPHA_FUNC_INDEX,
+  COGL_PIPELINE_STATE_ALPHA_FUNC_REFERENCE  => 1 +< COGL_PIPELINE_STATE_ALPHA_FUNC_REFERENCE_INDEX,
+  COGL_PIPELINE_STATE_BLEND                 => 1 +< COGL_PIPELINE_STATE_BLEND_INDEX,
+  COGL_PIPELINE_STATE_USER_SHADER           => 1 +< COGL_PIPELINE_STATE_USER_SHADER_INDEX,
+  COGL_PIPELINE_STATE_DEPTH                 => 1 +< COGL_PIPELINE_STATE_DEPTH_INDEX,
+  COGL_PIPELINE_STATE_NON_ZERO_POINT_SIZE   => 1 +< COGL_PIPELINE_STATE_NON_ZERO_POINT_SIZE_INDEX,
+  COGL_PIPELINE_STATE_POINT_SIZE            => 1 +< COGL_PIPELINE_STATE_POINT_SIZE_INDEX,
+  COGL_PIPELINE_STATE_PER_VERTEX_POINT_SIZE => 1 +< COGL_PIPELINE_STATE_PER_VERTEX_POINT_SIZE_INDEX,
+  COGL_PIPELINE_STATE_CULL_FACE             => 1 +< COGL_PIPELINE_STATE_CULL_FACE_INDEX,
+  COGL_PIPELINE_STATE_UNIFORMS              => 1 +< COGL_PIPELINE_STATE_UNIFORMS_INDEX,
+  COGL_PIPELINE_STATE_VERTEX_SNIPPETS       => 1 +< COGL_PIPELINE_STATE_VERTEX_SNIPPETS_INDEX,
+  COGL_PIPELINE_STATE_FRAGMENT_SNIPPETS     => 1 +< COGL_PIPELINE_STATE_FRAGMENT_SNIPPETS_INDEX,
+  COGL_PIPELINE_STATE_REAL_BLEND_ENABLE     => 1 +< COGL_PIPELINE_STATE_REAL_BLEND_ENABLE_INDEX,
 );
+
+# constant CoglPollFDEvent is export := guint32;
+# our enum CoglPollFDEventEnum is export (
+#   COGL_POLL_FD_EVENT_IN   =>   COGL_SYSDEF_POLLIN,
+#   COGL_POLL_FD_EVENT_PRI  =>  COGL_SYSDEF_POLLPRI,
+#   COGL_POLL_FD_EVENT_OUT  =>  COGL_SYSDEF_POLLOUT,
+#   COGL_POLL_FD_EVENT_ERR  =>  COGL_SYSDEF_POLLERR,
+#   COGL_POLL_FD_EVENT_HUP  =>  COGL_SYSDEF_POLLHUP,
+#   COGL_POLL_FD_EVENT_NVAL => COGL_SYSDEF_POLLNVAL,
+# );
 
 constant CoglPrivateReadPixelsFlags is export := guint64;
 our enum CoglPrivateReadPixelsFlagsEnum is export (
-  COGL_READ_PIXELS_NO_FLIP => 1L +< 30,
+  COGL_READ_PIXELS_NO_FLIP => 1  +< 30,
 );
 
 constant CoglReadPixelsFlags is export := guint64;
 our enum CoglReadPixelsFlagsEnum is export (
-  COGL_READ_PIXELS_COLOR_BUFFER => 1L +< 0,
+  COGL_READ_PIXELS_COLOR_BUFFER => 1  +< 0,
 );
 
 constant CoglRendererError is export := guint32;
@@ -473,14 +473,14 @@ our enum CoglRendererErrorEnum is export <
   COGL_RENDERER_ERROR_BAD_CONSTRAINT
 >;
 
-constant CoglSamplerCacheWrapMode is export := guint32;
-our enum CoglSamplerCacheWrapModeEnum is export (
-  COGL_SAMPLER_CACHE_WRAP_MODE_REPEAT          =>          GL_REPEAT,
-  COGL_SAMPLER_CACHE_WRAP_MODE_MIRRORED_REPEAT => GL_MIRRORED_REPEAT,
-  COGL_SAMPLER_CACHE_WRAP_MODE_CLAMP_TO_EDGE   =>   GL_CLAMP_TO_EDGE,
-  COGL_SAMPLER_CACHE_WRAP_MODE_CLAMP_TO_BORDER => GL_CLAMP_TO_BORDER,
-  COGL_SAMPLER_CACHE_WRAP_MODE_AUTOMATIC       =>          GL_ALWAYS,
-);
+# constant CoglSamplerCacheWrapMode is export := guint32;
+# our enum CoglSamplerCacheWrapModeEnum is export (
+#   COGL_SAMPLER_CACHE_WRAP_MODE_REPEAT          =>          GL_REPEAT,
+#   COGL_SAMPLER_CACHE_WRAP_MODE_MIRRORED_REPEAT => GL_MIRRORED_REPEAT,
+#   COGL_SAMPLER_CACHE_WRAP_MODE_CLAMP_TO_EDGE   =>   GL_CLAMP_TO_EDGE,
+#   COGL_SAMPLER_CACHE_WRAP_MODE_CLAMP_TO_BORDER => GL_CLAMP_TO_BORDER,
+#   COGL_SAMPLER_CACHE_WRAP_MODE_AUTOMATIC       =>          GL_ALWAYS,
+# );
 
 constant CoglScanoutError is export := guint32;
 our enum CoglScanoutErrorEnum is export <
@@ -781,6 +781,14 @@ our enum MutterClutterContentGravityEnum is export <
   CLUTTER_CONTENT_GRAVITY_RESIZE_FILL
   CLUTTER_CONTENT_GRAVITY_RESIZE_ASPECT
 >;
+
+constant MutterClutterContentRepeat is export := guint32;
+our enum MutterClutterContentRepeatEnum is export (
+  CLUTTER_REPEAT_NONE   => 0,
+  CLUTTER_REPEAT_X_AXIS => 1 +< 0,
+  CLUTTER_REPEAT_Y_AXIS => 1 +< 1,
+  CLUTTER_REPEAT_BOTH   => 1 +< 0 +| 1 +< 1
+);
 
 constant MutterClutterDebugFlag is export := guint32;
 our enum MutterClutterDebugFlagEnum is export (
@@ -1202,6 +1210,55 @@ our enum MutterClutterScrollSourceEnum is export <
   CLUTTER_SCROLL_SOURCE_CONTINUOUS
 >;
 
+constant MutterClutterStaticColor is export := guint32;
+our enum MutterClutterStaticColorEnum is export (
+  CLUTTER_COLOR_WHITE           => 0,
+  'CLUTTER_COLOR_BLACK',
+  'CLUTTER_COLOR_RED',
+  'CLUTTER_COLOR_DARK_RED',
+  'CLUTTER_COLOR_GREEN',
+  'CLUTTER_COLOR_DARK_GREEN',
+  'CLUTTER_COLOR_BLUE',
+  'CLUTTER_COLOR_DARK_BLUE',
+  'CLUTTER_COLOR_CYAN',
+  'CLUTTER_COLOR_DARK_CYAN',
+  'CLUTTER_COLOR_MAGENTA',
+  'CLUTTER_COLOR_DARK_MAGENTA',
+  'CLUTTER_COLOR_YELLOW',
+  'CLUTTER_COLOR_DARK_YELLOW',
+  'CLUTTER_COLOR_GRAY',
+  'CLUTTER_COLOR_DARK_GRAY',
+  'CLUTTER_COLOR_LIGHT_GRAY',
+  'CLUTTER_COLOR_BUTTER',
+  'CLUTTER_COLOR_BUTTER_LIGHT',
+  'CLUTTER_COLOR_BUTTER_DARK',
+  'CLUTTER_COLOR_ORANGE',
+  'CLUTTER_COLOR_ORANGE_LIGHT',
+  'CLUTTER_COLOR_ORANGE_DARK',
+  'CLUTTER_COLOR_CHOCOLATE',
+  'CLUTTER_COLOR_CHOCOLATE_LIGHT',
+  'CLUTTER_COLOR_CHOCOLATE_DARK',
+  'CLUTTER_COLOR_CHAMELEON',
+  'CLUTTER_COLOR_CHAMELEON_LIGHT',
+  'CLUTTER_COLOR_CHAMELEON_DARK',
+  'CLUTTER_COLOR_SKY_BLUE',
+  'CLUTTER_COLOR_SKY_BLUE_LIGHT',
+  'CLUTTER_COLOR_SKY_BLUE_DARK',
+  'CLUTTER_COLOR_PLUM',
+  'CLUTTER_COLOR_PLUM_LIGHT',
+  'CLUTTER_COLOR_PLUM_DARK',
+  'CLUTTER_COLOR_SCARLET_RED',
+  'CLUTTER_COLOR_SCARLET_RED_LIGHT',
+  'CLUTTER_COLOR_SCARLET_RED_DARK',
+  'CLUTTER_COLOR_ALUMINIUM_1',
+  'CLUTTER_COLOR_ALUMINIUM_2',
+  'CLUTTER_COLOR_ALUMINIUM_3',
+  'CLUTTER_COLOR_ALUMINIUM_4',
+  'CLUTTER_COLOR_ALUMINIUM_5',
+  'CLUTTER_COLOR_ALUMINIUM_6',
+  'CLUTTER_COLOR_TRANSPARENT'
+);
+
 constant MutterClutterShaderType is export := guint32;
 our enum MutterClutterShaderTypeEnum is export <
   CLUTTER_VERTEX_SHADER
@@ -1274,289 +1331,6 @@ our enum MutterClutterVirtualDeviceTypeEnum is export (
   CLUTTER_VIRTUAL_DEVICE_TYPE_POINTER     => 1 +< 1,
   CLUTTER_VIRTUAL_DEVICE_TYPE_TOUCHSCREEN => 1 +< 2,
 );
-
-constant CoglAttributeType is export := guint32;
-our enum CoglAttributeTypeEnum is export (
-  COGL_ATTRIBUTE_TYPE_BYTE           => 0x1400,
-  COGL_ATTRIBUTE_TYPE_UNSIGNED_BYTE  => 0x1401,
-  COGL_ATTRIBUTE_TYPE_SHORT          => 0x1402,
-  COGL_ATTRIBUTE_TYPE_UNSIGNED_SHORT => 0x1403,
-  COGL_ATTRIBUTE_TYPE_FLOAT          => 0x1406,
-);
-
-constant CoglBitmapError is export := guint32;
-our enum CoglBitmapErrorEnum is export <
-  COGL_BITMAP_ERROR_FAILED
-  COGL_BITMAP_ERROR_UNKNOWN_TYPE
-  COGL_BITMAP_ERROR_CORRUPT_IMAGE
->;
-
-constant CoglBlendStringError is export := guint32;
-our enum CoglBlendStringErrorEnum is export <
-  COGL_BLEND_STRING_ERROR_PARSE_ERROR
-  COGL_BLEND_STRING_ERROR_ARGUMENT_PARSE_ERROR
-  COGL_BLEND_STRING_ERROR_INVALID_ERROR
-  COGL_BLEND_STRING_ERROR_GPU_UNSUPPORTED_ERROR
->;
-
-constant CoglBufferBit is export := guint64;
-our enum CoglBufferBitEnum is export (
-  COGL_BUFFER_BIT_COLOR   => 1 +< 0,
-  COGL_BUFFER_BIT_DEPTH   => 1 +< 1,
-  COGL_BUFFER_BIT_STENCIL => 1 +< 2,
-);
-
-constant CoglBufferError is export := guint32;
-our enum CoglBufferErrorEnum is export <
-  COGL_BUFFER_ERROR_MAP
->;
-
-constant CoglBufferMapHint is export := guint32;
-our enum CoglBufferMapHintEnum is export (
-  COGL_BUFFER_MAP_HINT_DISCARD       => 1 +< 0,
-  COGL_BUFFER_MAP_HINT_DISCARD_RANGE => 1 +< 1,
-);
-
-constant CoglBufferTarget is export := guint32;
-our enum CoglBufferTargetEnum is export (
-  COGL_WINDOW_BUFFER    => (1 +< 1),
-  COGL_OFFSCREEN_BUFFER => (1 +< 2),
-);
-
-constant CoglBufferUpdateHint is export := guint32;
-our enum CoglBufferUpdateHintEnum is export <
-  COGL_BUFFER_UPDATE_HINT_STATIC
-  COGL_BUFFER_UPDATE_HINT_DYNAMIC
-  COGL_BUFFER_UPDATE_HINT_STREAM
->;
-
-constant CoglDepthTestFunction is export := guint32;
-our enum CoglDepthTestFunctionEnum is export (
-  COGL_DEPTH_TEST_FUNCTION_NEVER    => 0x0200,
-  COGL_DEPTH_TEST_FUNCTION_LESS     => 0x0201,
-  COGL_DEPTH_TEST_FUNCTION_EQUAL    => 0x0202,
-  COGL_DEPTH_TEST_FUNCTION_LEQUAL   => 0x0203,
-  COGL_DEPTH_TEST_FUNCTION_GREATER  => 0x0204,
-  COGL_DEPTH_TEST_FUNCTION_NOTEQUAL => 0x0205,
-  COGL_DEPTH_TEST_FUNCTION_GEQUAL   => 0x0206,
-  COGL_DEPTH_TEST_FUNCTION_ALWAYS   => 0x0207,
-);
-
-constant CoglEglImageFlags is export := guint32;
-our enum CoglEglImageFlagsEnum is export (
-  COGL_EGL_IMAGE_FLAG_NONE        =>      0,
-  COGL_EGL_IMAGE_FLAG_NO_GET_DATA => 1 +< 0,
-);
-
-constant CoglFeatureID is export := guint32;
-our enum CoglFeatureIDEnum is export <
-  COGL_FEATURE_ID_UNSIGNED_INT_INDICES
-  COGL_FEATURE_ID_MAP_BUFFER_FOR_READ
-  COGL_FEATURE_ID_MAP_BUFFER_FOR_WRITE
-  COGL_FEATURE_ID_FENCE
-  COGL_FEATURE_ID_TEXTURE_RG
-  COGL_FEATURE_ID_BUFFER_AGE
-  COGL_FEATURE_ID_TEXTURE_EGL_IMAGE_EXTERNAL
-  COGL_FEATURE_ID_BLIT_FRAMEBUFFER
-  COGL_FEATURE_ID_TIMESTAMP_QUERY
-  COGL_N_FEATURE_IDS
->;
-
-constant CoglFilterReturn is export := guint32;
-our enum CoglFilterReturnEnum is export <
-  COGL_FILTER_CONTINUE
-  COGL_FILTER_REMOVE
->;
-
-constant CoglFrameEvent is export := guint32;
-our enum CoglFrameEventEnum is export (
-  COGL_FRAME_EVENT_SYNC     => 1,
-  'COGL_FRAME_EVENT_COMPLETE'
-);
-
-constant CoglFramebufferError is export := guint32;
-our enum CoglFramebufferErrorEnum is export <
-  COGL_FRAMEBUFFER_ERROR_ALLOCATE
->;
-
-constant CoglGraphicsResetStatus is export := guint32;
-our enum CoglGraphicsResetStatusEnum is export <
-  COGL_GRAPHICS_RESET_STATUS_NO_ERROR
-  COGL_GRAPHICS_RESET_STATUS_GUILTY_CONTEXT_RESET
-  COGL_GRAPHICS_RESET_STATUS_INNOCENT_CONTEXT_RESET
-  COGL_GRAPHICS_RESET_STATUS_UNKNOWN_CONTEXT_RESET
-  COGL_GRAPHICS_RESET_STATUS_PURGED_CONTEXT_RESET
->;
-
-constant CoglIndicesType is export := guint32;
-our enum CoglIndicesTypeEnum is export <
-  COGL_INDICES_TYPE_UNSIGNED_BYTE
-  COGL_INDICES_TYPE_UNSIGNED_SHORT
-  COGL_INDICES_TYPE_UNSIGNED_INT
->;
-
-constant CoglPipelineAlphaFunc is export := guint32;
-our enum CoglPipelineAlphaFuncEnum is export (
-  COGL_PIPELINE_ALPHA_FUNC_NEVER    => 0x0200,
-  COGL_PIPELINE_ALPHA_FUNC_LESS     => 0x0201,
-  COGL_PIPELINE_ALPHA_FUNC_EQUAL    => 0x0202,
-  COGL_PIPELINE_ALPHA_FUNC_LEQUAL   => 0x0203,
-  COGL_PIPELINE_ALPHA_FUNC_GREATER  => 0x0204,
-  COGL_PIPELINE_ALPHA_FUNC_NOTEQUAL => 0x0205,
-  COGL_PIPELINE_ALPHA_FUNC_GEQUAL   => 0x0206,
-  COGL_PIPELINE_ALPHA_FUNC_ALWAYS   => 0x0207,
-);
-
-constant CoglPipelineCullFaceMode is export := guint32;
-our enum CoglPipelineCullFaceModeEnum is export <
-  COGL_PIPELINE_CULL_FACE_MODE_NONE
-  COGL_PIPELINE_CULL_FACE_MODE_FRONT
-  COGL_PIPELINE_CULL_FACE_MODE_BACK
-  COGL_PIPELINE_CULL_FACE_MODE_BOTH
->;
-
-constant CoglPipelineFilter is export := guint32;
-our enum CoglPipelineFilterEnum is export (
-  COGL_PIPELINE_FILTER_NEAREST                => 0x2600,
-  COGL_PIPELINE_FILTER_LINEAR                 => 0x2601,
-  COGL_PIPELINE_FILTER_NEAREST_MIPMAP_NEAREST => 0x2700,
-  COGL_PIPELINE_FILTER_LINEAR_MIPMAP_NEAREST  => 0x2701,
-  COGL_PIPELINE_FILTER_NEAREST_MIPMAP_LINEAR  => 0x2702,
-  COGL_PIPELINE_FILTER_LINEAR_MIPMAP_LINEAR   => 0x2703,
-);
-
-constant CoglPollFDEvent is export := guint32;
-our enum CoglPollFDEventEnum is export (
-  COGL_POLL_FD_EVENT_IN   => COGL_SYSDEF_POLLIN,
-  COGL_POLL_FD_EVENT_PRI  => COGL_SYSDEF_POLLPRI,
-  COGL_POLL_FD_EVENT_OUT  => COGL_SYSDEF_POLLOUT,
-  COGL_POLL_FD_EVENT_ERR  => COGL_SYSDEF_POLLERR,
-  COGL_POLL_FD_EVENT_HUP  => COGL_SYSDEF_POLLHUP,
-  COGL_POLL_FD_EVENT_NVAL => COGL_SYSDEF_POLLNVAL,
-);
-
-constant CoglReadPixelsFlags is export := guint64;
-our enum CoglReadPixelsFlagsEnum is export (
-  COGL_READ_PIXELS_COLOR_BUFFER => 1 +< 0,
-);
-
-constant CoglRendererError is export := guint32;
-our enum CoglRendererErrorEnum is export <
-  COGL_RENDERER_ERROR_XLIB_DISPLAY_OPEN
-  COGL_RENDERER_ERROR_BAD_CONSTRAINT
->;
-
-constant CoglScanoutError is export := guint32;
-our enum CoglScanoutErrorEnum is export <
-  COGL_SCANOUT_ERROR_INHIBITED
->;
-
-constant CoglShaderType is export := guint32;
-our enum CoglShaderTypeEnum is export <
-  COGL_SHADER_TYPE_VERTEX
-  COGL_SHADER_TYPE_FRAGMENT
->;
-
-constant CoglSnippetHook is export := guint32;
-our enum CoglSnippetHookEnum is export (
-  COGL_SNIPPET_HOOK_VERTEX                  =>    0,
-  'COGL_SNIPPET_HOOK_VERTEX_TRANSFORM',
-  'COGL_SNIPPET_HOOK_VERTEX_GLOBALS',
-  'COGL_SNIPPET_HOOK_POINT_SIZE',
-  COGL_SNIPPET_HOOK_FRAGMENT                => 2048,
-  'COGL_SNIPPET_HOOK_FRAGMENT_GLOBALS',
-  COGL_SNIPPET_HOOK_TEXTURE_COORD_TRANSFORM => 4096,
-  COGL_SNIPPET_HOOK_LAYER_FRAGMENT          => 6144,
-  'COGL_SNIPPET_HOOK_TEXTURE_LOOKUP'
-);
-
-constant CoglStereoMode is export := guint32;
-our enum CoglStereoModeEnum is export <
-  COGL_STEREO_BOTH
-  COGL_STEREO_LEFT
-  COGL_STEREO_RIGHT
->;
-
-constant CoglSubpixelOrder is export := guint32;
-our enum CoglSubpixelOrderEnum is export <
-  COGL_SUBPIXEL_ORDER_UNKNOWN
-  COGL_SUBPIXEL_ORDER_NONE
-  COGL_SUBPIXEL_ORDER_HORIZONTAL_RGB
-  COGL_SUBPIXEL_ORDER_HORIZONTAL_BGR
-  COGL_SUBPIXEL_ORDER_VERTICAL_RGB
-  COGL_SUBPIXEL_ORDER_VERTICAL_BGR
->;
-
-constant CoglSystemError is export := guint32;
-our enum CoglSystemErrorEnum is export <
-  COGL_SYSTEM_ERROR_UNSUPPORTED
-  COGL_SYSTEM_ERROR_NO_MEMORY
->;
-
-constant CoglTextureComponents is export := guint32;
-our enum CoglTextureComponentsEnum is export (
-  COGL_TEXTURE_COMPONENTS_A     => 1,
-  'COGL_TEXTURE_COMPONENTS_RG',
-  'COGL_TEXTURE_COMPONENTS_RGB',
-  'COGL_TEXTURE_COMPONENTS_RGBA',
-  'COGL_TEXTURE_COMPONENTS_DEPTH'
-);
-
-constant CoglTextureError is export := guint32;
-our enum CoglTextureErrorEnum is export <
-  COGL_TEXTURE_ERROR_SIZE
-  COGL_TEXTURE_ERROR_FORMAT
-  COGL_TEXTURE_ERROR_BAD_PARAMETER
-  COGL_TEXTURE_ERROR_TYPE
->;
-
-constant CoglTextureFlags is export := guint32;
-our enum CoglTextureFlagsEnum is export (
-  COGL_TEXTURE_NONE           =>      0,
-  COGL_TEXTURE_NO_AUTO_MIPMAP => 1 +< 0,
-  COGL_TEXTURE_NO_SLICING     => 1 +< 1,
-  COGL_TEXTURE_NO_ATLAS       => 1 +< 2,
-);
-
-constant CoglVerticesMode is export := guint32;
-our enum CoglVerticesModeEnum is export (
-  COGL_VERTICES_MODE_POINTS         => 0x0000,
-  COGL_VERTICES_MODE_LINES          => 0x0001,
-  COGL_VERTICES_MODE_LINE_LOOP      => 0x0002,
-  COGL_VERTICES_MODE_LINE_STRIP     => 0x0003,
-  COGL_VERTICES_MODE_TRIANGLES      => 0x0004,
-  COGL_VERTICES_MODE_TRIANGLE_STRIP => 0x0005,
-  COGL_VERTICES_MODE_TRIANGLE_FAN   => 0x0006,
-);
-
-constant CoglWinding is export := guint32;
-our enum CoglWindingEnum is export <
-  COGL_WINDING_CLOCKWISE
-  COGL_WINDING_COUNTER_CLOCKWISE
->;
-
-constant CoglWinsysFeature is export := guint32;
-our enum CoglWinsysFeatureEnum is export <
-  COGL_WINSYS_FEATURE_VBLANK_COUNTER
-  COGL_WINSYS_FEATURE_VBLANK_WAIT
-  COGL_WINSYS_FEATURE_TEXTURE_FROM_PIXMAP
-  COGL_WINSYS_FEATURE_SWAP_BUFFERS_EVENT
-  COGL_WINSYS_FEATURE_SWAP_REGION
-  COGL_WINSYS_FEATURE_SWAP_REGION_THROTTLE
-  COGL_WINSYS_FEATURE_SWAP_REGION_SYNCHRONIZED
-  COGL_WINSYS_FEATURE_BUFFER_AGE
-  COGL_WINSYS_FEATURE_SYNC_AND_COMPLETE_EVENT
-  COGL_WINSYS_FEATURE_N_FEATURES
->;
-
-constant CoglWinsysID is export := guint32;
-our enum CoglWinsysIDEnum is export <
-  COGL_WINSYS_ID_ANY
-  COGL_WINSYS_ID_STUB
-  COGL_WINSYS_ID_GLX
-  COGL_WINSYS_ID_EGL_XLIB
-  COGL_WINSYS_ID_CUSTOM
->;
 
 constant MetaBarrierDirection is export := guint32;
 our enum MetaBarrierDirectionEnum is export (
@@ -1842,6 +1616,18 @@ our enum MetaShadowModeEnum is export <
   META_SHADOW_MODE_FORCED_OFF
   META_SHADOW_MODE_FORCED_ON
 >;
+
+constant MetaDirection is export := guint32;
+our enum MetaDirectionEnum is export (
+  META_DIRECTION_LEFT       => 1 +< 0,
+  META_DIRECTION_RIGHT      => 1 +< 1,
+  META_DIRECTION_TOP        => 1 +< 2,
+  META_DIRECTION_BOTTOM     => 1 +< 3,
+  META_DIRECTION_UP         => 1 +< 2,
+  META_DIRECTION_DOWN       => 1 +< 3,
+  META_DIRECTION_HORIZONTAL => 1 +< 0 +| 1 +< 1,
+  META_DIRECTION_VERTICAL   => 1 +< 2 +| 1 +< 3,
+);
 
 constant MetaSide is export := guint32;
 our enum MetaSideEnum is export (
