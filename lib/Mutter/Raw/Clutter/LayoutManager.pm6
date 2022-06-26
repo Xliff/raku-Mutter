@@ -1,6 +1,9 @@
 use v6.c;
 
+use NativeCall;
+
 use GLib::Raw::Definitions;
+use GLib::Raw::Structs;
 use Mutter::Raw::Definitions;
 
 unit package Mutter::Raw::Clutter::LayoutManager;
@@ -8,58 +11,59 @@ unit package Mutter::Raw::Clutter::LayoutManager;
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-layout-manager.h
 
 sub clutter_layout_manager_allocate (
-  ClutterLayoutManager $manager,
-  ClutterContainer     $container,
-  ClutterActorBox      $allocation
+  MutterClutterLayoutManager $manager,
+  MutterClutterContainer     $container,
+  MutterClutterActorBox      $allocation
 )
   is native(mutter)
   is export
 { * }
 
 sub clutter_layout_manager_child_get (
-  ClutterLayoutManager $manager,
-  ClutterContainer     $container,
-  ClutterActor         $actor,
-  Str                  $first_property
+  MutterClutterLayoutManager $manager,
+  MutterClutterContainer     $container,
+  MutterClutterActor         $actor,
+  Str                        $first_property
 )
   is native(mutter)
   is export
 { * }
 
 sub clutter_layout_manager_child_get_property (
-  ClutterLayoutManager $manager,
-  ClutterContainer     $container,
-  ClutterActor         $actor,
-  Str                  $property_name,
-  GValue               $value
+  MutterClutterLayoutManager $manager,
+  MutterClutterContainer     $container,
+  MutterClutterActor         $actor,
+  Str                        $property_name,
+  GValue                     $value
 )
   is native(mutter)
   is export
 { * }
 
 sub clutter_layout_manager_child_set (
-  ClutterLayoutManager $manager,
-  ClutterContainer     $container,
-  ClutterActor         $actor,
-  Str                  $first_property)
+  MutterClutterLayoutManager $manager,
+  MutterClutterContainer     $container,
+  MutterClutterActor         $actor,
+  Str                        $first_property
+)
   is native(mutter)
   is export
 { * }
 
 sub clutter_layout_manager_child_set_property (
-  ClutterLayoutManager $manager,
-  ClutterContainer     $container,
-  ClutterActor         $actor,
-  Str                  $property_name,
-  GValue               $value
+  MutterClutterLayoutManager $manager,
+  MutterClutterContainer     $container,
+  MutterClutterActor         $actor,
+  Str                        $property_name,
+  GValue                     $value
 )
   is native(mutter)
   is export
 { * }
 
 sub clutter_layout_manager_find_child_property (
-  ClutterLayoutManager $manager,
-  Str                  $name
+  MutterClutterLayoutManager $manager,
+  Str                        $name
 )
   returns GParamSpec
   is native(mutter)
@@ -67,32 +71,32 @@ sub clutter_layout_manager_find_child_property (
 { * }
 
 sub clutter_layout_manager_get_child_meta (
-  ClutterLayoutManager $manager,
-  ClutterContainer     $container,
-  ClutterActor         $actor
+  MutterClutterLayoutManager $manager,
+  MutterClutterContainer     $container,
+  MutterClutterActor         $actor
 )
-  returns ClutterLayoutMeta
+  returns MutterClutterLayoutMeta
   is native(mutter)
   is export
 { * }
 
 sub clutter_layout_manager_get_preferred_height (
-  ClutterLayoutManager $manager,
-  ClutterContainer     $container,
-  gfloat               $for_width,
-  gfloat               $min_height_p is rw,
-  gfloat               $nat_height_p is rw
+  MutterClutterLayoutManager $manager,
+  MutterClutterContainer     $container,
+  gfloat                     $for_width,
+  gfloat                     $min_height_p is rw,
+  gfloat                     $nat_height_p is rw
 )
   is native(mutter)
   is export
 { * }
 
 sub clutter_layout_manager_get_preferred_width (
-  ClutterLayoutManager $manager,
-  ClutterContainer     $container,
-  gfloat               $for_height,
-  gfloat               $min_width_p is rw,
-  gfloat               $nat_width_p is rw
+  MutterClutterLayoutManager $manager,
+  MutterClutterContainer     $container,
+  gfloat                     $for_height,
+  gfloat                     $min_width_p is rw,
+  gfloat                     $nat_width_p is rw
 )
   is native(mutter)
   is export
@@ -104,14 +108,16 @@ sub clutter_layout_manager_get_type ()
   is export
 { * }
 
-sub clutter_layout_manager_layout_changed (ClutterLayoutManager $manager)
+sub clutter_layout_manager_layout_changed (
+  MutterClutterLayoutManager $manager
+)
   is native(mutter)
   is export
 { * }
 
 sub clutter_layout_manager_list_child_properties (
-  ClutterLayoutManager $manager,
-  guint                $n_pspecs is rw
+  MutterClutterLayoutManager $manager,
+  guint                      $n_pspecs is rw
 )
   returns CArray[CArray[GParamSpec]]
   is native(mutter)
@@ -119,8 +125,8 @@ sub clutter_layout_manager_list_child_properties (
 { * }
 
 sub clutter_layout_manager_set_container (
-  ClutterLayoutManager $manager,
-  ClutterContainer     $container
+  MutterClutterLayoutManager $manager,
+  MutterClutterContainer     $container
 )
   is native(mutter)
   is export
