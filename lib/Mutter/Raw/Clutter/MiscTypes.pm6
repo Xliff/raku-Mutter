@@ -3,79 +3,90 @@ use v6.c;
 use NativeCall;
 
 use GLib::Raw::Definitions;
+use GLib::Raw::Structs;
+use Graphene::Raw::Definitions;
 use Mutter::Raw::Definitions;
 
 unit package Mutter::Raw::Clutter::MiscTypes;
 
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-types.h
 
+#: ClutterProgressFunc (GValue, GValue, gdouble, GValue --> gboolean);
+
 sub clutter_actor_box_alloc ()
-  returns ClutterActorBox
+  returns MutterClutterActorBox
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_box_clamp_to_pixel (ClutterActorBox $box)
+sub clutter_actor_box_clamp_to_pixel (MutterClutterActorBox $box)
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_box_contains (ClutterActorBox $box, gfloat $x, gfloat $y)
+sub clutter_actor_box_contains (
+  MutterClutterActorBox $box,
+  gfloat                $x,
+  gfloat                $y
+)
   returns uint32
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_box_copy (ClutterActorBox $box)
-  returns ClutterActorBox
+sub clutter_actor_box_copy (MutterClutterActorBox $box)
+  returns MutterClutterActorBox
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_box_equal (ClutterActorBox $box_a, ClutterActorBox $box_b)
+sub clutter_actor_box_equal (
+  MutterClutterActorBox $box_a,
+  MutterClutterActorBox $box_b
+)
   returns uint32
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_box_free (ClutterActorBox $box)
+sub clutter_actor_box_free (MutterClutterActorBox $box)
   is native(mutter)
   is export
 { * }
 
 sub clutter_actor_box_from_vertices (
-  ClutterActorBox    $box,
-  graphene_point3d_t $verts
+  MutterClutterActorBox    $box,
+  graphene_point3d_t       $verts
 )
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_box_get_area (ClutterActorBox $box)
+sub clutter_actor_box_get_area (MutterClutterActorBox $box)
   returns gfloat
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_box_get_height (ClutterActorBox $box)
+sub clutter_actor_box_get_height (MutterClutterActorBox $box)
   returns gfloat
   is native(mutter)
   is export
 { * }
 
 sub clutter_actor_box_get_origin (
-  ClutterActorBox $box,
-  gfloat          $x    is rw,
-  gfloat          $y    is rw
+  MutterClutterActorBox $box,
+  gfloat                $x    is rw,
+  gfloat                $y    is rw
 )
   is native(mutter)
   is export
 { * }
 
 sub clutter_actor_box_get_size (
-  ClutterActorBox $box,
-  gfloat          $width is rw,
-  gfloat          $height is rw
+  MutterClutterActorBox $box,
+  gfloat                $width  is rw,
+  gfloat                $height is rw
 )
   is native(mutter)
   is export
@@ -87,118 +98,128 @@ sub clutter_actor_box_get_type ()
   is export
 { * }
 
-sub clutter_actor_box_get_width (ClutterActorBox $box)
+sub clutter_actor_box_get_width (MutterClutterActorBox $box)
   returns gfloat
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_box_get_x (ClutterActorBox $box)
+sub clutter_actor_box_get_x (MutterClutterActorBox $box)
   returns gfloat
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_box_get_y (ClutterActorBox $box)
+sub clutter_actor_box_get_y (MutterClutterActorBox $box)
   returns gfloat
   is native(mutter)
   is export
 { * }
 
 sub clutter_actor_box_init (
-  ClutterActorBox $box,
-  gfloat          $x_1,
-  gfloat          $y_1,
-  gfloat          $x_2,
-  gfloat          $y_2
+  MutterClutterActorBox $box,
+  gfloat                $x_1,
+  gfloat                $y_1,
+  gfloat                $x_2,
+  gfloat                $y_2
 )
-  returns ClutterActorBox
+  returns MutterClutterActorBox
   is native(mutter)
   is export
 { * }
 
 sub clutter_actor_box_init_rect (
-  ClutterActorBox $box,
-  gfloat $x,
-  gfloat $y,
-  gfloat $width,
-  gfloat $height
+  MutterClutterActorBox $box,
+  gfloat                $x,
+  gfloat                $y,
+  gfloat                $width,
+  gfloat                $height
 )
   is native(mutter)
   is export
 { * }
 
 sub clutter_actor_box_interpolate (
-  ClutterActorBox $initial,
-  ClutterActorBox $final,
-  gdouble         $progress,
-  ClutterActorBox $result
+  MutterClutterActorBox $initial,
+  MutterClutterActorBox $final,
+  gdouble               $progress,
+  MutterClutterActorBox $result
 )
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_box_is_initialized (ClutterActorBox $box)
+sub clutter_actor_box_is_initialized (MutterClutterActorBox $box)
   returns uint32
   is native(mutter)
   is export
 { * }
 
 sub clutter_actor_box_new (gfloat $x_1, gfloat $y_1, gfloat $x_2, gfloat $y_2)
-  returns ClutterActorBox
+  returns MutterClutterActorBox
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_box_scale (ClutterActorBox $box, gfloat $scale)
+sub clutter_actor_box_scale (MutterClutterActorBox $box, gfloat $scale)
   is native(mutter)
   is export
 { * }
 
-sub clutter_actor_box_set_origin (ClutterActorBox $box, gfloat $x, gfloat $y)
+sub clutter_actor_box_set_origin (
+  MutterClutterActorBox $box,
+  gfloat                $x,
+  gfloat                $y
+)
   is native(mutter)
   is export
 { * }
 
 sub clutter_actor_box_set_size (
-  ClutterActorBox $box,
-  gfloat          $width,
-  gfloat          $height
+  MutterClutterActorBox $box,
+  gfloat                $width,
+  gfloat                $height
 )
   is native(mutter)
   is export
 { * }
 
 sub clutter_actor_box_union (
-  ClutterActorBox $a,
-  ClutterActorBox $b,
-  ClutterActorBox $result
+  MutterClutterActorBox $a,
+  MutterClutterActorBox $b,
+  MutterClutterActorBox $result
 )
   is native(mutter)
   is export
 { * }
 
 sub clutter_interval_register_progress_func (
-  GType               $value_type,
-  ClutterProgressFunc $func
+  GType                     $value_type,
+                            &func (
+                              GValue,
+                              GValue,
+                              gdouble,
+                              GValue
+                              --> gboolean
+                            )
 )
   is native(mutter)
   is export
 { * }
 
-sub clutter_knot_copy (ClutterKnot $knot)
-  returns ClutterKnot
+sub clutter_knot_copy (MutterClutterKnot $knot)
+  returns MutterClutterKnot
   is native(mutter)
   is export
 { * }
 
-sub clutter_knot_equal (ClutterKnot $knot_a, ClutterKnot $knot_b)
+sub clutter_knot_equal (MutterClutterKnot $knot_a, MutterClutterKnot $knot_b)
   returns uint32
   is native(mutter)
   is export
 { * }
 
-sub clutter_knot_free (ClutterKnot $knot)
+sub clutter_knot_free (MutterClutterKnot $knot)
   is native(mutter)
   is export
 { * }
@@ -209,13 +230,13 @@ sub clutter_knot_get_type ()
   is export
 { * }
 
-sub clutter_margin_copy (ClutterMargin $margin_)
-  returns ClutterMargin
+sub clutter_margin_copy (MutterClutterMargin $margin_)
+  returns MutterClutterMargin
   is native(mutter)
   is export
 { * }
 
-sub clutter_margin_free (ClutterMargin $margin_)
+sub clutter_margin_free (MutterClutterMargin $margin_)
   is native(mutter)
   is export
 { * }
@@ -227,24 +248,27 @@ sub clutter_margin_get_type ()
 { * }
 
 sub clutter_margin_new ()
-  returns ClutterMargin
+  returns MutterClutterMargin
   is native(mutter)
   is export
 { * }
 
-sub clutter_path_node_copy (ClutterPathNode $node)
-  returns ClutterPathNode
+sub clutter_path_node_copy (MutterClutterPathNode $node)
+  returns MutterClutterPathNode
   is native(mutter)
   is export
 { * }
 
-sub clutter_path_node_equal (ClutterPathNode $node_a, ClutterPathNode $node_b)
+sub clutter_path_node_equal (
+  MutterClutterPathNode $node_a,
+  MutterClutterPathNode $node_b
+)
   returns uint32
   is native(mutter)
   is export
 { * }
 
-sub clutter_path_node_free (ClutterPathNode $node)
+sub clutter_path_node_free (MutterClutterPathNode $node)
   is native(mutter)
   is export
 { * }
@@ -255,32 +279,32 @@ sub clutter_path_node_get_type ()
   is export
 { * }
 
-sub clutter_paint_volume_copy (ClutterPaintVolume $pv)
-  returns ClutterPaintVolume
+sub clutter_paint_volume_copy (MutterClutterPaintVolume $pv)
+  returns MutterClutterPaintVolume
   is native(mutter)
   is export
 { * }
 
-sub clutter_paint_volume_free (ClutterPaintVolume $pv)
+sub clutter_paint_volume_free (MutterClutterPaintVolume $pv)
   is native(mutter)
   is export
 { * }
 
-sub clutter_paint_volume_get_depth (ClutterPaintVolume $pv)
+sub clutter_paint_volume_get_depth (MutterClutterPaintVolume $pv)
   returns gfloat
   is native(mutter)
   is export
 { * }
 
-sub clutter_paint_volume_get_height (ClutterPaintVolume $pv)
+sub clutter_paint_volume_get_height (MutterClutterPaintVolume $pv)
   returns gfloat
   is native(mutter)
   is export
 { * }
 
 sub clutter_paint_volume_get_origin (
-  ClutterPaintVolume $pv,
-  graphene_point3d_t $vertex
+  MutterClutterPaintVolume $pv,
+  graphene_point3d_t       $vertex
 )
   is native(mutter)
   is export
@@ -292,55 +316,64 @@ sub clutter_paint_volume_get_type ()
   is export
 { * }
 
-sub clutter_paint_volume_get_width (ClutterPaintVolume $pv)
+sub clutter_paint_volume_get_width (MutterClutterPaintVolume $pv)
   returns gfloat
   is native(mutter)
   is export
 { * }
 
-sub clutter_paint_volume_set_depth (ClutterPaintVolume $pv, gfloat $depth)
+sub clutter_paint_volume_set_depth (
+  MutterClutterPaintVolume $pv,
+  gfloat                   $depth
+)
   is native(mutter)
   is export
 { * }
 
 sub clutter_paint_volume_set_from_allocation (
-  ClutterPaintVolume $pv,
-  ClutterActor       $actor
+  MutterClutterPaintVolume $pv,
+  MutterClutterActor       $actor
 )
   returns uint32
   is native(mutter)
   is export
 { * }
 
-sub clutter_paint_volume_set_height (ClutterPaintVolume $pv, gfloat $height)
-  is native(mutter)
-  is export
-{ * }
-
-sub clutter_paint_volume_set_origin (
-  ClutterPaintVolume $pv,
-  graphene_point3d_t $origin
+sub clutter_paint_volume_set_height (
+  MutterClutterPaintVolume $pv,
+  gfloat                   $height
 )
   is native(mutter)
   is export
 { * }
 
-sub clutter_paint_volume_set_width (ClutterPaintVolume $pv, gfloat $width)
+sub clutter_paint_volume_set_origin (
+  MutterClutterPaintVolume $pv,
+  graphene_point3d_t       $origin
+)
+  is native(mutter)
+  is export
+{ * }
+
+sub clutter_paint_volume_set_width (
+  MutterClutterPaintVolume $pv,
+  gfloat                   $width
+)
   is native(mutter)
   is export
 { * }
 
 sub clutter_paint_volume_union (
-  ClutterPaintVolume $pv,
-  ClutterPaintVolume $another_pv
+  MutterClutterPaintVolume $pv,
+  MutterClutterPaintVolume $another_pv
 )
   is native(mutter)
   is export
 { * }
 
 sub clutter_paint_volume_union_box (
-  ClutterPaintVolume $pv,
-  ClutterActorBox    $box
+  MutterClutterPaintVolume $pv,
+  MutterClutterActorBox    $box
 )
   is native(mutter)
   is export
