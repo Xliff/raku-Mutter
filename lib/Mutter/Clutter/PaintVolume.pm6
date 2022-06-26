@@ -83,8 +83,8 @@ class Mutter::Clutter::PaintVolume {
 
 }
 
-# method clutter_interval_register_progress_func (ClutterProgressFunc $func) {
-#   clutter_interval_register_progress_func($!mcpv, $func);
+# method clutter_interval_register_progress_func (&func) {
+#   clutter_interval_register_progress_func($!mcpv, &func);
 # }
 #
 # method clutter_knot_copy {
