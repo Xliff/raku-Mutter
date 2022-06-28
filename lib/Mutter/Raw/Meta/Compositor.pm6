@@ -8,21 +8,21 @@ unit package Mutter::Raw::Meta::Compositor;
 ### /usr/include/mutter-10/meta/compositor.h
 
 sub meta_compositor_add_window (
-  MetaCompositor $compositor,
-  MetaWindow     $window
+  MutterMetaCompositor $compositor,
+  MutterMetaWindow     $window
 )
   is native(mutter)
   is export
 { * }
 
-sub meta_compositor_destroy (MetaCompositor $compositor)
+sub meta_compositor_destroy (MutterMetaCompositor $compositor)
   is native(mutter)
   is export
 { * }
 
 sub meta_compositor_filter_keybinding (
-  MetaCompositor $compositor,
-  MetaKeyBinding $binding
+  MutterMetaCompositor $compositor,
+  MutterMetaKeyBinding $binding
 )
   returns uint32
   is native(mutter)
@@ -30,154 +30,154 @@ sub meta_compositor_filter_keybinding (
 { * }
 
 sub meta_compositor_flash_display (
-  MetaCompositor $compositor,
-  MetaDisplay    $display
+  MutterMetaCompositor $compositor,
+  MutterMetaDisplay    $display
 )
   is native(mutter)
   is export
 { * }
 
-sub meta_compositor_get_laters (MetaCompositor $compositor)
-  returns MetaLaters
+sub meta_compositor_get_laters (MutterMetaCompositor $compositor)
+  returns MutterMetaLaters
   is native(mutter)
   is export
 { * }
 
-sub meta_compositor_hide_tile_preview (MetaCompositor $compositor)
+sub meta_compositor_hide_tile_preview (MutterMetaCompositor $compositor)
   is native(mutter)
   is export
 { * }
 
 sub meta_compositor_hide_window (
-  MetaCompositor $compositor,
-  MetaWindow     $window,
-  MetaCompEffect $effect
+  MutterMetaCompositor $compositor,
+  MutterMetaWindow     $window,
+  MutterMetaCompEffect $effect
 )
   is native(mutter)
   is export
 { * }
 
-sub meta_compositor_manage (MetaCompositor $compositor)
+sub meta_compositor_manage (MutterMetaCompositor $compositor)
   is native(mutter)
   is export
 { * }
 
 sub meta_compositor_queue_frame_drawn (
-  MetaCompositor $compositor,
-  MetaWindow     $window,
-  gboolean       $no_delay_frame
+  MutterMetaCompositor $compositor,
+  MutterMetaWindow     $window,
+  gboolean             $no_delay_frame
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_compositor_remove_window (
-  MetaCompositor $compositor,
-  MetaWindow     $window
+  MutterMetaCompositor $compositor,
+  MutterMetaWindow     $window
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_compositor_show_tile_preview (
-  MetaCompositor $compositor,
-  MetaWindow     $window,
-  MetaRectangle  $tile_rect,
-  gint           $tile_monitor_number
+  MutterMetaCompositor $compositor,
+  MutterMetaWindow     $window,
+  MutterMetaRectangle  $tile_rect,
+  gint                 $tile_monitor_number
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_compositor_show_window (
-  MetaCompositor $compositor,
-  MetaWindow     $window,
-  MetaCompEffect $effect
+  MutterMetaCompositor $compositor,
+  MutterMetaWindow     $window,
+  MutterMetaCompEffect $effect
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_compositor_show_window_menu (
-  MetaCompositor     $compositor,
-  MetaWindow         $window,
-  MetaWindowMenuType $menu,
-  gint               $x,
-  gint               $y
+  MutterMetaCompositor     $compositor,
+  MutterMetaWindow         $window,
+  MutterMetaWindowMenuType $menu,
+  gint                     $x,
+  gint                     $y
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_compositor_show_window_menu_for_rect (
-  MetaCompositor     $compositor,
-  MetaWindow         $window,
-  MetaWindowMenuType $menu,
-  MetaRectangle      $rect
+  MutterMetaCompositor     $compositor,
+  MutterMetaWindow         $window,
+  MutterMetaWindowMenuType $menu,
+  MutterMetaRectangle      $rect
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_compositor_size_change_window (
-  MetaCompositor $compositor,
-  MetaWindow     $window,
-  MetaSizeChange $which_change,
-  MetaRectangle  $old_frame_rect,
-  MetaRectangle  $old_buffer_rect
+  MutterMetaCompositor $compositor,
+  MutterMetaWindow     $window,
+  MutterMetaSizeChange $which_change,
+  MutterMetaRectangle  $old_frame_rect,
+  MutterMetaRectangle  $old_buffer_rect
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_compositor_switch_workspace (
-  MetaCompositor      $compositor,
-  MetaWorkspace       $from,
-  MetaWorkspace       $to,
-  MetaMotionDirection $direction
+  MutterMetaCompositor      $compositor,
+  MutterMetaWorkspace       $from,
+  MutterMetaWorkspace       $to,
+  MutterMetaMotionDirection $direction
 )
   is native(mutter)
   is export
 { * }
 
-sub meta_compositor_sync_stack (MetaCompositor $compositor, GList $stack)
+sub meta_compositor_sync_stack (MutterMetaCompositor $compositor, GList $stack)
   is native(mutter)
   is export
 { * }
 
 sub meta_compositor_sync_updates_frozen (
-  MetaCompositor $compositor,
-  MetaWindow     $window
+  MutterMetaCompositor $compositor,
+  MutterMetaWindow     $window
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_compositor_sync_window_geometry (
-  MetaCompositor $compositor,
-  MetaWindow     $window,
-  gboolean       $did_placement
+  MutterMetaCompositor $compositor,
+  MutterMetaWindow     $window,
+  gboolean             $did_placement
 )
   is native(mutter)
   is export
 { * }
 
-sub meta_compositor_unmanage (MetaCompositor $compositor)
+sub meta_compositor_unmanage (MutterMetaCompositor $compositor)
   is native(mutter)
   is export
 { * }
 
 sub meta_compositor_window_opacity_changed (
-  MetaCompositor $compositor,
-  MetaWindow     $window
+  MutterMetaCompositor $compositor,
+  MutterMetaWindow     $window
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_compositor_window_shape_changed (
-  MetaCompositor $compositor,
-  MetaWindow     $window
+  MutterMetaCompositor $compositor,
+  MutterMetaWindow     $window
 )
   is native(mutter)
   is export
