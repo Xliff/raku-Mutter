@@ -5,3 +5,4 @@ hfile-prefix=META_EXPORT:META_EXPORT:CLUTTER_EXPORT
 lib=mutter
 include-directory=/usr/src/mutter-42.1/clutter/clutter
 exec=mutter-exec
+subprefixes=Meta,Clutter,Cogl
