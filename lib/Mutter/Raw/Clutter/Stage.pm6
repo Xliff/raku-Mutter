@@ -3,7 +3,9 @@ use v6.c;
 use NativeCall;
 
 use GLib::Raw::Definitions;
+use GLib::Raw::Structs;
 use Mutter::Raw::Definitions;
+use Mutter::Raw::Enums;
 
 unit package Mutter::Raw::Clutter::Stage;
 
@@ -15,28 +17,28 @@ sub clutter_perspective_get_type ()
   is export
 { * }
 
-sub clutter_stage_ensure_viewport (ClutterStage $stage)
+sub clutter_stage_ensure_viewport (MutterClutterStage $stage)
   is native(mutter)
   is export
 { * }
 
 sub clutter_stage_get_actor_at_pos (
-  ClutterStage    $stage,
-  ClutterPickMode $pick_mode,
-  gfloat          $x,
-  gfloat          $y
+  MutterClutterStage    $stage,
+  MutterClutterPickMode $pick_mode,
+  gfloat                $x,
+  gfloat                $y
 )
-  returns ClutterActor
+  returns MutterClutterActor
   is native(mutter)
   is export
 { * }
 
 sub clutter_stage_get_capture_final_size (
-  ClutterStage          $stage,
-  cairo_rectangle_int_t $rect,
-  gint                  $out_width  is rw,
-  gint                  $out_height is rw,
-  gfloat                $out_scale  is rw
+  MutterClutterStage          $stage,
+  cairo_rectangle_int_t       $rect,
+  gint                        $out_width  is rw,
+  gint                        $out_height is rw,
+  gfloat                      $out_scale  is rw
 )
   returns uint32
   is native(mutter)
@@ -44,51 +46,54 @@ sub clutter_stage_get_capture_final_size (
 { * }
 
 sub clutter_stage_get_device_actor (
-  ClutterStage         $stage,
-  ClutterInputDevice   $device,
-  ClutterEventSequence $sequence
+  MutterClutterStage         $stage,
+  MutterClutterInputDevice   $device,
+  MutterClutterEventSequence $sequence
 )
-  returns ClutterActor
+  returns MutterClutterActor
   is native(mutter)
   is export
 { * }
 
-sub clutter_stage_get_event_actor (ClutterStage $stage, ClutterEvent $event)
-  returns ClutterActor
+sub clutter_stage_get_event_actor (
+  MutterClutterStage $stage,
+  MutterClutterEvent $event
+)
+  returns MutterClutterActor
   is native(mutter)
   is export
 { * }
 
-sub clutter_stage_get_grab_actor (ClutterStage $stage)
-  returns ClutterActor
+sub clutter_stage_get_grab_actor (MutterClutterStage $stage)
+  returns MutterClutterActor
   is native(mutter)
   is export
 { * }
 
-sub clutter_stage_get_key_focus (ClutterStage $stage)
-  returns ClutterActor
+sub clutter_stage_get_key_focus (MutterClutterStage $stage)
+  returns MutterClutterActor
   is native(mutter)
   is export
 { * }
 
 sub clutter_stage_get_minimum_size (
-  ClutterStage $stage,
-  guint        $width  is rw,
-  guint        $height is rw
+  MutterClutterStage $stage,
+  guint              $width  is rw,
+  guint              $height is rw
 )
   is native(mutter)
   is export
 { * }
 
 sub clutter_stage_get_perspective (
-  ClutterStage       $stage,
-  ClutterPerspective $perspective
+  MutterClutterStage       $stage,
+  MutterClutterPerspective $perspective
 )
   is native(mutter)
   is export
 { * }
 
-sub clutter_stage_get_title (ClutterStage $stage)
+sub clutter_stage_get_title (MutterClutterStage $stage)
   returns Str
   is native(mutter)
   is export
@@ -100,21 +105,21 @@ sub clutter_stage_get_type ()
   is export
 { * }
 
-sub clutter_stage_get_view_at (ClutterStage $stage, gfloat $x, gfloat $y)
-  returns ClutterStageView
+sub clutter_stage_get_view_at (MutterClutterStage $stage, gfloat $x, gfloat $y)
+  returns MutterClutterStageView
   is native(mutter)
   is export
 { * }
 
-sub clutter_stage_grab (ClutterStage $stage, ClutterActor $actor)
-  returns ClutterGrab
+sub clutter_stage_grab (MutterClutterStage $stage, MutterClutterActor $actor)
+  returns MutterClutterGrab
   is native(mutter)
   is export
 { * }
 
 sub clutter_stage_is_redraw_queued_on_view (
-  ClutterStage     $stage,
-  ClutterStageView $view
+  MutterClutterStage     $stage,
+  MutterClutterStageView $view
 )
   returns uint32
   is native(mutter)
@@ -122,13 +127,13 @@ sub clutter_stage_is_redraw_queued_on_view (
 { * }
 
 sub clutter_stage_paint_to_buffer (
-  ClutterStage            $stage,
+  MutterClutterStage      $stage,
   cairo_rectangle_int_t   $rect,
   gfloat                  $scale,
   CArray[uint8]           $data,
   gint                    $stride,
-  CoglPixelFormat         $format,
-  ClutterPaintFlag        $paint_flags,
+  guint                   $format,       #= MutterMutterCoglPixelFormat
+  MutterClutterPaintFlag  $paint_flags,
   CArray[Pointer[GError]] $error
 )
   returns uint32
@@ -137,60 +142,63 @@ sub clutter_stage_paint_to_buffer (
 { * }
 
 sub clutter_stage_paint_to_content (
-  ClutterStage            $stage,
+  MutterClutterStage      $stage,
   cairo_rectangle_int_t   $rect,
   gfloat                  $scale,
-  ClutterPaintFlag        $paint_flags,
+  MutterClutterPaintFlag  $paint_flags,
   CArray[Pointer[GError]] $error
 )
-  returns ClutterContent
+  returns MutterClutterContent
   is native(mutter)
   is export
 { * }
 
 sub clutter_stage_paint_to_framebuffer (
-  ClutterStage          $stage,
-  CoglFramebuffer       $framebuffer,
-  cairo_rectangle_int_t $rect,
-  gfloat                $scale,
-  ClutterPaintFlag      $paint_flags
+  MutterClutterStage     $stage,
+  MutterCoglFramebuffer  $framebuffer,
+  cairo_rectangle_int_t  $rect,
+  gfloat                 $scale,
+  MutterClutterPaintFlag $paint_flags
 )
   is native(mutter)
   is export
 { * }
 
 sub clutter_stage_read_pixels (
-  ClutterStage $stage,
-  gint         $x,
-  gint         $y,
-  gint         $width,
-  gint         $height
+  MutterClutterStage $stage,
+  gint               $x,
+  gint               $y,
+  gint               $width,
+  gint               $height
 )
   returns Str
   is native(mutter)
   is export
 { * }
 
-sub clutter_stage_schedule_update (ClutterStage $stage)
+sub clutter_stage_schedule_update (MutterClutterStage $stage)
   is native(mutter)
   is export
 { * }
 
-sub clutter_stage_set_key_focus (ClutterStage $stage, ClutterActor $actor)
-  is native(mutter)
-  is export
-{ * }
-
-sub clutter_stage_set_minimum_size (
-  ClutterStage $stage,
-  guint        $width,
-  guint        $height
+sub clutter_stage_set_key_focus (
+  MutterClutterStage $stage,
+  MutterClutterActor $actor
 )
   is native(mutter)
   is export
 { * }
 
-sub clutter_stage_set_title (ClutterStage $stage, Str $title)
+sub clutter_stage_set_minimum_size (
+  MutterClutterStage $stage,
+  guint              $width,
+  guint              $height
+)
+  is native(mutter)
+  is export
+{ * }
+
+sub clutter_stage_set_title (MutterClutterStage $stage, Str $title)
   is native(mutter)
   is export
 { * }
