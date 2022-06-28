@@ -13,14 +13,14 @@ use GLib::Roles::Pointers;
 
 unit package Mutter::Raw::Structs;
 
-class MetaRectangle is repr<CStruct> is export {
+class MutterClutterOffscreenRectangle is repr<CStruct> is export {
 	has gint $.x      is rw;
 	has gint $.y      is rw;
 	has gint $.width  is rw;
 	has gint $.height is rw;
 }
 
-class MetaBarrierEvent is repr<CStruct> does GLib::Roles::Pointers is export {
+class MutterClutterOffscreenBarrierEvent is repr<CStruct> does GLib::Roles::Pointers is export {
   has guint    $!ref_count;
 
   has gint     $.event_id is rw;
@@ -34,32 +34,32 @@ class MetaBarrierEvent is repr<CStruct> does GLib::Roles::Pointers is export {
   has gboolean $.grabbed  is rw;
 }
 
-class MetaBackgroundGroupClass is repr<CStruct> is export {
-	has ClutterActorClass $!parent_class;
-}
+# class MutterClutterOffscreenBackgroundGroupClass is repr<CStruct> is export {
+# 	has MutterClutterOffscreenActorClass $!parent_class;
+# }
 
-class MetaBarrier is repr<CStruct> is export {
+class MutterClutterOffscreenBarrier is repr<CStruct> is export {
 	has GObject $!parent;
 	has Pointer $!priv  ;
 }
 
-class MetaBarrierClass is repr<CStruct> is export {
-	has GObjectClass $!parent_class;
-}
+# class MutterClutterOffscreenBarrierClass is repr<CStruct> is export {
+# 	has GObjectClass $!parent_class;
+# }
 
-class MetaEdge is repr<CStruct> is export {
-	has MetaRectangle $.rect     ;
-	has MetaSide      $.side_type;
-	has MetaEdgeType  $.edge_type;
-}
+# class MutterClutterOffscreenEdge is repr<CStruct> is export {
+# 	has MutterClutterOffscreenRectangle $.rect     ;
+# 	has MutterClutterOffscreenSide      $.side_type;
+# 	has MutterClutterOffscreendgeType  $.edge_type;
+# }
 
-class MetaFrameBorders is repr<CStruct> is export {
+class MutterClutterOffscreenFrameBorders is repr<CStruct> is export {
 	has GtkBorder $.visible  ;
 	has GtkBorder $.invisible;
 	has GtkBorder $.total    ;
 }
 
-class MetaPluginInfo is repr<CStruct> is export {
+class MutterClutterOffscreenPluginInfo is repr<CStruct> is export {
 	has Str $!name       ;
 	has Str $!version    ;
 	has Str $!author     ;
@@ -97,7 +97,7 @@ class MetaPluginInfo is repr<CStruct> is export {
   }
 }
 
-class MetaShadowParams is repr<CStruct> is export {
+class MutterClutterOffscreenShadowParams is repr<CStruct> is export {
 	has gint    $.radius   is rw;
 	has gint    $.top_fade is rw;
 	has gint    $.x_offset is rw;
@@ -105,7 +105,7 @@ class MetaShadowParams is repr<CStruct> is export {
 	has guint8  $.opacity  is rw;
 }
 
-class MetaStrut is repr<CStruct> is export {
-	has MetaRectangle $!rect;
-	has MetaSide      $!side;
-}
+# class MutterClutterOffscreenStrut is repr<CStruct> is export {
+# 	has MutterClutterOffscreenRectangle $!rect;
+# 	has MutterClutterOffscreenSide      $!side;
+# }
