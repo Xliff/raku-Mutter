@@ -43,5 +43,5 @@ BEGIN {
                          |@jg-exports,
                          |@gio-exports,
                          |@pango-exports,
-                         |@mlutter-exports;
+                         |@mutter-exports;
 }
