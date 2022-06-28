@@ -3,28 +3,29 @@ use v6.c;
 use NativeCall;
 
 use GLib::Raw::Definitions;
+use Graphene::Raw::Definitions;
 use Mutter::Raw::Definitions;
 
-class Mutter::Raw::Meta::Background::Content;
+unit package Mutter::Raw::Meta::Background::Content;
 
 ### /usr/src/mutter-42.1/src/meta/meta-background-content.h
 
-sub meta_background_content_new (MetaDisplay $display, gint $monitor)
-  returns ClutterContent
+sub meta_background_content_new (MutterMetaDisplay $display, gint $monitor)
+  returns MutterClutterContent
   is native(mutter)
   is export
 { * }
 
 sub meta_background_content_set_background (
-  MetaBackgroundContent $self,
-  MetaBackground        $background
+  MutterMetaBackgroundContent $self,
+  MutterMetaBackground        $background
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_background_content_set_gradient (
-  MetaBackgroundContent $self,
+  MutterMetaBackgroundContent $self,
   gboolean              $enabled,
   gint                  $height,
   gdouble               $tone_start
@@ -34,26 +35,26 @@ sub meta_background_content_set_gradient (
 { * }
 
 sub meta_background_content_set_rounded_clip_bounds (
-  MetaBackgroundContent $self,
-  graphene_rect_t       $bounds
+  MutterMetaBackgroundContent $self,
+  graphene_rect_t             $bounds
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_background_content_set_rounded_clip_radius (
-  MetaBackgroundContent $self,
-  gfloat                $radius
+  MutterMetaBackgroundContent $self,
+  gfloat                      $radius
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_background_content_set_vignette (
-  MetaBackgroundContent $self,
-  gboolean              $enabled, 
-  gdouble               $brightness, 
-  gdouble               $sharpness
+  MutterMetaBackgroundContent $self,
+  gboolean                    $enabled,
+  gdouble                     $brightness,
+  gdouble                     $sharpness
 )
   is native(mutter)
   is export
