@@ -1,5 +1,7 @@
 use v6.c;
 
+use NativeCall;
+
 use GLib::Raw::Definitions;
 use Mutter::Raw::Definitions;
 
@@ -7,61 +9,61 @@ unit package Mutter::Raw::Meta::Backend;
 
 ### /usr/src/mutter-42.1/src/meta/meta-backend.h
 
-sub meta_backend_get_context (MetaBackend $backend)
-  returns MetaContext
+sub meta_backend_get_context (MutterMetaBackend $backend)
+  returns MutterMetaContext
   is native(mutter)
   is export
 { * }
 
-sub meta_backend_get_core_idle_monitor (MetaBackend $backend)
-  returns MetaIdleMonitor
+sub meta_backend_get_core_idle_monitor (MutterMetaBackend $backend)
+  returns MutterMetaIdleMonitor
   is native(mutter)
   is export
 { * }
 
-sub meta_backend_get_dnd (MetaBackend $backend)
-  returns MetaDnd
+sub meta_backend_get_dnd (MutterMetaBackend $backend)
+  returns MutterMetaDnd
   is native(mutter)
   is export
 { * }
 
-sub meta_backend_get_monitor_manager (MetaBackend $backend)
-  returns MetaMonitorManager
+sub meta_backend_get_monitor_manager (MutterMetaBackend $backend)
+  returns MutterMetaMonitorManager
   is native(mutter)
   is export
 { * }
 
-sub meta_backend_get_remote_access_controller (MetaBackend $backend)
-  returns MetaRemoteAccessController
+sub meta_backend_get_remote_access_controller (MutterMetaBackend $backend)
+  returns MutterMetaRemoteAccessController
   is native(mutter)
   is export
 { * }
 
-sub meta_backend_get_settings (MetaBackend $backend)
-  returns MetaSettings
+sub meta_backend_get_settings (MutterMetaBackend $backend)
+  returns MutterMetaSettings
   is native(mutter)
   is export
 { * }
 
-sub meta_backend_get_stage (MetaBackend $backend)
-  returns ClutterActor
+sub meta_backend_get_stage (MutterMetaBackend $backend)
+  returns MutterClutterActor
   is native(mutter)
   is export
 { * }
 
-sub meta_backend_is_headless (MetaBackend $backend)
+sub meta_backend_is_headless (MutterMetaBackend $backend)
   returns uint32
   is native(mutter)
   is export
 { * }
 
-sub meta_backend_is_rendering_hardware_accelerated (MetaBackend $backend)
+sub meta_backend_is_rendering_hardware_accelerated (MutterMetaBackend $backend)
   returns uint32
   is native(mutter)
   is export
 { * }
 
-sub meta_backend_lock_layout_group (MetaBackend $backend, guint $idx)
+sub meta_backend_lock_layout_group (MutterMetaBackend $backend, guint $idx)
   is native(mutter)
   is export
 { * }
@@ -72,13 +74,13 @@ sub meta_clutter_init ()
 { * }
 
 sub meta_get_backend ()
-  returns MetaBackend
+  returns MutterMetaBackend
   is native(mutter)
   is export
 { * }
 
 sub meta_backend_set_keymap (
-  MetaBackend $backend,
+  MutterMetaBackend $backend,
   Str         $layouts,
   Str         $variants,
   Str         $options

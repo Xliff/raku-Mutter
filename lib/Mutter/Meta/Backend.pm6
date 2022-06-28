@@ -8,7 +8,7 @@ class GLib::Roles::Object;
 class Mutter::Meta::Backend {
   also does GLib::Roles::Object;
 
-  has MetaBackend $!mb is implementor;
+  has MutterMetaBackend $!mb is implementor;
 
   method get_context ( :$raw = False ) {
     propReturnObject(
@@ -22,7 +22,7 @@ class Mutter::Meta::Backend {
     propReturnObject(
       meta_backend_get_core_idle_monitor($!mb),
       $raw,
-      |Mutter::Meta::MetaIdleMonitor.getTypePair
+      |Mutter::Meta::IdleMonitor.getTypePair
     );
   }
 
