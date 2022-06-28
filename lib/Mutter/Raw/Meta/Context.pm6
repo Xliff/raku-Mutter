@@ -8,24 +8,24 @@ unit package Mutter::Raw::Meta::Context;
 ### /usr/src/mutter-42.1/src/meta/meta-context.h
 
 sub meta_context_add_option_entries (
-  MetaContext  $context,
-  GOptionEntry $entries,
-  Str          $translation_domain
+  MutterMetaContext  $context,
+  GOptionEntry       $entries,
+  Str                $translation_domain
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_context_add_option_group (
-  MetaContext  $context,
-  GOptionGroup $group
+  MutterMetaContext  $context,
+  GOptionGroup       $group
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_context_configure (
-  MetaContext             $context,
+  MutterMetaContext       $context,
   gint                    $argc     is rw,
   CArray[CArray[Str]]     $argv,
   CArray[Pointer[GError]] $error
@@ -35,42 +35,42 @@ sub meta_context_configure (
   is export
 { * }
 
-sub meta_context_destroy (MetaContext $context)
+sub meta_context_destroy (MutterMetaContext $context)
   is native(mutter)
   is export
 { * }
 
-sub meta_context_get_backend (MetaContext $context)
-  returns MetaBackend
+sub meta_context_get_backend (MutterMetaContext $context)
+  returns MutterMetaBackend
   is native(mutter)
   is export
 { * }
 
-sub meta_context_get_compositor_type (MetaContext $context)
-  returns MetaCompositorType
+sub meta_context_get_compositor_type (MutterMetaContext $context)
+  returns MutterMetaCompositorType
   is native(mutter)
   is export
 { * }
 
-sub meta_context_get_display (MetaContext $context)
-  returns MetaDisplay
+sub meta_context_get_display (MutterMetaContext $context)
+  returns MutterMetaDisplay
   is native(mutter)
   is export
 { * }
 
-sub meta_context_is_replacing (MetaContext $context)
+sub meta_context_is_replacing (MutterMetaContext $context)
   returns uint32
   is native(mutter)
   is export
 { * }
 
-sub meta_context_notify_ready (MetaContext $context)
+sub meta_context_notify_ready (MutterMetaContext $context)
   is native(mutter)
   is export
 { * }
 
 sub meta_context_raise_rlimit_nofile (
-  MetaContext             $context,
+  MutterMetaContext       $context,
   CArray[Pointer[GError]] $error
 )
   returns uint32
@@ -79,7 +79,7 @@ sub meta_context_raise_rlimit_nofile (
 { * }
 
 sub meta_context_restore_rlimit_nofile (
-  MetaContext             $context,
+  MutterMetaContext       $context,
   CArray[Pointer[GError]] $error
 )
   returns uint32
@@ -88,7 +88,7 @@ sub meta_context_restore_rlimit_nofile (
 { * }
 
 sub meta_context_run_main_loop (
-  MetaContext             $context,
+  MutterMetaContext       $context,
   CArray[Pointer[GError]] $error
 )
   returns uint32
@@ -97,50 +97,59 @@ sub meta_context_run_main_loop (
 { * }
 
 sub meta_context_set_gnome_wm_keybindings (
-  MetaContext $context,
-  Str         $wm_keybindings
+  MutterMetaContext $context,
+  Str               $wm_keybindings
 )
   is native(mutter)
   is export
 { * }
 
-sub meta_context_set_plugin_gtype (MetaContext $context, GType $plugin_gtype)
+sub meta_context_set_plugin_gtype (
+  MutterMetaContext $context,
+  GType             $plugin_gtype
+)
   is native(mutter)
   is export
 { * }
 
-sub meta_context_set_plugin_name (MetaContext $context, Str $plugin_name)
+sub meta_context_set_plugin_name (MutterMetaContext $context, Str $plugin_name)
   is native(mutter)
   is export
 { * }
 
-sub meta_context_setup (MetaContext $context, CArray[Pointer[GError]] $error)
+sub meta_context_setup (
+  MutterMetaContext       $context,
+  CArray[Pointer[GError]] $error
+)
   returns uint32
   is native(mutter)
   is export
 { * }
 
-sub meta_context_start (MetaContext $context, CArray[Pointer[GError]] $error)
+sub meta_context_start (
+  MutterMetaContext       $context,
+  CArray[Pointer[GError]] $error
+)
   returns uint32
   is native(mutter)
   is export
 { * }
 
-sub meta_context_terminate (MetaContext $context)
+sub meta_context_terminate (MutterMetaContext $context)
   is native(mutter)
   is export
 { * }
 
 sub meta_context_terminate_with_error (
-  MetaContext     $context,
-  Pointer[GError] $error
+  MutterMetaContext     $context,
+  Pointer[GError]       $error
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_create_context (Str $name)
-  returns MetaContext
+  returns MutterMetaContext
   is native(mutter)
   is export
 { * }
