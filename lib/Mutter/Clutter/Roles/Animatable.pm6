@@ -10,7 +10,7 @@ use GLib::Object::ParamSpec;
 use GLib::Roles::Object;
 
 role Mutter::Clutter::Roles::Animatable {
-  has NutterClutterAnimatable $!mc-anim is implementor;
+  has MutterClutterAnimatable $!mc-anim is implementor;
 
   method Mutter::Raw::Definitions::MutterClutterAnimatable
     is also<MutterClutterAnimatable>
