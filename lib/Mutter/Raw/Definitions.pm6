@@ -15,6 +15,8 @@ constant mutter-cogl-pango is export = 'mutter-cogl-pango-10',v0;
 
 constant cairo_rectangle_int_t  is export = Cairo::cairo_rectangle_int_t;
 
+constant cairo_region_t is export = Pointer;
+
 # Meta
 
 class MutterMetaBackend                is repr<CPointer> does GLib::Roles::Pointers is export { }
