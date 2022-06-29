@@ -68,6 +68,7 @@ class MutterClutterLayoutManager   is repr<CPointer> does GLib::Roles::Pointers 
 class MutterClutterLayoutMeta      is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterMargin          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterOffscreenEffect is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterPageTurnEffect  is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterPathNode        is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterPaintContext    is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterPaintNode       is repr<CPointer> does GLib::Roles::Pointers is export { }
