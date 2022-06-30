@@ -1186,6 +1186,15 @@ our enum MutterClutterScriptErrorEnum is export <
   CLUTTER_SCRIPT_ERROR_INVALID_VALUE
 >;
 
+
+constant MutterClutterScrollMode is export := guint32;
+our enum MutterClutterScrollModeEnum is export (
+  CLUTTER_SCROLL_NONE         => 0,
+  CLUTTER_SCROLL_HORIZONTALLY => 1 +< 0,
+  CLUTTER_SCROLL_VERTICALLY   => 1 +< 1,
+  CLUTTER_SCROLL_BOTH         => 1 +| (1 +< 1)
+);
+
 constant MutterClutterScrollDirection is export := guint32;
 our enum MutterClutterScrollDirectionEnum is export <
   CLUTTER_SCROLL_UP
