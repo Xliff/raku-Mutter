@@ -5,6 +5,7 @@ use ATK::Raw::Exports;
 use GIO::Raw::Exports;
 use JSON::GLib::Raw::Exports;
 use Pango::Raw::Exports;
+use Graphene::Raw::Exports;
 use Mutter::Raw::Exports;
 
 unit package Mutter::Raw::Types;
@@ -32,6 +33,7 @@ need Pango::Raw::Definitions;
 need Pango::Raw::Enums;
 need Pango::Raw::Structs;
 need Pango::Raw::Subs;
+need Graphene::Raw::Definitions;
 need Mutter::Raw::Definitions;
 need Mutter::Raw::Enums;
 need Mutter::Raw::Subs;
@@ -43,5 +45,6 @@ BEGIN {
                          |@jg-exports,
                          |@gio-exports,
                          |@pango-exports,
+                         |@graphene-exports,
                          |@mutter-exports;
 }
