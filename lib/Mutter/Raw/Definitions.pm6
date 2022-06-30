@@ -84,6 +84,7 @@ class MutterClutterPickContext        is repr<CPointer> does GLib::Roles::Pointe
 class MutterClutterPropertyTransition is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterRotateAction       is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterScript             is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterScriptable         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterStage              is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterStageView          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterTimeline           is repr<CPointer> does GLib::Roles::Pointers is export { }
