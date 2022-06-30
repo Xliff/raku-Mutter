@@ -14,6 +14,8 @@ constant mutter-cogl       is export = 'mutter-cogl-10',v0;
 constant mutter-cogl-pango is export = 'mutter-cogl-pango-10',v0;
 
 constant cairo_rectangle_int_t  is export = Cairo::cairo_rectangle_int_t;
+constant cairo_t                is export = Cairo::cairo_t;
+constant cairo_path_t           is export = Cairo::cairo_path_t;
 
 constant cairo_region_t is export = Pointer;
 
