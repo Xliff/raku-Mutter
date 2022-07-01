@@ -665,6 +665,44 @@ our enum TestUtilsTextureFlagsEnum is export (
   TEST_UTILS_TEXTURE_NO_ATLAS       => 1 +< 2,
 );
 
+constant MutterClutterPointerA11yFlags is export := guint32;
+our enum MutterClutterPointerA11yFlagsEnum is export (
+  CLUTTER_A11Y_SECONDARY_CLICK_ENABLED   => 1 +< 0,
+  CLUTTER_A11Y_DWELL_ENABLED             => 1 +< 1,
+);
+
+constant MutterClutterPointerA11yDwellClickType is export := guint32;
+our enum MutterClutterPointerA11yDwellClickTypeEnum is export <
+  CLUTTER_A11Y_DWELL_CLICK_TYPE_NONE
+  CLUTTER_A11Y_DWELL_CLICK_TYPE_PRIMARY
+  CLUTTER_A11Y_DWELL_CLICK_TYPE_SECONDARY
+  CLUTTER_A11Y_DWELL_CLICK_TYPE_MIDDLE
+  CLUTTER_A11Y_DWELL_CLICK_TYPE_DOUBLE
+  CLUTTER_A11Y_DWELL_CLICK_TYPE_DRAG
+>;
+
+constant MutterClutterPointerA11yDwellDirection is export := guint32;
+our enum  MutterClutterPointerA11yDwellDirectionEnum is export <
+  CLUTTER_A11Y_DWELL_DIRECTION_NONE
+  CLUTTER_A11Y_DWELL_DIRECTION_LEFT
+  CLUTTER_A11Y_DWELL_DIRECTION_RIGHT
+  CLUTTER_A11Y_DWELL_DIRECTION_UP
+  CLUTTER_A11Y_DWELL_DIRECTION_DOWN,
+>;
+
+constant MutterClutterPointerA11yDwellMode is export := guint32;
+our enum MutterClutterPointerA11yDwellModeEnum is export <
+  CLUTTER_A11Y_DWELL_MODE_WINDOW
+  CLUTTER_A11Y_DWELL_MODE_GESTURE
+>;
+
+constant MutterClutterPointerA11yTimeoutType is export := guint32;
+our enum MutterClutterPointerA11yTimeoutTypeEnum is export <
+  CLUTTER_A11Y_TIMEOUT_TYPE_SECONDARY_CLICK
+  CLUTTER_A11Y_TIMEOUT_TYPE_DWELL
+  CLUTTER_A11Y_TIMEOUT_TYPE_GESTURE
+>;
+
 constant MutterClutterActorAlign is export := guint32;
 our enum MutterClutterActorAlignEnum is export <
   CLUTTER_ACTOR_ALIGN_FILL
@@ -1098,6 +1136,45 @@ our enum MutterClutterLongPressStateEnum is export <
   CLUTTER_LONG_PRESS_ACTIVATE
   CLUTTER_LONG_PRESS_CANCEL
 >;
+
+constant MutterClutterModifierType is export := guint32;
+our enum MutterClutterModifierTypeEnum is export (
+  CLUTTER_SHIFT_MASK                 => 1 +< 0,
+  CLUTTER_LOCK_MASK                  => 1 +< 1,
+  CLUTTER_CONTROL_MASK               => 1 +< 2,
+  CLUTTER_MOD1_MASK                  => 1 +< 3,
+  CLUTTER_MOD2_MASK                  => 1 +< 4,
+  CLUTTER_MOD3_MASK                  => 1 +< 5,
+  CLUTTER_MOD4_MASK                  => 1 +< 6,
+  CLUTTER_MOD5_MASK                  => 1 +< 7,
+  CLUTTER_BUTTON1_MASK               => 1 +< 8,
+  CLUTTER_BUTTON2_MASK               => 1 +< 9,
+  CLUTTER_BUTTON3_MASK               => 1 +< 10,
+  CLUTTER_BUTTON4_MASK               => 1 +< 11,
+  CLUTTER_BUTTON5_MASK               => 1 +< 12,
+  CLUTTER_MODIFIER_RESERVED_13_MASK  => 1 +< 13,
+  CLUTTER_MODIFIER_RESERVED_14_MASK  => 1 +< 14,
+  CLUTTER_MODIFIER_RESERVED_15_MASK  => 1 +< 15,
+  CLUTTER_MODIFIER_RESERVED_16_MASK  => 1 +< 16,
+  CLUTTER_MODIFIER_RESERVED_17_MASK  => 1 +< 17,
+  CLUTTER_MODIFIER_RESERVED_18_MASK  => 1 +< 18,
+  CLUTTER_MODIFIER_RESERVED_19_MASK  => 1 +< 19,
+  CLUTTER_MODIFIER_RESERVED_20_MASK  => 1 +< 20,
+  CLUTTER_MODIFIER_RESERVED_21_MASK  => 1 +< 21,
+  CLUTTER_MODIFIER_RESERVED_22_MASK  => 1 +< 22,
+  CLUTTER_MODIFIER_RESERVED_23_MASK  => 1 +< 23,
+  CLUTTER_MODIFIER_RESERVED_24_MASK  => 1 +< 24,
+  CLUTTER_MODIFIER_RESERVED_25_MASK  => 1 +< 25,
+  CLUTTER_SUPER_MASK                 => 1 +< 26,
+  CLUTTER_HYPER_MASK                 => 1 +< 27,
+  CLUTTER_META_MASK                  => 1 +< 28,
+  CLUTTER_MODIFIER_RESERVED_29_MASK  => 1 +< 29,
+  CLUTTER_RELEASE_MASK               => 1 +< 30,
+
+  # Combination of CLUTTER_SHIFT_MASK..CLUTTER_BUTTON5_MASK + CLUTTER_SUPER_MASK
+  # CLUTTER_HYPER_MASK + CLUTTER_META_MASK + CLUTTER_RELEASE_MASK
+  CLUTTER_MODIFIER_MASK              => 0x5c001fff
+);
 
 constant MutterClutterOffscreenRedirect is export := guint32;
 our enum MutterClutterOffscreenRedirectEnum is export (

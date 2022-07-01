@@ -109,3 +109,16 @@ class MutterClutterOffscreenShadowParams is repr<CStruct> is export {
 # 	has MutterClutterOffscreenRectangle $!rect;
 # 	has MutterClutterOffscreenSide      $!side;
 # }
+
+class MutterClutterPointerA11ySettings is repr<CStruct> is export {
+  has MutterClutterPointerA11yFlags          $.controls                is rw;
+  has MutterClutterPointerA11yDwellClickType $.dwell_click_type        is rw;
+  has MutterClutterPointerA11yDwellMode      $.dwell_mode              is rw;
+  has MutterClutterPointerA11yDwellDirection $.dwell_gesture_single    is rw;
+  has MutterClutterPointerA11yDwellDirection $.dwell_gesture_double    is rw;
+  has MutterClutterPointerA11yDwellDirection $.dwell_gesture_drag      is rw;
+  has MutterClutterPointerA11yDwellDirection $.dwell_gesture_secondary is rw;
+  has gint                                   $.secondary_click_delay   is rw;
+  has gint                                   $.dwell_delay             is rw;
+  has gint                                   $.dwell_threshold         is rw;
+}

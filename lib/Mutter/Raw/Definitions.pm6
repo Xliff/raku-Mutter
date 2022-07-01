@@ -61,11 +61,13 @@ class MutterClutterContent            is repr<CPointer> does GLib::Roles::Pointe
 class MutterClutterConstraint         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterContainer          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterEffect             is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterEvent              is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterEventSequence      is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterFrameClock         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterGrab               is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterInputDevice        is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterInterval           is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterKeymap             is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterKnot               is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterLayoutManager      is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterLayoutMeta         is repr<CPointer> does GLib::Roles::Pointers is export { }
@@ -86,11 +88,13 @@ class MutterClutterRotateAction       is repr<CPointer> does GLib::Roles::Pointe
 class MutterClutterScript             is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterScriptable         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterScrollActor        is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterSeat               is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterStage              is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterStageView          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterTimeline           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterTransition         is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterClutterEvent              is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterVirtualInputDevice is repr<CPointer> does GLib::Roles::Pointers is export { }
+
 
 # Cogl
 
