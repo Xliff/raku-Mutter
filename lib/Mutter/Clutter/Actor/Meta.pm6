@@ -1,10 +1,15 @@
 use v6.c;
 
+use Method::Also;
 use NativeCall;
 
+use GLib::Raw::Traits;
 use Mutter::Raw::Types;
 
 use GLib::Roles::Object;
+
+our subset MutterClutterActorMetaAncestry is export of Mu
+  where MutterClutterActorMeta | GObject;
 
 class Mutter::Clutter::Actor::Meta {
   also does GLib::Roles::Object;
@@ -47,9 +52,9 @@ class Mutter::Clutter::Actor::Meta {
     $o;
   }
 
-  method get_actor (:$raw = False) {
+  method get_actor (:$raw = False) is also<get-actor> {
     propReturnObject(
-      clutter_actor_meta_get_actor($!mcam)
+      clutter_actor_meta_get_actor($!mcam),
       $raw,
       |::('Mutter::Clutter::Actor').getTypePair
     )
@@ -67,11 +72,11 @@ class Mutter::Clutter::Actor::Meta {
       STORE => -> $, \v { self.set_name(v) }
   }
 
-  method get_enabled {
+  method get_enabled is also<get-enabled> {
     so clutter_actor_meta_get_enabled($!mcam);
   }
 
-  method get_name  {
+  method get_name  is also<get-name> {
     clutter_actor_meta_get_name($!mcam),
   }
 
@@ -81,11 +86,13 @@ class Mutter::Clutter::Actor::Meta {
     unstable_get_type( self.^name, &clutter_actor_meta_get_type, $n, $t );
   }
 
-  method set_enabled (gboolean $is_enabled) {
-    clutter_actor_meta_set_enabled($!mcam, $is_enabled);
+  method set_enabled (gboolean $is_enabled) is also<set-enabled> {
+    my gboolean $i = $is_enabled.so.Int;
+
+    clutter_actor_meta_set_enabled($!mcam, $i);
   }
 
-  method set_name (Str $name) {
+  method set_name (Str() $name) is also<set-name> {
     clutter_actor_meta_set_name($!mcam, $name);
   }
 
@@ -94,19 +101,19 @@ class Mutter::Clutter::Actor::Meta {
 
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-actor-meta.h
 
-sub clutter_actor_meta_get_actor (ClutterActorMeta $meta)
-  returns ClutterActor
+sub clutter_actor_meta_get_actor (MutterClutterActorMeta $meta)
+  returns MutterClutterActor
   is native(mutter-clutter)
   is export
 { * }
 
-sub clutter_actor_meta_get_enabled (ClutterActorMeta $meta)
+sub clutter_actor_meta_get_enabled (MutterClutterActorMeta $meta)
   returns uint32
   is native(mutter-clutter)
   is export
 { * }
 
-sub clutter_actor_meta_get_name (ClutterActorMeta $meta)
+sub clutter_actor_meta_get_name (MutterClutterActorMeta $meta)
   returns Str
   is native(mutter-clutter)
   is export
@@ -119,14 +126,14 @@ sub clutter_actor_meta_get_type
 { * }
 
 sub clutter_actor_meta_set_enabled (
-  ClutterActorMeta $meta,
-  gboolean         $is_enabled
+  MutterClutterActorMeta $meta,
+  gboolean               $is_enabled
 )
   is native(mutter-clutter)
   is export
 { * }
 
-sub clutter_actor_meta_set_name (ClutterActorMeta $meta, Str $name)
+sub clutter_actor_meta_set_name (MutterClutterActorMeta $meta, Str $name)
   is native(mutter-clutter)
   is export
 { * }
