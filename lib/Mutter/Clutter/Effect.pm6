@@ -5,16 +5,16 @@ use NativeCall;
 
 use Mutter::Raw::Types;
 
-use Mutter::Clutter::ActorMeta;
+use Mutter::Clutter::Actor::Meta;
 
 our subset MutterClutterEffectAncestry of Mu is export
   where MutterClutterEffect | MutterClutterActorMetaAncestry;
 
-class Mutter::Clutter::Effect is Mutter::Clutter::ActorMeta {
-  has MutterClutterEffect $!c-eff is implementor;
+class Mutter::Clutter::Effect is Mutter::Clutter::Actor::Meta {
+  has MutterClutterEffect $!mce is implementor;
 
   submethod BUILD ( :$mutter-clutter-effect ) {
-    self.setMutterClutterEffect)($mutter-clutter-effect)
+    self.setMutterClutterEffect($mutter-clutter-effect)
       if $mutter-clutter-effect
   }
 
@@ -25,14 +25,14 @@ class Mutter::Clutter::Effect is Mutter::Clutter::ActorMeta {
   method setMutterClutterfEffect(MutterClutterEffectAncestry $_) {
     my $to-parent;
     $!mce = do {
-      when ClutterEffect {
-        $to-parent = cast(ClutterActorMeta, $_);
+      when MutterClutterEffect {
+        $to-parent = cast(MutterClutterActorMeta, $_);
         $_;
       }
 
       default {
         $to-parent = $_;
-        cast(ClutterEffect, $_);
+        cast(MutterClutterEffect, $_);
       }
     }
     self.setActorMeta($to-parent);
@@ -61,7 +61,7 @@ class Mutter::Clutter::Effect is Mutter::Clutter::ActorMeta {
 
 }
 
-sub clutter_effect_queue_repaint (ClutterEffect $effect)
+sub clutter_effect_queue_repaint (MutterClutterEffect $effect)
   is native(mutter-clutter)
   is export
 { * }
