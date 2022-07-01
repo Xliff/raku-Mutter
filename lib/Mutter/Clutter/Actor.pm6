@@ -2755,11 +2755,3 @@ INIT {
     say "Clutter::Actor - { $np } property entr{ $np == 1 ?? 'y' !! 'ies' }";
   }
 }
-
-# method clutter_constraint_update_preferred_size (ClutterActor $actor, ClutterOrientation $direction, gfloat $for_size, gfloat $minimum_size is rw, gfloat $natural_size is rw) {
-#   clutter_constraint_update_preferred_size($!mca, $actor, $direction, $for_size, $minimum_size is rw, $natural_size is rw);
-# }
-#
-# method clutter_constraint_get_type {
-#   clutter_constraint_get_type();
-# }
