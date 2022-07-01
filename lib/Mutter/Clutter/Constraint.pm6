@@ -29,7 +29,7 @@ class Mutter::Clutter::Constraint {
 
   method setMutterClutterConstraint (MutterClutterConstraintAncestry $_) {
     my $to-parent;
-    $!c-con = do {
+    $!mc-con = do {
       when MutterClutterConstraint {
         $to-parent = cast(GObject, $_);
         $_
@@ -59,10 +59,47 @@ class Mutter::Clutter::Constraint {
 
     unstable_get_type( self.^name, &clutter_constraint_get_type, $n, $t );
   }
+
+  proto method update_preferred_size (|)
+  { * }
+
+  multi method update_preferred_size (
+    MutterClutterActor() $actor,
+    Int()                $direction,
+    Num()                $for_size
+  ) {
+    samewith($actor, $direction, $for_size, $, $);
+  }
+  multi method update_preferred_size (
+    MutterClutterActor() $actor,
+    Int()                $direction,
+    Num()                $for_size,
+                         $minimum_size is rw,
+                         $natural_size is rw
+  ) {
+    my MutterClutterOrientation  $d          = $direction;
+    my gfloat                   ($f, $m, $n) = ($for_size, 0e0, 0e0);
+
+    clutter_constraint_update_preferred_size($!mc-con, $actor, $d, $f, $m, $n);
+    ($minimum_size, $natural_size) = ($m, $n);
+  }
+
 }
+
+sub clutter_constraint_update_preferred_size (
+  MutterClutterConstraint  $constraint,
+  MutterClutterActor       $actor,
+  MutterClutterOrientation $direction,
+  gfloat                   $for_size,
+  gfloat                   $minimum_size is rw,
+  gfloat                   $natural_size is rw
+)
+  is native(mutter-clutter)
+  is export
+{ * }
 
 sub clutter_constraint_get_type ()
   returns GType
   is native(mutter-clutter)
   is export
-  { * }
+{ * }
