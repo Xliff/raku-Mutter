@@ -7,6 +7,8 @@ use Mutter::Raw::Clutter::Seat;
 
 use GLib::GList;
 
+use Mutter::Clutter::VirtualInputDevice;
+
 class Mutter::Clutter::Seat {
   has MutterClutterSeat $!mcs is implementor;
 
@@ -14,10 +16,14 @@ class Mutter::Clutter::Seat {
     clutter_seat_bell_notify($!mcs);
   }
 
-  method create_virtual_device (Int() $device_type) {
+  method create_virtual_device (Int() $device_type, :$raw = False) {
     my MutterClutterInputDeviceType $d = $device_type;
 
-    clutter_seat_create_virtual_device($!mcs, $d);
+    propReturnObject(
+      clutter_seat_create_virtual_device($!mcs, $d),
+      $raw,
+      |Mutter::Clutter::VirtualInputDevice
+    );
   }
 
   method ensure_a11y_state {
