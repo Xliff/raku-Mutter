@@ -13,25 +13,25 @@ sub clutter_path_constraint_get_offset (
   MutterClutterPathConstraint $constraint
 )
   returns gfloat
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_path_constraint_get_path (MutterClutterPathConstraint $constraint)
   returns MutterClutterPath
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_path_constraint_get_type ()
   returns GType
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_path_constraint_new (MutterClutterPath $path, gfloat $offset)
   returns MutterClutterConstraint
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -39,7 +39,7 @@ sub clutter_path_constraint_set_offset (
   MutterClutterPathConstraint $constraint,
   gfloat                      $offset
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -47,6 +47,6 @@ sub clutter_path_constraint_set_path (
   MutterClutterPathConstraint $constraint,
   MutterClutterPath           $path
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }

@@ -13,25 +13,25 @@ unit package Mutter::Raw::Clutter::ShaderEffect;
 
 sub clutter_shader_effect_get_program (MutterClutterShaderEffect $effect)
   returns MutterCoglHandle
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_shader_effect_get_shader (MutterClutterShaderEffect $effect)
   returns MutterCoglHandle
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_shader_effect_get_type ()
   returns GType
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_shader_effect_new (MutterClutterShaderType $shader_type)
   returns MutterClutterShaderEffect
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -40,7 +40,7 @@ sub clutter_shader_effect_set_shader_source (
   Str                             $source
 )
   returns uint32
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -51,7 +51,7 @@ sub clutter_shader_effect_set_shader_source (
 #   gsize $n_values,
 #   ...
 # )
-#   is native(mutter)
+#   is native(mutter-clutter)
 #   is export
 # { * }
 
@@ -60,6 +60,6 @@ sub clutter_shader_effect_set_uniform_value (
   Str                       $name,
   GValue                    $value
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }

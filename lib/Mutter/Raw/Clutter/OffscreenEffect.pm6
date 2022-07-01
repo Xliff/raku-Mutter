@@ -15,7 +15,7 @@ sub clutter_offscreen_effect_create_texture (
   gfloat                       $height
 )
   returns MutterCoglHandle
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -23,7 +23,7 @@ sub clutter_offscreen_effect_get_pipeline (
   MutterClutterOffscreenEffect $effect
 )
   returns MutterCoglPipeline
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -33,19 +33,19 @@ sub clutter_offscreen_effect_get_target_size (
   gfloat                       $height  is rw
 )
   returns uint32
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_offscreen_effect_get_texture (MutterClutterOffscreenEffect $effect)
   returns MutterCoglHandle
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_offscreen_effect_get_type ()
   returns GType
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -54,6 +54,6 @@ sub clutter_offscreen_effect_paint_target (
   MutterClutterPaintNode       $node,
   MutterClutterPaintContext    $paint_context
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }

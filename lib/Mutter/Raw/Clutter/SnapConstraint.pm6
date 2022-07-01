@@ -15,7 +15,7 @@ sub clutter_snap_constraint_get_edges (
   MutterClutterSnapEdge       $from_edge,
   MutterClutterSnapEdge       $to_edge
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -23,7 +23,7 @@ sub clutter_snap_constraint_get_offset (
   MutterClutterSnapConstraint $constraint
 )
   returns gfloat
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -31,13 +31,13 @@ sub clutter_snap_constraint_get_source (
   MutterClutterSnapConstraint $constraint
 )
   returns MutterClutterActor
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_snap_constraint_get_type ()
   returns GType
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -48,7 +48,7 @@ sub clutter_snap_constraint_new (
   gfloat                $offset
 )
   returns MutterClutterConstraint
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -57,7 +57,7 @@ sub clutter_snap_constraint_set_edges (
   MutterClutterSnapEdge       $from_edge,
   MutterClutterSnapEdge       $to_edge
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -65,7 +65,7 @@ sub clutter_snap_constraint_set_offset (
   MutterClutterSnapConstraint $constraint,
   gfloat                      $offset
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -73,6 +73,6 @@ sub clutter_snap_constraint_set_source (
   MutterClutterSnapConstraint $constraint,
   MutterClutterActor          $source
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }

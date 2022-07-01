@@ -15,13 +15,13 @@ sub clutter_animatable_find_property (
   Str                     $property_name
 )
   returns GParamSpec
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_animatable_get_actor (MutterClutterAnimatable $animatable)
   returns MutterClutterActor
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -30,7 +30,7 @@ sub clutter_animatable_get_initial_state (
   Str                     $property_name,
   GValue                  $value
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -42,7 +42,7 @@ sub clutter_animatable_interpolate_value (
   GValue                  $value
 )
   returns uint32
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -51,6 +51,6 @@ sub clutter_animatable_set_final_state (
   Str                     $property_name,
   GValue                  $value
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
