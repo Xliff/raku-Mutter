@@ -91,6 +91,7 @@ class MutterClutterScriptable         is repr<CPointer> does GLib::Roles::Pointe
 class MutterClutterScrollActor        is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterSeat               is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterShaderEffect       is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterSnapConstraint     is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterStage              is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterStageView          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterTimeline           is repr<CPointer> does GLib::Roles::Pointers is export { }
