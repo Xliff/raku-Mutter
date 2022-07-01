@@ -1578,21 +1578,3 @@ sub clutter_actor_remove_effect_by_name (MutterClutterActor $self, Str $name)
   is native(mutter-clutter)
   is export
 { * }
-
-sub clutter_constraint_update_preferred_size (
-  MutterClutterConstraint  $constraint,
-  MutterClutterActor       $actor,
-  MutterClutterOrientation $direction,
-  gfloat                   $for_size,
-  gfloat                   $minimum_size is rw,
-  gfloat                   $natural_size is rw
-)
-  is native(mutter-clutter)
-  is export
-{ * }
-
-sub clutter_constraint_get_type ()
-  returns GType
-  is native(mutter-clutter)
-  is export
-{ * }
