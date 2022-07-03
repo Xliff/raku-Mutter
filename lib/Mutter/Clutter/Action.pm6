@@ -7,7 +7,7 @@ use Mutter::Raw::Types;
 # Abstract.
 # GObject.
 
-#use Mutter::Clutter::ActorMeta;
+use Mutter::Clutter::Actor::Meta;
 
 our subset MutterClutterActionAncestry is export of Mu
   where MutterClutterAction | MutterClutterActorMetaAncestry;
