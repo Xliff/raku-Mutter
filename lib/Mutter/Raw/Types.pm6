@@ -29,6 +29,7 @@ need GIO::Raw::Structs;
 need GIO::Raw::Subs;
 need GIO::DBus::Raw::Types;
 need GIO::Raw::Exports;
+need Graphene::Raw::Exports;
 need Pango::Raw::Definitions;
 need Pango::Raw::Enums;
 need Pango::Raw::Structs;
