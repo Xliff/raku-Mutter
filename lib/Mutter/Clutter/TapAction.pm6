@@ -6,34 +6,34 @@ use Mutter::Raw::Types;
 
 use Mutter::Clutter::Action;
 
-class Mutter::Clutter::SwipeAction is Mutter::Clutter::Action {
-  has MutterClutterSwipeAction $!mcsa is implementor;
+class Mutter::Clutter::TapAction is Mutter::Clutter::Action {
+  has MutterClutterTapAction $!mcsa is implementor;
 
   method new {
-    my $clutter-swipe-action = clutter_swipe_action_new();
+    my $clutter-tap-action = clutter_tap_action_new();
 
-    $clutter-swipe-action ?? self.bless( :$clutter-swipe-action ) !! Nil;
+    $clutter-tap-action ?? self.bless( :$clutter-tap-action ) !! Nil;
   }
 
   method get_type {
     state ($n, $t);
 
-    unstable_get_type( self.^name, &clutter_swipe_action_get_type, $n, $t );
+    unstable_get_type( self.^name, &clutter_tap_action_get_type, $n, $t );
   }
 
 }
 
 
-### /usr/src/mutter-42.1/clutter/clutter/clutter-swipe-action.h
+### /usr/src/mutter-42.1/clutter/clutter/clutter-tap-action.h
 
-sub clutter_swipe_action_get_type ()
+sub clutter_tap_action_get_type ()
   returns GType
   is native(mutter)
   is export
 { * }
 
-sub clutter_swipe_action_new ()
-  returns MutterClutterSwipeAction
+sub clutter_tap_action_new ()
+  returns MutterClutterTapAction
   is native(mutter)
   is export
 { * }
