@@ -63,7 +63,7 @@ role Mutter::Clutter::Roles::Scriptable {
 our subset MutterClutterScriptableAncestry is export of Mu
   where MutterClutterScriptable | GObject;
 
-class Mutter::Scriptable {
+class Mutter::Clutter::Scriptable {
   also does GLib::Roles::Object;
   also does Mutter::Clutter::Roles::Scriptable;
 
