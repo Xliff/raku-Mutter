@@ -40,7 +40,7 @@ role Mutter::Clutter::Roles::Signals::Generic {
 sub g-connect-actor(
   Pointer $app,
   Str     $name,
-          &handler (Pointer, ClutterActor, Pointer),
+          &handler (Pointer, MutterClutterActor, Pointer),
   Pointer $data,
   uint32  $flags
 )
