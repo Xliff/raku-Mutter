@@ -30,7 +30,7 @@ use GLib::Roles::Implementor;
 use Mutter::Clutter::Roles::Animatable;
 use Mutter::Clutter::Roles::Container;
 # use Mutter::Clutter::Roles::Content;
-# use Mutter::Clutter::Roles::Scriptable;
+use Mutter::Clutter::Roles::Scriptable;
 # use Mutter::Clutter::Roles::Signals::Actor;
 # use Mutter::Clutter::Roles::Signals::Generic;
 
@@ -44,7 +44,7 @@ class Mutter::Clutter::Actor {
   also does GLib::Roles::Object;
   also does Mutter::Clutter::Roles::Animatable;
   also does Mutter::Clutter::Roles::Container;
-  # also does Mutter::Clutter::Roles::Scriptable;
+  also does Mutter::Clutter::Roles::Scriptable;
   # also does Mutter::Clutter::Roles::Signals::Actor;
   # also does Mutter::Clutter::Roles::Signals::Generic;
 
@@ -69,7 +69,7 @@ class Mutter::Clutter::Actor {
 
       when MutterClutterAnimatable { $!mc-anim = $_; proceed; }
       when MutterClutterContainer  { $!mcc     = $_; proceed; }
-      #when MutterClutterScriptable { $!mcs     = $_; proceed; }
+      when MutterClutterScriptable { $!mcs     = $_; proceed; }
 
       when MutterClutterAnimatable |
            MutterClutterContainer  |
