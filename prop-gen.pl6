@@ -75,7 +75,7 @@ my %methods;
 sub genSub ($mn, $rw, $gtype, $dep, $vtype-r, $vtype-w) {
   my %c;
 
-  #say "MN: $mn, RW: $rw";
+  # say "MN: $mn, RW: { $rw.map( "'" ~ * ~ "'" ).join(', ') }";
 
   with $rw {
     %c<read> =
@@ -83,15 +83,19 @@ sub genSub ($mn, $rw, $gtype, $dep, $vtype-r, $vtype-w) {
       ' ' x 6 ~ "self.prop_get('{ $mn }', \$gv);\n" ~
       #' ' x 6 ~ ");\n" ~
       $vtype-r
-    if $rw.any.contains('read');
+    if $rw.any eq 'read';
+
+    # say "R: { so($rw.any eq 'read') }";
 
     %c<write> =
       "{ $vtype-w }\n" ~
       ' ' x 6 ~ "self.prop_set(\'{ $mn }\', \$gv);"
-    if $rw.any.contains('write');
+    if $rw.any eq 'write';
+
+    # say "W: { so($rw.any eq 'write') }";
 
     %c<write> = "warn '{ $mn } is a construct-only attribute'"
-      if $rw.any.contains('construct');
+      if $rw.any eq 'construct';
   }
 
   %c<write> //= "warn '{ $mn } does not allow writing'";
@@ -252,25 +256,28 @@ sub generateFromFile (
 
     my $prop-name = .<p>[0].Str;
 
-    my $rw = do for .<p>.tail
-                        .split(' | ')
-   {
-      my @rw-mapped;
-      my $rw-mapped = .trim
-                      .lc
-                      .subst('g_param_')
-                      .subst('able', '')
-                      .subst('_only', '');
+    my $rw = (
+      do gather for .<p>.tail
+                        .lc
+                        .split(/ <.ws> '|' <.ws> /)
+     {
+        my @perms;
 
-      $rw-mapped ~~ tr/()//;
-      $rw-mapped ~~ s/ 'writ'» /write/;
+        #"RW-P: $_";
 
-      @rw-mapped.push('read')        if $rw-mapped.any eq 'read';
-      @rw-mapped.push('write')       if $rw-mapped.any eq 'write';
-      @rw-mapped = ('read', 'write') if $rw-mapped.any eq 'readwrite';
-      #@rw-mapped.gist.say;
-      |@rw-mapped;
-    }
+        s/ 'writ'» /write/;
+
+        @perms.push: 'read'           if .ends-with('_read'  | '_readable');
+        @perms.push: 'write'          if .ends-with('_write' | '_writable');
+        @perms.append: |<read write>  if .ends-with('readwrite');
+
+        if +@perms {
+          take $_ for @perms;
+        }
+      }
+    ).cache;
+
+    #say "RW: { $rw.gist }";
 
     my $*co;
     my $type = my $*types = .[0].Str;
