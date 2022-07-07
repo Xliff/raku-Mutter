@@ -3,14 +3,47 @@ use v6.c;
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::Container;
 
+use GLib::Roles::Implementor;
+use GLib::Roles::Object;
+use Mutter::Clutter::Roles::Signals::Container;
+
 role Mutter::Clutter::Roles::Container {
+  also does Mutter::Clutter::Roles::Signals::Container;
+
   has MutterClutterContainer $!mcc is implementor;
 
-  method create_child_meta (ClutterActor() $actor) {
+  method roleInit-MutterClutterContainer {
+    return if $!mcc;
+
+    my \i = findProperImplementor(self.^attributes);
+
+    $!mcc = cast( MutterClutterContainer, i.get_value(self) )
+  }
+
+  # Is originally:
+  # ClutterContainer *container,  ClutterActor *child,  GParamSpec *pspec --> void
+  method child-notify {
+    self.connect-child-notify($!mcc);
+  }
+
+  # Is originally:
+  # ClutterContainer *container,  ClutterActor *actor --> void
+  method actor-added {
+    self.connect-actor($!mcc, 'actor-added');
+  }
+
+  # Is originally:
+  # ClutterContainer *container,  ClutterActor *actor --> void
+  method actor-removed {
+    self.connect-actor($!mcc, 'actor-removed');
+  }
+
+
+  method create_child_meta (MutterClutterActor() $actor) {
     clutter_container_create_child_meta($!mcc, $actor);
   }
 
-  method destroy_child_meta (ClutterActor() $actor) {
+  method destroy_child_meta (MutterClutterActor() $actor) {
     clutter_container_destroy_child_meta($!mcc, $actor);
   }
 
@@ -22,11 +55,11 @@ role Mutter::Clutter::Roles::Container {
     );
   }
 
-  method get_child_meta (ClutterActor() $actor) {
+  method get_child_meta (MutterClutterActor() $actor) {
     clutter_container_get_child_meta($!mcc, $actor);
   }
 
-  method get_type {
+  method muttercluttercontainer_get_type {
     state ($n, $t);
 
     unstable_get_type( self.^name, &clutter_container_get_type, $n, $t );
@@ -35,6 +68,7 @@ role Mutter::Clutter::Roles::Container {
 }
 
 class Mutter::Clutter::Container::Child {
+  has $!mccc;
 
   # method get (ClutterActor $actor, Str $first_prop, ...) {
   #   clutter_container_child_get($!mcc, $actor, $first_prop);
@@ -52,23 +86,23 @@ class Mutter::Clutter::Container::Child {
                          :$raw       = False,
                          :$gvalue    = False
   ) {
-    samewith($child, $property, GValue.new, :$raw, :$gvalue) {
+    samewith($child, $property, GValue.new, :$raw, :$gvalue);
   }
   multi method get_property (
-    MutterClutterActor() $child,
-    Str()                $property,
-    GValue()             $value
-                        :$raw       = False,
-                        :$gvalue    = False
+    MutterClutterActor()  $child,
+    Str()                 $property,
+    GValue()              $value,
+                         :$raw       = False,
+                         :$gvalue    = False
   ) {
-    clutter_container_child_get_property($!mcc, $child, $property, $value);
-    my $v = propReturnObject($value, $raw, |GLib::Value.getTypePair)
-    $v.value unless $gvalue || $raw
+    clutter_container_child_get_property($!mccc, $child, $property, $value);
+    my $v = propReturnObject($value, $raw, |GLib::Value.getTypePair);
+    $v.value unless $gvalue || $raw;
     $v;
   }
 
   method notify (MutterClutterActor() $child, GParamSpec() $pspec) {
-    clutter_container_child_notify($!mcc, $child, $pspec);
+    clutter_container_child_notify($!mccc, $child, $pspec);
   }
 
   # method set (ClutterActor $actor, Str $first_prop, ...) {
@@ -80,7 +114,7 @@ class Mutter::Clutter::Container::Child {
     Str()                $property,
     GValue()             $value
   ) {
-    clutter_container_child_set_property($!mcc, $child, $property, $value);
+    clutter_container_child_set_property($!mccc, $child, $property, $value);
   }
 
 }
@@ -94,3 +128,49 @@ class Mutter::Clutter::Container::Child {
 # method class_list_child_properties (guint $n_properties is rw) {
 #   clutter_container_class_list_child_properties($!mcc, $n_properties is rw);
 # }
+
+our subset MutterClutterContainerAncestry is export of Mu
+  where MutterClutterContainer | GObject;
+
+class Mutter::Clutter::Container {
+  also does GLib::Roles::Object;
+  also does Mutter::Clutter::Roles::Container;
+
+  submethod BUILD ( :$mutter-clutter-container ) {
+    self.setMutterClutterContainer($mutter-clutter-container)
+      if $mutter-clutter-container;
+  }
+
+  method setMutterClutterContainer(MutterClutterContainerAncestry $_) {
+    my $to-parent;
+
+    $!mcc = do {
+      when MutterClutterContainer {
+        $to-parent = cast(GObject, $_);
+        $_;
+      }
+
+      default {
+        $to-parent = $_;
+        cast(MutterClutterContainer, $_);
+      }
+    }
+    self!setObject($to-parent);
+  }
+
+  method new (
+    MutterClutterContainerAncestry  $mutter-clutter-container,
+                                   :$ref                       = True
+  ) {
+    return Nil unless $mutter-clutter-container;
+
+    my $o = self.bless( :$mutter-clutter-container );
+    $o.ref if $ref;
+    $o;
+  }
+
+  method get_type {
+    self.muttercluttercontainer_get_type
+  }
+
+}

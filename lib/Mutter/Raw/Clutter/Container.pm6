@@ -2,6 +2,13 @@ use v6.c;
 
 use NativeCall;
 
+use GLib::Raw::Definitions;
+use GLib::Raw::Structs;
+use Mutter::Raw::Definitions;
+use Mutter::Raw::Structs;
+
+use GLib::Class::Object;
+
 unit package Mutter::Raw::Clutter::Container;
 
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-container.h
@@ -84,7 +91,7 @@ sub clutter_container_create_child_meta (
 sub clutter_container_destroy_child_meta (
   MutterClutterContainer $container,
   MutterClutterActor     $actor
-)0
+)
   is native(mutter)
   is export
 { * }
