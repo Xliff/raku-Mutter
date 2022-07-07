@@ -8,6 +8,7 @@ use Mutter::Raw::Clutter::Animatable;
 use GLib::Object::ParamSpec;
 
 use GLib::Roles::Object;
+use GLib::Roles::Implementor;
 
 role Mutter::Clutter::Roles::Animatable {
   has MutterClutterAnimatable $!mc-anim is implementor;
@@ -81,7 +82,7 @@ role Mutter::Clutter::Roles::Animatable {
 
 }
 
-our subset MutterClutterAnimatable is export of Mu
+our subset MutterClutterAnimatableAncestry is export of Mu
   where MutterClutterAnimatable | GObject;
 
 class Mutter::Clutter::Animatable {
