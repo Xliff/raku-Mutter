@@ -1,5 +1,8 @@
 use v6.c;
 
+use Method::Also;
+
+use GLib::Raw::Traits;
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::Color;
 
@@ -22,13 +25,13 @@ class Mutter::Clutter::Color {
     is also<MutterClutterColor>
   { $!mcc }
 
-  multi method new (MutterClutterColor $color) {
-    $color ?? self.bless(:$color) !! Nil;
+  multi method new (MutterClutterColor $mutter-clutter-color) {
+    $mutter-clutter-color ?? self.bless( :$mutter-clutter-color ) !! Nil;
   }
   multi method new {
     my $mutter-clutter-color = ::?CLASS.alloc;
 
-    $color ?? self.bless( :$mutter-clutter-color ) !! Nil;
+    $mutter-clutter-color ?? self.bless( :$mutter-clutter-color ) !! Nil;
   }
   multi method new (
     Int() $red,
@@ -43,7 +46,6 @@ class Mutter::Clutter::Color {
   }
 
   method new_from_hls (
-    Clutter::Color:U:
     Num()             $hue,
     Num()             $luminance,
     Num()             $saturation,
@@ -59,7 +61,7 @@ class Mutter::Clutter::Color {
     my gfloat ($h, $l, $s)           = ($hue, $luminance, $saturation);
     my         $mutter-clutter-color = ::?CLASS.alloc;
 
-    X::Mutter::Clutter::Color::Memory.new.throw unless $color;
+    X::Mutter::Clutter::Color::Memory.new.throw unless $mutter-clutter-color;
 
     if $alpha.defined {
       die '$alpha is not Int-compatible' unless $alpha.^lookup('Int');
@@ -80,7 +82,7 @@ class Mutter::Clutter::Color {
     my guint $p                    = $pixel;
     my       $mutter-clutter-color = ::?CLASS.alloc;
 
-    X::Mutter::Clutter::Color::Memory.new.throw unless $color;
+    X::Mutter::Clutter::Color::Memory.new.throw unless $mutter-clutter-color;
 
     clutter_color_from_pixel($mutter-clutter-color, $p);
     self.bless( :$mutter-clutter-color );
@@ -92,7 +94,6 @@ class Mutter::Clutter::Color {
       from_string
       from-string
     >
-
   {
     my $mutter-clutter-color = ::?CLASS.alloc;
 
@@ -102,14 +103,14 @@ class Mutter::Clutter::Color {
     self.bless( :$mutter-clutter-color );
   }
 
-  method new_from_color (ClutterColor() $c) is static
+  method new_from_color (MutterClutterColor() $c) is static
     is also<
       new-from-color
       from_color
       from-color
     >
   {
-    my $mutter-clutter-color = ClutterColor.new(
+    my $mutter-clutter-color = MutterClutterColor.new(
       $c.red,
       $c.green,
       $c.blue,
@@ -145,7 +146,7 @@ DIE
     Int()             $green,
     Int()             $blue,
     Int()             $alpha
-  }
+  )
     is static
   {
     my guint8 ($r, $g, $b, $a) = ($red, $green, $blue, $alpha);
@@ -155,14 +156,14 @@ DIE
     $c;
   }
 
-  multi method add (ClutterColor() $b, :$raw = False) {
+  multi method add (MutterClutterColor() $b, :$raw = False) {
     my $color = ::?CLASS.alloc;
 
     X::ClutterColor::Memory.new.throw unless $color;
 
     ::?CLASS.add($b, $color, :$raw);
   }
-  method add (
+  multi method add (
     MutterClutterColor()  $b,
     MutterClutterColor()  $result,
                          :$raw     = False
@@ -175,7 +176,7 @@ DIE
   }
 
   method alloc is static {
-    clutter_color_alloc($!mcc);
+    clutter_color_alloc();
   }
 
   method copy ( :$raw = False ) {
@@ -186,16 +187,16 @@ DIE
     );
   }
 
-  method darken ( :$raw = False ) {
-    samewith( ::?CLASS.alloc);
+  multi method darken ( :$raw = False ) {
+    samewith( ::?CLASS.alloc );
   }
-  method darken (MutterClutterColor() $result, :$raw = False) {
+  multi method darken (MutterClutterColor() $result, :$raw = False) {
     clutter_color_darken($!mcc, $result);
     propReturnObject($result, $raw, |self.getTypePair);
   }
 
-  method equal (MutterClutterColor() $v2) {
-    ::?CCLASS.equal($!mcc, $v2);
+  multi method equal (MutterClutterColor() $v2) {
+    ::?CLASS.equal($!mcc, $v2);
   }
   multi method equal (MutterClutterColor() $a, MutterClutterColor() $b)
     is static
@@ -207,7 +208,7 @@ DIE
     clutter_color_free($!mcc);
   }
 
-  method get_type {
+  method get_type is also<get-type> {
     state ($n, $t);
 
     unstable_get_type( self.^name, &clutter_color_get_type, $n, $t );
@@ -221,7 +222,7 @@ DIE
   }
 
   multi method interpolate (MutterClutterColor() $final, Num() $progress) {
-    ::?CLASS.interpolate($!cc, $final, $progress);
+    ::?CLASS.interpolate($!mcc, $final, $progress);
   }
   multi method interpolate (
     MutterClutterColor()  $a,
@@ -233,7 +234,7 @@ DIE
   {
     return Nil unless $a && $b;
 
-    my $color = self.alloc;
+    my $color = ::?CLASS.alloc;
     return unless $color;
 
     my gdouble $p = $progress;
@@ -258,17 +259,17 @@ DIE
   {
     clutter_color_lighten($c1, $c2);
 
-    propReturnObject($c2, $raw, self.getTypePair
+    propReturnObject($c2, $raw, self.getTypePair);
   }
 
   multi method shade (Num() $factor, :$raw = False) {
     ::?CLASS.shade($!mcc, $factor, $, :$raw);
   }
   multi method shade (
-    ClutterColor()    $c1,
-    Num()             $factor,
-                      $color
-                     :$raw     = False
+    MutterClutterColor()    $c1,
+    Num()                   $factor,
+                            $color,
+                           :$raw     = False
   ) {
     return Nil unless $c1;
 
@@ -282,10 +283,15 @@ DIE
     propReturnObject($color, $raw, |self.getTypePair)
   }
 
-  multi method subtract (ClutterColor() $b) {
-    ::?CLASS.subtract($!cc, $b);
+  multi method subtract (MutterClutterColor() $b) {
+    ::?CLASS.subtract($!mcc, $b, ::?CLASS.alloc);
   }
-  method subtract (ClutterColor() $b, ClutterColor() $b, :$raw = False) {
+  multi method subtract (
+    MutterClutterColor()  $a,
+    MutterClutterColor()  $b,
+    MutterClutterColor()  $result,
+                         :$raw     = False
+  ) {
     return Nil unless $a && $b;
 
     my $color = ::?CLASS.alloc;
@@ -303,10 +309,10 @@ DIE
     ::?CLASS.to_hls($!mcc, $, $, $);
   }
   multi method to_hls (
-    ClutterColor()    $color,
-                      $hue        is rw,
-                      $luminance  is rw,
-                      $saturation is rw
+    MutterClutterColor() $color,
+                         $hue        is rw,
+                         $luminance  is rw,
+                         $saturation is rw
   ) {
     $color //= ::?CLASS.alloc;
 
@@ -318,29 +324,29 @@ DIE
     ($hue, $luminance, $saturation) = ($h, $l, $s);
   }
 
-  method to_pixel {
+  method to_pixel is also<to-pixel> {
     clutter_color_to_pixel($!mcc);
   }
 
-  method to_string {
+  method to_string is also<to-string> {
     clutter_color_to_string($!mcc);
   }
 
 }
 
 class Mutter::Clutter::Color::ParamSpec {
-  method get_type {
+  method get_type is also<get-type> {
     state ($n, $t);
 
     unstable_get_type( self.^name, &clutter_param_color_get_type, $n, $t );
   }
 
   method new (
-    Str()          $name,
-    Str()          $nick,
-    Str()          $blurb,
-    ClutterColor() $default_value,
-    Int()          $flags
+    Str()                $name,
+    Str()                $nick,
+    Str()                $blurb,
+    MutterClutterColor() $default_value,
+    Int()                $flags
   ) {
     my GParamFlags $f = $flags;
 
@@ -364,11 +370,11 @@ class Mutter::Clutter::Color::Value {
 
   method color ( :$raw = False ) is rw {
     Proxy.new:
-      FETCH => -> $                    { self.get_color(:$raw) },
-      STORE => -> $, ClutterColor() \v { self.set_color(v)     };
+      FETCH => -> $                          { self.get_color(:$raw) },
+      STORE => -> $, MutterClutterColor() \v { self.set_color(v)     };
   }
 
-  method get_color ( :$raw = False ) {
+  method get_color ( :$raw = False ) is also<get-color> {
     propReturnObject(
       clutter_value_get_color($!mccv),
       $raw,
@@ -376,7 +382,7 @@ class Mutter::Clutter::Color::Value {
     );
   }
 
-  method set_color (ClutterColor() $color) {
+  method set_color (MutterClutterColor() $color) is also<set-color> {
     clutter_value_set_color($!mccv, $color);
   }
 

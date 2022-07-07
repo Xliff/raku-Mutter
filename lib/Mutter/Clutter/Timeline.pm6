@@ -1,9 +1,13 @@
-se v6.c;
+use v6.c;
 
+use Method::Also;
+
+use GLib::Raw::Traits;
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::Timeline;
 
 use GLib::Roles::Object;
+use GLib::Roles::Implementor;
 
 our subset MutterClutterTimelineAncestry is export of Mu
   where MutterClutterTimeline | GObject;
@@ -11,7 +15,7 @@ our subset MutterClutterTimelineAncestry is export of Mu
 class Mutter::Clutter::Timeline {
   also does GLib::Roles::Object;
 
-  has MutterClutterTimeline $!mct is implementor;
+  has MutterClutterTimeline $!mctime is implementor;
 
   submethod BUILD ( :$mutter-clutter-timeline ) {
     self.setMutterClutterTimeline($mutter-clutter-timeline)
@@ -20,7 +24,8 @@ class Mutter::Clutter::Timeline {
 
   method setMutterClutterTimeline (MutterClutterTimelineAncestry $_) {
     my $to-parent;
-    $!ctime = do {
+
+    $!mctime = do {
       when MutterClutterTimeline {
         $to-parent = cast(GObject, $_);
         $_;
@@ -36,7 +41,7 @@ class Mutter::Clutter::Timeline {
 
   method Mutter::Raw::Definitions::MutterClutterTimeline
     is also<MutterClutterTimeline>
-  { $!mct }
+  { $!mctime }
 
   multi method new (
     MutterClutterTimelineAncestry  $mutter-clutter-timeline
@@ -49,7 +54,9 @@ class Mutter::Clutter::Timeline {
     $o;
   }
 
-  method new_for_actor (ClutterActor() $actor, Int() $duration_ms) {
+  method new_for_actor (MutterClutterActor() $actor, Int() $duration_ms)
+    is also<new-for-actor>
+  {
     my gint $d = $duration_ms;
 
     my $mutter-clutter-timeline = clutter_timeline_new_for_actor($actor, $d);
@@ -58,9 +65,11 @@ class Mutter::Clutter::Timeline {
   }
 
   method new_for_frame_clock (
-    ClutterFrameClock() $frame_clock,
-    Int() $duration_ms
-  ) {
+    MutterClutterFrameClock() $frame_clock,
+    Int()                     $duration_ms
+  )
+    is also<new-for-frame-clock>
+  {
     my gint $d = $duration_ms;
 
     my $mutter-clutter-timeline = clutter_timeline_new_for_frame_clock(
@@ -77,13 +86,15 @@ class Mutter::Clutter::Timeline {
       STORE => -> $, \v { self.set_actor(v) }
   }
 
-  method auto_reverse is rw is g-property {
+  method auto_reverse is rw is g-property is also<auto-reverse> {
     Proxy.new:
       FETCH => -> $     { self.get_auto_reverse    },
       STORE => -> $, \v { self.set_auto_reverse(v) }
   }
 
-  method cubic_bezier_progress is rw is g-property {
+  method cubic_bezier_progress is rw is g-property
+    is also<cubic-bezier-progress>
+  {
     Proxy.new:
       FETCH => -> $     { self.get_cubic_bezier_progress    },
       STORE => -> $, \v { self.set_cubic_bezier_progress(v) }
@@ -107,25 +118,25 @@ class Mutter::Clutter::Timeline {
       STORE => -> $, \v { self.set_duration(v) }
   }
 
-  method frame_clock is rw is g-property {
+  method frame_clock is rw is g-property is also<frame-clock> {
     Proxy.new:
       FETCH => -> $     { self.get_frame_clock    },
       STORE => -> $, \v { self.set_frame_clock(v) }
   }
 
-  method progress_mode is rw is g-property {
+  method progress_mode is rw is g-property is also<progress-mode> {
     Proxy.new:
       FETCH => -> $     { self.get_progress_mode    },
       STORE => -> $, \v { self.set_progress_mode(v) }
   }
 
-  method repeat_count is rw is g-property {
+  method repeat_count is rw is g-property is also<repeat-count> {
     Proxy.new:
       FETCH => -> $     { self.get_repeat_count    },
       STORE => -> $, \v { self.set_repeat_count(v) }
   }
 
-  method step_progress is rw is g-property {
+  method step_progress is rw is g-property is also<step-progress> {
     Proxy.new:
       FETCH => -> $     { self.get_step_progress    },
       STORE => -> $, \v { self.set_step_progress(v) }
@@ -134,45 +145,45 @@ class Mutter::Clutter::Timeline {
   # Is originally:
   # ClutterTimeline, gpointer --> void
   method completed {
-    self.connect($!ctime, 'completed');
+    self.connect($!mctime, 'completed');
   }
 
   # Is originally:
   # ClutterTimeline, Str, gint, gpointer -> void
   method marker-reached is also<marker_reached> {
-    self.connect-strint($!ctime, 'marker-reached');
+    self.connect-strint($!mctime, 'marker-reached');
   }
 
   # Is originally:
   # ClutterTimeline, gint, gpointer --> void
   method new-frame is also<new_frame> {
-    self.connect-int($!ctime, 'new-frame');
+    self.connect-int($!mctime, 'new-frame');
   }
 
   # Is originally:
   # ClutterTimeline, gpointer --> void
   method paused {
-    self.connect($!ctime, 'paused');
+    self.connect($!mctime, 'paused');
   }
 
   # Is originally:
   # ClutterTimeline, gpointer --> void
   method started {
-    self.connect($!ctime, 'started');
+    self.connect($!mctime, 'started');
   }
 
   # Is originally:
   # ClutterTimeline, gboolean, gpointer --> void
   method stopped {
-    self.connect-bool($!ctime, 'stopped');
+    self.connect-bool($!mctime, 'stopped');
   }
 
-  method add_marker ((Str() $marker_name, Num() $progress)
+  method add_marker (Str() $marker_name, Num() $progress)
     is also<add-marker>
   {
     my gdouble $p = $progress;
 
-    clutter_timeline_add_marker($!mct, $marker_name, $p);
+    clutter_timeline_add_marker($!mctime, $marker_name, $p);
   }
 
   method add_marker_at_time (Str() $marker_name, Int() $msecs)
@@ -180,184 +191,197 @@ class Mutter::Clutter::Timeline {
   {
     my guint $ms = $msecs;
 
-    clutter_timeline_add_marker_at_time($!mct, $marker_name, $ms);
+    clutter_timeline_add_marker_at_time($!mctime, $marker_name, $ms);
   }
 
   method advance (Int() $msecs) {
     my guint $ms = $msecs;
 
-    clutter_timeline_advance($!mct, $ms);
+    clutter_timeline_advance($!mctime, $ms);
   }
 
   method advance_to_marker (Str() $marker_name) is also<advance-to-marker> {
-    clutter_timeline_advance_to_marker($!mct, $marker_name);
+    clutter_timeline_advance_to_marker($!mctime, $marker_name);
   }
 
-  method get_actor ( :$raw = False ) {
+  method get_actor ( :$raw = False ) is also<get-actor> {
     propReturnObject(
-      clutter_timeline_get_actor($!mct),
+      clutter_timeline_get_actor($!mctime),
       $raw,
       |::('Mutter::Clutter::Actor').getTypePair
     );
   }
 
-  method get_auto_reverse {
-    so clutter_timeline_get_auto_reverse($!mct);
+  method get_auto_reverse is also<get-auto-reverse> {
+    so clutter_timeline_get_auto_reverse($!mctime);
   }
 
   method get_cubic_bezier_progress (
     graphene_point_t() $c_1,
     graphene_point_t() $c_2
-  ) {
-    clutter_timeline_get_cubic_bezier_progress($!mct, $c_1, $c_2);
+  )
+    is also<get-cubic-bezier-progress>
+  {
+    clutter_timeline_get_cubic_bezier_progress($!mctime, $c_1, $c_2);
   }
 
-  method get_current_repeat {
-    clutter_timeline_get_current_repeat($!mct);
+  method get_current_repeat is also<get-current-repeat> {
+    clutter_timeline_get_current_repeat($!mctime);
   }
 
-  method get_delay {
-    clutter_timeline_get_delay($!mct);
+  method get_delay is also<get-delay> {
+    clutter_timeline_get_delay($!mctime);
   }
 
-  method get_delta {
-    clutter_timeline_get_delta($!mct);
+  method get_delta is also<get-delta> {
+    clutter_timeline_get_delta($!mctime);
   }
 
-  method get_direction {
-    clutter_timeline_get_direction($!mct);
+  method get_direction is also<get-direction> {
+    clutter_timeline_get_direction($!mctime);
   }
 
-  method get_duration {
-    clutter_timeline_get_duration($!mct);
+  method get_duration is also<get-duration> {
+    clutter_timeline_get_duration($!mctime);
   }
 
-  method get_duration_hint {
-    clutter_timeline_get_duration_hint($!mct);
+  method get_duration_hint is also<get-duration-hint> {
+    clutter_timeline_get_duration_hint($!mctime);
   }
 
-  method get_elapsed_time {
-    clutter_timeline_get_elapsed_time($!mct);
+  method get_elapsed_time is also<get-elapsed-time> {
+    clutter_timeline_get_elapsed_time($!mctime);
   }
 
-  method get_frame_clock {
-    clutter_timeline_get_frame_clock($!mct);
+  method get_frame_clock is also<get-frame-clock> {
+    clutter_timeline_get_frame_clock($!mctime);
   }
 
-  method get_progress {
-    clutter_timeline_get_progress($!mct);
+  method get_progress is also<get-progress> {
+    clutter_timeline_get_progress($!mctime);
   }
 
-  method get_progress_mode {
-    clutter_timeline_get_progress_mode($!mct);
+  method get_progress_mode is also<get-progress-mode> {
+    clutter_timeline_get_progress_mode($!mctime);
   }
 
-  method get_repeat_count {
-    clutter_timeline_get_repeat_count($!mct);
+  method get_repeat_count is also<get-repeat-count> {
+    clutter_timeline_get_repeat_count($!mctime);
   }
 
-  proto method get_step_progress (|) {
+  proto method get_step_progress (|)
+    is also<get-step-progress>
   { * }
 
-  method get_step_progress {
+  multi method get_step_progress {
     samewith($, $);
   }
-  method get_step_progress ($n_steps is rw, $step_mode is rw) {
-    my gint            $n = 0;
-    my ClutterStepMode $s = 0;
+  multi method get_step_progress ($n_steps is rw, $step_mode is rw) {
+    my gint                  $n = 0;
+    my MutterClutterStepMode $s = 0;
 
-    clutter_timeline_get_step_progress($!mct, $n, $s);
+    clutter_timeline_get_step_progress($!mctime, $n, $s);
     ($n_steps, $step_mode) = ($n, $s);
   }
 
-  method get_type {
+  method get_type is also<get-type> {
     state ($n, $t);
 
     unstable_get_type(self.^name, &clutter_timeline_get_type, $n, $t );
   }
 
-  method has_marker (Str() $marker_name) {
-    so clutter_timeline_has_marker($!mct, $marker_name);
+  method has_marker (Str() $marker_name) is also<has-marker> {
+    so clutter_timeline_has_marker($!mctime, $marker_name);
   }
 
-  method is_playing {
-    so clutter_timeline_is_playing($!mct);
+  method is_playing is also<is-playing> {
+    so clutter_timeline_is_playing($!mctime);
   }
 
   method list_markers (Int() $msecs, Int() $n_markers) is also<list-markers> {
-    my guint $ms = $msecs;
+    my gint  $ms = $msecs;
     my gsize $nm = $n_markers;
 
-    CStringArrayToArray( clutter_timeline_list_markers($!ctime, $ms, $nm) );
+    CStringArrayToArray( clutter_timeline_list_markers($!mctime, $ms, $nm) );
   }
 
   method pause {
-    clutter_timeline_pause($!mct);
+    clutter_timeline_pause($!mctime);
   }
 
   method remove_marker (Str() $marker_name) is also<remove-marker> {
-    clutter_timeline_remove_marker($!mct, $marker_name);
+    clutter_timeline_remove_marker($!mctime, $marker_name);
   }
 
   method rewind {
-    clutter_timeline_rewind($!mct);
+    clutter_timeline_rewind($!mctime);
   }
 
-  method set_actor (ClutterActor() $actor) {
-    clutter_timeline_set_actor($!mct, $actor);
+  method set_actor (MutterClutterActor() $actor) is also<set-actor> {
+    clutter_timeline_set_actor($!mctime, $actor);
   }
 
-  method set_auto_reverse (Inta() $reverse) {
+  method set_auto_reverse (Int() $reverse) is also<set-auto-reverse> {
     my gboolean $r = $reverse.so.Int;
 
-    clutter_timeline_set_auto_reverse($!mct, $r);
+    clutter_timeline_set_auto_reverse($!mctime, $r);
   }
 
   method set_cubic_bezier_progress (
     graphene_point_t() $c_1,
     graphene_point_t() $c_2
-  ) {
-    clutter_timeline_set_cubic_bezier_progress($!mct, $c_1, $c_2);
+  )
+    is also<set-cubic-bezier-progress>
+  {
+    clutter_timeline_set_cubic_bezier_progress($!mctime, $c_1, $c_2);
   }
 
-  method set_delay (Int() $msecs) {
+  method set_delay (Int() $msecs) is also<set-delay> {
     my guint $m = $msecs;
 
-    clutter_timeline_set_delay($!mct, $m);
+    clutter_timeline_set_delay($!mctime, $m);
   }
 
-  method set_direction (ClutterTimelineDirection $direction) {
-    clutter_timeline_set_direction($!mct, $direction);
+  method set_direction (Int() $direction)
+    is also<set-direction>
+  {
+    my MutterClutterTimelineDirection $d = $direction;
+
+    clutter_timeline_set_direction($!mctime, Mutter);
   }
 
-  method set_duration (Int() $msecs) {
+  method set_duration (Int() $msecs) is also<set-duration> {
     my guint $m = $msecs;
 
-    clutter_timeline_set_duration($!mct, $m);
+    clutter_timeline_set_duration($!mctime, $m);
   }
 
-  method set_frame_clock (ClutterFrameClock() $frame_clock) {
-    clutter_timeline_set_frame_clock($!mct, $frame_clock);
+  method set_frame_clock (MutterClutterFrameClock() $frame_clock)
+    is also<set-frame-clock>
+  {
+    clutter_timeline_set_frame_clock($!mctime, $frame_clock);
   }
 
   method set_progress_func (
              &func,
     gpointer $data   = gpointer,
              &notify = $DEFAULT-GDESTROY-NOTIFY
-  ) {
-    clutter_timeline_set_progress_func($!mct, &func, $data, &notify);
+  )
+    is also<set-progress-func>
+  {
+    clutter_timeline_set_progress_func($!mctime, &func, $data, &notify);
   }
 
-  method set_progress_mode (Int() $mode) {
-    my ClutterAnimationMode $m = $mode;
+  method set_progress_mode (Int() $mode) is also<set-progress-mode> {
+    my MutterClutterAnimationMode $m = $mode;
 
-    clutter_timeline_set_progress_mode($!mct, $m);
+    clutter_timeline_set_progress_mode($!mctime, $m);
   }
 
-  method set_repeat_count (Int() $count) {
+  method set_repeat_count (Int() $count) is also<set-repeat-count> {
     my gint $c = $count;
 
-    clutter_timeline_set_repeat_count($!mct, $c);
+    clutter_timeline_set_repeat_count($!mctime, $c);
   }
 
   method set_step_progress (Int() $n_steps, Int() $step_mode)
@@ -366,21 +390,21 @@ class Mutter::Clutter::Timeline {
     my gint  $n = $n_steps;
     my guint $s = $step_mode;
 
-    clutter_timeline_set_step_progress($!mct, $n, $s);
+    clutter_timeline_set_step_progress($!mctime, $n, $s);
   }
 
   method skip (Int() $msecs) {
-    my guint $m = $m;
+    my guint $m = $msecs;
 
-    clutter_timeline_skip($!mct, $m);
+    clutter_timeline_skip($!mctime, $m);
   }
 
   method start {
-    clutter_timeline_start($!mct);
+    clutter_timeline_start($!mctime);
   }
 
   method stop {
-    clutter_timeline_stop($!mct);
+    clutter_timeline_stop($!mctime);
   }
 
 }

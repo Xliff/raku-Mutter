@@ -1,11 +1,14 @@
 use v6.c;
 
+use Method::Also;
+
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::LayoutManager;
 
 use GLib::Value;
 
 use GLib::Roles::Object;
+use GLib::Roles::Implementor;
 
 our subset MutterClutterLayoutManagerAncestry is export of Mu
   where MutterClutterLayoutManager | GObject;
@@ -19,25 +22,26 @@ class Mutter::Clutter::LayoutManager {
     self.setLayoutManager($manager) if $manager.defined;
   }
 
-  method setLayoutManager(ClutterLayoutManagerAncestry $_) {
+  method setLayoutManager(MutterClutterLayoutManagerAncestry $_) {
     my $to-parent;
+
     $!mclm = do {
-      when ClutterLayoutManager {
+      when MutterClutterLayoutManager {
         $to-parent = cast(GObject, $_);
         $_;
       }
 
       default {
         $to-parent = $_;
-        cast(ClutterLayoutManager, $_);
+        cast(MutterClutterLayoutManager, $_);
       }
     }
     self!setObject($to-parent);
   }
 
-  method Mutter::Raw::Definitions::ClutterLayoutManager
-    is also<ClutterLayoutManager>
-  { $!clm }
+  method Mutter::Raw::Definitions::MutterClutterLayoutManager
+    is also<MutterClutterLayoutManager>
+  { $!mclm }
 
   method new (
     MutterClutterLayoutManagerAncestry  $mutter-layout-manager,
@@ -53,22 +57,24 @@ class Mutter::Clutter::LayoutManager {
   # Is originally:
   # ClutterLayoutManager, gpointer --> void
   method layout-changed {
-    self.connect($!clm, 'layout-changed');
+    self.connect($!mclm, 'layout-changed');
   }
 
   method allocate (
-    ClutterContainer() $container,
-    ClutterActorBox()  $allocation
+    MutterClutterContainer() $container,
+    MutterClutterActorBox()  $allocation
   ) {
     clutter_layout_manager_allocate($!mclm, $container, $allocation);
   }
 
   method child_get (
-    ClutterContainer()  $container,
-    ClutterActor()      $actor,
-                       *@property-names,
-                       :$hash            = True;
-  ) {
+    MutterClutterContainer()  $container,
+    MutterClutterActor()      $actor,
+                             *@property-names,
+                             :$hash            = True;
+  )
+    is also<child-get>
+  {
     # clutter_layout_manager_child_get(
     #   $!mclm,
     #   $container,
@@ -80,7 +86,7 @@ class Mutter::Clutter::LayoutManager {
       my $v = self.child_get_property($container, $actor, $_);
       $v ?? $v.value !! Nil;
     } for @property-names;
-    return %props if %hash;
+    return %props if $hash;
     return %props{ @property-names };
   }
 
@@ -89,17 +95,17 @@ class Mutter::Clutter::LayoutManager {
   { * }
 
   multi method child_get_property (
-    ClutterContainer() $container,
-    ClutterActor()     $actor,
-    Str()              $property_name
+    MutterClutterContainer() $container,
+    MutterClutterActor()     $actor,
+    Str()                    $property_name
   ) {
     samewith($container, $actor, $property_name, GValue.new);
   }
   multi method child_get_property (
-    ClutterContainer() $container,
-    ClutterActor()     $actor,
-    Str()              $property_name,
-    GValue()           $value
+    MutterClutterContainer() $container,
+    MutterClutterActor()     $actor,
+    Str()                    $property_name,
+    GValue()                 $value
   ) {
     clutter_layout_manager_child_get_property(
       $!mclm,
@@ -115,16 +121,16 @@ class Mutter::Clutter::LayoutManager {
   { * }
 
   multi method child_set (
-    ClutterContainer()  $container,
-    ClutterActor()      $actor,
-                       *%props
+    MutterClutterContainer()  $container,
+    MutterClutterActor()      $actor,
+                             *%props
   ) {
     samewith($container, $actor, %props);
   }
   multi method child_set (
-    ClutterContainer() $container,
-    ClutterActor()     $actor,
-                       %props
+    MutterClutterContainer() $container,
+    MutterClutterActor()     $actor,
+                             %props
   ) {
     samewith(
       $container,
@@ -133,16 +139,16 @@ class Mutter::Clutter::LayoutManager {
     );
   }
   multi method child_set (
-    ClutterContainer()  $container,
-    ClutterActor()      $actor,
-                       *@key-values
+    MutterClutterContainer()  $container,
+    MutterClutterActor()      $actor,
+                             *@key-values
   ) {
     samewith($container, $actor, @key-values);
   }
   multi method child_set (
-    ClutterContainer() $container,
-    ClutterActor()     $actor,
-                       @key-values
+    MutterClutterContainer() $container,
+    MutterClutterActor()     $actor,
+                             @key-values
   ) {
     # clutter_layout_manager_child_set(
     #   $!mclm,
@@ -154,17 +160,19 @@ class Mutter::Clutter::LayoutManager {
     for @key-values.rotor(2) -> ($k, $v is rw) {
       next unless $k.not || $v.defined.not;
 
-      $v ~~ GLib::Value ?? $v !! valueToGValue($v);
+      $v = $v ~~ GLib::Value ?? $v !! valueToGValue($v);
       self.child_set_property($container, $actor, $k, $v);
     }
   }
 
   method child_set_property (
-    ClutterContainer() $container,
-    ClutterActor()     $actor,
-    Str()              $property_name,
-    GValue()           $value
-  ) {
+    MutterClutterContainer() $container,
+    MutterClutterActor()     $actor,
+    Str()                    $property_name,
+    GValue()                 $value
+  )
+    is also<child-set-property>
+  {
     clutter_layout_manager_child_set_property(
       $!mclm,
       $container,
@@ -174,7 +182,9 @@ class Mutter::Clutter::LayoutManager {
     );
   }
 
-  method find_child_property (Str() $name, :$raw = False) {
+  method find_child_property (Str() $name, :$raw = False)
+    is also<find-child-property>
+  {
     propReturnObject(
       clutter_layout_manager_find_child_property($!mclm, $name),
       $raw,
@@ -183,16 +193,20 @@ class Mutter::Clutter::LayoutManager {
   }
 
   method get_child_meta (
-    ClutterContainer()  $container,
-    ClutterActor()      $actor
-                       :$raw  = False,
-                       :$grid = False
-  ) {
+    MutterClutterContainer()  $container,
+    MutterClutterActor()      $actor,
+                             :$raw  = False,
+                             :$grid = False
+  )
+    is also<get-child-meta>
+  {
+    my \T = $grid ?? ::('Mutter::Clutter::GridLayoutMeta')
+                  !! ::('Mutter::Clutter::LayoutMeta');
+
     propReturnObject(
       clutter_layout_manager_get_child_meta($!mclm, $container, $actor),
       $raw,
-      |( $grid ?? Mutter::Clutter::GridLayoutMeta
-               !! Mutter::Clutter::LayoutMeta ).getTypePair
+      |T.getTypePair
     )
   }
 
@@ -201,16 +215,16 @@ class Mutter::Clutter::LayoutManager {
   { * }
 
   multi method get_preferred_height (
-    ClutterContainer() $container,
-    Num()              $for_width
+    MutterClutterContainer() $container,
+    Num()                    $for_width
   ) {
     samewith($container, $for_width, $, $);
   }
   multi method get_preferred_height (
-    ClutterContainer() $container,
-    Num()              $for_width,
-                       $min_height_p is rw,
-                       $nat_height_p is rw
+    MutterClutterContainer() $container,
+    Num()                    $for_width,
+                             $min_height_p is rw,
+                             $nat_height_p is rw
   ) {
     my gfloat  $fw         = $for_width;
     my gfloat ($mhp, $nhp) = 0e0 xx 2;
@@ -230,16 +244,16 @@ class Mutter::Clutter::LayoutManager {
   { * }
 
   multi method get_preferred_width (
-    ClutterContainer() $container,
-    Num()              $for_height
+    MutterClutterContainer() $container,
+    Num()                    $for_height
   ) {
     samewith($container, $for_height, $, $);
   }
   multi method get_preferred_width (
-    ClutterContainer() $container,
-    Num()              $for_height,
-                       $min_width_p is rw,
-                       $nat_width_p is rw
+    MutterClutterContainer() $container,
+    Num()                    $for_height,
+                             $min_width_p is rw,
+                             $nat_width_p is rw
   ) {
     my gfloat  $fh         = $for_height;
     my gfloat ($mwp, $nwp) = 0e0 xx 2;
@@ -285,7 +299,9 @@ class Mutter::Clutter::LayoutManager {
     $psa.map({ GLib::Object::ParamSpec.new($_) }).cache;
   }
 
-  method set_container (ClutterContainer() $container) {
+  method set_container (MutterClutterContainer() $container)
+    is also<set-container>
+  {
     clutter_layout_manager_set_container($!mclm, $container);
   }
 

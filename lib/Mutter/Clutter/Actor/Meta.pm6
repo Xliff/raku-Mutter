@@ -6,6 +6,7 @@ use NativeCall;
 use GLib::Raw::Traits;
 use Mutter::Raw::Types;
 
+use GLib::Roles::Implementor;
 use GLib::Roles::Object;
 
 our subset MutterClutterActorMetaAncestry is export of Mu

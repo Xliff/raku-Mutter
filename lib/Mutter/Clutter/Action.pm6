@@ -9,6 +9,8 @@ use Mutter::Raw::Types;
 
 use Mutter::Clutter::Actor::Meta;
 
+use GLib::Roles::Implementor;
+
 our subset MutterClutterActionAncestry is export of Mu
   where MutterClutterAction | MutterClutterActorMetaAncestry;
 

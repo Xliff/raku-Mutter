@@ -3,10 +3,12 @@ use v6.c;
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::MiscTypes;
 
+use GLib::Roles::Implementor;
+
 class Mutter::Clutter::PaintVolume {
   has MutterClutterPaintVolume $!mcpv is implementor;
 
-  method copy {
+  method copy ( :$raw = False ) {
     propReturnObject(
       clutter_paint_volume_copy($!mcpv),
       $raw,
@@ -53,7 +55,7 @@ class Mutter::Clutter::PaintVolume {
     clutter_paint_volume_set_depth($!mcpv, $d);
   }
 
-  method set_from_allocation (ClutterActor() $actor) {
+  method set_from_allocation (MutterClutterActor() $actor) {
     clutter_paint_volume_set_from_allocation($!mcpv, $actor);
   }
 
@@ -73,11 +75,11 @@ class Mutter::Clutter::PaintVolume {
     clutter_paint_volume_set_width($!mcpv, $w);
   }
 
-  method union (ClutterPaintVolume() $another_pv) {
+  method union (MutterClutterPaintVolume() $another_pv) {
     clutter_paint_volume_union($!mcpv, $another_pv);
   }
 
-  method union_box (ClutterActorBox() $box) {
+  method union_box (MutterClutterActorBox() $box) {
     clutter_paint_volume_union_box($!mcpv, $box);
   }
 

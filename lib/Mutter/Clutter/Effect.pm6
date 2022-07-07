@@ -7,6 +7,8 @@ use Mutter::Raw::Types;
 
 use Mutter::Clutter::Actor::Meta;
 
+use GLib::Roles::Implementor;
+
 our subset MutterClutterEffectAncestry of Mu is export
   where MutterClutterEffect | MutterClutterActorMetaAncestry;
 

@@ -3,26 +3,30 @@ use v6.c;
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::MiscTypes;
 
+use GLib::Roles::Implementor;
+
 class Mutter::Clutter::ActorBox {
   has MutterClutterActorBox $!mcab is implementor;
 
   method alloc {
-    clutter_actor_box_alloc($!mcab);
+    clutter_actor_box_alloc();
   }
 
   method clamp_to_pixel {
     clutter_actor_box_clamp_to_pixel($!mcab);
   }
 
-  method contains (gfloat $x, gfloat $y) {
-    clutter_actor_box_contains($!mcab, $x, $y);
+  method contains (Num() $x, Num() $y) {
+    my gfloat ($xx, $yy) = ($x, $y);
+
+    so clutter_actor_box_contains($!mcab, $xx, $yy);
   }
 
   method copy {
     clutter_actor_box_copy($!mcab);
   }
 
-  method equal (ClutterActorBox $box_b) {
+  method equal (MutterClutterActorBox() $box_b) {
     clutter_actor_box_equal($!mcab, $box_b);
   }
 
@@ -30,7 +34,7 @@ class Mutter::Clutter::ActorBox {
     clutter_actor_box_free($!mcab);
   }
 
-  method from_vertices (graphene_point3d_t $verts) {
+  method from_vertices (graphene_point3d_t() $verts) {
     clutter_actor_box_from_vertices($!mcab, $verts);
   }
 
@@ -43,11 +47,11 @@ class Mutter::Clutter::ActorBox {
   }
 
   method get_origin (gfloat $x is rw, gfloat $y is rw) {
-    clutter_actor_box_get_origin($!mcab, $x is rw, $y is rw);
+    clutter_actor_box_get_origin($!mcab, $x, $y);
   }
 
   method get_size (gfloat $width is rw, gfloat $height is rw) {
-    clutter_actor_box_get_size($!mcab, $width is rw, $height is rw);
+    clutter_actor_box_get_size($!mcab, $width, $height);
   }
 
   method get_type {
@@ -75,9 +79,9 @@ class Mutter::Clutter::ActorBox {
   }
 
   method interpolate (
-    ClutterActorBox $final,
+    MutterClutterActorBox $final,
     gdouble         $progress,
-    ClutterActorBox $result
+    MutterClutterActorBox $result
   ) {
     clutter_actor_box_interpolate($!mcab, $final, $progress, $result);
   }
@@ -102,7 +106,10 @@ class Mutter::Clutter::ActorBox {
     clutter_actor_box_set_size($!mcab, $width, $height);
   }
 
-  method union (ClutterActorBox $b, ClutterActorBox $result) {
+  method union (
+    MutterClutterActorBox $b,
+    MutterClutterActorBox $result
+  ) {
     clutter_actor_box_union($!mcab, $b, $result);
   }
 }
