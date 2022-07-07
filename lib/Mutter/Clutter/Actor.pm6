@@ -29,14 +29,15 @@ use GLib::Roles::Implementor;
 
 use Mutter::Clutter::Roles::Animatable;
 use Mutter::Clutter::Roles::Container;
-# use Mutter::Clutter::Roles::Content;
+use Mutter::Clutter::Roles::Content;
 use Mutter::Clutter::Roles::Scriptable;
-# use Mutter::Clutter::Roles::Signals::Actor;
-# use Mutter::Clutter::Roles::Signals::Generic;
+use Mutter::Clutter::Roles::Signals::Actor;
+use Mutter::Clutter::Roles::Signals::Generic;
 
 our subset MutterClutterActorAncestry is export of Mu
   where MutterClutterAnimatable | MutterClutterContainer |
-        MutterClutterScriptable | MutterClutterActor     | GObject;
+        MutterClutterScriptable | MutterClutterActor     |
+        MutterClutterContent    | GObject;
 
 my (@animatables, @set-methods, @add-methods, %properties);
 
@@ -44,9 +45,10 @@ class Mutter::Clutter::Actor {
   also does GLib::Roles::Object;
   also does Mutter::Clutter::Roles::Animatable;
   also does Mutter::Clutter::Roles::Container;
+  also does Mutter::Clutter::Roles::Content;
   also does Mutter::Clutter::Roles::Scriptable;
-  # also does Mutter::Clutter::Roles::Signals::Actor;
-  # also does Mutter::Clutter::Roles::Signals::Generic;
+  also does Mutter::Clutter::Roles::Signals::Actor;
+  also does Mutter::Clutter::Roles::Signals::Generic;
 
   has MutterClutterActor $!mca is implementor;
 
@@ -67,12 +69,14 @@ class Mutter::Clutter::Actor {
         $_;
       }
 
-      when MutterClutterAnimatable { $!mc-anim = $_; proceed; }
-      when MutterClutterContainer  { $!mcc     = $_; proceed; }
-      when MutterClutterScriptable { $!mcs     = $_; proceed; }
+      when MutterClutterAnimatable { $!mc-anim    = $_; proceed; }
+      when MutterClutterContainer  { $!mcc        = $_; proceed; }
+      when MutterClutterContent    { $!mc-content = $_; proceed; }
+      when MutterClutterScriptable { $!mcs        = $_; proceed; }
 
       when MutterClutterAnimatable |
            MutterClutterContainer  |
+           MutterClutterContent    |
            MutterClutterScriptable
       {
         $to-parent = cast(GObject, $_);
@@ -88,6 +92,7 @@ class Mutter::Clutter::Actor {
     self!setObject($to-parent);
     self.roleInit-MutterClutterAnimatable;
     self.roleInit-MutterClutterContainer;
+    self.roleInit-MutterClutterContent;
     self.roleInit-MutterClutterScriptable;
   }
 
