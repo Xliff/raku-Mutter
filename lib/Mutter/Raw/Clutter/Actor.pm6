@@ -1537,16 +1537,16 @@ sub clutter_actor_clear_effects (MutterClutterActor $self)
   is export
 { * }
 
-sub clutter_effect_get_type ()
-  returns GType
-  is native(mutter-clutter)
-  is export
-{ * }
-
-sub clutter_effect_queue_repaint (MutterClutterEffect $effect)
-  is native(mutter-clutter)
-  is export
-{ * }
+# sub clutter_effect_get_type ()
+#   returns GType
+#   is native(mutter-clutter)
+#   is export
+# { * }
+#
+# sub clutter_effect_queue_repaint (MutterClutterEffect $effect)
+#   is native(mutter-clutter)
+#   is export
+# { * }
 
 sub clutter_actor_get_effect (MutterClutterActor $self, Str $name)
   returns MutterClutterEffect
