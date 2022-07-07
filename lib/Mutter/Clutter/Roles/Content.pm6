@@ -12,15 +12,15 @@ role Mutter::Clutter::Roles::Content {
   has $!mc-content;
 
   method roleInit-MutterClutterContent {
-    return if $!mcs;
+    return if $!mc-content;
 
     my \i = findProperImplementor(self.^attributes);
 
-    $!mcs = cast( MutterClutterContent, i.get_value(self) )
+    $!mc-content = cast( MutterClutterContent, i.get_value(self) )
   }
 
   method Mutter::Raw::Definitions::MutterClutterContent
-  { $!mcs }
+  { $!mc-content }
 
   proto method get_preferred_size (|)
   { * }
@@ -68,7 +68,7 @@ class Mutter::Clutter::Content {
   ) {
     my $to-parent;
 
-    $!mcs = do {
+    $!mc-content = do {
       when MutterClutterContent {
         $to-parent = cast(GObject, $_);
         $_;
@@ -101,7 +101,11 @@ class Mutter::Clutter::Content {
 
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-content.h
 
-sub clutter_content_get_preferred_size (CMutterlutterContent $content, gfloat $width is rw, gfloat $height is rw)
+sub clutter_content_get_preferred_size (
+  MutterClutterContent $content,
+  gfloat               $width    is rw, 
+  gfloat               $height   is rw
+)
   returns uint32
   is native(mutter)
   is export
