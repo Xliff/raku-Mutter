@@ -2,15 +2,10 @@ use v6.c;
 
 use NativeCall;
 
-
-use Clutter::Raw::Types;
-
+use Mutter::Raw::Types;
 use GLib::Raw::ReturnedValue;
 
-use GLib::Roles::Signals::Generic;
-use Mutter::Clutter::Roles::Signals::Generic;
-
-role Clutter::Roles::Signals::Actor {
+role Mutter::Clutter::Roles::Signals::Actor {
   has %!signals-a;
 
   # ClutterActor, ClutterActorBox, ClutterAllocationFlags, gpointer
