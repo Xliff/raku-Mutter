@@ -20,6 +20,9 @@ role Mutter::Clutter::Roles::Container {
     $!mcc = cast( MutterClutterContainer, i.get_value(self) )
   }
 
+  method Mutter::Raw::Definitions::MutterClutterContainer
+  { $!mcc }
+
   # Is originally:
   # ClutterContainer *container,  ClutterActor *child,  GParamSpec *pspec --> void
   method child-notify {
