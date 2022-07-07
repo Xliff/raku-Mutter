@@ -5,10 +5,10 @@ use Mutter::Raw::Clutter::Container;
 
 use GLib::Roles::Implementor;
 use GLib::Roles::Object;
-use Mutter::Clutter::Roles::Signals::Container;
+use Mutter::Clutter::Roles::Signals::Generic;
 
 role Mutter::Clutter::Roles::Container {
-  also does Mutter::Clutter::Roles::Signals::Container;
+  also does Mutter::Clutter::Roles::Signals::Generic;
 
   has MutterClutterContainer $!mcc is implementor;
 
