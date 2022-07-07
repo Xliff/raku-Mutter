@@ -6,9 +6,11 @@ use Mutter::Raw::Clutter::Container;
 use GLib::Roles::Implementor;
 use GLib::Roles::Object;
 use Mutter::Clutter::Roles::Signals::Generic;
+use Mutter::Clutter::Roles::Signals::Container;
 
 role Mutter::Clutter::Roles::Container {
   also does Mutter::Clutter::Roles::Signals::Generic;
+  also does Mutter::Clutter::Roles::Signals::Container;
 
   has MutterClutterContainer $!mcc is implementor;
 
