@@ -54,3 +54,9 @@ sub clutter_animatable_set_final_state (
   is native(mutter-clutter)
   is export
 { * }
+
+sub clutter_animatable_get_type ()
+  returns GType
+  is native(mutter-clutter)
+  is export
+{ * }
