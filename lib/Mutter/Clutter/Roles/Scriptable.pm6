@@ -2,15 +2,31 @@ use v6.c;
 
 use NativeCall;
 
+use GLib::Raw::Traits;
 use Mutter::Raw::Types;
 
+use GLib::Roles::Implementor;
 use GLib::Roles::Object;
 
 role Mutter::Clutter::Roles::Scriptable {
   has MutterClutterScriptable $!mcs is implementor;
 
+  method roleInit-MutterClutterScriptable {
+    return if $!mcs;
+
+    my \i = findProperImplementor(self.^attributes);
+
+    $!mcs = cast( MutterClutterScriptable, i.get_value(self) )
+  }
+
   method Mutter::Raw::Definitions::MutterClutterScriptable
   { $!mcs }
+
+  method id is rw is g-property {
+    Proxy.new:
+      FETCH => -> $     { self.get_id    },
+      STORE => -> $, \v { self.set_id(v) }
+  }
 
   method get_id {
     clutter_scriptable_get_id($!mcs);
