@@ -3060,6 +3060,6 @@ INIT {
     my $o = GLib::Object.new(Mutter::Clutter::Actor.get-type);
     %properties = $o.getClass.getProperties;
     my $np = %properties.elems;
-    say "Clutter::Actor - { $np } property entr{ $np == 1 ?? 'y' !! 'ies' }";
+    say "Mutter::Clutter::Actor - { $np } property entr{ $np == 1 ?? 'y' !! 'ies' }";
   }
 }
