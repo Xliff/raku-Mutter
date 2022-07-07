@@ -1,11 +1,18 @@
 use v6.c;
 
+use NativeCall;
 use Method::Also;
 
 use Cairo;
 
+use GLib::Raw::Traits;
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::Actor;
+
+use GLib::GList;
+use Graphene::Point;
+use Graphene::Size;
+use Graphene::Rect;
 
 use Mutter::Clutter::Action;
 use Mutter::Clutter::ActorBox;
@@ -14,13 +21,11 @@ use Mutter::Clutter::Constraint;
 use Mutter::Clutter::Effect;
 use Mutter::Clutter::LayoutManager;
 use Mutter::Clutter::PaintVolume;
-#use Mutter::Clutter::Point;
-# use Mutter::Clutter::Rect;
-#use Mutter::Clutter::Size;
 use Mutter::Clutter::Transition;
 #use Mutter::Clutter::Vertex;
 
 use GLib::Roles::Object;
+use GLib::Roles::Implementor;
 
 use Mutter::Clutter::Roles::Animatable;
 # use Mutter::Clutter::Roles::Container;
@@ -33,15 +38,15 @@ our subset MutterClutterActorAncestry is export of Mu
   where MutterClutterAnimatable | MutterClutterContainer |
         MutterClutterScriptable | MutterClutterActor     | GObject;
 
-my (@set_methods, @add_methods, %properties);
+my (@animatables, @set-methods, @add-methods, %properties);
 
 class Mutter::Clutter::Actor {
   also does GLib::Roles::Object;
   also does Mutter::Clutter::Roles::Animatable;
-  also does Mutter::Clutter::Roles::Container;
-  also does Mutter::Clutter::Roles::Scriptable;
-  also does Mutter::Clutter::Roles::Signals::Actor;
-  also does Mutter::Clutter::Roles::Signals::Generic;
+  # also does Mutter::Clutter::Roles::Container;
+  # also does Mutter::Clutter::Roles::Scriptable;
+  # also does Mutter::Clutter::Roles::Signals::Actor;
+  # also does Mutter::Clutter::Roles::Signals::Generic;
 
   has MutterClutterActor $!mca is implementor;
 
@@ -63,8 +68,8 @@ class Mutter::Clutter::Actor {
       }
 
       when MutterClutterAnimatable { $!mc-anim = $_; proceed; }
-      when MutterClutterScriptable { $!mcs     = $_; proceed; }
-      when MutterClutterContainer  { $!mc      = $_; proceed; }
+      #when MutterClutterScriptable { $!mcs     = $_; proceed; }
+      #when MutterClutterContainer  { $!mcc     = $_; proceed; }
 
       when MutterClutterAnimatable |
            MutterClutterContainer  |
@@ -100,6 +105,1157 @@ class Mutter::Clutter::Actor {
     my $mutter-clutter-actor = clutter_actor_new();
 
     $mutter-clutter-actor ?? self.bless( :$mutter-clutter-actor ) !! Nil;
+  }
+
+  # Type: float
+  method x is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('x', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('x', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method y is rw is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('y', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('y', $gv);
+      }
+    );
+  }
+
+  # Type: graphene_point_t
+  method position ( :$raw = False) is rw  is g-property {
+    my $gv = GLib::Value.new( Graphene::Point.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('position', $gv);
+        propReturnObject(
+          $gv.object,
+          $raw,
+          |Graphene::Point.getTypePair
+        );
+      },
+      STORE => -> $, graphene_point_t() $val is copy {
+        $gv.object = $val;
+        self.prop_set('position', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method height is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('height', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('height', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method width is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('width', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('width', $gv);
+      }
+    );
+  }
+
+  # Type: GrapheneSize
+  method size ( :$raw = False) is rw  is g-property {
+    my $gv = GLib::Value.new( Graphene::Size.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('size', $gv);
+        propReturnObject(
+          $gv.object,
+          $raw,
+          |Graphene::Size.getTypePair
+        );
+      },
+      STORE => -> $, graphene_size_t() $val is copy {
+        $gv.object = $val;
+        self.prop_set('size', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method fixed-x is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('fixed-x', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('fixed-x', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method fixed-y is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('fixed-y', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('fixed-y', $gv);
+      }
+    );
+  }
+
+  # Type: boolean
+  method fixed-position-set is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('fixed-position-set', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.boolean = $val;
+        self.prop_set('fixed-position-set', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method min-width is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('min-width', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('min-width', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method min-height is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('min-height', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('min-height', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method natural-width is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('natural-width', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('natural-width', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method natural-height is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('natural-height', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('natural-height', $gv);
+      }
+    );
+  }
+
+  # Type: boolean
+  method min-width-set is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('min-width-set', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.boolean = $val;
+        self.prop_set('min-width-set', $gv);
+      }
+    );
+  }
+
+  # Type: boolean
+  method min-height-set is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('min-height-set', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.boolean = $val;
+        self.prop_set('min-height-set', $gv);
+      }
+    );
+  }
+
+  # Type: boolean
+  method natural-width-set is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('natural-width-set', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.boolean = $val;
+        self.prop_set('natural-width-set', $gv);
+      }
+    );
+  }
+
+  # Type: boolean
+  method natural-height-set is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('natural-height-set', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.boolean = $val;
+        self.prop_set('natural-height-set', $gv);
+      }
+    );
+  }
+
+  # Type: MutterActorBox
+  method allocation ( :$raw = False ) is rw  is g-property {
+    my $gv = GLib::Value.new( Mutter::Clutter::ActorBox.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('allocation', $gv);
+        propReturnObject(
+          $gv.boxed,
+          $raw,
+          |Mutter::Clutter::ActorBox.getTypePair
+        );
+      },
+      STORE => -> $,  $val is copy {
+        warn 'allocation does not allow writing'
+      }
+    );
+  }
+
+  # Type: ClutterColor
+  method background-color ( :$raw = False )
+    is also<background_color>
+    is g-property
+    is rw
+  {
+    my $gv = GLib::Value.new( Mutter::Clutter::Color.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('background-color', $gv);
+        propReturnObject(
+          $gv.boxed,
+          $raw,
+          |Mutter::Clutter::Color.getTypePair
+        );
+      },
+      STORE => -> $, MutterClutterColor() $val is copy {
+        $gv.boxed = $val;
+        self.prop_set('background-color', $gv);
+      }
+    );
+  }
+
+  # Type: MutterRequestMode
+  method request-mode is rw  is g-property {
+    my $gv = GLib::Value.new(
+      GLib::Value.typeFromEnum(MutterClutterRequestMode)
+    );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('request-mode', $gv);
+        MutterClutterRequestModeEnum(
+          $gv.valueFromEnum(MutterClutterRequestMode)
+        )
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.valueFromEnum(MutterClutterRequestMode) = $val;
+        self.prop_set('request-mode', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method z-position is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('z-position', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('z-position', $gv);
+      }
+    );
+  }
+
+  # Type: uint
+  method opacity is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_UINT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('opacity', $gv);
+        $gv.uint;
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.uint = $val;
+        self.prop_set('opacity', $gv);
+      }
+    );
+  }
+
+  # Type: MutterOffscreenRedirect
+  method offscreen-redirect is rw  is g-property {
+    my $gv = GLib::Value.new(
+      GLib::typeFromEnum(MutterClutterOffscreenRedirect)
+    );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('offscreen-redirect', $gv);
+        MutterClutterOffscreenRedirectEnum(
+          $gv.valueFromEnum(MutterClutterOffscreenRedirect)
+        );
+      },
+      STORE => -> $,  $val is copy {
+        $gv.valueFromEnum(MutterClutterOffscreenRedirect) = $val;
+        self.prop_set('offscreen-redirect', $gv);
+      }
+    );
+  }
+
+  # Type: boolean
+  method visible is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('visible', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.boolean = $val;
+        self.prop_set('visible', $gv);
+      }
+    );
+  }
+
+  # Type: boolean
+  method mapped is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('mapped', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        warn 'mapped does not allow writing'
+      }
+    );
+  }
+
+  # Type: boolean
+  method realized is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('realized', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        warn 'realized does not allow writing'
+      }
+    );
+  }
+
+  # Type: boolean
+  method reactive is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('reactive', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.boolean = $val;
+        self.prop_set('reactive', $gv);
+      }
+    );
+  }
+
+  # Type: boolean
+  # method has-clip is rw  is g-property {
+  #   my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+  #   Proxy.new(
+  #     FETCH => sub ($) {
+  #       self.prop_get('has-clip', $gv);
+  #       $gv.boolean;
+  #     },
+  #     STORE => -> $, Int() $val is copy {
+  #       warn 'has-clip does not allow writing'
+  #     }
+  #   );
+  # }
+
+  # Type: graphene_rect_t
+  method clip-rect ( :$raw = False ) is rw  is g-property {
+    my $gv = GLib::Value.new( Graphene::Rect.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('clip-rect', $gv);
+        propReturnObject(
+          $gv.value,
+          $raw,
+          |Graphene::Rect.getTypePair
+        );
+      },
+      STORE => -> $, graphene_rect_t() $val is copy {
+        $gv.value = $val;
+        self.prop_set('clip-rect', $gv);
+      }
+    );
+  }
+
+  # Type: string
+  method name is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_STRING );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('name', $gv);
+        $gv.string;
+      },
+      STORE => -> $, Str() $val is copy {
+        $gv.string = $val;
+        self.prop_set('name', $gv);
+      }
+    );
+  }
+
+  # Type: graphene_point_t
+  method pivot-point ( :$raw = False) is rw  is g-property {
+    my $gv = GLib::Value.new( Graphene::Point.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('pivot-point', $gv);
+        propReturnObject(
+          $gv.value,
+          $raw,
+          |Graphene::Point.getTypePair
+        );
+      },
+      STORE => -> $, graphene_point_t() $val is copy {
+        $gv.value = $val;
+        self.prop_set('pivot-point', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method pivot-point-z is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('pivot-point-z', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('pivot-point-z', $gv);
+      }
+    );
+  }
+
+  # Type: double
+  method scale-x is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_DOUBLE );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('scale-x', $gv);
+        $gv.double;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.double = $val;
+        self.prop_set('scale-x', $gv);
+      }
+    );
+  }
+
+  # Type: double
+  method scale-y is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_DOUBLE );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('scale-y', $gv);
+        $gv.double;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.double = $val;
+        self.prop_set('scale-y', $gv);
+      }
+    );
+  }
+
+  # Type: double
+  method scale-z is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_DOUBLE );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('scale-z', $gv);
+        $gv.double;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.double = $val;
+        self.prop_set('scale-z', $gv);
+      }
+    );
+  }
+
+  # Type: double
+  method rotation-angle-x is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_DOUBLE );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('rotation-angle-x', $gv);
+        $gv.double;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.double = $val;
+        self.prop_set('rotation-angle-x', $gv);
+      }
+    );
+  }
+
+  # Type: double
+  method rotation-angle-y is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_DOUBLE );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('rotation-angle-y', $gv);
+        $gv.double;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.double = $val;
+        self.prop_set('rotation-angle-y', $gv);
+      }
+    );
+  }
+
+  # Type: double
+  method rotation-angle-z is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_DOUBLE );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('rotation-angle-z', $gv);
+        $gv.double;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.double = $val;
+        self.prop_set('rotation-angle-z', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method translation-x is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('translation-x', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('translation-x', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method translation-y is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('translation-y', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('translation-y', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method translation-z is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('translation-z', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('translation-z', $gv);
+      }
+    );
+  }
+
+  # Type: MutterMatrix
+  method transform ( :$raw = False) is rw  is g-property {
+    my $gv = GLib::Value.new( Mutter::Clutter::Matrix.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('transform', $gv);
+        propReturnObject(
+          $gv.value,
+          $raw,
+          |Mutter::Clutter::Matrix.getTypePair
+        );
+      },
+      STORE => -> $,  $val is copy {
+        $gv.value = $val;
+        self.prop_set('transform', $gv);
+      }
+    );
+  }
+
+  # Type: boolean
+  method transform-set is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('transform-set', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        warn 'transform-set does not allow writing'
+      }
+    );
+  }
+
+  # Type: MutterMatrix
+  method child-transform ( :$raw = False) is rw  is g-property {
+    my $gv = GLib::Value.new( Mutter::Clutter::Matrix.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('child-transform', $gv);
+        propReturnObject(
+          $gv.value,
+          $raw,
+          |Mutter::Clutter::Matrix.getTypePair
+        );
+      },
+      STORE => -> $,  $val is copy {
+        $gv.value = $val;
+        self.prop_set('child-transform', $gv);
+      }
+    );
+  }
+
+  # Type: boolean
+  method child-transform-set is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('child-transform-set', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        warn 'child-transform-set does not allow writing'
+      }
+    );
+  }
+
+  # Type: boolean
+  method show-on-set-parent is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('show-on-set-parent', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.boolean = $val;
+        self.prop_set('show-on-set-parent', $gv);
+      }
+    );
+  }
+
+  # Type: boolean
+  method clip-to-allocation is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('clip-to-allocation', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.boolean = $val;
+        self.prop_set('clip-to-allocation', $gv);
+      }
+    );
+  }
+
+  # Type: MutterTextDirection
+  method text-direction is rw  is g-property {
+    my $gv = GLib::Value.new(
+      GLib::Value.typeFromEnum(MutterClutterTextDirection)
+    );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('text-direction', $gv);
+        MutterClutterTextDirectionEnum(
+          $gv.valueFromEnum(MutterClutterTextDirection)
+        );
+      },
+      STORE => -> $,  $val is copy {
+        $gv.valueFromEnum(MutterClutterTextDirection) = $val;
+        self.prop_set('text-direction', $gv);
+      }
+    );
+  }
+
+  # Type: boolean
+  # method has-pointer is rw  is g-property {
+  #   my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+  #   Proxy.new(
+  #     FETCH => sub ($) {
+  #       self.prop_get('has-pointer', $gv);
+  #       $gv.boolean;
+  #     },
+  #     STORE => -> $, Int() $val is copy {
+  #       warn 'has-pointer does not allow writing'
+  #     }
+  #   );
+  # }
+
+  # Type: MutterAction
+  method actions is rw  is g-property {
+    my $gv = GLib::Value.new( Mutter::Clutter::Action.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        warn 'actions does not allow reading' if $DEBUG;
+        0;
+      },
+
+      STORE => -> $, MutterClutterAction() $val is copy {
+        $gv.object = $val;
+        self.prop_set('actions', $gv);
+      }
+    );
+  }
+
+  # Type: MutterConstraint
+  method constraints is rw  is g-property {
+    my $gv = GLib::Value.new( Mutter::Clutter::Constraint.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        warn 'constraints does not allow reading' if $DEBUG;
+        0;
+      },
+
+      STORE => -> $, MutterClutterConstraint() $val is copy {
+        $gv.value = $val;
+        self.prop_set('constraints', $gv);
+      }
+    );
+  }
+
+  # Type: MutterEffect
+  method effect is rw  is g-property {
+    my $gv = GLib::Value.new( Mutter::Clutter::Effect.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        warn 'effect does not allow reading' if $DEBUG;
+        0;
+      },
+
+      STORE => -> $, MutterClutterEffect() $val is copy {
+        $gv.value = $val;
+        self.prop_set('effect', $gv);
+      }
+    );
+  }
+
+  # Type: MutterLayoutManager
+  method layout-manager ( :$raw = False) is rw  is g-property {
+    my $gv = GLib::Value.new( Mutter::Clutter::LayoutManager.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('layout-manager', $gv);
+        propReturnObject(
+          $gv.object,
+          $raw,
+          |Mutter::LayoutManager.getTypePair
+        );
+      },
+      STORE => -> $, MutterClutterLayoutManager() $val is copy {
+        $gv.object = $val;
+        self.prop_set('layout-manager', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method margin-top is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('margin-top', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('margin-top', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method margin-bottom is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('margin-bottom', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('margin-bottom', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method margin-left is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('margin-left', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('margin-left', $gv);
+      }
+    );
+  }
+
+  # Type: float
+  method margin-right is rw  is g-property is animatable {
+    my $gv = GLib::Value.new( G_TYPE_FLOAT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('margin-right', $gv);
+        $gv.float;
+      },
+      STORE => -> $, Num() $val is copy {
+        $gv.float = $val;
+        self.prop_set('margin-right', $gv);
+      }
+    );
+  }
+
+  # Type: boolean
+  method background-color-set is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('background-color-set', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        warn 'background-color-set does not allow writing'
+      }
+    );
+  }
+
+  # Type: MutterActor
+  method first-child ( :$raw = False) is rw  is g-property {
+    my $gv = GLib::Value.new( Mutter::Clutter::Actor.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('first-child', $gv);
+        propReturnObject(
+          $gv.object,
+          $raw,
+          |Mutter::Clutter::Actor.getTypePair
+        );
+      },
+      STORE => -> $,  $val is copy {
+        warn 'first-child does not allow writing'
+      }
+    );
+  }
+
+  # Type: MutterActor
+  method last-child ( :$raw = False) is rw  is g-property {
+    my $gv = GLib::Value.new( Mutter::Clutter::Actor.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('last-child', $gv);
+        propReturnObject(
+          $gv.object,
+          $raw,
+          |Mutter::Clutter::Actor.getTypePair
+        );
+      },
+      STORE => -> $,  $val is copy {
+        warn 'last-child does not allow writing'
+      }
+    );
+  }
+
+  # Type: MutterContent
+  method content ( :$raw = False ) is rw  is g-property {
+    my $gv = GLib::Value.new( Mutter::Clutter::Content.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('content', $gv);
+        propReturnObject(
+          $gv.object,
+          $raw,
+          |Mutter::Clutter::Content.getTypePair
+        );
+      },
+      STORE => -> $,  $val is copy {
+        $gv.object = $val;
+        self.prop_set('content', $gv);
+      }
+    );
+  }
+
+  # Type: MutterContentGravity
+  method content-gravity is rw  is g-property {
+    my $gv = GLib::Value.new(
+      GLib::Value.typeFromEnum(MutterClutterContentGravity)
+    );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('content-gravity', $gv);
+        MutterClutterContentGravityEnum(
+          $gv.valueFromEnum(MutterClutterContentGravity)
+        );
+      },
+      STORE => -> $,  $val is copy {
+        $gv.valueFromEnum(MutterClutterContentGravity) = $val;
+        self.prop_set('content-gravity', $gv);
+      }
+    );
+  }
+
+  # Type: MutterActorBox
+  method content-box ( :$raw = False ) is rw is g-property {
+    my $gv = GLib::Value.new( Mutter::Clutter::ActorBox.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('content-box', $gv);
+        propReturnObject(
+          $gv.boxed,
+          $raw,
+          |Mutter::Clutter::ActorBox.getTypePair
+        );
+      },
+      STORE => -> $,  $val is copy {
+        warn 'content-box does not allow writing'
+      }
+    );
+  }
+
+  # Type: MutterScalingFilter
+  method minification-filter is rw  is g-property {
+    my $gv = GLib::Value.new(
+      GLib::Value.typeFromEnum(MutterClutterScalingFilter)
+    );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('minification-filter', $gv);
+        MutterClutterScalingFilterEnum(
+          $gv.valueFromEnum(MutterClutterScalingFilter)
+        );
+      },
+      STORE => -> $,  $val is copy {
+        $gv.valueFromEnum(MutterClutterScalingFilter) = $val;
+        self.prop_set('minification-filter', $gv);
+      }
+    );
+  }
+
+  # Type: MutterScalingFilter
+  method magnification-filter is rw  is g-property {
+    my $gv = GLib::Value.new(
+      GLib::Value.typeFromEnum(MutterClutterScalingFilter)
+    );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('magnification-filter', $gv);
+        MutterClutterScalingFilterEnum(
+          $gv.valueFromEnum(MutterClutterScalingFilter)
+        );
+      },
+      STORE => -> $,  $val is copy {
+        $gv.valueFromEnum(MutterClutterScalingFilter) = $val;
+        self.prop_set('magnification-filter', $gv);
+      }
+    );
+  }
+
+  # Type: MutterContentRepeat
+  method content-repeat is rw  is g-property {
+    my $gv = GLib::Value.new(
+      GLib::Value.typeFromEnum(MutterClutterContentRepeat)
+    );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('content-repeat', $gv);
+        MutterClutterContentRepeatEnum(
+          $gv.valueFromEnum(MutterClutterContentRepeat)
+        );
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.valueFromEnum(MutterClutterContentRepeat) = $val;
+        self.prop_set('content-repeat', $gv);
+      }
+    );
+  }
+
+  method x-align is also<x_align> is rw is g-property {
+    my $gv = GLib::Value.new(
+      GLib::Value.typeFromEnum(MutterClutterActorAlign)
+    );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('x-align', $gv);
+        MutterClutterContentRepeatEnum(
+          $gv.valueFromEnum(MutterClutterActorAlign)
+        );
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.valueFromEnum(MutterClutterActorAlign) = $val;
+        self.prop_set('x-align', $gv);
+      }
+    );
+  }
+
+  method x-expand is also<x_expand> is rw is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('x-expand', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.boolean = $val;
+        self.prop_set('x-expand', $gv);
+      }
+    );
+  }
+
+  method y-expand is also<y_expand> is rw is g-property {
+    my $gv = GLib::Value.new( G_TYPE_BOOLEAN );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('y-expand', $gv);
+        $gv.boolean;
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.boolean = $val;
+        self.prop_set('y-expand', $gv);
+      }
+    );
+  }
+
+  method y-align is also<y_align> is rw is g-property {
+    my $gv = GLib::Value.new(
+      GLib::Value.typeFromEnum(MutterClutterActorAlign)
+    );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('y-align', $gv);
+        MutterClutterContentRepeatEnum(
+          $gv.valueFromEnum(MutterClutterActorAlign)
+        );
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.valueFromEnum(MutterClutterActorAlign) = $val;
+        self.prop_set('y-align', $gv);
+      }
+    );
+  }
+
+  method margins is rw {
+    Proxy.new:
+      FETCH => sub ($) {
+        (
+          self.margin-top,
+          self.margin-left,
+          self.margin-right,
+          self.margin-bottom
+        )
+      },
+      STORE => -> $, Num() $val {
+        my gfloat $v = $val;
+        (
+          self.margin-top,
+          self.margin-left,
+          self.margin-right,
+          self.margin-bottom
+        ) = $val xx 4;
+      }
   }
 
   # Is originally:
@@ -227,6 +1383,12 @@ class Mutter::Clutter::Actor {
   }
 
   # Is originally:
+  # MutterClutterActor, gpointer --> void
+  method resource-scale-changed {
+    self.connect($!mca, 'resource-scale-changed');
+  }
+
+  # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
   method scroll-event is also<scroll_event> {
     self.connect-clutter-event($!mca, 'scroll-event');
@@ -236,6 +1398,12 @@ class Mutter::Clutter::Actor {
   # MutterClutterActor, gpointer --> void
   method show {
     self.connect($!mca, 'show');
+  }
+
+  # Is originally:
+  # MutterClutterActor, gpointer --> void
+  method stage-views-changed {
+    self.connect($!mca, 'stage-views-changed');
   }
 
   # Is originally:
@@ -260,885 +1428,6 @@ class Mutter::Clutter::Actor {
   # MutterClutterActor, gpointer --> void
   method unrealize {
     self.connect($!mca, 'unrealize');
-  }
-
-  method opacity is rw is animatable {
-    Proxy.new(
-      FETCH => sub ($) {
-        clutter_actor_get_opacity($!mca);
-      },
-      STORE => sub ($, Int() $opacity is copy) {
-        my guint8 $o = $opacity;
-
-        clutter_actor_set_opacity($!mca, $o);
-      }
-    );
-  }
-
-  method opacity-override is rw is also<opacity_override> {
-    Proxy.new(
-      FETCH => sub ($) {
-        clutter_actor_get_opacity_override($!mca);
-      },
-      STORE => sub ($, Int() $opacity is copy) {
-        my gint $o = $opacity;
-
-        clutter_actor_set_opacity_override($!mca, $o);
-      }
-    );
-  }
-
-  method pivot-point-z is rw is also<pivot_point_z> is animatable {
-    Proxy.new(
-      FETCH => sub ($) {
-        clutter_actor_get_pivot_point_z($!mca);
-      },
-      STORE => sub ($, $pivot_z is copy) {
-        clutter_actor_set_pivot_point_z($!mca, $pivot_z);
-      }
-    );
-  }
-
-  method reactive is rw {
-    Proxy.new(
-      FETCH => sub ($) {
-        so clutter_actor_get_reactive($!mca);
-      },
-      STORE => sub ($, Int() $reactive is copy) {
-        my gboolean $r = $reactive.so.Int;
-
-        clutter_actor_set_reactive($!mca, $r);
-      }
-    );
-  }
-
-  method request_mode is rw is also<request-mode> {
-    Proxy.new(
-      FETCH => sub ($) {
-        ClutterRequestModeEnum( clutter_actor_get_request_mode($!mca) );
-      },
-      STORE => sub ($, Int() $mode is copy) {
-        my guint $m = $mode;
-
-        clutter_actor_set_request_mode($!mca, $m);
-      }
-    );
-  }
-
-  method scale_z is rw is also<scale-z> is animatable {
-    Proxy.new(
-      FETCH => sub ($) {
-        clutter_actor_get_scale_z($!mca);
-      },
-      STORE => sub ($, $scale_z is copy) {
-        clutter_actor_set_scale_z($!mca, $scale_z);
-      }
-    );
-  }
-
-  method text_direction is rw is also<text-direction> {
-    Proxy.new(
-      FETCH => sub ($) {
-        ClutterTextDirectionEnum( clutter_actor_get_text_direction($!mca) );
-      },
-      STORE => sub ($, Int() $text_dir is copy) {
-        my guint $d = $text_dir;
-        clutter_actor_set_text_direction($!mca, $d);
-      }
-    );
-  }
-
-  method width is rw {
-    Proxy.new(
-      FETCH => sub ($) {
-        clutter_actor_get_width($!mca);
-      },
-      STORE => sub ($, Num() $width is copy) {
-        my gfloat $w = $width;
-
-        clutter_actor_set_width($!mca, $w);
-      }
-    );
-  }
-
-  method x is rw is animatable {
-    Proxy.new(
-      FETCH => sub ($) {
-        clutter_actor_get_x($!mca);
-      },
-      STORE => sub ($, Num() $x is copy) {
-        my gfloat $xx = $x;
-
-        clutter_actor_set_x($!mca, $xx);
-      }
-    );
-  }
-
-  method x-align is rw is also<x_align> {
-    Proxy.new(
-      FETCH => sub ($) {
-        ClutterActorAlignEnum( clutter_actor_get_x_align($!mca) );
-      },
-      STORE => sub ($, Int() $x_align is copy) {
-        my ClutterActorAlign $xa = $x_align;
-
-        clutter_actor_set_x_align($!mca, $xa);
-      }
-    );
-  }
-
-  method x-expand is rw is also<x_expand> {
-    Proxy.new(
-      FETCH => sub ($) {
-        so clutter_actor_get_x_expand($!mca);
-      },
-      STORE => sub ($, Int() $expand is copy) {
-        my gboolean $e = $expand.so.Int;
-
-        clutter_actor_set_x_expand($!mca, $expand);
-      }
-    );
-  }
-
-  method y is rw is animatable {
-    Proxy.new(
-      FETCH => sub ($) {
-        clutter_actor_get_y($!mca);
-      },
-      STORE => sub ($, Num() $y is copy) {
-        my gfloat $yy = $y;
-
-        clutter_actor_set_y($!mca, $yy);
-      }
-    );
-  }
-
-  method y-align is rw is also<y_align> {
-    Proxy.new(
-      FETCH => sub ($) {
-        ClutterActorAlignEnum( clutter_actor_get_y_align($!mca) );
-      },
-      STORE => sub ($, Int() $y_align is copy) {
-        my ClutterActorAlign $ya = $y_align;
-
-        clutter_actor_set_y_align($!mca, $ya);
-      }
-    );
-  }
-
-  method y-expand is rw is also<y_expand> {
-    Proxy.new(
-      FETCH => sub ($) {
-        so clutter_actor_get_y_expand($!mca);
-      },
-      STORE => sub ($, Int() $expand is copy) {
-        my gboolean $e = $expand.so.Int;
-
-        clutter_actor_set_y_expand($!mca, $expand);
-      }
-    );
-  }
-
-  method z-position is rw is also<z_position>  is animatable {
-    Proxy.new(
-      FETCH => sub ($) {
-        clutter_actor_get_z_position($!mca);
-      },
-      STORE => sub ($, Num() $z_position is copy) {
-        my gfloat $z = $z_position;
-
-        clutter_actor_set_z_position($!mca, $z_position);
-      }
-    );
-  }
-
-  # Type: ClutterAction
-  method actions is rw  {
-    my GLib::Value $gv .= new( Mutter::Clutter::Action.get_type );
-    Proxy.new(
-      FETCH => sub ($) {
-        warn "'actions' does not allow reading" if $DEBUG;
-        0;
-      },
-      STORE => -> $, ClutterAction() $val is copy {
-        $gv.object = $val;
-        self.prop_set('actions', $gv);
-      }
-    );
-  }
-
-  # Type: MutterClutterActorBox
-  method allocation (:$raw = False) is rw  {
-    my GLib::Value $gv .= new( Mutter::Clutter::ActorBox.get_type );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('allocation', $gv);
-
-        propReturnObject(
-          $gv.boxed,
-          $raw,
-          |Mutter::Clutter::ActorBox.getTypePair
-        )
-      },
-      STORE => -> $, $val is copy {
-        warn "'allocation' does not allow writing"
-      }
-    );
-  }
-
-  method background-color is rw is also<background_color> {
-    Proxy.new:
-      FETCH => sub ($)    { self.get-background-color      },
-      STORE => -> $, \val { self.set-background-color(val) };
-  }
-
-  # Type: gboolean
-  method background-color-set is rw is also<background_color_set> {
-    my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('background-color-set', $gv);
-        $gv.boolean;
-      },
-      STORE => -> $, Int() $val is copy {
-        warn "'background-color-set' does not allow writing" if $DEBUG;
-      }
-    );
-  }
-
-  # Type: ClutterMatrix
-  method child-transform is rw is also<child_transform> {
-    my GLib::Value $gv .= new( G_TYPE_POINTER );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('child-transform', $gv);
-
-        propReturnObject($gv.pointer, True, MutterClutterMatrix);
-      },
-      STORE => -> $, ClutterMatrix() $val is copy {
-        $gv.pointer = $val;
-        self.prop_set('child-transform', $gv);
-      }
-    );
-  }
-
-  # Type: gboolean
-  method child-transform-set is rw is also<child_transform_set> {
-    my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('child-transform-set', $gv);
-        $gv.boolean;
-      },
-      STORE => -> $, Int() $val is copy {
-        warn "'child-transform-set' does not allow writing" if $DEBUG;
-      }
-    );
-  }
-
-  # Type: MutterClutterRect
-  # method clip-rect is rw is also<clip_rect> {
-  #   my GLib::Value $gv .= new( Mutter::Clutter::Rect.get_type );
-  #   Proxy.new(
-  #     FETCH => sub ($) {
-  #       self.prop_get('clip-rect', $gv);
-  #       propReturnObject($gv.boxed, True, MutterClutterRect);
-  #     },
-  #     STORE => -> $, MutterClutterRect() $val is copy {
-  #       $gv.boxed = $val;
-  #       self.prop_set('clip-rect', $gv);
-  #     }
-  #   );
-  # }
-
-  # Type: gboolean
-  method clip-to-allocation is rw is also<clip_to_allocation> {
-    Proxy.new:
-      FETCH => sub ($)          { self.get-clip-to-allocation },
-      STORE => -> $, Int() \val { self.set-clip-to-allocation(val) };
-  }
-
-  # Type: ClutterContent
-  method content is rw  {
-    Proxy.new:
-      FETCH => sub ($)                     { self.get_content },
-      STORE => -> $, ClutterContent() \val { self.set_content(val) };
-  }
-
-  # Type: ClutterActorBox
-  method content-box ( :$raw = False ) is rw is also<content_box> {
-    my GLib::Value $gv .= new( Mutter::Clutter::ActorBox.get_type );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('content-box', $gv);
-
-        propReturnObject(
-          $gv.boxed,
-          $raw,
-          |Mutter::Clutter::ActorBox.getTypePair
-        );
-      },
-      STORE => -> $, $val is copy {
-        warn "'content-box' does not allow writing";
-      }
-    );
-  }
-
-  # Type: ClutterContentGravity
-  method content-gravity is rw is also<content_gravity> {
-    Proxy.new:
-      FETCH => sub ($)          { self.get-content-gravity },
-      STORE => -> $, Int() \val { self.set-content-gravity(val) };
-  }
-
-  # Type: ClutterContentRepeat
-  method content-repeat is rw is also<content_repeat> {
-    Proxy.new:
-      FETCH => sub ($)          { self.get-content-repeat },
-      STORE => -> $, Int() \val { self.set-content-repeat(val) };
-  }
-
-  method easing_delay is rw is also<easing-delay> {
-    Proxy.new:
-      FETCH => sub ($)          { self.get-easing-delay },
-      STORE => -> $, Int() \val { self.set-easing-delay(val) };
-  }
-
-  method easing-duration is rw is also<easing_duration> {
-    Proxy.new:
-      FETCH => sub ($)          { self.get-easing-duration },
-      STORE => -> $, Int() \val { self.set-easing-duration(val) };
-  }
-
-  method easing-mode is rw is also<easing_mode> {
-    Proxy.new:
-      FETCH => sub ($)          { self.get-easing-mode },
-      STORE => -> $, Int() \val { self.set-easing-mode(val) };
-  }
-
-  # Type: ClutterEffect
-  method effect is rw  {
-    my GLib::Value $gv .= new( Mutter::Clutter::Effect.get_type );
-    Proxy.new(
-      FETCH => sub ($) {
-        warn "'effect' does not allow reading" if $DEBUG;
-        0;
-      },
-      STORE => -> $, ClutterEffect() $val is copy {
-        $gv.object = $val;
-        self.prop_set('effect', $gv);
-      }
-    );
-  }
-
-  # Type: gboolean
-  method fixed-position-set is rw is also<fixed_position_set> {
-    Proxy.new:
-      FETCH => sub ($)          { self.get-fixed-position-set };
-      STORE => -> $, Int() \val { self.set-fixed-position-set(val) };
-  }
-
-  # Type: gfloat
-  method fixed-x is rw is also<fixed_x> is animatable {
-    my GLib::Value $gv .= new( G_TYPE_FLOAT );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('fixed-x', $gv);
-        $gv.float;
-      },
-      STORE => -> $, Num() $val is copy {
-        $gv.float = $val;
-        self.prop_set('fixed-x', $gv);
-      }
-    );
-  }
-
-  # Type: gfloat
-  method fixed-y is rw is also<fixed_y> is animatable {
-    my GLib::Value $gv .= new( G_TYPE_FLOAT );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('fixed-y', $gv);
-        $gv.float;
-      },
-      STORE => -> $, Num() $val is copy {
-        $gv.float = $val;
-        self.prop_set('fixed-y', $gv);
-      }
-    );
-  }
-
-  # Type: gfloat
-  method height is rw is animatable {
-    Proxy.new:
-      FETCH => sub ($)          { self.get-height },
-      STORE => -> $, Num() \val { self.set-height(val) };
-  }
-
-  # Type: ClutterLayoutManager
-  method layout-manager (:$raw = False) is rw is also<layout_manager> {
-    Proxy.new:
-      FETCH => sub ($) {
-        self.get-layout-manager(:$raw);
-      },
-      STORE => -> $, ClutterLayoutManager() \val {
-        self.set-layout-manager(val)
-      };
-  }
-
-  # Type: ClutterScalingFilter
-  method magnification-filter is rw is also<magification_filter> {
-    my GLib::Value $gv .= new( Mutter::Raw::Enums.scaling_filter_get_type );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('magnification-filter', $gv);
-        ClutterScalingFilterEnum( $gv.enum );
-      },
-      STORE => -> $, Int() $val is copy {
-        $gv.uint = $val;
-        self.prop_set('magnification-filter', $gv);
-      }
-    );
-  }
-
-  # Type: gboolean
-  method mapped is rw  {
-    my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('mapped', $gv);
-        $gv.boolean;
-      },
-      STORE => -> $, Int() $val is copy {
-        warn "'mapped' does not allow writing"
-      }
-    );
-  }
-
-  method margins is rw {
-    Proxy.new:
-      FETCH => sub ($) {
-        (
-          self.margin-top,
-          self.margin-left,
-          self.margin-right,
-          self.margin-bottom
-        )
-      },
-      STORE => -> $, Num() $val {
-        my gfloat $v = $val;
-        (
-          self.margin-top,
-          self.margin-left,
-          self.margin-right,
-          self.margin-bottom
-        ) = $val xx 4;
-      }
-  }
-
-  # Type: gfloat
-  method margin-bottom is rw is also<margin_bottom> is animatable {
-    Proxy.new:
-      FETCH => sub ($)          { self.get-margin-bottom },
-      STORE => -> $, Num() \val { self.set-margin-bottom(val) };
-  }
-
-  # Type: gfloat
-  method margin-left is rw is also<margin_left> is animatable {
-    Proxy.new:
-      FETCH => sub ($)          { self.get-margin-left },
-      STORE => -> $, Num() \val { self.set-margin-left(val) };
-  }
-
-  # Type: gfloat
-  method margin-right is rw is also<margin_right> is animatable {
-  Proxy.new:
-    FETCH => sub ($)          { self.get-margin-right },
-    STORE => -> $, Num() \val { self.set-margin-right(val) };
-  }
-
-  # Type: gfloat
-  method margin-top is rw is also<margin_top> is animatable {
-    Proxy.new:
-      FETCH => sub ($)          { self.get-margin-top },
-      STORE => -> $, Num() \val { self.set-margin-top(val) };
-  }
-
-  # Type: gfloat
-  method min-height is rw is also<min_height> is animatable {
-    my GLib::Value $gv .= new( G_TYPE_FLOAT );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('min-height', $gv);
-        $gv.float;
-      },
-      STORE => -> $, Num() $val is copy {
-        $gv.float = $val;
-        self.prop_set('min-height', $gv);
-      }
-    );
-  }
-
-  # Type: gboolean
-  method min-height-set is rw is also<min_height_set> {
-    my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('min-height-set', $gv);
-        $gv.boolean;
-      },
-      STORE => -> $, Int() $val is copy {
-        $gv.boolean = $val;
-        self.prop_set('min-height-set', $gv);
-      }
-    );
-  }
-
-  # Type: gfloat
-  method min-width is rw is also<min_width> is animatable {
-    my GLib::Value $gv .= new( G_TYPE_FLOAT );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('min-width', $gv);
-        $gv.float;
-      },
-      STORE => -> $, Num() $val is copy {
-        $gv.float = $val;
-        self.prop_set('min-width', $gv);
-      }
-    );
-  }
-
-  # Type: gboolean
-  method min-width-set is rw is also<min_width_set> {
-    my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('min-width-set', $gv);
-        $gv.boolean;
-      },
-      STORE => -> $, Int() $val is copy {
-        $gv.boolean = $val;
-        self.prop_set('min-width-set', $gv);
-      }
-    );
-  }
-
-  # Type: ClutterScalingFilter
-  method minification-filter is rw is also<minification_filter> {
-    my GLib::Value $gv .= new( Mutter::Raw::Enums.scaling_filter_get_type );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('minification-filter', $gv);
-        ClutterScalingFilterEnum( $gv.enum );
-      },
-      STORE => -> $, Int() $val is copy {
-        $gv.uint = $val;
-        self.prop_set('minification-filter', $gv);
-      }
-    );
-  }
-
-  # Type: gchar
-  method name is rw  {
-    Proxy.new:
-      FETCH => sub ($)          { self.get-name },
-      STORE => -> $, Str() $val { self.set-name($val) };
-  }
-
-  # Type: gfloat
-  method natural-height is rw is also<natural_height> is animatable {
-    my GLib::Value $gv .= new( G_TYPE_FLOAT );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('natural-height', $gv);
-        $gv.float;
-      },
-      STORE => -> $, Num() $val is copy {
-        $gv.float = $val;
-        self.prop_set('natural-height', $gv);
-      }
-    );
-  }
-
-  # Type: gboolean
-  method natural-height-set is rw is also<natural_height_set> {
-    my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('natural-height-set', $gv);
-        $gv.boolean;
-      },
-      STORE => -> $, Int() $val is copy {
-        $gv.boolean = $val;
-        self.prop_set('natural-height-set', $gv);
-      }
-    );
-  }
-
-  # Type: gfloat
-  method natural-width is rw is also<natural_width> is animatable {
-    my GLib::Value $gv .= new( G_TYPE_FLOAT );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('natural-width', $gv);
-        $gv.float;
-      },
-      STORE => -> $, Num() $val is copy {
-        $gv.float = $val;
-        self.prop_set('natural-width', $gv);
-      }
-    );
-  }
-
-  # Type: gboolean
-  method natural-width-set is rw is also<natural_width_set> {
-    my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('natural-width-set', $gv);
-        $gv.boolean;
-      },
-      STORE => -> $, Int() $val is copy {
-        $gv.boolean = $val;
-        self.prop_set('natural-width-set', $gv);
-      }
-    );
-  }
-
-  # Type: ClutterOffscreenRedirect
-  method offscreen-redirect is rw is also<offscreen_redirect> {
-    Proxy.new:
-      FETCH => sub ($)          { self.get-offscreen-redirect },
-      STORE => -> $, Num() \val { self.set-offscreen-redirect(val) };
-  }
-
-  # # Type: ClutterPoint
-  # method pivot-point is rw is also<pivot_point> is animatable {
-  #   my GLib::Value $gv .= new( Mutter::Clutter::Point.get_type );
-  #   Proxy.new(
-  #     FETCH => sub ($) {
-  #       self.prop_get('pivot-point', $gv);
-  #       propReturnObject($gv.boxed, True, MutterClutterPoint);
-  #     },
-  #     STORE => -> $, MutterClutterPoint() $val is copy {
-  #       $gv.boxed = $val;
-  #       self.prop_set('pivot-point', $gv);
-  #     }
-  #   );
-  # }
-
-  # # Type: ClutterPoint
-  # method position is rw  {
-  #   my GLib::Value $gv .= new( Mutter::Clutter::Point.get_type );
-  #   Proxy.new(
-  #     FETCH => sub ($) {
-  #       self.prop_get('position', $gv);
-  #       propReturnObject($gv.boxed, True, MutterClutterPoint);
-  #     },
-  #     STORE => -> $, MutterClutterPoint() $val is copy {
-  #       $gv.boxed = $val;
-  #       self.prop_set('position', $gv);
-  #     }
-  #   );
-  # }
-
-  # Type: gboolean
-  method realized is rw  {
-    my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('realized', $gv);
-        $gv.boolean;
-      },
-      STORE => -> $, Int() $val is copy {
-        warn "realized does not allow writing"
-      }
-    );
-  }
-
-  # Type: gdouble
-  method rotation-angle-x is rw is also<rotation_angle_x> is animatable {
-    my GLib::Value $gv .= new( G_TYPE_DOUBLE );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('rotation-angle-x', $gv);
-        $gv.double;
-      },
-      STORE => -> $, Num() $val is copy {
-        $gv.double = $val;
-        self.prop_set('rotation-angle-x', $gv);
-      }
-    );
-  }
-
-  # Type: gdouble
-  method rotation-angle-y is rw is also<rotation_angle_y> is animatable {
-    my GLib::Value $gv .= new( G_TYPE_DOUBLE );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('rotation-angle-y', $gv);
-        $gv.double;
-      },
-      STORE => -> $, Num() $val is copy {
-        $gv.double = $val;
-        self.prop_set('rotation-angle-y', $gv);
-      }
-    );
-  }
-
-  # Type: gdouble
-  method rotation-angle-z is rw is also<rotation_angle_z> is animatable {
-    my GLib::Value $gv .= new( G_TYPE_DOUBLE );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('rotation-angle-z', $gv);
-        $gv.double;
-      },
-      STORE => -> $, Num() $val is copy {
-        $gv.double = $val;
-        self.prop_set('rotation-angle-z', $gv);
-      }
-    );
-  }
-
-  # Type: gdouble
-  method scale-x is rw is also<scale_x> is animatable {
-    my GLib::Value $gv .= new( G_TYPE_DOUBLE );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('scale-x', $gv);
-        $gv.double;
-      },
-      STORE => -> $, Num() $val is copy {
-        $gv.double = $val;
-        self.prop_set('scale-x', $gv);
-      }
-    );
-  }
-
-  # Type: gdouble
-  method scale-y is rw is also<scale_y> is animatable {
-    my GLib::Value $gv .= new( G_TYPE_DOUBLE );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('scale-y', $gv);
-        $gv.double;
-      },
-      STORE => -> $, Num() $val is copy {
-        $gv.double = $val;
-        self.prop_set('scale-y', $gv);
-      }
-    );
-  }
-
-  # Type: gboolean
-  method show-on-set-parent is rw is also<show_on_set_parent> {
-    my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('show-on-set-parent', $gv);
-        $gv.boolean;
-      },
-      STORE => -> $, Int() $val is copy {
-        $gv.boolean = $val;
-        self.prop_set('show-on-set-parent', $gv);
-      }
-    );
-  }
-
-  # Type: ClutterSize
-  # method size (:$raw = False) is rw  {
-  #   my GLib::Value $gv .= new( Mutter::Clutter::Size.get_type );
-  #   Proxy.new(
-  #     FETCH => sub ($) {
-  #       self.prop_get('size', $gv);
-  #
-  #       propReturnObject(
-  #         $gv.boxed,
-  #         $raw,
-  #         |Mutter::Clutter::Size.getTypePair
-  #       );
-  #     },
-  #     STORE => -> $, ClutterSize() $val is copy {
-  #       $gv.boxed = $val;
-  #       self.prop_set('size', $gv);
-  #     }
-  #   );
-  # }
-
-  # Type: gboolean
-  method transform-set is rw is also<transform_set> {
-    my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('transform-set', $gv);
-        $gv.boolean;
-      },
-      STORE => -> $, Int() $val is copy {
-        warn "transform-set does not allow writing"
-      }
-    );
-  }
-
-  # Type: gfloat
-  method translation-x is rw is also<translation_x> is animatable {
-    my GLib::Value $gv .= new( G_TYPE_FLOAT );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('translation-x', $gv);
-        $gv.float;
-      },
-      STORE => -> $, Num() $val is copy {
-        $gv.float = $val;
-        self.prop_set('translation-x', $gv);
-      }
-    );
-  }
-
-  # Type: gfloat
-  method translation-y is rw is also<translation_y> is animatable {
-    my GLib::Value $gv .= new( G_TYPE_FLOAT );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('translation-y', $gv);
-        $gv.float;
-      },
-      STORE => -> $, Num() $val is copy {
-        $gv.float = $val;
-        self.prop_set('translation-y', $gv);
-      }
-    );
-  }
-
-  # Type: gfloat
-  method translation-z is rw is also<translation_z> is animatable {
-    my GLib::Value $gv .= new( G_TYPE_FLOAT );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('translation-z', $gv);
-        $gv.float;
-      },
-      STORE => -> $, Num() $val is copy {
-        $gv.float = $val;
-        self.prop_set('translation-z', $gv);
-      }
-    );
-  }
-
-  # Type: gboolean
-  method visible is rw  {
-    my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
-    Proxy.new(
-      FETCH => sub ($) {
-        self.prop_get('visible', $gv);
-        $gv.boolean;
-      },
-      STORE => -> $, Int() $val is copy {
-        $gv.boolean = $val;
-        self.prop_set('visible', $gv);
-      }
-    );
   }
 
   method add_child (MutterClutterActor() $child) {
@@ -1179,7 +1468,7 @@ class Mutter::Clutter::Actor {
     my gfloat ($xx, $yy, $aw, $ah)
       = ($x, $y, $available_width, $available_height);
 
-    clutter_actor_allocate_available_size($!mca, $xx, $yy, $aw, $ah, $f);
+    clutter_actor_allocate_available_size($!mca, $xx, $yy, $aw, $ah);
   }
 
   method allocate_preferred_size (Num() $x, Num() $y) {
@@ -1223,9 +1512,9 @@ class Mutter::Clutter::Actor {
     clutter_actor_bind_model(
       $!mca,
       $model,
-      $create_child_func,
+      &create_child_func,
       $user_data,
-      $notify
+      &notify
     );
   }
 
@@ -1283,7 +1572,7 @@ class Mutter::Clutter::Actor {
     );
   }
 
-  method destroy {
+  method emit_destroy is also<emit-destroy> {
     clutter_actor_destroy($!mca);
   }
 
@@ -1291,7 +1580,7 @@ class Mutter::Clutter::Actor {
     clutter_actor_destroy_all_children($!mca);
   }
 
-  method emit-event (MutterCluttserEvent() $event, Int() $capture)
+  method emit-event (MutterClutterEvent() $event, Int() $capture)
     is also<emit_event>
   {
     my gboolean $c = $capture.so.Int;
@@ -1323,14 +1612,14 @@ class Mutter::Clutter::Actor {
     samewith($, :$raw);
   }
   multi method get_background_color ($color is rw, :$raw = False) {
-    $color = ClutterColor.new;
+    $color = MutterClutterColor.new;
 
     clutter_actor_get_background_color($!mca, $color);
 
     propReturnObject($color, $raw, |Mutter::Clutter::Color.getTypePair)
   }
 
-  method get_child_at_index (Int() $index)
+  method get_child_at_index (Int() $index, :$raw = False)
     is also<get-child-at-index>
   {
     my gint $i = $index;
@@ -1348,7 +1637,7 @@ class Mutter::Clutter::Actor {
     clutter_actor_get_child_transform($!mca, $transform);
   }
 
-  method get_children :$glist = False, :$raw = False)
+  method get_children ( :$glist = False, :$raw = False )
     is also<
       get-children
       children
@@ -1358,7 +1647,7 @@ class Mutter::Clutter::Actor {
       clutter_actor_get_children($!mca),
       $raw,
       $glist,
-      |self.getTypePair`
+      |self.getTypePair
     );
   }
 
@@ -1387,13 +1676,17 @@ class Mutter::Clutter::Actor {
     clutter_actor_get_clip_to_allocation($!mca);
   }
 
-  method get_content is also<get-content> {
-    Mutter::Clutter:Content.new(
-      clutter_actor_get_content($!mca)
+  method get_content ( :$raw = False ) is also<get-content> {
+    propReturnObject(
+      clutter_actor_get_content($!mca),
+      $raw,
+      |Mutter::Clutter::Content.getTypePair
     );
   }
 
-  method get_content_box (ClutterActorBox() $box) is also<get-content-box> {
+  method get_content_box (MutterClutterActorBox() $box)
+    is also<get-content-box>
+  {
     clutter_actor_get_content_box($!mca, $box);
   }
 
@@ -1440,13 +1733,7 @@ class Mutter::Clutter::Actor {
     MutterClutterAnimationModeEnum( clutter_actor_get_easing_mode($!mca) );
   }
 
-  method get_first_child (:$raw = False)
-    is also<
-      get-first-child
-      first_child
-      first-child
-    >
-  {
+  method get_first_child (:$raw = False) is also<get-first-child> {
     propReturnObject(
       clutter_actor_get_first_child($!mca),
       $raw,
@@ -1454,8 +1741,17 @@ class Mutter::Clutter::Actor {
     );
   }
 
-  method get_fixed_position (gfloat $x is rw, gfloat $y is rw) {
-    clutter_actor_get_fixed_position($!mca, $x is rw, $y is rw);
+  proto method get_fixed_position (|)
+  { * }
+
+  multi method get_fixed_position {
+    samewith($, $);
+  }
+  multi method get_fixed_position ($x is rw, $y is rw) {
+    my gfloat ($xx, $yy) = 0e0 xx 2;
+
+    clutter_actor_get_fixed_position($!mca, $xx, $yy);
+    ($x, $y) = ($xx, $yy);
   }
 
   method get_fixed_position_set is also<get-fixed-position-set> {
@@ -1468,20 +1764,14 @@ class Mutter::Clutter::Actor {
       flags
     >
   {
-    ClutterActorFlagsEnum( clutter_actor_get_flags($!mca);
+    MutterClutterActorFlagsEnum( clutter_actor_get_flags($!mca) );
   }
 
   method get_height is also<get-height> {
     clutter_actor_get_height($!mca);
   }
 
-  method get_last_child (:$raw = False)
-    is also<
-      get-last-child
-      last_child
-      last-child
-    >
-  {
+  method get_last_child ( :$raw = False ) is also<get-last-child> {
     propReturnObject(
       clutter_actor_get_last_child($!mca),
       $raw,
@@ -1489,7 +1779,7 @@ class Mutter::Clutter::Actor {
     );
   }
 
-  method get_layout_manager(:$raw = False) is also<get-layout-manager> {
+  method get_layout_manager ( :$raw = False ) is also<get-layout-manager> {
     propReturnObject(
       clutter_actor_get_layout_manager($!mca),
       $raw,
@@ -1547,7 +1837,7 @@ class Mutter::Clutter::Actor {
   }
 
   method get_offscreen_redirect is also<get-offscreen-redirect> {
-    ClutterOffscreenRedirectEnum(
+    MutterClutterOffscreenRedirectEnum(
       clutter_actor_get_offscreen_redirect($!mca)
     );
   }
@@ -2034,7 +2324,9 @@ class Mutter::Clutter::Actor {
     clutter_actor_needs_expand($!mca, $o);
   }
 
-  method paint (MutterClutterPaintContext() $paint_context) {
+  method emit_paint (MutterClutterPaintContext() $paint_context)
+    is also<emit-paint>
+  {
     clutter_actor_paint($!mca, $paint_context);
   }
 
@@ -2044,11 +2336,16 @@ class Mutter::Clutter::Actor {
     clutter_actor_peek_stage_views($!mca);
   }
 
-  method pick (MutterClutterPickContext $pick_context) {
+  method emit_pick (MutterClutterPickContext() $pick_context)
+    is also<emit-pick>
+  {
     clutter_actor_pick($!mca, $pick_context);
   }
 
-  method pick_box (MutterClutterPickContext $pick_context, MutterClutterActorBox $box) {
+  method pick_box (
+    MutterClutterPickContext() $pick_context,
+    MutterClutterActorBox()    $box
+  ) {
     clutter_actor_pick_box($!mca, $pick_context, $box);
   }
 
@@ -2056,13 +2353,13 @@ class Mutter::Clutter::Actor {
     clutter_actor_queue_redraw($!mca);
   }
 
-  method queue_redraw_with_clip (cairo_rectangle_int_t $clip)
-    is also<queue-redraw-actor>
+  method queue_redraw_with_clip (cairo_rectangle_int_t() $clip)
+    is also<queue-redraw-actor-with-clip>
   {
     clutter_actor_queue_redraw_with_clip($!mca, $clip);
   }
 
-  method queue_relayout is also<queue-relayout-actor> {
+  method queue_relayout_actor is also<queue-relayout-actor> {
     clutter_actor_queue_relayout($!mca);
   }
 
@@ -2086,13 +2383,13 @@ class Mutter::Clutter::Actor {
     clutter_actor_remove_clip($!mca);
   }
 
-  method remove_transition (Str $name) is also<remove-transition> {
+  method remove_transition (Str() $name) is also<remove-transition> {
     clutter_actor_remove_transition($!mca, $name);
   }
 
-  method replace_child method replace_child (
-    ClutterActor() $old_child,
-    ClutterActor() $new_child
+  method replace_child (
+    MutterClutterActor() $old_child,
+    MutterClutterActor() $new_child
   )
     is also<replace-child>
   {
@@ -2253,7 +2550,7 @@ class Mutter::Clutter::Actor {
     clutter_actor_set_margin_bottom($!mca, $m);
   }
 
-  method set_margin_bottom (Num() $margin) is also<set-margin-bottom> {
+  method set_margin_left (Num() $margin) is also<set-margin-left> {
     my gfloat $m = $margin;
 
     clutter_actor_set_margin_left($!mca, $m);
@@ -2265,7 +2562,7 @@ class Mutter::Clutter::Actor {
     clutter_actor_set_margin_right($!mca, $m);
   }
 
-  method set_margin_right (Num() $margin) is also<set-margin-right> {
+  method set_margin_top (Num() $margin) is also<set-margin-top> {
     my gfloat $m = $margin;
 
     clutter_actor_set_margin_top($!mca, $m);
@@ -2322,7 +2619,7 @@ class Mutter::Clutter::Actor {
   method set_reactive (Int() $reactive) is also<set-reactive> {
     my gboolean $r = $reactive.so.Int;
 
-    clutter_actor_set_reactive($!mca, $rs);
+    clutter_actor_set_reactive($!mca, $r);
   }
 
   method set_request_mode (Int() $mode) is also<set-request-mode> {
@@ -2477,7 +2774,7 @@ class Mutter::Clutter::Actor {
 
   # ACTIONS
 
-  method add_action (MutterlutterAction() $action) is also<add-action> {
+  method add_action (MutterClutterAction() $action) is also<add-action> {
     clutter_actor_add_action($!mca, $action);
   }
 
@@ -2550,70 +2847,30 @@ class Mutter::Clutter::Actor {
     clutter_actor_remove_action_by_name($!mca, $name);
   }
 
-}
-
-class Mutter::Clutter::Actor::Iter {
-  has MutterClutterActorIter $!mcai is implementor;
-
-  submethod BUILD ( :$mutter-actor-iter ) {
-    $!mcai = $mutter-actor-iter;
-  }
-
-  method init (MutterClutterActor() $root) {
-    my $mutter-actor-iter = clutter_actor_iter_init($!mca, $root);
-
-    $mutter-actor-iter ?? self.bless( :$mutter-actor-iter ) !! Nil;
-  }
-
-  method destroy {
-    clutter_actor_iter_destroy($!mcai);
-  }
-
-  method is_valid {
-    so clutter_actor_iter_is_valid($!mcai);
-  }
-
-  multi method next ( :$raw = False ) {
-    samewith( newCArray(MutterClutterActor), :$raw )
-  }
-  multi method next (CArray[MutterClutterActor] $child, :$raw = False) {
-    clutter_actor_iter_next($!mcai, $child);
-    propReturnObject( ppr($child), $raw, |self.getTypePair );
-  }
-
-  method prev ( :$raw = False ) {
-    samewith( newCArray(MutterClutterActor), :$raw )
-  }
-  method prev (CArray[MutterClutterActor] $child, :$raw = False) {
-    clutter_actor_iter_prev($!mcai, $child);
-    propReturnObject( ppr($child), $raw, |self.getTypePair );
-  }
-
-  method remove {
-    clutter_actor_iter_remove($!mcai);
-  }
-
   # CONSTRAINTS
 
   method add_constraints (*@constraints) is also<add-constraints> {
     for @constraints {
       die "\@constraints must contain only Mutter::Clutter::Constraint {
            '' }compatible values"
-      unless $_ ~~ ClutterConstraint || .^lookup('ClutterConstraint')
+      unless [||](
+        $_ ~~ MutterClutterConstraint,
+        .^lookup('MutterClutterConstraint')
+      );
     }
 
     self.add_constraint($_) for @constraints;
   }
 
-  method add_constraint (ClutterConstraint() $constraint)
+  method add_constraint (MutterClutterConstraint() $constraint)
     is also<add-constraint>
   {
     clutter_actor_add_constraint($!mca, $constraint);
   }
 
   method add_constraint_with_name (
-    Str()               $name,
-    ClutterConstraint() $constraint
+    Str()                     $name,
+    MutterClutterConstraint() $constraint
   )
     is also<
       add-constraint-with-name
@@ -2670,7 +2927,7 @@ class Mutter::Clutter::Actor::Iter {
     so clutter_actor_has_constraints($!mca);
   }
 
-  method remove_constraint (ClutterConstraint() $constraint)
+  method remove_constraint (MutterClutterConstraint() $constraint)
     is also<remove-constraint>
   {
     clutter_actor_remove_constraint($!mca, $constraint);
@@ -2694,6 +2951,7 @@ class Mutter::Clutter::Actor::Iter {
       add_effect_by_name
       add-effect-by-name
     >
+  {
     clutter_actor_add_effect_with_name($!mca, $name, $effect);
   }
 
@@ -2701,9 +2959,10 @@ class Mutter::Clutter::Actor::Iter {
     clutter_actor_clear_effects($!mca);
   }
 
-  method clutter_effect_queue_repaint {
-    clutter_effect_queue_repaint($!mca);
-  }
+  # This is a method for Mutter::Clutter::Effect
+  # method clutter_effect_queue_repaint {
+  #   clutter_effect_queue_repaint($!mca);
+  # }
 
   method get_effect (Str() $name, :$raw = False) is also<get-effect> {
     propReturnObject(
@@ -2715,7 +2974,7 @@ class Mutter::Clutter::Actor::Iter {
 
   method get_effects (:$glist = False, :$raw = False) is also<get-effects> {
     returnGList(
-      clutter_actor_get_effects($!ca),
+      clutter_actor_get_effects($!mca),
       $raw,
       $glist,
       |Mutter::Clutter::Effect.getTypePair
@@ -2726,7 +2985,7 @@ class Mutter::Clutter::Actor::Iter {
     so clutter_actor_has_effects($!mca);
   }
 
-  method remove_effect (ClutterEffect() $effect) is also<remove-effect> {
+  method remove_effect (MutterClutterEffect() $effect) is also<remove-effect> {
     clutter_actor_remove_effect($!mca, $effect);
   }
 
@@ -2736,20 +2995,64 @@ class Mutter::Clutter::Actor::Iter {
 
 }
 
+class Mutter::Clutter::Actor::Iter {
+  has MutterClutterActorIter $!mcai is implementor;
+
+  submethod BUILD ( :$mutter-actor-iter ) {
+    $!mcai = $mutter-actor-iter;
+  }
+
+  method init (MutterClutterActor() $root) {
+    my $mutter-actor-iter = clutter_actor_iter_init($root);
+
+    $mutter-actor-iter ?? self.bless( :$mutter-actor-iter ) !! Nil;
+  }
+
+  method destroy {
+    clutter_actor_iter_destroy($!mcai);
+  }
+
+  method is_valid {
+    so clutter_actor_iter_is_valid($!mcai);
+  }
+
+  multi method next ( :$raw = False ) {
+    samewith( newCArray(MutterClutterActor), :$raw )
+  }
+  multi method next (CArray[MutterClutterActor] $child, :$raw = False) {
+    clutter_actor_iter_next($!mcai, $child);
+    propReturnObject( ppr($child), $raw, |self.getTypePair );
+  }
+
+  multi method prev ( :$raw = False ) {
+    samewith( newCArray(MutterClutterActor), :$raw )
+  }
+  multi method prev (CArray[MutterClutterActor] $child, :$raw = False) {
+    clutter_actor_iter_prev($!mcai, $child);
+    propReturnObject( ppr($child), $raw, |self.getTypePair );
+  }
+
+  method remove {
+    clutter_actor_iter_remove($!mcai);
+  }
+}
+
 use GLib::Object::Type;
 use GLib::Class::Object;
 
 BEGIN {
-  @animatables = self.&findMethodsWithRole(AnimatablePropertyMethod);
-  @set-methods = self.&findMethodsWithPrefix('set_');
-  @add-methods = self.&findMethodsWithPrefix('add_');
-  say "{ ::?CLASS.^name } - { +@animatables } animatables, {
+  @animatables = Mutter::Clutter::Actor.&findMethodsWithRole(
+    AnimatablePropertyMethod
+  );
+  @set-methods = Mutter::Clutter::Actor.&findMethodsWithPrefixes('set_');
+  @add-methods = Mutter::Clutter::Actor.&findMethodsWithPrefixes('add_');
+  say "Mutter::Clutter::Actor - { +@animatables } animatables, {
          +@set-methods } set methods, and { +@add-methods } add methods";
 }
 
 INIT {
   unless %*ENV<P6_GLIB_COMPILE_PROCESS> {
-    my $o = GLib::Object.new-object(Mutter::Clutter::Actor.get-type);
+    my $o = GLib::Object.new(Mutter::Clutter::Actor.get-type);
     %properties = $o.getClass.getProperties;
     my $np = %properties.elems;
     say "Clutter::Actor - { $np } property entr{ $np == 1 ?? 'y' !! 'ies' }";
