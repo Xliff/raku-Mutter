@@ -111,6 +111,7 @@ class MutterClutterVirtualInputDevice is repr<CPointer> does GLib::Roles::Pointe
 
 # Cogl
 
+class MutterCoglContext          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglFramebuffer      is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglHandle           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglPipeline         is repr<CPointer> does GLib::Roles::Pointers is export { }
