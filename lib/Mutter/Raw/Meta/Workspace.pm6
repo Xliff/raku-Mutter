@@ -7,31 +7,34 @@ unit package Mutter::Raw::Meta::Workspace;
 
 ### /usr/include/mutter-10/meta/workspace.h
 
-sub meta_workspace_activate (MetaWorkspace $workspace, guint32 $timestamp)
+sub meta_workspace_activate (
+  MutterMetaWorkspace $workspace,
+  guint32             $timestamp
+)
   is native(mutter)
   is export
 { * }
 
 sub meta_workspace_activate_with_focus (
-  MetaWorkspace $workspace,
-  MetaWindow    $focus_this,
-  guint32       $timestamp
+  MutterMetaWorkspace $workspace,
+  MutterMetaWindow    $focus_this,
+  guint32             $timestamp
 )
   is native(mutter)
   is export
 { * }
 
-sub meta_workspace_get_display (MetaWorkspace $workspace)
-  returns MetaDisplay
+sub meta_workspace_get_display (MutterMetaWorkspace $workspace)
+  returns MutterMetaDisplay
   is native(mutter)
   is export
 { * }
 
 sub meta_workspace_get_neighbor (
-  MetaWorkspace       $workspace,
-  MetaMotionDirection $direction
+  MutterMetaWorkspace       $workspace,
+  MutterMetaMotionDirection $direction
 )
-  returns MetaWorkspace
+  returns MutterMetaWorkspace
   is native(mutter)
   is export
 { * }
@@ -43,37 +46,37 @@ sub meta_workspace_get_type ()
 { * }
 
 sub meta_workspace_get_work_area_all_monitors (
-  MetaWorkspace $workspace,
-  MetaRectangle $area
+  MutterMetaWorkspace $workspace,
+  MutterMetaRectangle $area
 )
   is native(mutter)
   is export
 { * }
 
 sub meta_workspace_get_work_area_for_monitor (
-  MetaWorkspace $workspace,
-  gint          $which_monitor,
-  MetaRectangle $area
+  MutterMetaWorkspace $workspace,
+  gint                $which_monitor,
+  MutterMetaRectangle $area
 )
   is native(mutter)
   is export
 { * }
 
-sub meta_workspace_index (MetaWorkspace $workspace)
+sub meta_workspace_index (MutterMetaWorkspace $workspace)
   returns gint
   is native(mutter)
   is export
 { * }
 
-sub meta_workspace_list_windows (MetaWorkspace $workspace)
-  returns GList # of MetaWindow
+sub meta_workspace_list_windows (MutterMetaWorkspace $workspace)
+  returns GList # of MutterMetaWindow
   is native(mutter)
   is export
 { * }
 
 sub meta_workspace_set_builtin_struts (
-  MetaWorkspace $workspace,
-  GSList        $struts
+  MutterMetaWorkspace $workspace,
+  GSList              $struts
 )
   is native(mutter)
   is export
