@@ -90,7 +90,11 @@ class Mutter::Clutter::Settings {
   }
 
   # Type: int
-  method double-click-distance is rw  is g-property is also<double_click_distance> {
+  method double-click-distance
+    is rw
+    is g-property
+    is also<double_click_distance>
+  {
     my $gv = GLib::Value.new( G_TYPE_INT );
     Proxy.new(
       FETCH => sub ($) {
@@ -105,7 +109,11 @@ class Mutter::Clutter::Settings {
   }
 
   # Type: int
-  method dnd-drag-threshold is rw  is g-property is also<dnd_drag_threshold> {
+  method dnd-drag-threshold
+    is rw
+    is g-property
+    is also<dnd_drag_threshold>
+  {
     my $gv = GLib::Value.new( G_TYPE_INT );
     Proxy.new(
       FETCH => sub ($) {
@@ -120,7 +128,7 @@ class Mutter::Clutter::Settings {
   }
 
   # Type: string
-  method font-name is rw  is g-property is also<font_name> {
+  method font-name is rw is g-property is also<font_name> {
     my $gv = GLib::Value.new( G_TYPE_STRING );
     Proxy.new(
       FETCH => sub ($) {
@@ -210,7 +218,11 @@ class Mutter::Clutter::Settings {
   }
 
   # Type: string
-  method font-subpixel-order is rw  is g-property is also<font_subpixel_order> {
+  method font-subpixel-order
+    is rw
+    is g-property
+    is also<font_subpixel_order>
+  {
     my $gv = GLib::Value.new( G_TYPE_STRING );
     Proxy.new(
       FETCH => sub ($) {
@@ -225,7 +237,11 @@ class Mutter::Clutter::Settings {
   }
 
   # Type: int
-  method long-press-duration is rw  is g-property is also<long_press_duration> {
+  method long-press-duration
+    is rw
+    is g-property
+    is also<long_press_duration>
+  {
     my $gv = GLib::Value.new( G_TYPE_INT );
     Proxy.new(
       FETCH => sub ($) {
@@ -240,7 +256,11 @@ class Mutter::Clutter::Settings {
   }
 
   # Type: uint
-  method fontconfig-timestamp is rw  is g-property is also<fontconfig_timestamp> {
+  method fontconfig-timestamp
+    is rw
+    is g-property
+    is also<fontconfig_timestamp>
+  {
     my $gv = GLib::Value.new( G_TYPE_UINT );
     Proxy.new(
       FETCH => sub ($) {
@@ -255,7 +275,11 @@ class Mutter::Clutter::Settings {
   }
 
   # Type: uint
-  method password-hint-time is rw  is g-property is also<password_hint_time> {
+  method password-hint-time
+    is rw
+    is g-property
+    is also<password_hint_time>
+  {
     my $gv = GLib::Value.new( G_TYPE_UINT );
     Proxy.new(
       FETCH => sub ($) {
