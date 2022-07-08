@@ -14,9 +14,9 @@ class Mutter::Clutter::InputFocus {
 
   has MutterClutterInputFocus $!mcif is implementor;
 
-  submethod BUILD ( :$mutter-clutter-container ) {
-    self.setMutterClutterInputFocus($mutter-clutter-container)
-      if $mutter-clutter-container;
+  submethod BUILD ( :$mutter-clutter-input-focus ) {
+    self.setMutterClutterInputFocus($mutter-clutter-input-focus)
+      if $mutter-clutter-input-focus;
   }
 
   method setMutterClutterInputFocus(MutterClutterInputFocusAncestry $_) {
@@ -40,12 +40,12 @@ class Mutter::Clutter::InputFocus {
   { $!mcif }
 
   method new (
-    MutterClutterInputFocusAncestry  $mutter-clutter-container,
+    MutterClutterInputFocusAncestry  $mutter-clutter-input-focus,
                                     :$ref                       = True
   ) {
-    return Nil unless $mutter-clutter-container;
+    return Nil unless $mutter-clutter-input-focus;
 
-    my $o = self.bless( :$mutter-clutter-container );
+    my $o = self.bless( :$mutter-clutter-input-focus );
     $o.ref if $ref;
     $o;
   }
