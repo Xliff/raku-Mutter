@@ -3,6 +3,7 @@ use v6.c;
 use NativeCall;
 
 use GLib::Raw::Definitions;
+use GLib::Raw::Structs;
 use Mutter::Raw::Definitions;
 
 unit package Mutter::Clutter::Raw::PaintNode;
@@ -10,42 +11,42 @@ unit package Mutter::Clutter::Raw::PaintNode;
 ### /usr/src/mutter-clutter-42.1/clutter/clutter/clutter-paint-node.h
 
 sub clutter_paint_node_add_child (
-  ClutterPaintNode $node,
-  ClutterPaintNode $child
+  MutterClutterPaintNode $node,
+  MutterClutterPaintNode $child
 )
   is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_paint_node_add_multitexture_rectangle (
-  ClutterPaintNode $node,
-  ClutterActorBox  $rect,
-  CArray[gfloat]   $text_coords,
-  gint             $text_coords_len
+  MutterClutterPaintNode $node,
+  MutterClutterActorBox  $rect,
+  CArray[gfloat]         $text_coords,
+  gint                   $text_coords_len
 )
   is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_paint_node_add_primitive (
-  ClutterPaintNode $node,
-  CoglPrimitive    $primitive
+  MutterClutterPaintNode $node,
+  MutterCoglPrimitive    $primitive
 )
   is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_paint_node_add_rectangle (
-  ClutterPaintNode $node,
-  ClutterActorBox  $rect
+  MutterClutterPaintNode $node,
+  MutterClutterActorBox  $rect
 )
   is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_paint_node_add_rectangles (
-  ClutterPaintNode $node,
-  CArray[gfloat]   $coords,
+  MutterClutterPaintNode $node,
+  CArray[gfloat]         $coords,
   gint $n_rect
 )
   is native(mutter-clutter)
@@ -53,21 +54,21 @@ sub clutter_paint_node_add_rectangles (
 { * }
 
 sub clutter_paint_node_add_texture_rectangle (
-  ClutterPaintNode $node,
-  ClutterActorBox  $rect,
-  gfloat           $x_1,
-  gfloat           $y_1,
-  gfloat           $x_2,
-  gfloat           $y_2
+  MutterClutterPaintNode $node,
+  MutterClutterActorBox  $rect,
+  gfloat                 $x_1,
+  gfloat                 $y_1,
+  gfloat                 $x_2,
+  gfloat                 $y_2
 )
   is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_paint_node_add_texture_rectangles (
-  ClutterPaintNode $node,
-  CArray[gfloat]   $coords,
-  gint             $n_rects
+  MutterClutterPaintNode $node,
+  CArray[gfloat]         $coords,
+  gint                   $n_rects
 )
   is native(mutter-clutter)
   is export
@@ -95,8 +96,8 @@ sub clutter_value_take_paint_node (GValue $value, gpointer $node)
   is export
 { * }
 
-sub clutter_paint_node_get_framebuffer (ClutterPaintNode $node)
-  returns CoglFramebuffer
+sub clutter_paint_node_get_framebuffer (MutterClutterPaintNode $node)
+  returns MutterCoglFramebuffer
   is native(mutter-clutter)
   is export
 { * }
@@ -108,30 +109,33 @@ sub clutter_paint_node_get_type ()
 { * }
 
 sub clutter_paint_node_paint (
-  ClutterPaintNode    $node,
-  ClutterPaintContext $paint_context
+  MutterClutterPaintNode    $node,
+  MutterClutterPaintContext $paint_context
 )
   is native(mutter-clutter)
   is export
 { * }
 
-sub clutter_paint_node_ref (ClutterPaintNode $node)
-  returns ClutterPaintNode
+sub clutter_paint_node_ref (MutterClutterPaintNode $node)
+  returns MutterClutterPaintNode
   is native(mutter-clutter)
   is export
 { * }
 
-sub clutter_paint_node_set_name (ClutterPaintNode $node, Str $name)
+sub clutter_paint_node_set_name (MutterClutterPaintNode $node, Str $name)
   is native(mutter-clutter)
   is export
 { * }
 
-sub clutter_paint_node_set_static_name (ClutterPaintNode $node, Str $name)
+sub clutter_paint_node_set_static_name (
+  MutterClutterPaintNode $node,
+  Str                    $name
+)
   is native(mutter-clutter)
   is export
 { * }
 
-sub clutter_paint_node_unref (ClutterPaintNode $node)
+sub clutter_paint_node_unref (MutterClutterPaintNode $node)
   is native(mutter-clutter)
   is export
 { * }

@@ -1,10 +1,14 @@
 use v6.c;
 
+use NativeCall;
+
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::PaintNode;
 
+use GLib::Roles::Implementor;
+
 class Mutter::Clutter::PaintNode {
-  has MutterMutterClutterPaintNode $!mcpm is implementor;
+  has MutterClutterPaintNode $!mcpn is implementor;
 
   method add_child (MutterClutterPaintNode() $child) {
     clutter_paint_node_add_child($!mcpn, $child);
@@ -19,7 +23,7 @@ class Mutter::Clutter::PaintNode {
                             :$size         = @text_coords.elems
   ) {
     die 'Cannot use a larger size than the array size!'
-      if $size > @coords.elems;
+      if $size > @text_coords.elems;
 
     samewith( $rect, ArrayToCArray(gfloat, @text_coords), $size );
   }
@@ -49,13 +53,13 @@ class Mutter::Clutter::PaintNode {
   proto method add_rectangles (|)
   { * }
 
-  method add_rectangles (@coords, :$size = @coords.elems ) {
+  multi method add_rectangles (@coords, :$size = @coords.elems ) {
     die 'Cannot use a larger size than the array size!'
       if $size > @coords.elems;
 
     samewith( ArrayToCArray(gfloat, @coords), $size );
   }
-  method add_rectangles (CArray[gfloat] $coords, Int() $n_rects) {
+  multi method add_rectangles (CArray[gfloat] $coords, Int() $n_rects) {
     my gint $n = $n_rects;
 
     clutter_paint_node_add_rectangles($!mcpn, $coords, $n);
@@ -89,7 +93,7 @@ class Mutter::Clutter::PaintNode {
     samewith( ArrayToCArray(gfloat, @coords), $size );
   }
   multi method add_texture_rectangles (CArray[gfloat] $coords, Int() $n_rects) {
-    clutter_paint_node_add_texture_rectangles($!mcpn, $c, $n_rects);
+    clutter_paint_node_add_texture_rectangles($!mcpn, $coords, $n_rects);
   }
 
   method get_framebuffer ( :$raw = False) {
@@ -129,7 +133,7 @@ class Mutter::Clutter::PaintNode {
 
 }
 
-use GLib::Raw::Value;
+use GLib::Value;
 
 class Mutter::Clutter::PaintNode::Value is GLib::Value {
 
