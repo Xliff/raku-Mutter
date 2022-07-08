@@ -15,7 +15,7 @@ sub clutter_text_buffer_delete_text (
   gint                    $n_chars
 )
   returns guint
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -24,7 +24,7 @@ sub clutter_text_buffer_emit_deleted_text (
   guint                   $position,
   guint                   $n_chars
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -34,37 +34,37 @@ sub clutter_text_buffer_emit_inserted_text (
   Str                     $chars,
   guint                   $n_chars
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_text_buffer_get_bytes (MutterClutterTextBuffer $buffer)
   returns gsize
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_text_buffer_get_length (MutterClutterTextBuffer $buffer)
   returns guint
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_text_buffer_get_max_length (MutterClutterTextBuffer $buffer)
   returns gint
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_text_buffer_get_text (MutterClutterTextBuffer $buffer)
   returns Str
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_text_buffer_get_type ()
   returns GType
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -75,19 +75,19 @@ sub clutter_text_buffer_insert_text (
   gint                    $n_chars
 )
   returns guint
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_text_buffer_new ()
   returns MutterClutterTextBuffer
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_text_buffer_new_with_text (CArray[uint8] $text, gssize $text_len)
   returns MutterClutterTextBuffer
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -95,7 +95,7 @@ sub clutter_text_buffer_set_max_length (
   MutterClutterTextBuffer $buffer,
   gint                    $max_length
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -104,6 +104,6 @@ sub clutter_text_buffer_set_text (
   CArray[uint8]           $chars,
   gint                    $n_chars
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }

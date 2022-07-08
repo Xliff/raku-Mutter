@@ -19,7 +19,7 @@ unit package Mutter::Raw::Clutter::Container;
 #   Str                    $first_prop
 #   ...
 # )
-#   is native(mutter)
+#   is native(mutter-clutter)
 #   is export
 # { * }
 
@@ -29,7 +29,7 @@ sub clutter_container_child_get_property (
   Str                    $property,
   GValue                 $value
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -38,7 +38,7 @@ sub clutter_container_child_notify (
   MutterClutterActor     $child,
   GParamSpec             $pspec
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -48,7 +48,7 @@ sub clutter_container_child_notify (
 #   Str                    $first_prop,
 #   ...
 # )
-#   is native(mutter)
+#   is native(mutter-clutter)
 #   is export
 # { * }
 
@@ -58,7 +58,7 @@ sub clutter_container_child_set_property (
   Str                    $property,
   GValue                 $value
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -67,7 +67,7 @@ sub clutter_container_class_find_child_property (
   Str          $property_name
 )
   returns GParamSpec
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -76,7 +76,7 @@ sub clutter_container_class_list_child_properties (
   guint        $n_properties is rw
 )
   returns CArray[CArray[GParamSpec]]
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -84,7 +84,7 @@ sub clutter_container_create_child_meta (
   MutterClutterContainer $container,
   MutterClutterActor     $actor
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -92,7 +92,7 @@ sub clutter_container_destroy_child_meta (
   MutterClutterContainer $container,
   MutterClutterActor     $actor
 )
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -101,7 +101,7 @@ sub clutter_container_find_child_by_name (
   Str                    $child_name
 )
   returns MutterClutterActor
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
@@ -110,12 +110,12 @@ sub clutter_container_get_child_meta (
   MutterClutterActor     $actor
 )
   returns MutterClutterChildMeta
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
 
 sub clutter_container_get_type ()
   returns GType
-  is native(mutter)
+  is native(mutter-clutter)
   is export
 { * }
