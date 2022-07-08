@@ -9,6 +9,8 @@ use GLib::GList;
 
 use Mutter::Clutter::VirtualInputDevice;
 
+use GLib::Roles::Implementor;
+
 class Mutter::Clutter::Seat {
   has MutterClutterSeat $!mcs is implementor;
 

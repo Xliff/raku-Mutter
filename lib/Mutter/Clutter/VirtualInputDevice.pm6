@@ -3,6 +3,8 @@ use v6.c;
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::VirtualInputDevice;
 
+use GLib::Roles::Implementor;
+
 class Mutter::Clutter::VirtualInputDevice {
   has MutterClutterVirtualInputDevice $!mcvid is implementor;
 
