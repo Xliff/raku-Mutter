@@ -68,6 +68,7 @@ class MutterClutterEventSequence      is repr<CPointer> does GLib::Roles::Pointe
 class MutterClutterFrame              is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterFrameClock         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterGrab               is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterGridLayout         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterInputDevice        is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterInterval           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterKeymap             is repr<CPointer> does GLib::Roles::Pointers is export { }
