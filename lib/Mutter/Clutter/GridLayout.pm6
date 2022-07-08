@@ -21,7 +21,7 @@ class Mutter::Clutter::GridLayout is Mutter::Clutter::LayoutManager {
       if $mutter-clutter-grid-layout;
   }
 
-  method setGridLayout(MutterClutterGridLayoutAncestry $_) {
+  method setMutterClutterGridLayout(MutterClutterGridLayoutAncestry $_) {
     my $to-parent;
 
     $!mcgl = do {
