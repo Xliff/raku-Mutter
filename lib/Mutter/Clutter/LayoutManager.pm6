@@ -9,14 +9,12 @@ use GLib::Value;
 
 use GLib::Roles::Object;
 use GLib::Roles::Implementor;
-use GLib::Roles::Signals::Generic;
 
 our subset MutterClutterLayoutManagerAncestry is export of Mu
   where MutterClutterLayoutManager | GObject;
 
 class Mutter::Clutter::LayoutManager {
   also does GLib::Roles::Object;
-  also does GLib::Roles::Signals::Generic;
 
   has MutterClutterLayoutManager $!mclm is implementor;
 
