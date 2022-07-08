@@ -71,6 +71,7 @@ class MutterClutterFrameClock         is repr<CPointer> does GLib::Roles::Pointe
 class MutterClutterGrab               is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterGridLayout         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterInputDevice        is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterInputFocus         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterInterval           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterKeymap             is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterKnot               is repr<CPointer> does GLib::Roles::Pointers is export { }
