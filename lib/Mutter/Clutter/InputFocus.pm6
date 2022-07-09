@@ -19,7 +19,7 @@ class Mutter::Clutter::InputFocus {
       if $mutter-clutter-input-focus;
   }
 
-  method setMutterClutterInputFocus(MutterClutterInputFocusAncestry $_) {
+  method setMutterClutterInputFocus (MutterClutterInputFocusAncestry $_) {
     my $to-parent;
 
     $!mcif = do {
