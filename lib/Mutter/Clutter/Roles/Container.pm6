@@ -5,6 +5,8 @@ use Mutter::Raw::Clutter::Container;
 
 use GLib::Roles::Implementor;
 use GLib::Roles::Object;
+use Mutter::Clutter::ChildMeta;
+
 use Mutter::Clutter::Roles::Signals::Generic;
 use Mutter::Clutter::Roles::Signals::Container;
 
@@ -43,7 +45,6 @@ role Mutter::Clutter::Roles::Container {
     self.connect-actor($!mcc, 'actor-removed');
   }
 
-
   method create_child_meta (MutterClutterActor() $actor) {
     clutter_container_create_child_meta($!mcc, $actor);
   }
@@ -60,8 +61,12 @@ role Mutter::Clutter::Roles::Container {
     );
   }
 
-  method get_child_meta (MutterClutterActor() $actor) {
-    clutter_container_get_child_meta($!mcc, $actor);
+  method get_child_meta (MutterClutterActor() $actor, :$raw = False) {
+    propReturnObject(
+      clutter_container_get_child_meta($!mcc, $actor),
+      $raw,
+      |Mutter::Clutter::ChildMeta.getTypePair
+    );
   }
 
   method muttercluttercontainer_get_type {
@@ -69,15 +74,6 @@ role Mutter::Clutter::Roles::Container {
 
     unstable_get_type( self.^name, &clutter_container_get_type, $n, $t );
   }
-
-}
-
-class Mutter::Clutter::Container::Child {
-  has $!mccc;
-
-  # method get (ClutterActor $actor, Str $first_prop, ...) {
-  #   clutter_container_child_get($!mcc, $actor, $first_prop);
-  # }
 
   proto method get_property (|)
   { * }
@@ -100,26 +96,26 @@ class Mutter::Clutter::Container::Child {
                          :$raw       = False,
                          :$gvalue    = False
   ) {
-    clutter_container_child_get_property($!mccc, $child, $property, $value);
+    clutter_container_child_get_property($!mcc, $child, $property, $value);
     my $v = propReturnObject($value, $raw, |GLib::Value.getTypePair);
     $v.value unless $gvalue || $raw;
     $v;
   }
 
-  method notify (MutterClutterActor() $child, GParamSpec() $pspec) {
-    clutter_container_child_notify($!mccc, $child, $pspec);
+  method child_notify (MutterClutterActor() $child, GParamSpec() $pspec) {
+    clutter_container_child_notify($!mcc, $child, $pspec);
   }
 
   # method set (ClutterActor $actor, Str $first_prop, ...) {
   #   clutter_container_child_set($!mcc, $actor, $first_prop);
   # }
 
-  method set_property (
+  method child_set_property (
     MutterClutterActor() $child,
     Str()                $property,
     GValue()             $value
   ) {
-    clutter_container_child_set_property($!mccc, $child, $property, $value);
+    clutter_container_child_set_property($!mcc, $child, $property, $value);
   }
 
 }
