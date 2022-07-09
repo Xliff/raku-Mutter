@@ -108,6 +108,7 @@ class MutterClutterStageManager       is repr<CPointer> does GLib::Roles::Pointe
 class MutterClutterStageView          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterStageWindow        is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterSwipeAction        is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterTapAction          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterTextBuffer         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterTimeline           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterTransition         is repr<CPointer> does GLib::Roles::Pointers is export { }
