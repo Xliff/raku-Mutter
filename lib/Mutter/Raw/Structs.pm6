@@ -122,3 +122,18 @@ class MutterClutterPointerA11ySettings is repr<CStruct> is export {
   has gint                                   $.dwell_delay             is rw;
   has gint                                   $.dwell_threshold         is rw;
 }
+
+class MutterClutterUnits
+	is   repr<CStruct>
+	is   export
+	does GLib::Roles::Pointers
+{
+  has MutterClutterUnitType $!unit_type;
+  has gfloat                $!value;
+  has gfloat                $!pixels;
+  has guint                 $!pixels_set;
+  has gint32                $!serial;
+
+  has gint32                $!padding_1;
+  has gint64                $!padding_2;
+}
