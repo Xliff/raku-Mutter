@@ -5,7 +5,11 @@ use NativeCall;
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::TextBuffer;
 
+use GLib::Roles::Object;
+
 class Mutter::Text::Buffer {
+  also does GLib::Roles::Object;
+
   has MutterClutterTextBuffer $!mctb is implementor;
 
   method new {
@@ -35,6 +39,57 @@ class Mutter::Text::Buffer {
     clutter_text_buffer_new_with_text($text, $t);
   }
 
+  # Type: string
+  method text is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_STRING );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('text', $gv);
+        $gv.string;
+      },
+      STORE => -> $, Str() $val is copy {
+        warn 'text does not allow writing'
+      }
+    );
+  }
+
+  # Type: uint
+  method length is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_UINT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('length', $gv);
+        $gv.uint;
+      },
+      STORE => -> $, Int() $val is copy {
+        warn 'length does not allow writing'
+      }
+    );
+  }
+
+  # Type: int
+  method max-length is rw  is g-property {
+    my $gv = GLib::Value.new( G_TYPE_INT );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('max-length', $gv);
+        $gv.int;
+      },
+      STORE => -> $, Int() $val is copy {
+        $gv.int = $val;
+        self.prop_set('max-length', $gv);
+      }
+    );
+  }
+
+  method deleted-text {
+    self.connect-uintuint($!mctb, 'deleted-text');
+  }
+
+  method inserted-text {
+    self.connect-inserted-text($!mctb);
+  }
+
   method delete_text (Int() $position, Int() $n_chars) {
     my guint $p = $position;
     my gint  $n = $n_chars;
@@ -48,7 +103,7 @@ class Mutter::Text::Buffer {
     clutter_text_buffer_emit_deleted_text($!mctb, $p, $n);
   }
 
-  method emit_inserted_text (Int() $position, Str $chars, Int() $n_chars) {
+  method emit_inserted_text (Int() $position, Str() $chars, Int() $n_chars) {
     my guint ($p, $n) = ($position, $n_chars);
 
     clutter_text_buffer_emit_inserted_text($!mctb, $p, $chars, $n);
@@ -90,11 +145,15 @@ class Mutter::Text::Buffer {
   multi method insert_text (
     Int()  $position,
     Buf    $chars,
-          :$size = $chars.bytes
+          :$size      = $chars.bytes
   ) {
     samewith($position, $chars.bytes, $size );
   }
-  multi method insert_text (Int() $position, CArray[uint8] $chars, Int() $n_chars) {
+  multi method insert_text (
+    Int()         $position,
+    CArray[uint8] $chars,
+    Int()         $n_chars
+  ) {
     my guint $p = $position;
     my gint  $n = $n_chars;
 
