@@ -2,9 +2,11 @@ use v6.c;
 
 use NativeCall;
 
+use GLib::Raw::Traits;
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::TextBuffer;
 
+use GLib::Roles::Implementor;
 use GLib::Roles::Object;
 
 class Mutter::Text::Buffer {
