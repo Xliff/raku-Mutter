@@ -307,7 +307,7 @@ sub MAIN (
   $control           is copy,
   :$var              is copy = 'w',
   :$prefix           is copy = "https://developer.gnome.org/gtk3/stable/",
-  :$type-prefix              = %config<type-prefix> // %config<type_prefix>,
+  :$type-prefix              = %config<type-prefix> // %config<type_prefix> // %config<prefix>,
   :$control-name
 ) {
   # If it's a URL, then try to pick it apart
