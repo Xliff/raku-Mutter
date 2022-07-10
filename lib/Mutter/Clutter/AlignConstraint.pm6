@@ -45,9 +45,9 @@ class Mutter::Clutter::AlignConstraint is Mutter::Clutter::Constraint {
   }
 
   # cw: Yes, the type names have become obnoxious...
-  constant MCACA := MutterClutterAlignConstraintAncestry;
+  constant CTA := MutterClutterAlignConstraintAncestry;
 
-  multi method new (MCACA $mutter-clutter-align-constraint, :$ref = True) {
+  multi method new (CTA $mutter-clutter-align-constraint, :$ref = True) {
     return unless $mutter-clutter-align-constraint;
 
     my $o = self.bless( :$mutter-clutter-align-constraint );
