@@ -19,14 +19,14 @@ class Mutter::Clutter::Action { # is Mutter::Clutter::ActorMeta {
 
   submethod BUILD ( :$mutter-clutter-action ) {
     self.setMutterClutterAction($mutter-clutter-action)
-      if $mutter-clutter-action.defined;
+      if $mutter-clutter-action;
   }
 
   method Mutter::Raw::Definitions::MutterClutterAction
     is also<MutterClutterAction>
   { $!mc-act }
 
-  method setMutterClutterAction(MutterClutterActionAncestry $_) {
+  method setMutterClutterAction (MutterClutterActionAncestry $_) {
     #self.IS-PROTECTED;
     my $to-parent;
     $!mc-act = do {
