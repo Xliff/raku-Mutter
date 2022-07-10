@@ -56,6 +56,7 @@ class MutterClutterActor              is repr<CPointer> does GLib::Roles::Pointe
 class MutterClutterActorBox           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterActorMeta          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterActorIter          is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterAlignConstraint    is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterAnimatable         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterBackend            is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterBinLayout          is repr<CPointer> does GLib::Roles::Pointers is export { }
