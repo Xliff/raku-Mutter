@@ -4,6 +4,9 @@ use GLib::Raw::Traits;
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::InputDevice;
 
+use GLib::Value;
+use Mutter::Clutter::Seat;
+
 use GLib::Roles::Object;
 use GLib::Roles::Implementor;
 
@@ -355,7 +358,6 @@ class Mutter::Clutter::InputDevice {
 
     unstable_get_type( self.^name, &clutter_input_device_get_type, $n, $t );
   }
-
   method get_vendor_id {
     clutter_input_device_get_vendor_id($!mcid);
   }
