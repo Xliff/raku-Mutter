@@ -18,8 +18,9 @@ class Mutter::Clutter::LayoutManager {
 
   has MutterClutterLayoutManager $!mclm is implementor;
 
-  submethod BUILD (:$manager) {
-    self.setLayoutManager($manager) if $manager.defined;
+  submethod BUILD ( :$mutter-clutter-layout-manager ) {
+    self.setLayoutManager($mutter-clutter-layout-manager)
+      if $mutter-clutter-layout-manager;
   }
 
   method setLayoutManager(MutterClutterLayoutManagerAncestry $_) {
@@ -44,12 +45,12 @@ class Mutter::Clutter::LayoutManager {
   { $!mclm }
 
   method new (
-    MutterClutterLayoutManagerAncestry  $mutter-layout-manager,
+    MutterClutterLayoutManagerAncestry  $mutter-clutter-layout-manager,
                                        :$ref                    = True
   ) {
-    return unless $mutter-layout-manager;
+    return unless $mutter-clutter-layout-manager;
 
-    my $o = self.bless( :$mutter-layout-manager );
+    my $o = self.bless( :$mutter-clutter-layout-manager );
     $o.ref if $ref;
     $o;
   }
