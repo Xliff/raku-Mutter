@@ -8,7 +8,7 @@ use Mutter::Raw::Definitions;
 
 unit package Mutter::Clutter::Raw::PaintNode;
 
-### /usr/src/mutter-clutter-42.1/clutter/clutter/clutter-paint-node.h
+### /usr/src/mutter-42.1/clutter/clutter/clutter-paint-node.h
 
 sub clutter_paint_node_add_child (
   MutterClutterPaintNode $node,
