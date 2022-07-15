@@ -54,6 +54,10 @@ class Mutter::Clutter::Action { # is Mutter::Clutter::ActorMeta {
     $o;
   }
 
+  method get_phase is also<get-phase> {
+    MutterClutterEventPhaseEnum( clutter_action_get_phase($!mc-act) );
+  }
+
   method get_type is also<get-type> {
     state ($n, $t);
 
@@ -61,8 +65,16 @@ class Mutter::Clutter::Action { # is Mutter::Clutter::ActorMeta {
   }
 }
 
+### /usr/src/mutter-42.1/clutter/clutter/clutter-action.h
+
+sub clutter_action_get_phase (MutterClutterAction $a)
+  returns MutterClutterEventPhase
+  is native(mutter-clutter)
+  is export
+{ * }
+
 sub clutter_action_get_type ()
   returns GType
   is native(mutter-clutter)
   is export
-  { * }
+{ * }
