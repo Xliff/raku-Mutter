@@ -63,6 +63,7 @@ class MutterClutterBindConstraint     is repr<CPointer> does GLib::Roles::Pointe
 class MutterClutterBindingPool        is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterBinLayout          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterBoxLayout          is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterCanvas             is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterChildMeta          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterColor              is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterContent            is repr<CPointer> does GLib::Roles::Pointers is export { }
