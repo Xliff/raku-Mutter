@@ -78,6 +78,7 @@ class MutterClutterFrame              is repr<CPointer> does GLib::Roles::Pointe
 class MutterClutterFrameClock         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterGrab               is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterGridLayout         is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterImage              is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterInputDevice        is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterInputDeviceTool    is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterInputMethod        is repr<CPointer> does GLib::Roles::Pointers is export { }
@@ -120,7 +121,6 @@ class MutterClutterTransition         is repr<CPointer> does GLib::Roles::Pointe
 class MutterClutterTransitionGroup    is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterVirtualInputDevice is repr<CPointer> does GLib::Roles::Pointers is export { }
 
-
 # Cogl
 
 class MutterCoglContext          is repr<CPointer> does GLib::Roles::Pointers is export { }
@@ -129,3 +129,4 @@ class MutterCoglHandle           is repr<CPointer> does GLib::Roles::Pointers is
 class MutterCoglPipeline         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglPrimitive        is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglScanout          is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterCoglTexture          is repr<CPointer> does GLib::Roles::Pointers is export { }
