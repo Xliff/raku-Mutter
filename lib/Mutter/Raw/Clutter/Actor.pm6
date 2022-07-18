@@ -1417,12 +1417,6 @@ sub clutter_actor_clear_actions (MutterClutterActor $self)
   is export
 { * }
 
-sub clutter_action_get_phase (MutterClutterAction $action)
-  returns MutterClutterEventPhase
-  is native(mutter-clutter)
-  is export
-{ * }
-
 sub clutter_actor_get_action (MutterClutterActor $self, Str $name)
   returns MutterClutterAction
   is native(mutter-clutter)

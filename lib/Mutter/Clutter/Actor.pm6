@@ -19,8 +19,8 @@ use Mutter::Clutter::ActorBox;
 use Mutter::Clutter::Color;
 use Mutter::Clutter::Constraint;
 use Mutter::Clutter::Effect;
-use Mutter::Clutter::LayoutManager;
 use Mutter::Clutter::PaintVolume;
+use Mutter::Clutter::LayoutManager;
 use Mutter::Clutter::Transition;
 #use Mutter::Clutter::Vertex;
 
