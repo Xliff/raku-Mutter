@@ -8,7 +8,7 @@ use Mutter::Raw::Enums;
 
 unit package Mutter::Raw::Clutter::VirtualInputDevice;
 
-### /usr/src/mutter-clutter-42.1/clutter/clutter/clutter-virtual-input-device.h
+### /usr/src/mutter-42.1/clutter/clutter/clutter-virtual-input-device.h
 
 sub clutter_virtual_input_device_get_device_type (
   MutterClutterVirtualInputDevice $virtual_device
