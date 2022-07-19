@@ -13,6 +13,29 @@ use GLib::Roles::Pointers;
 
 unit package Mutter::Raw::Structs;
 
+class MutterClutterFrameInfo is repr<CStruct> is export {
+	has int64_t                    $.frame-counter                  is rw;
+	has int64_t                    $.presentation-time              is rw; #= microseconds
+	has num32                      $.refresh-rate                   is rw;
+	has MutterClutterFrameInfoFlag $.flag                           is rw;
+	has guint                      $.sequence                       is rw;
+	has int64_t                    $.gpu-rendering-duration-us      is rw;
+	has int64_t                    $.cpu-time-before-buffer-swap-us is rw;
+
+	method gpu-rendering-duration-µs is rw {
+		$!gpu-rendering-duration-us
+	}
+
+	method cpu-time-before-buffer-swap-us is rw {
+		$!cpu-time-before-buffer-swap-us
+	}
+}
+
+class MutterClutterFrameListenerIface is repr<CStruct> is export {
+	has Pointer $.before-frame; #= (MutterClutterFrameClock, gint64, gpointer)
+	has Pointer $.frame;        #= (MutterClutterFrameClock, gint64, gpointer --> MutterClutterFrameResult)
+}
+
 class MutterClutterOffscreenRectangle is repr<CStruct> is export {
 	has gint $.x      is rw;
 	has gint $.y      is rw;
