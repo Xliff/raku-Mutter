@@ -1055,6 +1055,14 @@ our enum MutterClutterGridPositionEnum is export <
   CLUTTER_GRID_POSITION_BOTTOM
 >;
 
+constant MutterClutterGrabState is export := guint32;
+our enum MutterClutterGrabStateEnum is export (
+  CLUTTER_GRAB_STATE_NONE     => 0,
+  CLUTTER_GRAB_STATE_POINTER  => 1,
+  CLUTTER_GRAB_STATE_KEYBOARD => 1 +< 1,
+  CLUTTER_GRAB_STATE_ALL      => 1 +| 1 +< 1 # (CLUTTER_GRAB_STATE_POINTER | CLUTTER_GRAB_STATE_KEYBOARD),
+);
+
 constant MutterClutterImageError is export := guint32;
 our enum MutterClutterImageErrorEnum is export <
   CLUTTER_IMAGE_ERROR_INVALID_DATA
