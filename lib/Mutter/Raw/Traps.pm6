@@ -1,10 +1,11 @@
-### /usr/src/mutter-42.1/clutter/clutter/clutter-id-pool.h
-### /usr/src/mutter-42.1/clutter/clutter/clutter-mutter.h
-### /usr/src/mutter-42.1/clutter/clutter/clutter-macros.h
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-autocleanups.h
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-build-config.h.meson
+### /usr/src/mutter-42.1/clutter/clutter/clutter-color-static.h
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-deprecated.h
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-enum-types.h.in
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-enums.h
+### /usr/src/mutter-42.1/clutter/clutter/clutter-id-pool.h
+### /usr/src/mutter-42.1/clutter/clutter/clutter-macros.h
+### /usr/src/mutter-42.1/clutter/clutter/clutter-mutter.h
+### /usr/src/mutter-42.1/clutter/clutter/clutter-shader-types.h
 ### /usr/src/mutter-42.1/clutter/clutter/clutter.h
-### /usr/src/mutter-42.1/clutter/clutter/clutter-color-static.h
