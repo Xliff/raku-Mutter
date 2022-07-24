@@ -13,6 +13,7 @@ constant mutter-clutter    is export = 'mutter-clutter-10',v0;
 constant mutter-cogl       is export = 'mutter-cogl-10',v0;
 constant mutter-cogl-pango is export = 'mutter-cogl-pango-10',v0;
 
+constant cairo_rectangle_t      is export = Cairo::cairo_rectangle_t;
 constant cairo_rectangle_int_t  is export = Cairo::cairo_rectangle_int_t;
 constant cairo_t                is export = Cairo::cairo_t;
 constant cairo_path_t           is export = Cairo::cairo_path_t;
@@ -123,6 +124,18 @@ class MutterClutterTimeline                 is repr<CPointer> does GLib::Roles::
 class MutterClutterTransition               is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterTransitionGroup          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterVirtualInputDevice       is repr<CPointer> does GLib::Roles::Pointers is export { }
+
+class MutterClutterActorNode                is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterBlitNode                 is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterBlurNode                 is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterClipNode                 is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterColorNode                is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterLayerNode                is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterPipelineNode             is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterRootNode                 is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterTextureNode              is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterTextNode                 is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterTransformNode            is repr<CPointer> does GLib::Roles::Pointers is export { }
 
 # Cogl
 
