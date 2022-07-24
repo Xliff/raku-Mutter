@@ -124,6 +124,7 @@ class MutterClutterTimeline                 is repr<CPointer> does GLib::Roles::
 class MutterClutterTransition               is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterTransitionGroup          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterVirtualInputDevice       is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterZoomAction               is repr<CPointer> does GLib::Roles::Pointers is export { }
 
 class MutterClutterActorNode                is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterBlitNode                 is repr<CPointer> does GLib::Roles::Pointers is export { }
