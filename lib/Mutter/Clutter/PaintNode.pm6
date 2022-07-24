@@ -7,7 +7,7 @@ use Mutter::Raw::Clutter::PaintNode;
 
 use GLib::Roles::Implementor;
 
-class Mutter::Clutter::PaintNode {
+class Mutter::Clutter::Paint::Node {
   has MutterClutterPaintNode $!mcpn is implementor;
 
   method add_child (MutterClutterPaintNode() $child) {
@@ -135,7 +135,11 @@ class Mutter::Clutter::PaintNode {
 
 use GLib::Value;
 
-class Mutter::Clutter::PaintNode::Value is GLib::Value {
+# cw: Needs a Mutter::Clutter::Value class and move this stuff there, then
+# this stuff can go there. From that class, a specialized
+# Mutter::Clutter::Value::Paint can be created.
+
+class Mutter::Clutter::Paint::Node::Value is GLib::Value {
 
   method new {
     self.bless( type => Mutter::Clutter::PaintNode.get_type );
