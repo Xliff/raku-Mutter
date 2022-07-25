@@ -8,10 +8,48 @@ use Mutter::Clutter::OffscreenEffect;
 
 use GLib::Roles::Implementor;
 
+our subset MutterClutterBlurEffectAncestry is export of Mu
+  where MutterClutterBlurEffect | MutterClutterOffscreenEffectAncestry;
+
 class Mutter::Clutter::BlurEffect is Mutter::Clutter::OffscreenEffect {
   has MutterClutterBlurEffect $!mcbe is implementor;
 
-  method new {
+  submethod BUILD ( :$mutter-clutter-blur-effect ) {
+    self.setMutterClutterBlurEffect($mutter-clutter-blur-effect)
+      if $mutter-clutter-blur-effect
+  }
+
+  method setMutterClutterBlurEffect (MutterClutterBlurEffectAncestry $_) {
+    my $to-parent;
+
+    $!mcbe = do {
+      when MutterClutterBlurEffect {
+        $to-parent = cast(MutterClutterPaintNode, $_);
+        $_;
+      }
+
+      default {
+        $to-parent = $_;
+        cast(MutterClutterBlurEffect, $_);
+      }
+    }
+    self.setMutterClutterOffscreenEffect($to-parent);
+  }
+
+  method Mutter::Clutter::Raw::Definitions::MutterClutterBlurEffect
+  { $!mcbe }
+
+  multi method new (
+    MutterClutterBlurEffectAncestry  $mutter-clutter-blur-effect,
+                                    :$ref                         = True
+  ) {
+    return unless $mutter-clutter-blur-effect;
+
+    my $o = self.bless( :$mutter-clutter-blur-effect );
+    $o.ref if $ref;
+    $o;
+  }
+  multi method new {
     my $mutter-clutter-blur-effect = clutter_blur_effect_new();
 
     $mutter-clutter-blur-effect ?? self.bless( :$mutter-clutter-blur-effect )
