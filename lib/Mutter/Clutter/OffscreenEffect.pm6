@@ -9,8 +9,47 @@ use Mutter::Clutter::Effect;
 
 use GLib::Roles::Implementor;
 
+our subset MutterClutterOffscreenEffectAncestry is export of Mu
+  where MutterClutterOffscreenEffect | MutterClutterEffectAncestry;
+
 class Mutter::Clutter::OffscreenEffect is Mutter::Clutter::Effect {
   has MutterClutterOffscreenEffect $!mcoe is implementor;
+
+  submethod BUILD ( :$mutter-clutter-offscreen-effect ) {
+    self.setMutterClutterOffscreenEffect($mutter-clutter-offscreen-effect)
+      if $mutter-clutter-offscreen-effect
+  }
+
+  method setMutterClutterOffscreenEffect (
+    MutterClutterOffscreenEffectAncestry $_
+  ) {
+    my $to-parent;
+
+    $!mcoe = do {
+      when MutterClutterOffscreenEffect {
+        $to-parent = cast(MutterClutterPaintNode, $_);
+        $_;
+      }
+
+      default {
+        $to-parent = $_;
+        cast(MutterClutterOffscreenEffect, $_);
+      }
+    }
+    self.setMutterClutterEffect($to-parent);
+  }
+
+  method Mutter::Clutter::Raw::Definitions::MutterClutterOffscreenEffect
+  { $!mcoe }
+
+  constant MCOE := MutterClutterOffscreenEffectAncestry;
+  multi method new (MCOE $mutter-clutter-offscreen-effect, :$ref = True) {
+    return unless $mutter-clutter-offscreen-effect;
+
+    my $o = self.bless( :$mutter-clutter-offscreen-effect );
+    $o.ref if $ref;
+    $o;
+  }
 
   method create_texture (Num() $width, Num() $height, :$raw = False) {
     my gfloat ($w, $h) = ($width, $height);
