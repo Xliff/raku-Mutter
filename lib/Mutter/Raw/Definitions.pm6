@@ -70,6 +70,7 @@ class MutterClutterCanvas                   is repr<CPointer> does GLib::Roles::
 class MutterClutterChildMeta                is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterClone                    is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterColor                    is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterColorizeEffect           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterContent                  is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterConstraint               is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterContainer                is repr<CPointer> does GLib::Roles::Pointers is export { }
