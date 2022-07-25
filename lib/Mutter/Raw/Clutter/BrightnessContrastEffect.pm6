@@ -7,7 +7,7 @@ use Mutter::Raw::Definitions;
 
 unit package Mutter::Raw::Clutter::BrightnessContrastEffect;
 
-### /usr/src/mutter-42.\1/clutter/clutter/clutter-brightness-contrast-effect.h
+### /usr/src/mutter-42.1/clutter/clutter/clutter-brightness-contrast-effect.h
 
 sub clutter_brightness_contrast_effect_get_brightness (
   MutterClutterBrightnessContrastEffect $effect,
