@@ -5,8 +5,11 @@ use Mutter::Raw::Clutter::OffscreenEffect;
 
 #use Mutter::Cogl::Handle;
 #use Mutter::Cogl::Pipeline;
+use Mutter::Clutter::Effect;
 
-class Mutter::Clutter::OffscreenEffect {
+use GLib::Roles::Implementor;
+
+class Mutter::Clutter::OffscreenEffect is Mutter::Clutter::Effect {
   has MutterClutterOffscreenEffect $!mcoe is implementor;
 
   method create_texture (Num() $width, Num() $height, :$raw = False) {
