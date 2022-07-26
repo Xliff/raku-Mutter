@@ -52,7 +52,7 @@ sub MAIN (
 
         { .[0] } = do \{
           when { $tn } \{
-            \$to-parent = cast(MutterClutterPaintNode, \$_);
+            \$to-parent = cast({ $parent }, \$_);
             \$_;
           \}
 
