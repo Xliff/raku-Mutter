@@ -27,7 +27,7 @@ class Mutter::Clutter::OffscreenEffect is Mutter::Clutter::Effect {
 
     $!mcoe = do {
       when MutterClutterOffscreenEffect {
-        $to-parent = cast(MutterClutterPaintNode, $_);
+        $to-parent = cast(MutterClutterEffect, $_);
         $_;
       }
 

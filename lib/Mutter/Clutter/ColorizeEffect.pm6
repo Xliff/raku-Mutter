@@ -28,7 +28,7 @@ class Mutter::Clutter::ColorizeEffect is Mutter::Clutter::OffscreenEffect {
 
     $!mcce = do {
       when MutterClutterColorizeEffect {
-        $to-parent = cast(MutterClutterPaintNode, $_);
+        $to-parent = cast(MutterClutterOffscreenEffect, $_);
         $_;
       }
 
