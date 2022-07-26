@@ -4,6 +4,7 @@
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-deprecated.h
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-enum-types.h.in
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-enums.h
+### /usr/src/mutter-42.1/clutter/clutter/clutter-flatten-effect.h
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-id-pool.h
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-macros.h
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-mutter.h
