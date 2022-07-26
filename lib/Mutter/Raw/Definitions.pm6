@@ -76,6 +76,7 @@ class MutterClutterConstraint               is repr<CPointer> does GLib::Roles::
 class MutterClutterContainer                is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterDamageHistory            is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterDeformEffect             is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterDesaturateEffect         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterEffect                   is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterEvent                    is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterEventSequence            is repr<CPointer> does GLib::Roles::Pointers is export { }
