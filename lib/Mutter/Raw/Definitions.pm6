@@ -94,6 +94,7 @@ class MutterClutterInputDeviceTool          is repr<CPointer> does GLib::Roles::
 class MutterClutterInputMethod              is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterInputFocus               is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterInterval                 is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterKeyframeTransition       is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterKeymap                   is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterKnot                     is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterLayoutManager            is repr<CPointer> does GLib::Roles::Pointers is export { }
