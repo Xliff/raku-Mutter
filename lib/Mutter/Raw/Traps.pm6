@@ -1,4 +1,5 @@
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-autocleanups.h
+### /usr/src/mutter-42.1/clutter/clutter/clutter-bezier.h
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-build-config.h.meson
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-color-static.h
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-deprecated.h
