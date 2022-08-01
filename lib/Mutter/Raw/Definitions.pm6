@@ -148,6 +148,7 @@ class MutterClutterTransformNode            is repr<CPointer> does GLib::Roles::
 
 # Cogl
 
+class MutterCoglColor            is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglContext          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglFramebuffer      is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglHandle           is repr<CPointer> does GLib::Roles::Pointers is export { }
