@@ -32,9 +32,9 @@ sub MAIN (
 
     my $tn = .<typename>.Str;
     my ($pa, $sp) = do if $parent ne 'GObject' {
-      ($parent ~ 'Ancestry', 'set' ~ $parent)
+      ($parent ~ 'Ancestry', '.set' ~ $parent)
     } else {
-      ('GObject', 'set!Object');
+      ('GObject', '!setObject');
     }
     $class-def = qq:to/ANCESTRY/;
 
@@ -61,7 +61,7 @@ sub MAIN (
             cast({ $tn }, \$_);
           \}
         \}
-        self.{ $sp }(\$to-parent);
+        self{ $sp }(\$to-parent);
       \}
 
       method Mutter::Clutter::Raw::Definitions::{ $tn }
