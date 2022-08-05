@@ -6,6 +6,7 @@ use GLib::Raw::Definitions;
 use GLib::Raw::Structs;
 use Mutter::Raw::Definitions;
 use Mutter::Raw::Enums;
+use Mutter::Raw::Structs;
 
 unit package Mutter::Raw::COGL::Buffer;
 
