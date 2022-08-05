@@ -148,6 +148,8 @@ class MutterClutterTransformNode            is repr<CPointer> does GLib::Roles::
 
 # Cogl
 
+class MutterCoglAttribute        is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterCoglAttributeBuffer  is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglBitmap           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglBuffer           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglColor            is repr<CPointer> does GLib::Roles::Pointers is export { }
@@ -160,3 +162,11 @@ class MutterCoglPixelBuffer      is repr<CPointer> does GLib::Roles::Pointers is
 class MutterCoglPrimitive        is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglScanout          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglTexture          is repr<CPointer> does GLib::Roles::Pointers is export { }
+
+class X::Mutter::COGL::InvalidNumberOfElements is Exception {
+  has $.routine is built;
+
+  method message {
+    "Invalid number of elements in call to { $.routine }!";
+  }
+}
