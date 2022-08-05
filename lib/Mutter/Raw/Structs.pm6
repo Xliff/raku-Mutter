@@ -160,3 +160,21 @@ class MutterClutterUnits
   has gint32                $!padding_1;
   has gint64                $!padding_2;
 }
+
+
+class MutterCoglUserDataKey
+	is   repr<CStruct>
+	is   export
+	does GLib::Roles::Pointers
+{
+	has guint $.unused;
+}
+
+class MutterCoglDebugObjectTypeInfo
+	is   repr<CStruct>
+	is   export
+	does GLib::Roles::Pointers
+{
+  has Str    $.name;
+  has gulong $.instance_count;
+}
