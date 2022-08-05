@@ -76,6 +76,13 @@ our enum MutterCoglBoxedTypeEnum is export <
   COGL_BOXED_MATRIX
 >;
 
+constant MutterCoglBufferAccess is export := guint32;
+our enum MutterCoglBufferAccessEnum is export (
+ COGL_BUFFER_ACCESS_READ       => 1,
+ COGL_BUFFER_ACCESS_WRITE      => 1 +< 1,
+ COGL_BUFFER_ACCESS_READ_WRITE => 1 +| 2  # COGL_BUFFER_ACCESS_READ | COGL_BUFFER_ACCESS_WRITE
+);
+
 constant MutterCoglBufferBindTarget is export := guint32;
 our enum MutterCoglBufferBindTargetEnum is export <
   COGL_BUFFER_BIND_TARGET_PIXEL_PACK
