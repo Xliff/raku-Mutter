@@ -1,10 +1,15 @@
 use v6.c;
 
+use NativeCall;
+
+use GLib::Raw::Traits;
 use Mutter::Raw::Types;
 use Mutter::Raw::COGL::Bitmap;
 
 use Mutter::COGL::Object;
 use Mutter::COGL::Buffer;
+
+use GLib::Roles::Implementor;
 
 our subset MutterCoglBitmapAncestry is export of Mu
   where MutterCoglBitmap | MutterCoglObjectAncestry;
@@ -84,7 +89,7 @@ class Mutter::COGL::Bitmap {
       CArray[uint8_t].new($data)
     );
   }
-  method new_for_data (
+  multi method new_for_data (
     MutterCoglContext() $context,
     Int()               $width,
     Int()               $height,
@@ -117,7 +122,7 @@ class Mutter::COGL::Bitmap {
   ) {
     my gint ($w, $h, $r, $o) = ($width, $height, $rowstride, $offset);
 
-    my MutterCoglPixelFormat $f = $format
+    my MutterCoglPixelFormat $f = $format;
 
     my $mutter-cogl-bitmap = cogl_bitmap_new_from_buffer(
       $buffer,
@@ -133,7 +138,11 @@ class Mutter::COGL::Bitmap {
 
   method new_from_file (Str() $filename, CArray[Pointer[GError]] $error) {
     clear_error;
-    $mutter-cogl-bitmap = cogl_bitmap_new_from_file($!mcb, $filename, $error);
+    my $mutter-cogl-bitmap = cogl_bitmap_new_from_file(
+      $!mcb,
+      $filename,
+      $error
+    );
     set_error($error);
 
     $mutter-cogl-bitmap ?? self.bless( :$mutter-cogl-bitmap ) !! Nil;
@@ -145,10 +154,10 @@ class Mutter::COGL::Bitmap {
     Int()               $height,
     Int()               $format
   ) {
-    my gint                  ($w, $h) = ($with, $height);
-    my MutterCoglPixelFormat  $f      = $format
+    my gint                  ($w, $h) = ($width, $height);
+    my MutterCoglPixelFormat  $f      = $format;
 
-    my $mutter-cogl-bitmap = cogl_bitmap_new_with_size($context, $w, $h, $F);
+    my $mutter-cogl-bitmap = cogl_bitmap_new_with_size($context, $w, $h, $f);
 
     $mutter-cogl-bitmap ?? self.bless( :$mutter-cogl-bitmap ) !! Nil;
   }
@@ -188,15 +197,20 @@ class Mutter::COGL::Bitmap {
   }
 
   proto method get_size_from_file (|)
+    is static
   { * }
 
-  multi method get_size_from_file {
-    samewith($, $);
+  multi method get_size_from_file (Str() $file) {
+    samewith($file, $, $);
   }
-  multi method get_size_from_file ($width is rw, $height is rw) {
+  multi method get_size_from_file (
+    Str() $file,
+          $width     is rw,
+          $height    is rw
+  ) {
     my gint ($w, $h) = 0 xx 2;
 
-    cogl_bitmap_get_size_from_file($!mcb, $w, $h);
+    cogl_bitmap_get_size_from_file($file, $w, $h);
     ($width, $height) = ($w, $h);
   }
 

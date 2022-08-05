@@ -11,7 +11,7 @@ unit package Mutter::Raw::COGL::Bitmap;
 
 ### /usr/src/mutter-42.1/cogl/cogl/cogl-bitmap.h
 
-sub cogl_is_bitmap (Pointer $object)
+sub cogl_is_bitmap (MutterCoglBitmap $object)
   returns uint32
   is native(mutter-clutter)
   is export
