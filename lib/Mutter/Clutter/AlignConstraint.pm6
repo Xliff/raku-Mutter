@@ -44,6 +44,13 @@ class Mutter::Clutter::AlignConstraint is Mutter::Clutter::Constraint {
     self.setMutterClutterConstraint($to-parent);
   }
 
+  method ACCEPTS (\k) {
+    [||](
+      k ~~ ::?CLASS,
+      k ~~ MutterClutterAlignConstraintAncestry
+    )
+  }
+
   # cw: Yes, the type names have become obnoxious...
   constant CTA := MutterClutterAlignConstraintAncestry;
 
