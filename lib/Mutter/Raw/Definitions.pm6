@@ -158,6 +158,7 @@ class MutterCoglDriver           is repr<CPointer> does GLib::Roles::Pointers is
 class MutterCoglFramebuffer      is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglHandle           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglObject           is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterCoglOnscreenTemplate is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglOutput           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglPipeline         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglPixelBuffer      is repr<CPointer> does GLib::Roles::Pointers is export { }
