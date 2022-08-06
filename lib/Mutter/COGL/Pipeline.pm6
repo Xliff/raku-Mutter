@@ -51,8 +51,8 @@ class Mutter::COGL::Pipeline is Mutter::COGL::Object {
     $o.ref if $ref;
     $o;
   }
-  multi method new {
-    my $mutter-cogl-pipeline = cogl_pipeline_new();
+  multi method new (MutterCoglContext() $context) {
+    my $mutter-cogl-pipeline = cogl_pipeline_new($context);
 
     $mutter-cogl-pipeline ?? self.bless( :$mutter-cogl-pipeline ) !! Nil;
   }
