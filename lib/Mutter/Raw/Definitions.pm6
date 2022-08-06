@@ -154,6 +154,7 @@ class MutterCoglBitmap           is repr<CPointer> does GLib::Roles::Pointers is
 class MutterCoglBuffer           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglColor            is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglContext          is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterCoglDriver           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglFramebuffer      is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglHandle           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglObject           is repr<CPointer> does GLib::Roles::Pointers is export { }
