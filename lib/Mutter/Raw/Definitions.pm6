@@ -163,6 +163,7 @@ class MutterCoglPipeline         is repr<CPointer> does GLib::Roles::Pointers is
 class MutterCoglPixelBuffer      is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglPrimitive        is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglScanout          is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterCoglSwapChain        is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglTexture          is repr<CPointer> does GLib::Roles::Pointers is export { }
 
 class X::Mutter::COGL::InvalidNumberOfElements is Exception {
