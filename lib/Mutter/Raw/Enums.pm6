@@ -542,6 +542,13 @@ our enum MutterCoglReadPixelsFlagsEnum is export (
   COGL_READ_PIXELS_COLOR_BUFFER => 1  +< 0,
 );
 
+our constant MutterCoglRendererConstraint is export := guint32;
+our enum MutterCoglRendererConstraintEnum is export (
+  COGL_RENDERER_CONSTRAINT_USES_X11  => (1 +< 0),
+  COGL_RENDERER_CONSTRAINT_USES_XLIB => (1 +< 1),
+  COGL_RENDERER_CONSTRAINT_USES_EGL  => (1 +< 2),
+);
+
 constant MutterCoglRendererError is export := guint32;
 our enum MutterCoglRendererErrorEnum is export <
   COGL_RENDERER_ERROR_XLIB_DISPLAY_OPEN
