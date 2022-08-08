@@ -1864,3 +1864,58 @@ our enum MetaWindowTypeEnum is export <
   META_WINDOW_DND
   META_WINDOW_OVERRIDE_OTHER
 >;
+
+sub bppForMutterCoglFormat ($format) is export {
+  do given MutterCoglPixelFormatEnum($format) {
+    when COGL_PIXEL_FORMAT_A_8                  |
+         COGL_PIXEL_FORMAT_G_8                    { 1 }
+
+    when COGL_PIXEL_FORMAT_RGB_565              |
+         COGL_PIXEL_FORMAT_RGBA_4444_PRE        |
+         COGL_PIXEL_FORMAT_RGBA_4444            |
+         COGL_PIXEL_FORMAT_RGBA_5551            |
+         COGL_PIXEL_FORMAT_YUV                  |
+         COGL_PIXEL_FORMAT_RGBA_5551_PRE        |
+         COGL_PIXEL_FORMAT_RG_88                |
+         COGL_PIXEL_FORMAT_DEPTH_16               { 2 }
+
+    when COGL_PIXEL_FORMAT_RGB_888              |
+         COGL_PIXEL_FORMAT_BGR_888                { 3 }
+
+    when COGL_PIXEL_FORMAT_RGBA_8888            |
+         COGL_PIXEL_FORMAT_BGRA_8888            |
+         COGL_PIXEL_FORMAT_ARGB_8888            |
+         COGL_PIXEL_FORMAT_ABGR_8888            |
+         COGL_PIXEL_FORMAT_RGBA_8888_PRE        |
+         COGL_PIXEL_FORMAT_BGRA_8888_PRE        |
+         COGL_PIXEL_FORMAT_ARGB_8888_PRE        |
+         COGL_PIXEL_FORMAT_ABGR_8888_PRE        |
+         COGL_PIXEL_FORMAT_RGBA_1010102         |
+         COGL_PIXEL_FORMAT_BGRA_1010102         |
+         COGL_PIXEL_FORMAT_XRGB_2101010         |
+         COGL_PIXEL_FORMAT_ARGB_2101010         |
+         COGL_PIXEL_FORMAT_XBGR_2101010         |
+         COGL_PIXEL_FORMAT_ABGR_2101010         |
+         COGL_PIXEL_FORMAT_BGRA_1010102_PRE     |
+         COGL_PIXEL_FORMAT_RGBA_1010102_PRE     |
+         COGL_PIXEL_FORMAT_ARGB_2101010_PRE     |
+         COGL_PIXEL_FORMAT_ABGR_2101010_PRE     |
+         COGL_PIXEL_FORMAT_DEPTH_24_STENCIL_8   |
+         COGL_PIXEL_FORMAT_DEPTH_32               { 4 }
+
+    when COGL_PIXEL_FORMAT_RGBA_FP_16161616     |
+         COGL_PIXEL_FORMAT_BGRA_FP_16161616     |
+         COGL_PIXEL_FORMAT_XRGB_FP_16161616     |
+         COGL_PIXEL_FORMAT_ARGB_FP_16161616     |
+         COGL_PIXEL_FORMAT_XBGR_FP_16161616     |
+         COGL_PIXEL_FORMAT_ABGR_FP_16161616     |
+         COGL_PIXEL_FORMAT_RGBA_FP_16161616_PRE |
+         COGL_PIXEL_FORMAT_BGRA_FP_16161616_PRE |
+         COGL_PIXEL_FORMAT_ARGB_FP_16161616_PRE |
+         COGL_PIXEL_FORMAT_ABGR_FP_16161616_PRE   { 8 }
+
+    default {
+      die "Cannot get a BPP value from { $_ // 'Unknown value' }"
+    }
+  }
+}
