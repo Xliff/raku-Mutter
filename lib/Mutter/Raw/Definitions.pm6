@@ -171,6 +171,8 @@ class MutterCoglSwapChain        is repr<CPointer> does GLib::Roles::Pointers is
 class MutterCoglTimestampQuery   is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglTexture          is repr<CPointer> does GLib::Roles::Pointers is export { }
 
+constant MutterCoglPipelineKey is export := Str;
+
 class X::Mutter::COGL::InvalidNumberOfElements is Exception {
   has $.routine is built;
 
