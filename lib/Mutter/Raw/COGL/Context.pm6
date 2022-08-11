@@ -115,3 +115,11 @@ sub cogl_context_timestamp_query_get_time_ns (
   is native(mutter-clutter)
   is export
 { * }
+
+### /usr/src/mutter-42.1/cogl/cogl/cogl-egl.h
+
+sub cogl_egl_context_get_egl_display (MutterCoglContext $context)
+  returns EGLDisplay
+  is native(mutter-clutter)
+  is export
+{ * }

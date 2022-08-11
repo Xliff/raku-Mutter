@@ -123,6 +123,12 @@ class Mutter::COGL::Context is Mutter::COGL::Object {
     cogl_context_timestamp_query_get_time_ns($!mcc, $query);
   }
 
+  method get_egl_display {
+    # cw: Can only return the pointer, since we don't know what 'EGLDisplay'
+    #     is
+    cogl_egl_context_get_egl_display($!mcc);
+  }
+
 }
 
 # method cogl_foreach_feature (MutterCoglFeatureCallback $callback, Pointer $user_data) {
