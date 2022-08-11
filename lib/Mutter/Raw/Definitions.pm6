@@ -169,7 +169,9 @@ class MutterCoglPipeline         is repr<CPointer> does GLib::Roles::Pointers is
 class MutterCoglPixelBuffer      is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglPrimitive        is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglRenderer         is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterCoglRendererSource   is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglScanout          is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterCoglSource           is repr<CPointer> does GLib::Roles::Pointers is export { } 
 class MutterCoglSwapChain        is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglTimestampQuery   is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglTexture          is repr<CPointer> does GLib::Roles::Pointers is export { }
