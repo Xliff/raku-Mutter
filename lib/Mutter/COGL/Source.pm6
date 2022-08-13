@@ -114,6 +114,8 @@ class COGL::Renderer::Source is GLib::Source {
 
 }
 
+### /usr/src/mutter-42.1/cogl/cogl/cogl-glib-source.h
+
 sub cogl_glib_renderer_source_new (
   MutterCoglRenderer $renderer,
   gint               $priority
