@@ -8,10 +8,10 @@ use GLib::Raw::Definitions;
 
 unit package Mutter::Raw::Definitions;
 
-constant mutter            is export = 'mutter-10',v0;
-constant mutter-clutter    is export = 'mutter-clutter-10',v0;
-constant mutter-cogl       is export = 'mutter-cogl-10',v0;
-constant mutter-cogl-pango is export = 'mutter-cogl-pango-10',v0;
+constant mutter                 is export = 'mutter-10',v0;
+constant mutter-clutter         is export = 'mutter-clutter-10',v0;
+constant mutter-cogl            is export = 'mutter-cogl-10',v0;
+constant mutter-cogl-pango      is export = 'mutter-cogl-pango-10',v0;
 
 constant cairo_rectangle_t      is export := Cairo::cairo_rectangle_t;
 constant cairo_rectangle_int_t  is export := Cairo::cairo_rectangle_int_t;
@@ -21,6 +21,7 @@ constant cairo_region_t         is export := Pointer;
 
 # Compat
 constant EGLDisplay             is export := Pointer;
+constant EGLImageKHR            is export := Pointer;
 
 # Meta
 
@@ -171,10 +172,11 @@ class MutterCoglPrimitive        is repr<CPointer> does GLib::Roles::Pointers is
 class MutterCoglRenderer         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglRendererSource   is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglScanout          is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterCoglSource           is repr<CPointer> does GLib::Roles::Pointers is export { } 
+class MutterCoglSource           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglSwapChain        is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterCoglTimestampQuery   is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglTexture          is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterCoglTexture2d        is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterCoglTimestampQuery   is repr<CPointer> does GLib::Roles::Pointers is export { }
 
 constant MutterCoglPipelineKey is export := Str;
 
