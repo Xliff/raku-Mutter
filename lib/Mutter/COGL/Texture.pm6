@@ -106,14 +106,46 @@ class Mutter::COGL::Texture is Mutter::COGL::Object {
     cogl_texture_set_components($!mct, $components);
   }
 
-  method set_data (
-    MutterCoglPixelFormat   $format,
-    gint                    $rowstride,
-    CArray[uint8_t]         $data,
-    gint                    $level,
-    CArray[Pointer[GError]] $error = gerror
+  proto method set_data (|)
+  { * }
+
+  multi method set_data (
+    Int()                   $format,
+    Int()                   $rowstride,
+                            @data,
+    Int()                   $level,
+    CArray[Pointer[GError]] $error       = gerror
   ) {
-    cogl_texture_set_data($!mct, $format, $rowstride, $data, $level, $error);
+    samewith(
+      $format,
+      $rowstride,
+      ArrayToCArray(uint8, @data),
+      $level,
+      $error
+    );
+  }
+  multi method set_data (
+    Int()                   $format,
+    Int()                   $rowstride,
+    Buf()                   $data,
+    Int()                   $level,
+    CArray[Pointer[GError]] $error       = gerror
+  ) {
+    samewith($format, $rowstride, CArray[uint8].new($data), $level, $error);
+  }
+  multi method set_data (
+    Int()                   $format,
+    Int()                   $rowstride,
+    CArray[uint8_t]         $data,
+    Int()                   $level,
+    CArray[Pointer[GError]] $error       = gerror
+  ) {
+    my MutterCoglPixelFormat  $f      =  $format;
+    my gint                  ($r, $l) = ($rowstride, $level);
+
+    clear_error;
+    cogl_texture_set_data($!mct, $f, $r, $data, $l, $error);
+    set_error($error);
   }
 
   method set_premultiplied (Int() $premultiplied) {
@@ -122,32 +154,127 @@ class Mutter::COGL::Texture is Mutter::COGL::Object {
     cogl_texture_set_premultiplied($!mct, $p);
   }
 
-  method set_region (
-    gint                  $src_x,
-    gint                  $src_y,
-    gint                  $dst_x,
-    gint                  $dst_y,
-    gint                  $dst_width,
-    gint                  $dst_height,
-    gint                  $width,
-    gint                  $height,
-    MutterCoglPixelFormat $format,
-    gint                  $rowstride,
-    CArray[uint8_t]       $data
+  proto method set_region (|)
+  { * }
+
+  multi method set_region (
+    Int()            $src_x,
+    Int()            $src_y,
+    Int()            $dst_x,
+    Int()            $dst_y,
+    Int()            $dst_width,
+    Int()            $dst_height,
+    Int()            $width,
+    Int()            $height,
+    Int()            $format,
+    Int()            $rowstride,
+                     @data
   ) {
-    cogl_texture_set_region($!mct, $src_x, $src_y, $dst_x, $dst_y, $dst_width, $dst_height, $width, $height, $format, $rowstride, $data);
+    samewith(
+      $src_x,
+      $src_y,
+      $dst_x,
+      $dst_y,
+      $dst_width,
+      $dst_height,
+      $width,
+      $height,
+      $format,
+      $rowstride,
+      ArrayToCArray(uint8, @data)
+    );
+  }
+  multi method set_region (
+    Int() $src_x,
+    Int() $src_y,
+    Int() $dst_x,
+    Int() $dst_y,
+    Int() $dst_width,
+    Int() $dst_height,
+    Int() $width,
+    Int() $height,
+    Int() $format,
+    Int() $rowstride,
+    Buf() $data
+  ) {
+    samewith(
+      $src_x,
+      $src_y,
+      $dst_x,
+      $dst_y,
+      $dst_width,
+      $dst_height,
+      $width,
+      $height,
+      $format,
+      $rowstride,
+      CArray[uint8].new($data)
+    );
+  }
+  multi method set_region (
+    Int()            $src_x,
+    Int()            $src_y,
+    Int()            $dst_x,
+    Int()            $dst_y,
+    Int()            $dst_width,
+    Int()            $dst_height,
+    Int()            $width,
+    Int()            $height,
+    Int()            $format,
+    Int()            $rowstride,
+    CArray[uint8_t]  $data
+  ) {
+    my gint ($sx, $sy, $dx, $dy, $dw, $dh, $w, $h, $r) = (
+      $src_x,
+      $src_y,
+      $dst_x,
+      $dst_y,
+      $dst_width,
+      $dst_height,
+      $width,
+      $height
+    );
+
+    my MutterCoglPixelFormat $f = $format;
+
+    cogl_texture_set_region(
+      $!mct,
+      $sx,
+      $sy,
+      $dx,
+      $dy,
+      $dw,
+      $dh,
+      $w,
+      $h,
+      $f,
+      $r,
+      $data
+    );
   }
 
   method set_region_from_bitmap (
-    gint             $src_x,
-    gint             $src_y,
-    gint             $dst_x,
-    gint             $dst_y,
-    gint             $dst_width,
-    gint             $dst_height,
-    MutterCoglBitmap $bitmap
+    Int()              $src_x,
+    Int()              $src_y,
+    Int()              $dst_x,
+    Int()              $dst_y,
+    Int()              $dst_width,
+    Int()              $dst_height,
+    MutterCoglBitmap() $bitmap
   ) {
-    cogl_texture_set_region_from_bitmap($!mct, $src_x, $src_y, $dst_x, $dst_y, $dst_width, $dst_height, $bitmap);
+    my gint ($sx, $sy, $dx, $dy, $dw, $dh) = 
+      ($src_x, $src_y, $dst_x, $dst_y, $dst_width, $dst_height);
+
+    cogl_texture_set_region_from_bitmap(
+      $!mct,
+      $sx,
+      $sy,
+      $dx,
+      $dy,
+      $dw,
+      $dh,
+      $bitmap
+    )
   }
 
 }
