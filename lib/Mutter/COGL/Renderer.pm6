@@ -9,6 +9,7 @@ use Mutter::Raw::COGL::Renderer;
 use Mutter::COGL::Object;
 
 use GLib::Roles::Implementor;
+use GLib::Roles::TypedBuffer;
 
 our subset MutterCoglRendererAncestry is export of Mu
   where MutterCoglRenderer | MutterCoglObjectAncestry;
@@ -107,6 +108,18 @@ class Mutter::COGL::Renderer is Mutter::COGL::Object {
     propReturnObject($db, $raw, |Mutter::COGL::DmaBufHandle.getTypePair)
   }
 
+  multi method dispatch (@poll_fds) {
+    samewith(
+      GLib::Roles::TypedBuffer[MutterCoglPollFD].new(@poll_fds).p,
+      @poll_fds.elems
+    );
+  }
+  multi method dispatch (gpointer $poll_fds, Int() $n_poll_fds) {
+    my gint $n = $n_poll_fds;
+
+    cogl_poll_renderer_dispatch($!mcr, $poll_fds, $n);
+  }
+
   method error_quark is also<error-quark> {
     cogl_renderer_error_quark();
   }
@@ -129,6 +142,37 @@ class Mutter::COGL::Renderer is Mutter::COGL::Object {
     state ($n, $t);
 
     unstable_get_type( self.^name, &cogl_renderer_get_gtype, $n, $t );
+  }
+
+  proto method get_info (|)
+  { * }
+
+  multi method get_info ( :$raw = False ) {
+    my $pfd = newCArray( Pointer[MutterCoglPollFD] );
+    my $t;
+
+    samewith($pfd, $, $t, :$raw)
+  }
+  multi method get_info (
+    gpointer   $poll_fds,
+               $n_poll_fds is rw,
+               $timeout    is rw,
+              :$raw               = False
+  ) {
+    my gint     $n = 0;
+    my gint64_t $t = 0;
+
+    cogl_poll_renderer_get_info($!mcr, $poll_fds, $n, $t);
+    ($n_poll_fds, $timeout) = ($n, $t);
+    return ($poll_fds, $timeout) if $raw;
+
+    $poll_fds = ppr($poll_fds);
+    my $fa = GLib::Roles::TypedBuffer[MutterCoglPollFD].new(
+      $poll_fds,
+      size       => $n_poll_fds
+    );
+
+    ($fa.Array, $timeout);
   }
 
   method get_winsys_id is also<get-winsys-id> {

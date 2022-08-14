@@ -6,6 +6,7 @@ use GLib::Raw::Definitions;
 use GLib::Raw::Structs;
 use Mutter::Raw::Definitions;
 use Mutter::Raw::Enums;
+use Mutter::Raw::Structs;
 
 unit package Mutter::Raw::COGL::Renderer;
 
@@ -125,6 +126,28 @@ sub cogl_renderer_set_winsys_id (
   MutterCoglRenderer $renderer,
   MutterCoglWinsysID $winsys_id
 )
+  is native(mutter-clutter)
+  is export
+{ * }
+
+### /usr/src/mutter-42.1/cogl/cogl/cogl-poll.h
+
+sub cogl_poll_renderer_dispatch (
+  MutterCoglRenderer $renderer,
+  Pointer            $poll_fds,
+  gint               $n_poll_fds
+)
+  is native(mutter-clutter)
+  is export
+{ * }
+
+sub cogl_poll_renderer_get_info (
+  MutterCoglRenderer $renderer,
+  Pointer            $poll_fds,
+  gint               $n_poll_fds is rw,
+  gint64_t           $timeout    is rw
+)
+  returns gint
   is native(mutter-clutter)
   is export
 { * }
