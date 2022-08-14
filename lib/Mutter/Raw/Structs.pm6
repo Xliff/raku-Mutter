@@ -178,3 +178,21 @@ class MutterCoglDebugObjectTypeInfo
   has Str    $.name;
   has gulong $.instance_count;
 }
+
+class MutterCoglPollFD is repr<CStruct> is export does GLib::Roles::Pointers {
+  has gint   $.fd      is rw;
+  has gshort $.events  is rw;
+  has gshort $.revents is rw;
+}
+
+class MutterCoglColor is repr<CStruct> is export does GLib::Roles::Pointers {
+	has guint8 $!red;
+	has guint8 $!green;
+	has guint8 $!blue;
+	has guint8 $!alpha;
+
+	has guint32 $!red32;
+	has guint32 $!green32;
+	has guint32 $!blue32;
+	has guint32 $!alpha32;
+}
