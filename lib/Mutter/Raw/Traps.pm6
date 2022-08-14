@@ -22,3 +22,6 @@
 # cw: This is out of scope since the functions deal with tracing a
 #     multi-threaded application, which MoarVM currently cannot handle
 ### /usr/src/mutter-42.1/cogl/cogl/cogl-trace.h
+
+### /usr/src/mutter-42.1/cogl/cogl/cogl-spans.h
+### /usr/src/mutter-42.1/cogl/cogl/cogl-rectangle-map.h
