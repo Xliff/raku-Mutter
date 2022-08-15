@@ -532,3 +532,29 @@ sub cogl_framebuffer_translate (
   is native(mutter-clutter)
   is export
 { * }
+
+
+### /usr/src/mutter-42.1/cogl/cogl/cogl-fence.h
+
+sub cogl_framebuffer_add_fence_callback (
+  MutterCoglFramebuffer $framebuffer,
+                        &callback (MutterCoglFence, gpointer),
+  Pointer               $user_data
+)
+  returns MutterCoglFenceClosure
+  is native(mutter-clutter)
+  is export
+{ * }
+
+sub cogl_framebuffer_cancel_fence_callback (
+  MutterCoglFramebuffer  $framebuffer,
+  MutterCoglFenceClosure $closure
+)
+  is native(mutter-clutter)
+  is export
+{ * }
+
+sub cogl_fence_closure_get_user_data (MutterCoglFenceClosure $closure)
+  is native(mutter-clutter)
+  is export
+{ * }
