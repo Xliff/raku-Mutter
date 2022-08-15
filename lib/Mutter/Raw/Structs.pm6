@@ -196,3 +196,10 @@ class MutterCoglColor is repr<CStruct> is export does GLib::Roles::Pointers {
 	has guint32 $!blue32;
 	has guint32 $!alpha32;
 }
+
+class MutterCoglOnscreenDirtyInfo is export does GLib::Roles::Pointers {
+	has gint $.x      is rw;
+	has gint $.y      is rw;
+	has gint $.width  is rw;
+	has gint $.height is rw;
+}
