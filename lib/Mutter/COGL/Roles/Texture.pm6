@@ -10,8 +10,11 @@ use Mutter::COGL::Object;
 
 use GLib::Roles::Implementor;
 
-class Mutter::COGL::Texture is Mutter::COGL::Object {
+role Mutter::COGL::Roles::Texture {
   has MutterCoglTexture $!mct is implementor;
+
+  method Mutter::Raw::Definitions::MutterCoglTexture
+  { $!mct }
 
   method allocate (CArray[Pointer[GError]] $error = gerror) {
     clear_error;
@@ -262,7 +265,7 @@ class Mutter::COGL::Texture is Mutter::COGL::Object {
     Int()              $dst_height,
     MutterCoglBitmap() $bitmap
   ) {
-    my gint ($sx, $sy, $dx, $dy, $dw, $dh) = 
+    my gint ($sx, $sy, $dx, $dy, $dw, $dh) =
       ($src_x, $src_y, $dst_x, $dst_y, $dst_width, $dst_height);
 
     cogl_texture_set_region_from_bitmap(
@@ -275,6 +278,48 @@ class Mutter::COGL::Texture is Mutter::COGL::Object {
       $dh,
       $bitmap
     )
+  }
+
+}
+
+our subset MutterCoglTextureAncestry is export of Mu
+  where MutterCoglTexture | MutterCoglObjectAncestry;
+
+class Mutter::COGL::Texture {
+  also does GLib::Roles::Object;
+  also does Mutter::COGL::Roles::Texture;
+
+  submethod BUILD ( :$mutter-cogl-texture ) {
+    self.setMutterCoglTexture($mutter-cogl-texture)
+      if $mutter-cogl-texture
+  }
+
+  method setMutterCoglTexture (MutterCoglTextureAncestry $_) {
+    my $to-parent;
+
+    $!mct = do {
+      when MutterCoglTexture {
+        $to-parent = cast(MutterCoglObject, $_);
+        $_;
+      }
+
+      default {
+        $to-parent = $_;
+        cast(MutterCoglTexture, $_);
+      }
+    }
+    self.setMutterCoglObject($to-parent);
+  }
+
+  multi method new (
+    MutterCoglTextureAncestry  $mutter-cogl-texture
+                              :$ref                = True
+  ) {
+    return unless $mutter-cogl-texture;
+
+    my $o = self.bless( :$mutter-cogl-texture );
+    $o.ref if $ref;
+    $o;
   }
 
 }
