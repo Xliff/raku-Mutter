@@ -1874,6 +1874,9 @@ our enum MetaWindowTypeEnum is export <
 
 sub bppForMutterCoglFormat ($format) is export {
   do given MutterCoglPixelFormatEnum($format) {
+    when COGL_PIXEL_FORMAT_ANY                  |
+         COGL_PIXEL_FORMAT_YUV                    { 0 }
+         
     when COGL_PIXEL_FORMAT_A_8                  |
          COGL_PIXEL_FORMAT_G_8                    { 1 }
 
@@ -1881,7 +1884,7 @@ sub bppForMutterCoglFormat ($format) is export {
          COGL_PIXEL_FORMAT_RGBA_4444_PRE        |
          COGL_PIXEL_FORMAT_RGBA_4444            |
          COGL_PIXEL_FORMAT_RGBA_5551            |
-         COGL_PIXEL_FORMAT_YUV                  |
+
          COGL_PIXEL_FORMAT_RGBA_5551_PRE        |
          COGL_PIXEL_FORMAT_RG_88                |
          COGL_PIXEL_FORMAT_DEPTH_16               { 2 }
