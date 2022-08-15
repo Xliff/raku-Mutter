@@ -161,6 +161,8 @@ class MutterCoglContext          is repr<CPointer> does GLib::Roles::Pointers is
 class MutterCoglDisplay          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglDmaBufHandle     is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglDriver           is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterCoglFence            is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterCoglFenceClosure     is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglFramebuffer      is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglFrameInfo        is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglHandle           is repr<CPointer> does GLib::Roles::Pointers is export { }
