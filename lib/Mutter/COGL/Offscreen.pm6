@@ -6,9 +6,9 @@ use NativeCall;
 use Mutter::Raw::Types;
 
 use Mutter::COGL::Framebuffer;
-use Mutter::COGL::Texture;
 
 use GLib::Roles::Implementor;
+use Mutter::COGL::Roles::Texture;
 
 our subset MutterCoglOffscreenAncestry is export of Mu
   where MutterCoglOffscreen | MutterCoglFramebufferAncestry;
