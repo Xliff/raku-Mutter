@@ -39,6 +39,7 @@ class Mutter::COGL::Onscreen is Mutter::COGL::Framebuffer {
   }
 
   method Mutter::Clutter::Raw::Definitions::MutterCoglOnscreen
+    is also<MutterCoglOnscreen>
   { $!mco }
 
   multi method new (
