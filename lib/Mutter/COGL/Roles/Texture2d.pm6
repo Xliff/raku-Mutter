@@ -1,56 +1,22 @@
 use v6.c;
 
+use NativeCall;
 use Method::Also;
 
 use Mutter::Raw::Types;
 use Mutter::Raw::COGL::Texture2d;
 
-use Mutter::COGL::Texture;
-
 use GLib::Roles::Implementor;
+use Mutter::COGL::Roles::Texture;
 
-our subset MutterCoglTexture2dAncestry is export of Mu
-  where MutterCoglTexture2d | MutterCoglTextureAncestry;
+role Mutter::COGL::Roles::Texture2d {
+  also does Mutter::COGL::Roles::Texture;
 
-class Mutter::COGL::Texture2d is Mutter::COGL::Texture {
   has MutterCoglTexture2d $!mct2 is implementor;
-
-  submethod BUILD ( :$mutter-cogl-t2d ) {
-    self.setMutterCoglTexture2d($mutter-cogl-t2d)
-      if $mutter-cogl-t2d
-  }
-
-  method setMutterCoglTexture2d (MutterCoglTexture2dAncestry $_) {
-    my $to-parent;
-
-    $!mct2 = do {
-      when MutterCoglTexture2d {
-        $to-parent = cast(MutterCoglTexture, $_);
-        $_;
-      }
-
-      default {
-        $to-parent = $_;
-        cast(MutterCoglTexture2d, $_);
-      }
-    }
-    self.setMutterCoglTexture($to-parent);
-  }
 
   method Mutter::Clutter::Raw::Definitions::MutterCoglTexture2d
     is also<MutterCoglTexture2d>
   { $!mct2 }
-
-  multi method new (
-    MutterCoglTexture2dAncestry  $mutter-cogl-t2d,
-                                :$ref              = True
-  ) {
-    return unless $mutter-cogl-t2d;
-
-    my $o = self.bless( :$mutter-cogl-t2d );
-    $o.ref if $ref;
-    $o;
-  }
 
   method new_from_bitmap (MutterCoglBitmap() $bitmap)
     is also<new-from-bitmap>
@@ -191,7 +157,7 @@ class Mutter::COGL::Texture2d is Mutter::COGL::Texture {
 
   method egl_image_external_alloc_finish (
     gpointer $user_data = gpointer,
-             &destroy
+             &destroy   = %DEFAULT-CALLBACKS<GDestoryNotify>
   )
     is also<egl-image-external-alloc-finish>
   {
@@ -206,7 +172,6 @@ class Mutter::COGL::Texture2d is Mutter::COGL::Texture {
     cogl_texture_2d_egl_image_external_bind($!mct2);
   }
 
-
   method is_texture_2d is also<is-texture-2d> {
     so cogl_is_texture_2d($!mct2);
   }
@@ -218,7 +183,50 @@ class Mutter::COGL::Texture2d is Mutter::COGL::Texture {
   }
 }
 
-class Mutter::COGL::Texture::EGL is Mutter::COGL::Texture2d {
+our subset MutterCoglTexture2dAncestry is export of Mu
+  where MutterCoglTexture2d | MutterCoglTextureAncestry;
+
+class Mutter::COGL::Texture2d {
+  also does GLib::Roles::Object;
+  also does Mutter::COGL::Roles::Texture2d;
+
+  submethod BUILD ( :$mutter-cogl-t2d ) {
+    self.setMutterCoglTexture2d($mutter-cogl-t2d)
+      if $mutter-cogl-t2d
+  }
+
+  method setMutterCoglTexture2d (MutterCoglTexture2dAncestry $_) {
+    my $to-parent;
+
+    $!mct2 = do {
+      when MutterCoglTexture2d {
+        $to-parent = cast(MutterCoglTexture, $_);
+        $_;
+      }
+
+      default {
+        $to-parent = $_;
+        cast(MutterCoglTexture2d, $_);
+      }
+    }
+    self.setMutterCoglTexture($to-parent);
+  }
+
+  multi method new (
+    MutterCoglTexture2dAncestry  $mutter-cogl-t2d,
+                                :$ref              = True
+  ) {
+    return unless $mutter-cogl-t2d;
+
+    my $o = self.bless( :$mutter-cogl-t2d );
+    $o.ref if $ref;
+    $o;
+  }
+
+}
+
+role Mutter::COGL::Roles::Texture2d::EGL {
+  also does Mutter::COGL::Roles::Texture2d;
 
   method new_from_image (
     Int()                   $width,
@@ -230,9 +238,9 @@ class Mutter::COGL::Texture::EGL is Mutter::COGL::Texture2d {
   )
     is also<new-from-image>
   {
-    my gint                  ($w, $h, $r) = ($width, $height, $rowstride);
-    my MutterCoglPixelFormat  $f          =  $format;
-    MutterCoglEglImageFlags   $fg         =  $flags;
+    my gint                    ($w, $h, $r) = ($width, $height);
+    my MutterCoglPixelFormat    $f          =  $format;
+    my MutterCoglEglImageFlags  $fg         =  $flags;
 
     clear_error;
     my $mutter-cogl-t2d = cogl_egl_texture_2d_new_from_image(
@@ -247,5 +255,13 @@ class Mutter::COGL::Texture::EGL is Mutter::COGL::Texture2d {
 
     $mutter-cogl-t2d ?? self.bless( :$mutter-cogl-t2d ) !! Nil
   }
+
+}
+
+# cw: Simple pun. No further code necessary.
+
+class Mutter::COGL::Texture::EGL {
+  also does GLib::Roles::Object;
+  also does Mutter::COGL::Roles::Texture2d;
 
 }

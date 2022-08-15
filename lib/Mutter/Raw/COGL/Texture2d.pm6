@@ -5,6 +5,7 @@ use NativeCall;
 use GLib::Raw::Definitions;
 use GLib::Raw::Structs;
 use Mutter::Raw::Definitions;
+use Mutter::Raw::Enums;
 
 unit package Mutter::Raw::COGL::Texture2d;
 
@@ -19,19 +20,19 @@ sub cogl_egl_texture_2d_new_from_image (
   MutterCoglEglImageFlags $flags,
   CArray[Pointer[GError]] $error
 )
-  returns MutterCoglTexture2D
+  returns MutterCoglTexture2d
   is      native(mutter-clutter)
   is      export
 { * }
 
-sub cogl_is_texture_2d (Pointer $object)
+sub cogl_is_texture_2d (MutterCoglTexture2d $object)
   returns uint32
   is      native(mutter-clutter)
   is      export
 { * }
 
 sub cogl_texture_2d_egl_image_external_alloc_finish (
-  MutterCoglTexture2D $tex_2d,
+  MutterCoglTexture2d $tex_2d,
   Pointer             $user_data,
                       &destroy (gpointer)
 )
@@ -39,7 +40,7 @@ sub cogl_texture_2d_egl_image_external_alloc_finish (
   is export
 { * }
 
-sub cogl_texture_2d_egl_image_external_bind (MutterCoglTexture2D $tex_2d)
+sub cogl_texture_2d_egl_image_external_bind (MutterCoglTexture2d $tex_2d)
   is native(mutter-clutter)
   is export
 { * }
@@ -51,7 +52,7 @@ sub cogl_texture_2d_get_gtype ()
 { * }
 
 sub cogl_texture_2d_new_from_bitmap (MutterCoglBitmap $bitmap)
-  returns MutterCoglTexture2D
+  returns MutterCoglTexture2d
   is      native(mutter-clutter)
   is      export
 { * }
@@ -65,7 +66,7 @@ sub cogl_texture_2d_new_from_data (
   CArray[uint8_t]         $data,
   CArray[Pointer[GError]] $error
 )
-  returns MutterCoglTexture2D
+  returns MutterCoglTexture2d
   is      native(mutter-clutter)
   is      export
 { * }
@@ -75,15 +76,15 @@ sub cogl_texture_2d_new_from_egl_image_external (
   gint                    $width,
   gint                    $height,
                           &alloc (
-                            MutterCoglTexture2D,
+                            MutterCoglTexture2d,
                             gpointer,
                             CArray[Pointer[GError]]
-                          )
+                          ),
   gpointer                $user_data,
                           &destroy (gpointer),
   CArray[Pointer[GError]] $error
 )
-  returns MutterCoglTexture2D
+  returns MutterCoglTexture2d
   is      native(mutter-clutter)
   is      export
 { * }
@@ -93,7 +94,7 @@ sub cogl_texture_2d_new_from_file (
   Str                     $filename,
   CArray[Pointer[GError]] $error
 )
-  returns MutterCoglTexture2D
+  returns MutterCoglTexture2d
   is      native(mutter-clutter)
   is      export
 { * }
@@ -103,7 +104,7 @@ sub cogl_texture_2d_new_with_size (
   gint              $width,
   gint              $height
 )
-  returns MutterCoglTexture2D
+  returns MutterCoglTexture2d
   is      native(mutter-clutter)
   is      export
 { * }
