@@ -27,13 +27,13 @@ role Mutter::COGL::Roles::Texture2d {
   }
 
   multi method new_from_data (
-    MutterCoglContext()     $ctx,
-    Int()                   $width,
-    Int()                   $height,
-    Int()                   $format,
-    Int()                   $rowstride,
-                            @data,
-    CArray[Pointer[GError]] $error       = gerror
+    MutterCoglContext()      $ctx,
+    Int()                    $width,
+    Int()                    $height,
+    Int()                    $format,
+                             @data,
+    CArray[Pointer[GError]]  $error       = gerror,
+    Int()                   :$rowstride   = 0
   )
     is also<new-from-data>
   {
@@ -48,13 +48,13 @@ role Mutter::COGL::Roles::Texture2d {
     );
   }
   multi method new_from_data (
-    MutterCoglContext()     $ctx,
-    Int()                   $width,
-    Int()                   $height,
-    Int()                   $format,
-    Int()                   $rowstride,
-    Buf()                   $data,
-    CArray[Pointer[GError]] $error       = gerror
+    MutterCoglContext()      $ctx,
+    Int()                    $width,
+    Int()                    $height,
+    Int()                    $format,
+    Buf()                    $data,
+    CArray[Pointer[GError]]  $error       = gerror,
+    Int()                   :$rowstride   = 0
   )
     is also<new-from-data>
   {
