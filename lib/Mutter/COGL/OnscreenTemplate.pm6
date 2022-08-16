@@ -1,7 +1,6 @@
 use v6.c;
 
 use Method::Also;
-
 use NativeCall;
 
 use Mutter::Raw::Types;
@@ -53,7 +52,7 @@ class Mutter::COGL::OnscreenTemplate is Mutter::COGL::Object {
     $o;
   }
   multi method new (MutterCoglSwapChain() $swap_chain) {
-    my $mutter-cogl-onscreen = cogl_onscreen_template_new($swap-chain);
+    my $mutter-cogl-onscreen = cogl_onscreen_template_new($swap_chain);
 
     $mutter-cogl-onscreen ?? self.bless( :$mutter-cogl-onscreen ) !! Nil;
   }
@@ -68,7 +67,7 @@ class Mutter::COGL::OnscreenTemplate is Mutter::COGL::Object {
     unstable_get_type(
       self.^name,
       &cogl_onscreen_template_get_gtype,
-      $n.
+      $n,
       $t
     );
   }
