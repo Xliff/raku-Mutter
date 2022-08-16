@@ -1,5 +1,6 @@
 use v6.c;
 
+use Method::Also;
 use NativeCall;
 
 use Mutter::Raw::Types;
@@ -39,7 +40,9 @@ class Mutter::COGL::Attribute is Mutter::COGL::Object {
     MutterCoglContext() $context,
     Str()               $name,
     Num()               $value
-  ) {
+  )
+    is also<new-const-1f>
+  {
     my gfloat $v = $value;
 
     my $mutter-cogl-attribute = cogl_attribute_new_const_1f(
@@ -56,7 +59,9 @@ class Mutter::COGL::Attribute is Mutter::COGL::Object {
     Str()               $name,
     Num()               $component0,
     Num()               $component1
-  ) {
+  )
+    is also<new-const-2f>
+  {
     my gfloat ($c0, $c1) = ($component0, $component1);
 
     my $mutter-cogl-attribute = cogl_attribute_new_const_2f(
@@ -71,6 +76,7 @@ class Mutter::COGL::Attribute is Mutter::COGL::Object {
   }
 
   proto method new_const_2fv (|)
+    is also<new-const-2fv>
   { * }
 
   multi method new_const_2fv (
@@ -99,6 +105,7 @@ class Mutter::COGL::Attribute is Mutter::COGL::Object {
   }
 
   proto method new_const_2x2fv (|)
+    is also<new-const-2x2fv>
   { * }
 
   multi method new_const_2x2fv (
@@ -137,7 +144,9 @@ class Mutter::COGL::Attribute is Mutter::COGL::Object {
     Num()               $component0,
     Num()               $component1,
     Num()               $component2
-  ) {
+  )
+    is also<new-const-3f>
+  {
     my gfloat ($c0, $c1, $c2) = ($component0, $component1, $component2);
 
     my $mutter-cogl-attribute = cogl_attribute_new_const_3f(
@@ -152,6 +161,7 @@ class Mutter::COGL::Attribute is Mutter::COGL::Object {
   }
 
   proto method new_const_3fv (|)
+    is also<new-const-3fv>
   { * }
 
   multi method new_const_3fv (
@@ -180,6 +190,7 @@ class Mutter::COGL::Attribute is Mutter::COGL::Object {
   }
 
   proto method new_const_3x3fv (|)
+    is also<new-const-3x3fv>
   { * }
 
   multi method new_const_3x3fv (
@@ -219,7 +230,9 @@ class Mutter::COGL::Attribute is Mutter::COGL::Object {
     Num()               $component1,
     Num()               $component2,
     Num()               $component3
-  ) {
+  )
+    is also<new-const-4f>
+  {
     my gfloat ($c0, $c1, $c2, $c3) =
       ($component0, $component1, $component2, $component3);
 
@@ -236,6 +249,7 @@ class Mutter::COGL::Attribute is Mutter::COGL::Object {
   }
 
   proto method new_const_4fv (|)
+    is also<new-const-4fv>
   { * }
 
   multi method new_const_4fv (
@@ -264,6 +278,7 @@ class Mutter::COGL::Attribute is Mutter::COGL::Object {
   }
 
   proto method new_const_4x4fv (|)
+    is also<new-const-4x4fv>
   { * }
 
   multi method new_const_4x4fv (
@@ -296,29 +311,31 @@ class Mutter::COGL::Attribute is Mutter::COGL::Object {
     $mutter-cogl-attribute ?? self.bless( :$mutter-cogl-attribute ) !! Nil;
   }
 
-  method is_attribute {
+  method is_attribute is also<is-attribute> {
     so cogl_is_attribute($!mca);
   }
 
-  method get_buffer  {
+  method get_buffer  is also<get-buffer> {
     cogl_attribute_get_buffer($!mca),
   }
 
-  method get_gtype {
+  method get_gtype is also<get-gtype> {
     state ($n, $t);
 
     unstable_get_type( self.^name, &cogl_attribute_get_gtype, $n, $t );
   }
 
-  method get_normalized {
+  method get_normalized is also<get-normalized> {
     so cogl_attribute_get_normalized($!mca);
   }
 
-  method set_buffer (MutterCoglAttributeBuffer() $attribute_buffer) {
+  method set_buffer (MutterCoglAttributeBuffer() $attribute_buffer)
+    is also<set-buffer>
+  {
     cogl_attribute_set_buffer($!mca, $attribute_buffer);
   }
 
-  method set_normalized (Int() $normalized) {
+  method set_normalized (Int() $normalized) is also<set-normalized> {
     my gboolean $n = $normalized;
 
     cogl_attribute_set_normalized($!mca, $n);

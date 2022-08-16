@@ -12,7 +12,7 @@ use GLib::Roles::Implementor;
 our subset MutterCoglSourceAncestry is export of Mu
   where MutterCoglSource | GSource;
 
-class COGL::Source is GLib::Source {
+class Mutter::COGL::Source is GLib::Source {
   has MutterCoglSource $!mcgs is implementor;
 
   submethod BUILD ( :$mutter-cogl-source ) {
@@ -38,6 +38,7 @@ class COGL::Source is GLib::Source {
   }
 
   method Mutter::Clutter::Raw::Definitions::MutterCoglSource
+    is also<MutterCoglSource>
   { $!mcgs }
 
   multi method new (MutterCoglSourceAncestry $mutter-cogl-source, :$ref = True) {

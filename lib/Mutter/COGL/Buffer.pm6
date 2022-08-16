@@ -1,5 +1,7 @@
 use v6.c;
 
+use Method::Also;
+
 use NativeCall;
 
 use Mutter::Raw::Types;
@@ -39,7 +41,10 @@ class Mutter::COGL::Buffer is Mutter::COGL::Object {
   method Mutter::Clutter::Raw::Definitions::MutterCoglBuffer
   { $!mcb }
 
-  multi method new (MutterCoglBufferAncestry $mutter-cogl-buffer, :$ref = True) {
+  multi method new (
+    MutterCoglBufferAncestry  $mutter-cogl-buffer,
+                             :$ref                 = True
+  ) {
     return unless $mutter-cogl-buffer;
 
     my $o = self.bless( :$mutter-cogl-buffer );
@@ -47,15 +52,15 @@ class Mutter::COGL::Buffer is Mutter::COGL::Object {
     $o;
   }
 
-  method is_buffer {
+  method is_buffer is also<is-buffer> {
     so cogl_is_buffer($!mcb);
   }
 
-  method get_size {
+  method get_size is also<get-size> {
     cogl_buffer_get_size($!mcb);
   }
 
-  method get_update_hint {
+  method get_update_hint is also<get-update-hint> {
     MutterCoglBufferMapHintEnum( cogl_buffer_get_update_hint($!mcb) )
   }
 
@@ -72,7 +77,9 @@ class Mutter::COGL::Buffer is Mutter::COGL::Object {
     Int()                   $access,
     Int()                   $hints,
     CArray[Pointer[GError]] $error   = gerror
-  ) {
+  )
+    is also<map-range>
+  {
     my size_t                  ($o, $s) = ($offset, $size);
     my MutterCoglBufferAccess   $a      =  $access;
     my MutterCoglBufferMapHint  $h      =  $hints;
@@ -82,13 +89,15 @@ class Mutter::COGL::Buffer is Mutter::COGL::Object {
     set_error($error);
   }
 
-  method set_data (Int() $offset, Pointer $data, Int() $size) {
+  method set_data (Int() $offset, Pointer $data, Int() $size)
+    is also<set-data>
+  {
     my size_t ($o, $s) = ($offset, $size);
 
     cogl_buffer_set_data($!mcb, $o, $data, $s);
   }
 
-  method set_update_hint (Int() $hint) {
+  method set_update_hint (Int() $hint) is also<set-update-hint> {
     my MutterCoglBufferUpdateHint $h = $hint;
 
     cogl_buffer_set_update_hint($!mcb, $h);

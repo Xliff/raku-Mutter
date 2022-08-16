@@ -1,5 +1,6 @@
 use v6.c;
 
+use Method::Also;
 use NativeCall;
 
 use Mutter::Raw::Types;
@@ -39,6 +40,7 @@ class Mutter::COGL::DmaBufHandle is Mutter::COGL::Object {
   }
 
   method Mutter::Clutter::Raw::Definitions::MutterCoglDmaBufHandle
+    is also<MutterCoglDmaBufHandle>
   { $!mcdbh }
 
   multi method new (
@@ -84,15 +86,15 @@ class Mutter::COGL::DmaBufHandle is Mutter::COGL::Object {
     cogl_dma_buf_handle_free($!mcdbh);
   }
 
-  method get_bpp {
+  method get_bpp is also<get-bpp> {
     cogl_dma_buf_handle_get_bpp($!mcdbh);
   }
 
-  method get_fd {
+  method get_fd is also<get-fd> {
     cogl_dma_buf_handle_get_fd($!mcdbh);
   }
 
-  method get_framebuffer ( :$raw = False ) {
+  method get_framebuffer ( :$raw = False ) is also<get-framebuffer> {
     propReturnObject(
       cogl_dma_buf_handle_get_framebuffer($!mcdbh),
       $raw,
@@ -100,19 +102,19 @@ class Mutter::COGL::DmaBufHandle is Mutter::COGL::Object {
     );
   }
 
-  method get_height {
+  method get_height is also<get-height> {
     cogl_dma_buf_handle_get_height($!mcdbh);
   }
 
-  method get_offset {
+  method get_offset is also<get-offset> {
     cogl_dma_buf_handle_get_offset($!mcdbh);
   }
 
-  method get_stride {
+  method get_stride is also<get-stride> {
     cogl_dma_buf_handle_get_stride($!mcdbh);
   }
 
-  method get_width {
+  method get_width is also<get-width> {
     cogl_dma_buf_handle_get_width($!mcdbh);
   }
 
@@ -130,14 +132,18 @@ class Mutter::COGL::DmaBufHandle is Mutter::COGL::Object {
     $rv;
   }
 
-  method sync_read_end (CArray[Pointer[GError]] $error = gerror) {
+  method sync_read_end (CArray[Pointer[GError]] $error = gerror)
+    is also<sync-read-end>
+  {
     clear_error;
     my $rv = cogl_dma_buf_handle_sync_read_end($!mcdbh, $error);
     set_error($error);
     $rv;
   }
 
-  method sync_read_start (CArray[Pointer[GError]] $error = gerror) {
+  method sync_read_start (CArray[Pointer[GError]] $error = gerror)
+    is also<sync-read-start>
+  {
     clear_error;
     my $rv = cogl_dma_buf_handle_sync_read_start($!mcdbh, $error);
     set_error($error);

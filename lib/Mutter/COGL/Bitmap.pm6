@@ -1,5 +1,7 @@
 use v6.c;
 
+use Method::Also;
+
 use NativeCall;
 
 use GLib::Raw::Traits;
@@ -40,6 +42,7 @@ class Mutter::COGL::Bitmap {
   }
 
   method Mutter::Clutter::Raw::Definitions::MutterCoglBitmap
+    is also<MutterCoglBitmap>
   { $!mcb }
 
   multi method new (
@@ -54,6 +57,7 @@ class Mutter::COGL::Bitmap {
   }
 
   proto method new_for_data (|)
+    is also<new-for-data>
   { * }
 
   multi method new_for_data (
@@ -119,7 +123,9 @@ class Mutter::COGL::Bitmap {
     Int()              $height,
     Int()              $rowstride,
     Int()              $offset
-  ) {
+  )
+    is also<new-from-buffer>
+  {
     my gint ($w, $h, $r, $o) = ($width, $height, $rowstride, $offset);
 
     my MutterCoglPixelFormat $f = $format;
@@ -136,7 +142,9 @@ class Mutter::COGL::Bitmap {
     $mutter-cogl-bitmap ?? self.bless( :$mutter-cogl-bitmap ) !! Nil;
   }
 
-  method new_from_file (Str() $filename, CArray[Pointer[GError]] $error) {
+  method new_from_file (Str() $filename, CArray[Pointer[GError]] $error)
+    is also<new-from-file>
+  {
     clear_error;
     my $mutter-cogl-bitmap = cogl_bitmap_new_from_file(
       $!mcb,
@@ -153,7 +161,9 @@ class Mutter::COGL::Bitmap {
     Int()               $width,
     Int()               $height,
     Int()               $format
-  ) {
+  )
+    is also<new-with-size>
+  {
     my gint                  ($w, $h) = ($width, $height);
     my MutterCoglPixelFormat  $f      = $format;
 
@@ -162,15 +172,15 @@ class Mutter::COGL::Bitmap {
     $mutter-cogl-bitmap ?? self.bless( :$mutter-cogl-bitmap ) !! Nil;
   }
 
-  method cogl_is_bitmap {
+  method cogl_is_bitmap is also<cogl-is-bitmap> {
     so cogl_is_bitmap($!mcb);
   }
 
-  method error_quark {
+  method error_quark is also<error-quark> {
     so cogl_bitmap_error_quark();
   }
 
-  method get_buffer ( :$raw = False ) {
+  method get_buffer ( :$raw = False ) is also<get-buffer> {
     propReturnObject(
       cogl_bitmap_get_buffer($!mcb),
       $raw,
@@ -178,25 +188,26 @@ class Mutter::COGL::Bitmap {
     );
   }
 
-  method get_format {
+  method get_format is also<get-format> {
     MutterCoglPixelFormat( cogl_bitmap_get_format($!mcb) );
   }
 
-  method get_gtype {
+  method get_gtype is also<get-gtype> {
     state ($n, $t);
 
     unstable_get_type( self.^name, &cogl_bitmap_get_gtype, $n, $t );
   }
 
-  method get_height {
+  method get_height is also<get-height> {
     cogl_bitmap_get_height($!mcb);
   }
 
-  method get_rowstride {
+  method get_rowstride is also<get-rowstride> {
     cogl_bitmap_get_rowstride($!mcb);
   }
 
   proto method get_size_from_file (|)
+    is also<get-size-from-file>
     is static
   { * }
 
@@ -214,7 +225,7 @@ class Mutter::COGL::Bitmap {
     ($width, $height) = ($w, $h);
   }
 
-  method get_width {
+  method get_width is also<get-width> {
     cogl_bitmap_get_width($!mcb);
   }
 

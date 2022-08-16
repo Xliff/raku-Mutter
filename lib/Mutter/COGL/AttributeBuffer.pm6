@@ -1,5 +1,7 @@
 use v6.c;
 
+use Method::Also;
+
 use NativeCall;
 
 use Mutter::Raw::Types;
@@ -36,6 +38,7 @@ class Mutter::COGL::AttributeBuffer is Mutter::COGL::Buffer {
   }
 
   method Mutter::Clutter::Raw::Definitions::MutterCoglAttributeBuffer
+    is also<MutterCoglAttributeBuffer>
   { $!mcab }
 
   multi method new (
@@ -83,7 +86,9 @@ class Mutter::COGL::AttributeBuffer is Mutter::COGL::Buffer {
                                !! Nil
   }
 
-  method new_with_size (MutterCoglContext() $context, Int() $bytes) {
+  method new_with_size (MutterCoglContext() $context, Int() $bytes)
+    is also<new-with-size>
+  {
     my size_t $b = $bytes;
 
     my $mutter-cogl-attribute-buf = cogl_attribute_buffer_new_with_size(
@@ -95,11 +100,11 @@ class Mutter::COGL::AttributeBuffer is Mutter::COGL::Buffer {
                                !! Nil
   }
 
-  method is_attribute_buffer {
+  method is_attribute_buffer is also<is-attribute-buffer> {
     so cogl_is_attribute_buffer($!mcab);
   }
 
-  method get_gtype {
+  method get_gtype is also<get-gtype> {
     state ($n, $t);
 
     unstable_get_type( self.^name, &cogl_attribute_buffer_get_gtype, $n, $t );

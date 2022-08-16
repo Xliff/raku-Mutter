@@ -1,5 +1,7 @@
 use v6.c;
 
+use Method::Also;
+
 use Mutter::Raw::Types;
 use Mutter::Raw::COGL::Object;
 
@@ -50,13 +52,13 @@ class Mutter::COGL::Object {
     $o;
   }
 
-  method get_gtype {
+  method get_gtype is also<get-gtype> {
     state ($n, $t);
 
     unstable_get_type( self.^name, &cogl_object_get_gtype, $n, $t );
   }
 
-  method get_user_data (MutterCoglUserDataKey() $key) {
+  method get_user_data (MutterCoglUserDataKey() $key) is also<get-user-data> {
     cogl_object_get_user_data($!mco, $key);
   }
 
@@ -69,7 +71,9 @@ class Mutter::COGL::Object {
     MutterCoglUserDataKey() $key,
     gpointer                $user_data = gpointer,
                             &destroy   = %DEFAULT-CALLBACKS<GDestroyNotify>
-  ) {
+  ) 
+    is also<set-user-data>
+  {
     cogl_object_set_user_data($!mco, $key, $user_data, &destroy);
   }
 

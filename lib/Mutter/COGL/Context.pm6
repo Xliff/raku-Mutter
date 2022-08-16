@@ -39,6 +39,7 @@ class Mutter::COGL::Context is Mutter::COGL::Object {
   }
 
   method Mutter::Clutter::Raw::Definitions::MutterCoglContext
+    is also<MutterCoglContext>
   { $!mcc }
 
   multi method new (

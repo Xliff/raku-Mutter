@@ -1,5 +1,7 @@
 use v6.c;
 
+use Method::Also;
+
 use NativeCall;
 
 use GLib::Raw::Traits;
@@ -14,6 +16,7 @@ role Mutter::COGL::Roles::Texture {
   has MutterCoglTexture $!mct is implementor;
 
   method Mutter::Raw::Definitions::MutterCoglTexture
+    is also<MutterCoglTexture>
   { $!mct }
 
   method allocate (CArray[Pointer[GError]] $error = gerror) {
@@ -23,27 +26,28 @@ role Mutter::COGL::Roles::Texture {
     $a;
   }
 
-  method cogl_is_texture {
+  method cogl_is_texture is also<cogl-is-texture> {
     so cogl_is_texture($!mct);
   }
 
-  method error_quark is static {
+  method error_quark is static is also<error-quark> {
     cogl_texture_error_quark();
   }
 
-  method get_components {
-    cogl_texture_get_components($!mct);
+  method get_components is also<get-components> {
+    MutterCoglTextureComponentsEnum( cogl_texture_get_components($!mct) );
   }
 
   proto method get_data (|)
+    is also<get-data>
   { * }
 
   multi method get_data (
     Int()  $format,
-    Int()  $rowstride,
-          :$raw        = False
+    Int() :$rowstride = 0,
+          :$raw       = False
   ) {
-    samewith($format, $rowstride, newCArray(uint8_t) );
+    samewith( $format, $rowstride, newCArray(uint8_t) );
   }
   multi method get_data (
     Int()            $format,
@@ -54,12 +58,13 @@ role Mutter::COGL::Roles::Texture {
     my MutterCoglPixelFormat $f = $format;
     my gint                  $r = $rowstride;
 
-    cogl_texture_get_data($!mct, $f, $r, $data);
-    return $data if $raw;
-    $data ?? Buf.new($data) !! Nil;
+    my $rs = cogl_texture_get_data($!mct, $f, $r, $data);
+    return ($rs, $data) if $raw;
+    ($rs, $data ?? Buf.new($data) !! Nil);
   }
 
   proto method get_gl_texture (|)
+    is also<get-gl-texture>
   { * }
 
   multi method get_gl_texture {
@@ -75,49 +80,54 @@ role Mutter::COGL::Roles::Texture {
     ($out_gl_handle, $out_gl_target) = ($oh, $ot);
   }
 
-  method get_gtype {
+  method get_gtype is also<get-gtype> {
     state ($n, $t);
 
     unstable_get_type( self.^name, &cogl_texture_get_gtype, $n, $t );
   }
 
-  method get_height {
+  method get_height is also<get-height> {
     cogl_texture_get_height($!mct);
   }
 
-  method get_max_waste {
+  method get_max_waste is also<get-max-waste> {
     cogl_texture_get_max_waste($!mct);
   }
 
-  method get_premultiplied {
+  method get_premultiplied is also<get-premultiplied> {
     so cogl_texture_get_premultiplied($!mct);
   }
 
-  method get_width {
+  method get_width is also<get-width> {
     cogl_texture_get_width($!mct);
   }
 
-  method is_get_data_supported {
+  method is_get_data_supported is also<is-get-data-supported> {
     so cogl_texture_is_get_data_supported($!mct);
   }
 
-  method is_sliced {
+  method is_sliced is also<is-sliced> {
     so cogl_texture_is_sliced($!mct);
   }
 
-  method set_components (MutterCoglTextureComponents $components) {
-    cogl_texture_set_components($!mct, $components);
+  method set_components (Int() $components)
+    is also<set-components>
+  {
+    my MutterCoglTextureComponents $c = $components;
+
+    cogl_texture_set_components($!mct, $c);
   }
 
   proto method set_data (|)
+    is also<set-data>
   { * }
 
   multi method set_data (
-    Int()                   $format,
-    Int()                   $rowstride,
-                            @data,
-    Int()                   $level,
-    CArray[Pointer[GError]] $error       = gerror
+    Int()                    $format,
+                             @data,
+    Int()                    $level,
+    CArray[Pointer[GError]]  $error     = gerror,
+    Int()                   :$rowstride = 0,
   ) {
     samewith(
       $format,
@@ -128,11 +138,11 @@ role Mutter::COGL::Roles::Texture {
     );
   }
   multi method set_data (
-    Int()                   $format,
-    Int()                   $rowstride,
-    Buf()                   $data,
-    Int()                   $level,
-    CArray[Pointer[GError]] $error       = gerror
+    Int()                    $format,
+    Buf()                    $data,
+    Int()                    $level,
+    CArray[Pointer[GError]]  $error       = gerror,
+    Int()                   :$rowstride   = 0
   ) {
     samewith($format, $rowstride, CArray[uint8].new($data), $level, $error);
   }
@@ -151,13 +161,14 @@ role Mutter::COGL::Roles::Texture {
     set_error($error);
   }
 
-  method set_premultiplied (Int() $premultiplied) {
+  method set_premultiplied (Int() $premultiplied) is also<set-premultiplied> {
     my gboolean $p = $premultiplied.so.Int;
 
     cogl_texture_set_premultiplied($!mct, $p);
   }
 
   proto method set_region (|)
+    is also<set-region>
   { * }
 
   multi method set_region (
@@ -170,8 +181,8 @@ role Mutter::COGL::Roles::Texture {
     Int()            $width,
     Int()            $height,
     Int()            $format,
-    Int()            $rowstride,
-                     @data
+                     @data,
+    Int()           :$rowstride = 0
   ) {
     samewith(
       $src_x,
@@ -188,17 +199,17 @@ role Mutter::COGL::Roles::Texture {
     );
   }
   multi method set_region (
-    Int() $src_x,
-    Int() $src_y,
-    Int() $dst_x,
-    Int() $dst_y,
-    Int() $dst_width,
-    Int() $dst_height,
-    Int() $width,
-    Int() $height,
-    Int() $format,
-    Int() $rowstride,
-    Buf() $data
+    Int()  $src_x,
+    Int()  $src_y,
+    Int()  $dst_x,
+    Int()  $dst_y,
+    Int()  $dst_width,
+    Int()  $dst_height,
+    Int()  $width,
+    Int()  $height,
+    Int()  $format,
+    Buf()  $data,
+    Int() :$rowstride = 0
   ) {
     samewith(
       $src_x,
@@ -264,7 +275,9 @@ role Mutter::COGL::Roles::Texture {
     Int()              $dst_width,
     Int()              $dst_height,
     MutterCoglBitmap() $bitmap
-  ) {
+  )
+    is also<set-region-from-bitmap>
+  {
     my gint ($sx, $sy, $dx, $dy, $dw, $dh) =
       ($src_x, $src_y, $dst_x, $dst_y, $dst_width, $dst_height);
 
@@ -313,7 +326,7 @@ class Mutter::COGL::Texture {
 
   multi method new (
     MutterCoglTextureAncestry  $mutter-cogl-texture
-                              :$ref                = True
+                              :$ref                 = True
   ) {
     return unless $mutter-cogl-texture;
 

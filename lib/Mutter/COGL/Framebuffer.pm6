@@ -736,16 +736,21 @@ class Mutter::COGL::Framebuffer is Mutter::COGL::Object {
     cogl_framebuffer_translate($!mcf, $xx, $yy, $zz)
   }
 
-  method add_fence_callback (&callback, gpointer $user_data = gpointer) {
+  method add_fence_callback (&callback, gpointer $user_data = gpointer)
+    is also<add-fence-callback>
+  {
     cogl_framebuffer_add_fence_callback($!mcf, &callback, $user_data);
   }
 
-  method cancel_fence_callback (MutterCoglFenceClosure() $closure) {
+  method cancel_fence_callback (MutterCoglFenceClosure() $closure)
+    is also<cancel-fence-callback>
+  {
     cogl_framebuffer_cancel_fence_callback($!mcf, $closure);
   }
 
   method fence_closure_get_user_data (MutterCoglFenceClosure $closure)
     is static
+    is also<fence-closure-get-user-data>
   {
     cogl_fence_closure_get_user_data($closure);
   }

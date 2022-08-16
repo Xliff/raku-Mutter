@@ -41,7 +41,10 @@ class Mutter::COGL::IndexBuffer is Mutter::COGL::Buffer {
     is also<MutterCoglIndexBuffer>
   { $!mcib }
 
-  multi method new (MutterCoglIndexBufferAncestry $mutter-cogl-index-buffer, :$ref = True) {
+  multi method new (
+    MutterCoglIndexBufferAncestry  $mutter-cogl-index-buffer,
+                                  :$ref                       = True
+  ) {
     return unless $mutter-cogl-index-buffer;
 
     my $o = self.bless( :$mutter-cogl-index-buffer );
