@@ -1456,7 +1456,7 @@ class Mutter::Clutter::Actor {
   )
     is also<allocate-align-fill>
   {
-    my gdouble ($xa, $ya)  = ($x_align, $y_align);
+    my gdouble  ($xa, $ya) = ($x_align, $y_align);
     my gboolean ($xf, $yf) = ($x_fill, $y_fill).map( *.so.Int);
 
     clutter_actor_allocate_align_fill($!mca, $box, $xa, $ya, $xf, $yf);
