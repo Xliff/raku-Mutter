@@ -19,11 +19,11 @@ class Mutter::Clutter::LayoutManager {
   has MutterClutterLayoutManager $!mclm is implementor;
 
   submethod BUILD ( :$mutter-clutter-layout-manager ) {
-    self.setLayoutManager($mutter-clutter-layout-manager)
+    self.setMutterClutterLayoutManager($mutter-clutter-layout-manager)
       if $mutter-clutter-layout-manager;
   }
 
-  method setLayoutManager(MutterClutterLayoutManagerAncestry $_) {
+  method setMutterClutterLayoutManager(MutterClutterLayoutManagerAncestry $_) {
     my $to-parent;
 
     $!mclm = do {
@@ -290,12 +290,12 @@ class Mutter::Clutter::LayoutManager {
     my guint $np = 0;
 
     my $psa = CArrayToArray(
-      GParamSpec,
       clutter_layout_manager_list_child_properties($!mclm, $np)
     );
-
     $n_pspecs = $np;
-    return $psa if $raw;
+
+    return Nil  unless $psa;
+    return $psa if     $raw;
 
     $psa.map({ GLib::Object::ParamSpec.new($_) }).cache;
   }
