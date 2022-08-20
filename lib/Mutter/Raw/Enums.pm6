@@ -1508,16 +1508,16 @@ our enum MutterClutterVirtualDeviceTypeEnum is export (
   CLUTTER_VIRTUAL_DEVICE_TYPE_TOUCHSCREEN => 1 +< 2,
 );
 
-constant MetaBarrierDirection is export := guint32;
-our enum MetaBarrierDirectionEnum is export (
+constant MutterMetaBarrierDirection is export := guint32;
+our enum MutterMetaBarrierDirectionEnum is export (
   META_BARRIER_DIRECTION_POSITIVE_X => 1 +< 0,
   META_BARRIER_DIRECTION_POSITIVE_Y => 1 +< 1,
   META_BARRIER_DIRECTION_NEGATIVE_X => 1 +< 2,
   META_BARRIER_DIRECTION_NEGATIVE_Y => 1 +< 3,
 );
 
-constant MetaButtonFunction is export := guint32;
-our enum MetaButtonFunctionEnum is export <
+constant MutterMetaButtonFunction is export := guint32;
+our enum MutterMetaButtonFunctionEnum is export <
   META_BUTTON_FUNCTION_MENU
   META_BUTTON_FUNCTION_MINIMIZE
   META_BUTTON_FUNCTION_MAXIMIZE
@@ -1525,14 +1525,14 @@ our enum MetaButtonFunctionEnum is export <
   META_BUTTON_FUNCTION_LAST
 >;
 
-constant MetaCloseDialogResponse is export := guint32;
-our enum MetaCloseDialogResponseEnum is export <
+constant MutterMetaCloseDialogResponse is export := guint32;
+our enum MutterMetaCloseDialogResponseEnum is export <
   META_CLOSE_DIALOG_RESPONSE_WAIT
   META_CLOSE_DIALOG_RESPONSE_FORCE_CLOSE
 >;
 
-constant MetaCompEffect is export := guint32;
-our enum MetaCompEffectEnum is export <
+constant MutterMetaCompEffect is export := guint32;
+our enum MutterMetaCompEffectEnum is export <
   META_COMP_EFFECT_CREATE
   META_COMP_EFFECT_UNMINIMIZE
   META_COMP_EFFECT_DESTROY
@@ -1540,8 +1540,8 @@ our enum MetaCompEffectEnum is export <
   META_COMP_EFFECT_NONE
 >;
 
-constant MetaCursor is export := guint32;
-our enum MetaCursorEnum is export (
+constant MutterMetaCursor is export := guint32;
+our enum MutterMetaCursorEnum is export (
   META_CURSOR_NONE                   => 0,
   'META_CURSOR_DEFAULT',
   'META_CURSOR_NORTH_RESIZE',
@@ -1565,14 +1565,14 @@ our enum MetaCursorEnum is export (
   'META_CURSOR_LAST'
 );
 
-constant MetaDebugPaintFlag is export := guint32;
-our enum MetaDebugPaintFlagEnum is export (
+constant MutterMetaDebugPaintFlag is export := guint32;
+our enum MutterMetaDebugPaintFlagEnum is export (
   META_DEBUG_PAINT_NONE          =>      0,
   META_DEBUG_PAINT_OPAQUE_REGION => 1 +< 0,
 );
 
-constant MetaDebugTopic is export := gint32;
-our enum MetaDebugTopicEnum is export (
+constant MutterMetaDebugTopic is export := gint32;
+our enum MutterMetaDebugTopicEnum is export (
   META_DEBUG_VERBOSE         =>      -1,
   META_DEBUG_FOCUS           => 1 +<  0,
   META_DEBUG_WORKAREA        => 1 +<  1,
@@ -1602,37 +1602,37 @@ our enum MetaDebugTopicEnum is export (
   META_DEBUG_RENDER          => 1 +< 25,
 );
 
-constant MetaDisplayCorner is export := guint32;
-our enum MetaDisplayCornerEnum is export <
+constant MutterMetaDisplayCorner is export := guint32;
+our enum MutterMetaDisplayCornerEnum is export <
   META_DISPLAY_TOPLEFT
   META_DISPLAY_TOPRIGHT
   META_DISPLAY_BOTTOMLEFT
   META_DISPLAY_BOTTOMRIGHT
 >;
 
-constant MetaDisplayDirection is export := guint32;
-our enum MetaDisplayDirectionEnum is export <
+constant MutterMetaDisplayDirection is export := guint32;
+our enum MutterMetaDisplayDirectionEnum is export <
   META_DISPLAY_UP
   META_DISPLAY_DOWN
   META_DISPLAY_LEFT
   META_DISPLAY_RIGHT
 >;
 
-constant MetaEdgeType is export := guint32;
-our enum MetaEdgeTypeEnum is export <
+constant MutterMetaEdgeType is export := guint32;
+our enum MutterMetaEdgeTypeEnum is export <
   META_EDGE_WINDOW
   META_EDGE_MONITOR
   META_EDGE_SCREEN
 >;
 
-constant MetaExitCode is export := guint32;
-our enum MetaExitCodeEnum is export <
+constant MutterMetaExitCode is export := guint32;
+our enum MutterMetaExitCodeEnum is export <
   META_EXIT_SUCCESS
   META_EXIT_ERROR
 >;
 
-constant MetaFrameFlags is export := guint32;
-our enum MetaFrameFlagsEnum is export (
+constant MutterMetaFrameFlags is export := guint32;
+our enum MutterMetaFrameFlagsEnum is export (
   META_FRAME_ALLOWS_DELETE            =>  1 +< 0,
   META_FRAME_ALLOWS_MENU              =>  1 +< 1,
   META_FRAME_ALLOWS_MINIMIZE          =>  1 +< 2,
@@ -1651,8 +1651,8 @@ our enum MetaFrameFlagsEnum is export (
   META_FRAME_TILED_RIGHT              => 1 +< 15,
 );
 
-constant MetaFrameType is export := guint32;
-our enum MetaFrameTypeEnum is export <
+constant MutterMetaFrameType is export := guint32;
+our enum MutterMetaFrameTypeEnum is export <
   META_FRAME_TYPE_NORMAL
   META_FRAME_TYPE_DIALOG
   META_FRAME_TYPE_MODAL_DIALOG
@@ -1663,8 +1663,8 @@ our enum MetaFrameTypeEnum is export <
   META_FRAME_TYPE_LAST
 >;
 
-constant MetaGravity is export := guint32;
-our enum MetaGravityEnum is export (
+constant MutterMetaGravity is export := guint32;
+our enum MutterMetaGravityEnum is export (
   META_GRAVITY_NONE       =>  0,
   META_GRAVITY_NORTH_WEST =>  1,
   META_GRAVITY_NORTH      =>  2,
@@ -1678,14 +1678,14 @@ our enum MetaGravityEnum is export (
   META_GRAVITY_STATIC     => 10,
 );
 
-constant MetaInhibitShortcutsDialogResponse is export := guint32;
-our enum MetaInhibitShortcutsDialogResponseEnum is export <
+constant MutterMetaInhibitShortcutsDialogResponse is export := guint32;
+our enum MutterMetaInhibitShortcutsDialogResponseEnum is export <
   META_INHIBIT_SHORTCUTS_DIALOG_RESPONSE_ALLOW
   META_INHIBIT_SHORTCUTS_DIALOG_RESPONSE_DENY
 >;
 
-constant MetaKeyBindingFlags is export := guint32;
-our enum MetaKeyBindingFlagsEnum is export (
+constant MutterMetaKeyBindingFlags is export := guint32;
+our enum MutterMetaKeyBindingFlagsEnum is export (
   'META_KEY_BINDING_NONE',
   META_KEY_BINDING_PER_WINDOW        => 1 +< 0,
   META_KEY_BINDING_BUILTIN           => 1 +< 1,
@@ -1695,8 +1695,8 @@ our enum MetaKeyBindingFlagsEnum is export (
   META_KEY_BINDING_NO_AUTO_GRAB      => 1 +< 5,
 );
 
-constant MetaLaterType is export := guint32;
-our enum MetaLaterTypeEnum is export <
+constant MutterMetaLaterType is export := guint32;
+our enum MutterMetaLaterTypeEnum is export <
   META_LATER_RESIZE
   META_LATER_CALC_SHOWING
   META_LATER_CHECK_FULLSCREEN
@@ -1705,14 +1705,14 @@ our enum MetaLaterTypeEnum is export <
   META_LATER_IDLE
 >;
 
-constant MetaLocaleDirection is export := guint32;
-our enum MetaLocaleDirectionEnum is export <
+constant MutterMetaLocaleDirection is export := guint32;
+our enum MutterMetaLocaleDirectionEnum is export <
   META_LOCALE_DIRECTION_LTR
   META_LOCALE_DIRECTION_RTL
 >;
 
-constant MetaMonitorSwitchConfigType is export := guint32;
-our enum MetaMonitorSwitchConfigTypeEnum is export <
+constant MutterMetaMonitorSwitchConfigType is export := guint32;
+our enum MutterMetaMonitorSwitchConfigTypeEnum is export <
   META_MONITOR_SWITCH_CONFIG_ALL_MIRROR
   META_MONITOR_SWITCH_CONFIG_ALL_LINEAR
   META_MONITOR_SWITCH_CONFIG_EXTERNAL
@@ -1720,8 +1720,8 @@ our enum MetaMonitorSwitchConfigTypeEnum is export <
   META_MONITOR_SWITCH_CONFIG_UNKNOWN
 >;
 
-constant MetaMotionDirection is export := gint32;
-our enum MetaMotionDirectionEnum is export (
+constant MutterMetaMotionDirection is export := gint32;
+our enum MutterMetaMotionDirectionEnum is export (
   META_MOTION_UP         => -1,
   META_MOTION_DOWN       => -2,
   META_MOTION_LEFT       => -3,
@@ -1732,15 +1732,15 @@ our enum MetaMotionDirectionEnum is export (
   META_MOTION_DOWN_RIGHT => -8,
 );
 
-constant MetaPadActionType is export := guint32;
-our enum MetaPadActionTypeEnum is export <
+constant MutterMetaPadActionType is export := guint32;
+our enum MutterMetaPadActionTypeEnum is export <
   META_PAD_ACTION_BUTTON
   META_PAD_ACTION_RING
   META_PAD_ACTION_STRIP
 >;
 
-constant MetaPreference is export := guint32;
-our enum MetaPreferenceEnum is export <
+constant MutterMetaPreference is export := guint32;
+our enum MutterMetaPreferenceEnum is export <
   META_PREF_MOUSE_BUTTON_MODS
   META_PREF_FOCUS_MODE
   META_PREF_FOCUS_NEW_WINDOWS
@@ -1778,23 +1778,23 @@ our enum MetaPreferenceEnum is export <
   META_PREF_CHECK_ALIVE_TIMEOUT
 >;
 
-constant MetaSelectionType is export := guint32;
-our enum MetaSelectionTypeEnum is export <
+constant MutterMetaSelectionType is export := guint32;
+our enum MutterMetaSelectionTypeEnum is export <
   META_SELECTION_PRIMARY
   META_SELECTION_CLIPBOARD
   META_SELECTION_DND
   META_N_SELECTION_TYPES
 >;
 
-constant MetaShadowMode is export := guint32;
-our enum MetaShadowModeEnum is export <
+constant MutterMetaShadowMode is export := guint32;
+our enum MutterMetaShadowModeEnum is export <
   META_SHADOW_MODE_AUTO
   META_SHADOW_MODE_FORCED_OFF
   META_SHADOW_MODE_FORCED_ON
 >;
 
-constant MetaDirection is export := guint32;
-our enum MetaDirectionEnum is export (
+constant MutterMetaDirection is export := guint32;
+our enum MutterMetaDirectionEnum is export (
   META_DIRECTION_LEFT       => 1 +< 0,
   META_DIRECTION_RIGHT      => 1 +< 1,
   META_DIRECTION_TOP        => 1 +< 2,
@@ -1805,24 +1805,24 @@ our enum MetaDirectionEnum is export (
   META_DIRECTION_VERTICAL   => 1 +< 2 +| 1 +< 3,
 );
 
-constant MetaSide is export := guint32;
-our enum MetaSideEnum is export (
+constant MutterMetaSide is export := guint32;
+our enum MutterMetaSideEnum is export (
   META_SIDE_LEFT   =>   META_DIRECTION_LEFT,
   META_SIDE_RIGHT  =>  META_DIRECTION_RIGHT,
   META_SIDE_TOP    =>    META_DIRECTION_TOP,
   META_SIDE_BOTTOM => META_DIRECTION_BOTTOM,
 );
 
-constant MetaSizeChange is export := guint32;
-our enum MetaSizeChangeEnum is export <
+constant MutterMetaSizeChange is export := guint32;
+our enum MutterMetaSizeChangeEnum is export <
   META_SIZE_CHANGE_MAXIMIZE
   META_SIZE_CHANGE_UNMAXIMIZE
   META_SIZE_CHANGE_FULLSCREEN
   META_SIZE_CHANGE_UNFULLSCREEN
 >;
 
-constant MetaStackLayer is export := guint32;
-our enum MetaStackLayerEnum is export (
+constant MutterMetaStackLayer is export := guint32;
+our enum MutterMetaStackLayerEnum is export (
   META_LAYER_DESKTOP           => 0,
   META_LAYER_BOTTOM            => 1,
   META_LAYER_NORMAL            => 2,
@@ -1832,28 +1832,28 @@ our enum MetaStackLayerEnum is export (
   META_LAYER_LAST              => 8,
 );
 
-constant MetaTabList is export := guint32;
-our enum MetaTabListEnum is export <
+constant MutterMetaTabList is export := guint32;
+our enum MutterMetaTabListEnum is export <
   META_TAB_LIST_NORMAL
   META_TAB_LIST_DOCKS
   META_TAB_LIST_GROUP
   META_TAB_LIST_NORMAL_ALL
 >;
 
-constant MetaTabShowType is export := guint32;
-our enum MetaTabShowTypeEnum is export <
+constant MutterMetaTabShowType is export := guint32;
+our enum MutterMetaTabShowTypeEnum is export <
   META_TAB_SHOW_ICON
   META_TAB_SHOW_INSTANTLY
 >;
 
-constant MetaWindowMenuType is export := guint32;
-our enum MetaWindowMenuTypeEnum is export <
+constant MutterMetaWindowMenuType is export := guint32;
+our enum MutterMetaWindowMenuTypeEnum is export <
   META_WINDOW_MENU_WM
   META_WINDOW_MENU_APP
 >;
 
-constant MetaWindowType is export := guint32;
-our enum MetaWindowTypeEnum is export <
+constant MutterMetaWindowType is export := guint32;
+our enum MutterMetaWindowTypeEnum is export <
   META_WINDOW_NORMAL
   META_WINDOW_DESKTOP
   META_WINDOW_DOCK
@@ -1876,7 +1876,7 @@ sub bppForMutterCoglFormat ($format) is export {
   do given MutterCoglPixelFormatEnum($format) {
     when COGL_PIXEL_FORMAT_ANY                  |
          COGL_PIXEL_FORMAT_YUV                    { 0 }
-         
+
     when COGL_PIXEL_FORMAT_A_8                  |
          COGL_PIXEL_FORMAT_G_8                    { 1 }
 
