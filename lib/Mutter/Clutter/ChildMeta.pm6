@@ -41,6 +41,44 @@ class Mutter::Clutter::ChildMeta {
   method Mutter::Raw::Clutter::Definitions::MutterClutterChildMeta
   { $!mccm }
 
+  # Type: MutterContainer
+  method container ( :$raw = False ) is rw is g-property {
+    my $gv = GLib::Value.new( Mutter::Clutter::Container.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('container', $gv);
+        propReturnObject(
+          $gv.object,
+          $raw,
+          |Mutter::Clutter::Container.getTypePair
+        );
+      },
+      STORE => -> $, MutterClutterContainer() $val is copy {
+        $gv.object = $val;
+        self.prop_set('container', $gv);
+      }
+    );
+  }
+
+  # Type: MutterActor
+  method actor ( :$raw = False ) is rw is g-property {
+    my $gv = GLib::Value.new( Mutter::Clutter::Actor.get_type );
+    Proxy.new(
+      FETCH => sub ($) {
+        self.prop_get('actor', $gv);
+        propReturnObject(
+          $gv.object,
+          $raw,
+          |Mutter::Clutter::Actor.getTypePair
+        );
+      },
+      STORE => -> $, MutterClutterActor() $val is copy {
+        $gv.object = $val;
+        self.prop_set('actor', $gv);
+      }
+    );
+  }
+
   method new (
     MutterClutterChildMetaAncestry  $mutter-clutter-child-meta,
                                   :$ref                         = True
