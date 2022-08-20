@@ -23,36 +23,42 @@ constant cairo_region_t         is export := Pointer;
 constant EGLDisplay             is export := Pointer;
 constant EGLImageKHR            is export := Pointer;
 
+# Cally
+class MutterCallyActor                 is repr<CPointer> does GLib::Roles::Pointers is export { }
+
+
 # Meta
 
-class MutterMetaBackend                is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaBackground             is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaBackgroundContent      is repr<CPointer> does GLib::Roles::Pointers is export { }
-#class MutterMetaBarrierEvent           is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaCloseDialog            is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaCompositor             is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaContext                is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaCursorTracker          is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaDisplay                is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaDnd                    is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaIdleMonitor            is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaLaters                 is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaLaunchContext          is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaMonitorManager         is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaPlugin                 is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaRectangle              is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaRemoteAccessController is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaSelection              is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaSelectionSource        is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaSettings               is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaShapedTexture          is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaStartupNotification    is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaWindow                 is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaWindowShape            is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaWorkspace              is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaX11Display             is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaBarrier                is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterMetaKeyBinding             is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaBackend                 is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaBackground              is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaBackgroundContent       is repr<CPointer> does GLib::Roles::Pointers is export { }
+#class MutterMetaBarrierEvent            is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaCloseDialog             is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaCompositor              is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaContext                 is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaCursorTracker           is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaDisplay                 is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaDnd                     is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaIdleMonitor             is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaInhibitShortcutsDialog  is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaLaters                  is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaLaunchContext           is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaMonitorManager          is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaPlugin                  is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaRectangle               is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaRemoteAccessController  is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaSelection               is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaSelectionSource         is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaSettings                is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaShapedTexture           is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaStartupNotification     is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaWindow                  is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaWindowActor             is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaWindowShape             is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaWorkspace               is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaX11Display              is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaBarrier                 is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaKeyBinding              is repr<CPointer> does GLib::Roles::Pointers is export { }
 
 # Clutter
 
@@ -103,7 +109,6 @@ class MutterClutterKeymap                   is repr<CPointer> does GLib::Roles::
 class MutterClutterKnot                     is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterLayoutManager            is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterLayoutMeta               is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterClutterMargin                   is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterOffscreenEffect          is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterPageTurnEffect           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterPanAction                is repr<CPointer> does GLib::Roles::Pointers is export { }
@@ -130,6 +135,7 @@ class MutterClutterStageView                is repr<CPointer> does GLib::Roles::
 class MutterClutterStageWindow              is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterSwipeAction              is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterTapAction                is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterClutterText                     is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterTextBuffer               is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterTimeline                 is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterTransition               is repr<CPointer> does GLib::Roles::Pointers is export { }
