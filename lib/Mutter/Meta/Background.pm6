@@ -19,8 +19,8 @@ class Mutter::Meta::Background {
   method set_blend (
     GFile() $file1,
     GFile() $file2,
-    Num()   s$blend_factor,
-    Int()   s$style
+    Num()   $blend_factor,
+    Int()   $style
   ) {
     my gdouble                 $b = $blend_factor;
     my GDesktopBackgroundStyle $s = $style;
