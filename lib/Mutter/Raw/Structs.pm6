@@ -36,6 +36,42 @@ class MutterClutterFrameListenerIface is repr<CStruct> is export {
 	has Pointer $.frame;        #= (MutterClutterFrameClock, gint64, gpointer --> MutterClutterFrameResult)
 }
 
+class MutterClutterMargin is repr<CStruct> is export {
+	has gfloat $.left   is rw;
+	has gfloat $.right  is rw;
+	has gfloat $.top    is rw;
+	has gfloat $.bottom is rw;
+
+	multi method new (:$c-alloc is required, :$right, :$left, :$top, :$bottom) {
+		sub clutter_margin_new ()
+			returns MutterClutterMargin
+			is      export
+			is      native(mutter-clutter)
+		{ * }
+
+		my $o = clutter_margin_new();
+		$o.right  = $right  if $right.defined;
+		$o.left   = $left   if $left.defined;
+		$o.top    = $top    if $top.defined;
+		$o.bottom = $bottom if $bottom.defined;
+	}
+
+	method copy
+		returns MutterClutterMargin
+		is      export
+		is      symbol('clutter_margin_copy')
+		is      native(mutter-clutter)
+	{ * }
+
+	method free
+		returns MutterClutterMargin
+		is      export
+		is      symbol('clutter_margin_free')
+		is      native(mutter-clutter)
+	{ * }
+
+}
+
 class MutterClutterOffscreenRectangle is repr<CStruct> is export {
 	has gint $.x      is rw;
 	has gint $.y      is rw;
