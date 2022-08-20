@@ -2,8 +2,11 @@ use v6.c;
 
 use NativeCall;
 
+use GLib::Raw::Traits;
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::Text;
+
+use GLib::Roles::Implementor;
 
 class Mutter::Clutter::Text {
   has MutterClutterText $!mct is implementor;
@@ -14,7 +17,11 @@ class Mutter::Clutter::Text {
     $mutter-clutter-text ?? self.bless( :$mutter-clutter-text )  !! Nil
   }
 
-  method new_full (Str() $font_name, Str()( $text, ClutterColor() $color) {
+  method new_full (
+    Str()                $font_name,
+    Str()                $text,
+    MutterClutterColor() $color
+  ) {
     my $mutter-clutter-text = clutter_text_new_full(
       $font_name,
       $text,
@@ -24,8 +31,8 @@ class Mutter::Clutter::Text {
     $mutter-clutter-text ?? self.bless( :$mutter-clutter-text )  !! Nil
   }
 
-  method new_with_buffer (ClutterTextBuffer() $buffer) {
-    clutter_text_new_with_buffer($!mct, $buffer);
+  method new_with_buffer (MutterClutterTextBuffer() $buffer) {
+    my $mutter-clutter-text = clutter_text_new_with_buffer($!mct, $buffer);
 
     $mutter-clutter-text ?? self.bless( :$mutter-clutter-text )  !! Nil
   }
@@ -37,15 +44,19 @@ class Mutter::Clutter::Text {
   }
 
   # Type: MutterTextBuffer
-  method buffer is rw  is g-property {
-    my $gv = GLib::Value.new( MutterTextBuffer );
+  method buffer ( :$raw = False ) is rw  is g-property {
+    my $gv = GLib::Value.new( Mutter::Clutter::TextBuffer.get_type );
     Proxy.new(
       FETCH => sub ($) {
         self.prop_get('buffer', $gv);
-        $gv.MutterTextBuffer;
+        propReturnObject(
+          $gv.object,
+          $raw,
+          |Mutter::Clutter::TextBuffer.getTypePair
+        );
       },
-      STORE => -> $,  $val is copy {
-        $gv.MutterTextBuffer = $val;
+      STORE => -> $, MutterClutterTextBuffer() $val is copy {
+        $gv.object = $val;
         self.prop_set('buffer', $gv);
       }
     );
@@ -67,15 +78,19 @@ class Mutter::Clutter::Text {
   }
 
   # Type: MutterFontDescription
-  method font-description is rw  is g-property {
-    my $gv = GLib::Value.new( MutterFontDescription );
+  method font-description ( :$raw = False )is rw  is g-property {
+    my $gv = GLib::Value.new( Pango::FontDescription.get_type );
     Proxy.new(
       FETCH => sub ($) {
         self.prop_get('font-description', $gv);
-        $gv.MutterFontDescription;
+        propReturnObject(
+          $gv.object,
+          $raw,
+          |Pango::FontDescription.getTypePair
+        );
       },
-      STORE => -> $,  $val is copy {
-        $gv.MutterFontDescription = $val;
+      STORE => -> $, PangoFontDescription() $val is copy {
+        $gv.object = $val;
         self.prop_set('font-description', $gv);
       }
     );
@@ -243,16 +258,20 @@ class Mutter::Clutter::Text {
     );
   }
 
-  # Type: MutterAttrList
-  method attributes is rw  is g-property {
-    my $gv = GLib::Value.new( MutterAttrList );
+  # Type: PangoAttrList
+  method attributes ( :$raw = False ) is rw  is g-property {
+    my $gv = GLib::Value.new( Pango::AttrList.get_type );
     Proxy.new(
       FETCH => sub ($) {
         self.prop_get('attributes', $gv);
-        $gv.MutterAttrList;
+        propReturnObject(
+          $gv.object,
+          $raw,
+          |Pango::AtrrList.getTypePair
+        );
       },
-      STORE => -> $,  $val is copy {
-        $gv.MutterAttrList = $val;
+      STORE => -> $, PangoAttrList() $val is copy {
+        $gv.object = $val;
         self.prop_set('attributes', $gv);
       }
     );
@@ -288,16 +307,16 @@ class Mutter::Clutter::Text {
     );
   }
 
-  # Type: MutterWrapMode
+  # Type: PangoWrapMode
   method line-wrap-mode is rw  is g-property {
-    my $gv = GLib::Value.new( MutterWrapMode );
+    my $gv = GLib::Value.new( GLib::Value.typeFromEnum(PangoWrapMode) );
     Proxy.new(
       FETCH => sub ($) {
         self.prop_get('line-wrap-mode', $gv);
-        $gv.MutterWrapMode;
+        PangoWrapModeEnum( $gv.valueFromEnum(PangoWrapMode) )
       },
-      STORE => -> $,  $val is copy {
-        $gv.MutterWrapMode = $val;
+      STORE => -> $, Int() $val is copy {
+        $gv.valueFromEnum(PangoWrapMode) = $val;
         self.prop_set('line-wrap-mode', $gv);
       }
     );
@@ -305,14 +324,14 @@ class Mutter::Clutter::Text {
 
   # Type: MutterEllipsizeMode
   method ellipsize is rw  is g-property {
-    my $gv = GLib::Value.new( MutterEllipsizeMode );
+    my $gv = GLib::Value.new( GLib::Value.typeFromEnum(PangoEllipsizeMode) );
     Proxy.new(
       FETCH => sub ($) {
         self.prop_get('ellipsize', $gv);
-        $gv.MutterEllipsizeMode;
+        PangoEllipsizeModeEnum( $gv.valueFromEnum(PangoEllipsizeMode) )
       },
-      STORE => -> $,  $val is copy {
-        $gv.MutterEllipsizeMode = $val;
+      STORE => -> $, Int() $val is copy {
+        $gv.valueFromEnum(PangoEllipsizeMode) = $val;
         self.prop_set('ellipsize', $gv);
       }
     );
@@ -401,37 +420,43 @@ class Mutter::Clutter::Text {
         self.prop_get('selected-text-color-set', $gv);
         $gv.boolean;
       },
-      STORE => -> $, Int() $val is copy {
+      STORE => -> $, $val is copy {
         warn 'selected-text-color-set does not allow writing'
       }
     );
   }
 
-  # Type: MutterInputContentHintFlags
+  # Type: MutterClutterInputContentHintFlags
   method input-hints is rw  is g-property {
-    my $gv = GLib::Value.new( MutterInputContentHintFlags );
+    my $gv = GLib::Value.new(
+      GLib::Value.typeFromEnum(MutterClutterInputContentHintFlags)
+    );
     Proxy.new(
       FETCH => sub ($) {
         self.prop_get('input-hints', $gv);
-        $gv.MutterInputContentHintFlags;
+        $gv.valueFromEnum(MutterClutterInputContentHintFlags);
       },
-      STORE => -> $,  $val is copy {
-        $gv.MutterInputContentHintFlags = $val;
+      STORE => -> $, Int() $val is copy {
+        $gv.valueFromEnum(MutterClutterInputContentHintFlags) = $val;
         self.prop_set('input-hints', $gv);
       }
     );
   }
 
-  # Type: MutterInputContentPurpose
+  # Type: MutterClutterInputContentPurpose
   method input-purpose is rw  is g-property {
-    my $gv = GLib::Value.new( MutterInputContentPurpose );
+    my $gv = GLib::Value.new(
+      GLib::Value.typeFromEnum(MutterClutterInputContentPurpose)
+    );
     Proxy.new(
       FETCH => sub ($) {
         self.prop_get('input-purpose', $gv);
-        $gv.MutterInputContentPurpose;
+        MutterClutterInputContentPurposeEnum(
+          $gv.valueFromEnum(MutterClutterInputContentPurpose)
+        );
       },
-      STORE => -> $,  $val is copy {
-        $gv.MutterInputContentPurpose = $val;
+      STORE => -> $, Int() $val is copy {
+        $gv.$gv.valueFromEnum(MutterClutterInputContentPurpose) = $val;
         self.prop_set('input-purpose', $gv);
       }
     );
@@ -442,7 +467,7 @@ class Mutter::Clutter::Text {
   }
 
   method coords_to_position (Num() $x, Num() $y) {
-    my gfloat($xx, $yy) = ($x, $y);
+    my gfloat ($xx, $yy) = ($x, $y);
 
     clutter_text_coords_to_position($!mct, $xx, $yy);
   }
@@ -489,11 +514,11 @@ class Mutter::Clutter::Text {
     clutter_text_get_chars($!mct, $s, $e);
   }
 
-  method get_color (ClutterColor() $color) {
+  method get_color (MutterClutterColor() $color) {
     clutter_text_get_color($!mct, $color);
   }
 
-  method get_cursor_color (ClutterColor() $color) {
+  method get_cursor_color (MutterClutterColor() $color) {
     clutter_text_get_cursor_color($!mct, $color);
   }
 
@@ -557,7 +582,7 @@ class Mutter::Clutter::Text {
     samewith($, $);
   }
   multi method get_layout_offsets ($x is rw, $y is rw) {
-    my gfint ($xx, $yy) = 0 xx 2;
+    my gint ($xx, $yy) = 0 xx 2;
 
     clutter_text_get_layout_offsets($!mct, $xx, $yy);
     ($x, $y) = ($xx, $yy);
@@ -587,7 +612,7 @@ class Mutter::Clutter::Text {
     so clutter_text_get_selectable($!mct);
   }
 
-  method get_selected_text_color (ClutterColor() $color) {
+  method get_selected_text_color (MutterClutterColor() $color) {
     clutter_text_get_selected_text_color($!mct, $color);
   }
 
@@ -599,7 +624,7 @@ class Mutter::Clutter::Text {
     clutter_text_get_selection_bound($!mct);
   }
 
-  method get_selection_color (ClutterColor() $color) {
+  method get_selection_color (MutterClutterColor() $color) {
     clutter_text_get_selection_color($!mct, $color);
   }
 
@@ -645,7 +670,7 @@ class Mutter::Clutter::Text {
   proto method position_to_coords (|)
   { * }
 
-  multi method position_to_coords (
+  multi method position_to_coords (Int() $position) {
     samewith($position, $, $)
   }
   multi method position_to_coords (
@@ -671,15 +696,15 @@ class Mutter::Clutter::Text {
     clutter_text_set_attributes($!mct, $attrs);
   }
 
-  method set_buffer (ClutterTextBuffer() $buffer) {
+  method set_buffer (MutterClutterTextBuffer() $buffer) {
     clutter_text_set_buffer($!mct, $buffer);
   }
 
-  method set_color (ClutterColor() $color) {
+  method set_color (MutterClutterColor() $color) {
     clutter_text_set_color($!mct, $color);
   }
 
-  method set_cursor_color (ClutterColor() $color) {
+  method set_cursor_color (MutterClutterColor() $color) {
     clutter_text_set_cursor_color($!mct, $color);
   }
 
@@ -722,13 +747,13 @@ class Mutter::Clutter::Text {
   }
 
   method set_input_hints (Int() $hints) {
-    my ClutterInputContentHintFlags $h = $hints;
+    my MutterClutterInputContentHintFlags $h = $hints;
 
     clutter_text_set_input_hints($!mct, $h);
   }
 
-  method set_input_purpose (ClutterInputContentPurpose $purpose) {
-    my ClutterInputContentPurpose $p = $purpose;
+  method set_input_purpose (MutterClutterInputContentPurpose $purpose) {
+    my MutterClutterInputContentPurpose $p = $purpose;
 
     clutter_text_set_input_purpose($!mct, $p);
   }
@@ -767,7 +792,10 @@ class Mutter::Clutter::Text {
     clutter_text_set_max_length($!mct, $max);
   }
 
-  method set_password_char (Str $wc) {
+  proto method set_password_char (|)
+  { * }
+
+  multi method set_password_char (Str $wc) {
     die 'Cannot set password char from null string!'
       unless $wc.chars;
     warn 'Setting password char to first character of an oversized string!'
@@ -775,7 +803,7 @@ class Mutter::Clutter::Text {
 
     samewith($wc.substr(0, 1).ord);
   }
-  method set_password_char (Int $wc) {
+  multi method set_password_char (Int $wc) {
     my gunichar $w = $wc;
 
     clutter_text_set_password_char($!mct, $w);
@@ -798,7 +826,7 @@ class Mutter::Clutter::Text {
     clutter_text_set_selectable($!mct, $selectable);
   }
 
-  method set_selected_text_color (ClutterColor() $color) {
+  method set_selected_text_color (MutterClutterColor() $color) {
     clutter_text_set_selected_text_color($!mct, $color);
   }
 
@@ -814,7 +842,7 @@ class Mutter::Clutter::Text {
     clutter_text_set_selection_bound($!mct, $s);
   }
 
-  method set_selection_color (ClutterColor() $color) {
+  method set_selection_color (MutterClutterColor() $color) {
     clutter_text_set_selection_color($!mct, $color);
   }
 
