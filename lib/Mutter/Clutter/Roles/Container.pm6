@@ -1,5 +1,8 @@
 use v6.c;
 
+use Method::Also;
+
+use GLib::Raw::Traits;
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::Container;
 
@@ -16,7 +19,7 @@ role Mutter::Clutter::Roles::Container {
 
   has MutterClutterContainer $!mcc is implementor;
 
-  method roleInit-MutterClutterContainer {
+  method roleInit-MutterClutterContainer is also<roleInit_MutterClutterContainer> {
     return if $!mcc;
 
     my \i = findProperImplementor(self.^attributes);
@@ -29,31 +32,31 @@ role Mutter::Clutter::Roles::Container {
 
   # Is originally:
   # ClutterContainer *container,  ClutterActor *child,  GParamSpec *pspec --> void
-  method child-notify {
+  method child-notify is also<child_notify> {
     self.connect-child-notify($!mcc);
   }
 
   # Is originally:
   # ClutterContainer *container,  ClutterActor *actor --> void
-  method actor-added {
+  method actor-added is also<actor_added> {
     self.connect-actor($!mcc, 'actor-added');
   }
 
   # Is originally:
   # ClutterContainer *container,  ClutterActor *actor --> void
-  method actor-removed {
+  method actor-removed is also<actor_removed> {
     self.connect-actor($!mcc, 'actor-removed');
   }
 
-  method create_child_meta (MutterClutterActor() $actor) {
+  method create_child_meta (MutterClutterActor() $actor) is also<create-child-meta> {
     clutter_container_create_child_meta($!mcc, $actor);
   }
 
-  method destroy_child_meta (MutterClutterActor() $actor) {
+  method destroy_child_meta (MutterClutterActor() $actor) is also<destroy-child-meta> {
     clutter_container_destroy_child_meta($!mcc, $actor);
   }
 
-  method find_child_by_name (Str() $child_name, :$raw = False) {
+  method find_child_by_name (Str() $child_name, :$raw = False) is also<find-child-by-name> {
     propReturnObject(
       clutter_container_find_child_by_name($!mcc, $child_name),
       $raw,
@@ -61,7 +64,7 @@ role Mutter::Clutter::Roles::Container {
     );
   }
 
-  method get_child_meta (MutterClutterActor() $actor, :$raw = False) {
+  method get_child_meta (MutterClutterActor() $actor, :$raw = False) is also<get-child-meta> {
     propReturnObject(
       clutter_container_get_child_meta($!mcc, $actor),
       $raw,
@@ -69,13 +72,14 @@ role Mutter::Clutter::Roles::Container {
     );
   }
 
-  method muttercluttercontainer_get_type {
+  method muttercluttercontainer_get_type is also<muttercluttercontainer-get-type> {
     state ($n, $t);
 
     unstable_get_type( self.^name, &clutter_container_get_type, $n, $t );
   }
 
   proto method get_property (|)
+    is also<get-property>
   { * }
 
   # cw: Would take quite a bit of work to make .get_property return
@@ -102,7 +106,9 @@ role Mutter::Clutter::Roles::Container {
     $v;
   }
 
-  method child_notify (MutterClutterActor() $child, GParamSpec() $pspec) {
+  method child_notify (MutterClutterActor() $child, GParamSpec() $pspec)
+    is also<child-notify>
+  {
     clutter_container_child_notify($!mcc, $child, $pspec);
   }
 
@@ -114,8 +120,28 @@ role Mutter::Clutter::Roles::Container {
     MutterClutterActor() $child,
     Str()                $property,
     GValue()             $value
-  ) {
+  )
+    is also<child-set-property>
+  {
     clutter_container_child_set_property($!mcc, $child, $property, $value);
+  }
+
+  method list_child_properties ( :$raw = False )
+    is also<list-child-properties>
+  {
+    my guint $n = 0;
+
+    my $p = clutter_container_class_list_child_properties(
+      self.getClass.GObjectClass,
+      $n
+    );
+
+    return Nil unless $p && $p[0];
+
+    CArrayToArray( $p[0] ).map({
+      $raw ?? $_
+           !! GLib::Object::ParamSpec.new($_)
+    });
   }
 
 }
@@ -170,7 +196,7 @@ class Mutter::Clutter::Container {
     $o;
   }
 
-  method get_type {
+  method get_type is also<get-type> {
     self.muttercluttercontainer_get_type
   }
 
