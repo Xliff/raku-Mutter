@@ -10,6 +10,7 @@ use Pango::Raw::Definitions;
 use Graphene::Raw::Definitions;
 use Mutter::Raw::Definitions;
 use Mutter::Raw::Enums;
+use Mutter::Raw::Structs;
 
 unit package Mutter::Raw::Clutter::Actor;
 

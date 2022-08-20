@@ -1,7 +1,13 @@
 use v6.c;
 
+use NativeCall;
+
 use GLib::Raw::Definitions;
+use Pango::Raw::Definitions;
+use Pango::Raw::Enums;
+use Graphene::Raw::Definitions;
 use Mutter::Raw::Definitions;
+use Mutter::Raw::Enums;
 
 unit package Mutter::Raw::Clutter::Text;
 

@@ -6,6 +6,7 @@ use GLib::Raw::Definitions;
 use GLib::Raw::Structs;
 use Graphene::Raw::Definitions;
 use Mutter::Raw::Definitions;
+use Mutter::Raw::Structs;
 
 unit package Mutter::Raw::Clutter::MiscTypes;
 
@@ -230,28 +231,29 @@ sub clutter_knot_get_type ()
   is export
 { * }
 
-sub clutter_margin_copy (MutterClutterMargin $margin_)
-  returns MutterClutterMargin
-  is native(mutter-clutter)
-  is export
-{ * }
-
-sub clutter_margin_free (MutterClutterMargin $margin_)
-  is native(mutter-clutter)
-  is export
-{ * }
-
-sub clutter_margin_get_type ()
-  returns GType
-  is native(mutter-clutter)
-  is export
-{ * }
-
-sub clutter_margin_new ()
-  returns MutterClutterMargin
-  is native(mutter-clutter)
-  is export
-{ * }
+# cw: Now in ::Raw::Structs
+# sub clutter_margin_copy (MutterClutterMargin $margin_)
+#   returns MutterClutterMargin
+#   is native(mutter-clutter)
+#   is export
+# { * }
+#
+# sub clutter_margin_free (MutterClutterMargin $margin_)
+#   is native(mutter-clutter)
+#   is export
+# { * }
+#
+# sub clutter_margin_get_type ()
+#   returns GType
+#   is native(mutter-clutter)
+#   is export
+# { * }
+#
+# sub clutter_margin_new ()
+#   returns MutterClutterMargin
+#   is native(mutter-clutter)
+#   is export
+# { * }
 
 sub clutter_path_node_copy (MutterClutterPathNode $node)
   returns MutterClutterPathNode
