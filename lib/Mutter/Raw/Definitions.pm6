@@ -160,6 +160,7 @@ class MutterClutterTransformNode            is repr<CPointer> does GLib::Roles::
 
 class MutterCoglAttribute            is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglAttributeBuffer      is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterCoglAtlasTexture         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglBitmap               is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterCoglBuffer               is repr<CPointer> does GLib::Roles::Pointers is export { }
 #class MutterCoglColor                is repr<CPointer> does GLib::Roles::Pointers is export { }
