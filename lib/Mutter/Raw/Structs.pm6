@@ -239,3 +239,25 @@ class MutterCoglOnscreenDirtyInfo is export does GLib::Roles::Pointers {
 	has gint $.width  is rw;
 	has gint $.height is rw;
 }
+
+class MutterCoglDepthState is export does GLib::Roles::Pointers {
+  # All private
+  has uint32_t $!magic;
+
+  has gboolean $!test_enabled;
+  has Pointer  $!test_function;
+  has gboolean $!write_enabled;
+  has gfloat   $!range_near;
+  has gfloat   $!range_far;
+
+  has uint32_t $!padding0;
+  has uint32_t $!padding1;
+  has uint32_t $!padding2;
+  has uint32_t $!padding3;
+  has uint32_t $!padding4;
+  has uint32_t $!padding5;
+  has uint32_t $!padding6;
+  has uint32_t $!padding7;
+  has uint32_t $!padding8;
+  has uint32_t $!padding9;
+}
