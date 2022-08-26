@@ -1508,6 +1508,62 @@ our enum MutterClutterVirtualDeviceTypeEnum is export (
   CLUTTER_VIRTUAL_DEVICE_TYPE_TOUCHSCREEN => 1 +< 2,
 );
 
+our constant MutterMetaMaximizeFlags is export := guint;
+our enum MutterMetaMaximizeFlagsEnum is export (
+  META_MAXIMIZE_HORIZONTAL => 1,
+  META_MAXIMIZE_VERTICAL   =>      1 +< 1,
+  META_MAXIMIZE_BOTH       => 1 +| 1 +< 1,
+);
+
+constant MutterMetaWindowClientType is export := guint32;
+our enum MutterMetaWindowClientTypeEnum is export <
+  META_WINDOW_CLIENT_TYPE_WAYLAND
+  META_WINDOW_CLIENT_TYPE_X11
+>;
+
+constant META_GRAB_OP_WINDOW_FLAG_KEYBOARD is export = 0x0100;
+constant META_GRAB_OP_WINDOW_FLAG_UNKNOWN  is export = 0x0200;
+constant META_GRAB_OP_WINDOW_DIR_WEST      is export = 0x1000;
+constant META_GRAB_OP_WINDOW_DIR_EAST      is export = 0x2000;
+constant META_GRAB_OP_WINDOW_DIR_SOUTH     is export = 0x4000;
+constant META_GRAB_OP_WINDOW_DIR_NORTH     is export = 0x8000;
+constant META_GRAB_OP_WINDOW_DIR_MASK      is export = 0xF000;
+
+constant _WGO_K                            is export = META_GRAB_OP_WINDOW_FLAG_KEYBOARD;
+constant _WGO_U                            is export = META_GRAB_OP_WINDOW_FLAG_UNKNOWN;
+constant _WGO_W                            is export = META_GRAB_OP_WINDOW_DIR_WEST;
+constant _WGO_E                            is export = META_GRAB_OP_WINDOW_DIR_EAST;
+constant _WGO_S                            is export = META_GRAB_OP_WINDOW_DIR_SOUTH;
+constant _WGO_N                            is export = META_GRAB_OP_WINDOW_DIR_NORTH;
+
+constant MutterMetaGrabOp is export := guint32;
+our enum MutterMetaGrabOpEnum is export (
+  'META_GRAB_OP_NONE',
+  'META_GRAB_OP_WINDOW_BASE',
+  'META_GRAB_OP_WAYLAND_POPUP',
+  'META_GRAB_OP_FRAME_BUTTON',
+
+  META_GRAB_OP_MOVING                     => 1,                                          #= META_GRAB_OP_WINDOW_BASE,
+  META_GRAB_OP_RESIZING_NW                => 1 +| _WGO_N +| _WGO_W,                      #= META_GRAB_OP_WINDOW_BASE | _WGO_N | _WGO_W,
+  META_GRAB_OP_RESIZING_N                 => 1 +| _WGO_N,                                #= META_GRAB_OP_WINDOW_BASE | _WGO_N,
+  META_GRAB_OP_RESIZING_NE                => 1 +| _WGO_N +| _WGO_E,                      #= META_GRAB_OP_WINDOW_BASE | _WGO_N | _WGO_E,
+  META_GRAB_OP_RESIZING_E                 => 1 +|           _WGO_E,                      #= META_GRAB_OP_WINDOW_BASE |          _WGO_E,
+  META_GRAB_OP_RESIZING_SW                => 1 +| _WGO_S +| _WGO_W,                      #= META_GRAB_OP_WINDOW_BASE | _WGO_S | _WGO_W,
+  META_GRAB_OP_RESIZING_S                 => 1 +| _WGO_S,                                #= META_GRAB_OP_WINDOW_BASE | _WGO_S,
+  META_GRAB_OP_RESIZING_SE                => 1 +| _WGO_S +| _WGO_E,                      #= META_GRAB_OP_WINDOW_BASE | _WGO_S | _WGO_E,
+  META_GRAB_OP_RESIZING_W                 => 1 +|           _WGO_W,                      #= META_GRAB_OP_WINDOW_BASE |          _WGO_W,
+  META_GRAB_OP_KEYBOARD_MOVING            => 1 +|                     _WGO_K,            #= META_GRAB_OP_WINDOW_BASE |                   _WGO_K,
+  META_GRAB_OP_KEYBOARD_RESIZING_UNKNOWN  => 1 +|                     _WGO_K  +| _WGO_U, #= META_GRAB_OP_WINDOW_BASE |                   _WGO_K | _WGO_U,
+  META_GRAB_OP_KEYBOARD_RESIZING_NW       => 1 +| _WGO_N +| _WGO_W +| _WGO_K,            #= META_GRAB_OP_WINDOW_BASE | _WGO_N | _WGO_W | _WGO_K,
+  META_GRAB_OP_KEYBOARD_RESIZING_N        => 1 +| _WGO_N +|           _WGO_K,            #= META_GRAB_OP_WINDOW_BASE | _WGO_N |          _WGO_K,
+  META_GRAB_OP_KEYBOARD_RESIZING_NE       => 1 +| _WGO_N +| _WGO_E +| _WGO_K,            #= META_GRAB_OP_WINDOW_BASE | _WGO_N | _WGO_E | _WGO_K,
+  META_GRAB_OP_KEYBOARD_RESIZING_E        => 1 +|           _WGO_E +| _WGO_K,            #= META_GRAB_OP_WINDOW_BASE |          _WGO_E | _WGO_K,
+  META_GRAB_OP_KEYBOARD_RESIZING_SW       => 1 +| _WGO_S +| _WGO_W +| _WGO_K,            #= META_GRAB_OP_WINDOW_BASE | _WGO_S | _WGO_W | _WGO_K,
+  META_GRAB_OP_KEYBOARD_RESIZING_S        => 1 +| _WGO_S +|           _WGO_K,            #= META_GRAB_OP_WINDOW_BASE | _WGO_S |          _WGO_K,
+  META_GRAB_OP_KEYBOARD_RESIZING_SE       => 1 +| _WGO_S +| _WGO_E +| _WGO_K,            #= META_GRAB_OP_WINDOW_BASE | _WGO_S | _WGO_E | _WGO_K,
+  META_GRAB_OP_KEYBOARD_RESIZING_W        => 1 +|           _WGO_W +| _WGO_K             #= META_GRAB_OP_WINDOW_BASE |          _WGO_W | _WGO_K,
+);
+
 constant MutterMetaBarrierDirection is export := guint32;
 our enum MutterMetaBarrierDirectionEnum is export (
   META_BARRIER_DIRECTION_POSITIVE_X => 1 +< 0,

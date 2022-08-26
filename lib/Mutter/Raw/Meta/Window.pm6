@@ -3,7 +3,9 @@ use v6.c;
 use NativeCall;
 
 use GLib::Raw::Definitions;
+use GLib::Raw::Object;
 use Mutter::Raw::Definitions;
+use Mutter::Raw::Enums;
 
 unit package Mutter::Raw::Meta::Window;
 
@@ -404,7 +406,7 @@ sub meta_window_get_workspace (MutterMetaWindow $window)
 { * }
 
 sub meta_window_get_xwindow (MutterMetaWindow $window)
-  returns Window
+  returns gpointer # Window
   is native(mutter)
   is export
 { * }

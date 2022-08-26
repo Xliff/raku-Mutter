@@ -39,6 +39,7 @@ class MutterMetaContext                 is repr<CPointer> does GLib::Roles::Poin
 class MutterMetaCursorTracker           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaDisplay                 is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaDnd                     is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaFrame                   is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaIdleMonitor             is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaInhibitShortcutsDialog  is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaLaters                  is repr<CPointer> does GLib::Roles::Pointers is export { }
