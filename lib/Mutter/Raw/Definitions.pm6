@@ -52,6 +52,7 @@ class MutterMetaSelectionSource         is repr<CPointer> does GLib::Roles::Poin
 class MutterMetaSettings                is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaShapedTexture           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaStartupNotification     is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaStartupSequence         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaWindow                  is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaWindowActor             is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaWindowShape             is repr<CPointer> does GLib::Roles::Pointers is export { }
