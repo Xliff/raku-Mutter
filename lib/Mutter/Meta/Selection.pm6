@@ -1,21 +1,34 @@
 use v6.c;
 
+use NativeCall;
+
 use Mutter::Raw::Types;
 use Mutter::Raw::Meta::Selection;
 
+use GLib::GList;
+
+use GLib::Roles::Object;
+use GLib::Roles::Implementor;
+use Mutter::Meta::Roles::Signals::Selection;
+
 class Mutter::Meta::Selection {
   also does GLib::Roles::Object;
+  also does Mutter::Meta::Roles::Signals::Selection;
 
-  has MetaSelection $!ms is implementor;
+  has MutterMetaSelection $!ms is implementor;
 
-  method new {
-    my $meta-selection = meta_selection_new();
+  method new (MutterMetaDisplay() $display) {
+    my $meta-selection = meta_selection_new($display);
 
     $meta-selection ?? self.bless( :$meta-selection ) !! Nil;
   }
 
+  method owner-changed {
+    self.connect-owner-changed($!ms);
+  }
+
   method get_mimetypes (Int() $selection_type, :$raw, :$glist = False) {
-    my MetaSelectionType $s = $selection_type;
+    my MutterMetaSelectionType $s = $selection_type;
 
     returnGList(
       meta_selection_get_mimetypes($!ms, $s),
@@ -24,8 +37,8 @@ class Mutter::Meta::Selection {
     );
   }
 
-  method set_owner (Int() $selection_type, MetaSelectionSource $owner) {
-    my MetaSelectionType $s = $selection_type;
+  method set_owner (Int() $selection_type, MutterMetaSelectionSource $owner) {
+    my MutterMetaSelectionType $s = $selection_type;
 
     meta_selection_set_owner($!ms, $selection_type, $owner);
   }
@@ -61,8 +74,8 @@ class Mutter::Meta::Selection {
                     &callback,
     gpointer        $user_data        = gpointer
   ) {
-    my MetaSelectionType $s  = $selection_type;
-    my gssize            $sz = $size;
+    my MutterMetaSelectionType $s  = $selection_type;
+    my gssize                  $sz = $size;
 
     meta_selection_transfer_async(
       $!ms,
@@ -86,8 +99,11 @@ class Mutter::Meta::Selection {
     $rv;
   }
 
-  method unset_owner (Int() $selection_type, MetaSelectionSource $owner) {
-    my MetaSelectionType $s = $selection_type;
+  method unset_owner (
+    Int()                       $selection_type,
+    MutterMetaSelectionSource() $owner
+  ) {
+    my MutterMetaSelectionType $s = $selection_type;
 
     meta_selection_unset_owner($!ms, $s, $owner);
   }
