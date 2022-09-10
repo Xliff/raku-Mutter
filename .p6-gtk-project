@@ -1,9 +1,9 @@
 prefix=Mutter
 modules=Mutter::Raw::Types
 backups=backup,bitbucket,google-backup,azure-backup,hut
-hfile-prefix=META_EXPORT:META_EXPORT:CLUTTER_EXPORT:COGL_EXPORT
+hfile-prefix=META_EXPORT:META_EXPORT:CLUTTER_EXPORT:COGL_EXPORT:COGL_EXPORT:\\#define:META_TYPE_SHADOW_FACTORY:META_EXPORT:META_EXPORT
 lib=mutter-clutter
-include-directory=/usr/src/mutter-42.1/cogl/cogl
+include-directory=/usr/src/mutter-42.1/src/meta
 exec=mutter-exec
 subprefixes=Meta,Clutter,Cogl
 idir-avail=True
