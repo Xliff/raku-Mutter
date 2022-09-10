@@ -27,5 +27,7 @@
 ### /usr/src/mutter-42.1/cogl/cogl/cogl-rectangle-map.h
 ### /usr/src/mutter-42.1/cogl/cogl/cogl-profile.h
 
+### /usr/src/mutter-42.1/src/meta/common.h
+### /usr/src/mutter-42.1/src/meta/enums.h
 ### /usr/src/mutter-42.1/src/meta/meta-dnd.h
 ### /usr/src/mutter-42.1/src/meta/meta-stage.h
