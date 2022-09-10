@@ -50,6 +50,7 @@ class MutterMetaRectangle               is repr<CPointer> does GLib::Roles::Poin
 class MutterMetaRemoteAccessController  is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaSelection               is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaSelectionSource         is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaSelectionSourceMemory   is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaSettings                is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaShapedTexture           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaStartupNotification     is repr<CPointer> does GLib::Roles::Pointers is export { }
