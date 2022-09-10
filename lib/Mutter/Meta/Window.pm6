@@ -4,9 +4,12 @@ use Mutter::Raw::Types;
 use Mutter::Raw::Meta::Window;
 
 use GLib::Roles::Object;
+use GLib::Roles::Implementor;
 
 class Mutter::Meta::Window {
   also does GLib::Roles::Object;
+
+  has MutterMetaWindow $!mw is implementor;
 
   method activate (Int() $current_time) {
     my guint32 $c = $current_time;
@@ -15,8 +18,8 @@ class Mutter::Meta::Window {
   }
 
   method activate_with_workspace (
-    Int()           $current_time,
-    MetaWorkspace() $workspace
+    Int()                 $current_time,
+    MutterMetaWorkspace() $workspace
   ) {
     my guint32 $c = $current_time;
 
@@ -36,9 +39,9 @@ class Mutter::Meta::Window {
   }
 
   method begin_grab_op (Int() $op, Int() $frame_action, Int() $timestamp) {
-    my MetaGrabOp $o = $op;
-    my gboolean   $f = $frame_action.so.Int;
-    my guint32    $t = $timestamp;
+    my MutterMetaGrabOp $o = $op;
+    my gboolean         $f = $frame_action.so.Int;
+    my guint32          $t = $timestamp;
 
     meta_window_begin_grab_op($!mw, $o, $f, $t);
   }
@@ -59,7 +62,7 @@ class Mutter::Meta::Window {
     meta_window_can_shade($!mw);
   }
 
-  method change_workspace (MetaWorkspace() $workspace) {
+  method change_workspace (MutterMetaWorkspace() $workspace) {
     meta_window_change_workspace($!mw, $workspace);
   }
 
@@ -77,8 +80,8 @@ class Mutter::Meta::Window {
   }
 
   method client_rect_to_frame_rect (
-    MetaRectangle() $client_rect,
-    MetaRectangle() $frame_rect
+    MutterMetaRectangle() $client_rect,
+    MutterMetaRectangle() $frame_rect
   ) {
     meta_window_client_rect_to_frame_rect($!mw, $client_rect, $frame_rect);
   }
@@ -97,22 +100,22 @@ class Mutter::Meta::Window {
     meta_window_focus($!mw, $timestamp);
   }
 
-  method foreach_ancestor (&func, Pointer $user_data) {
-    meta_window_foreach_ancestor($!mw, $func, $user_data);
+  method foreach_ancestor (&func, gpointer $user_data) {
+    meta_window_foreach_ancestor($!mw, &func, $user_data);
   }
 
-  method foreach_transient (&func, Pointer $user_data) {
+  method foreach_transient (&func, gpointer $user_data) {
     meta_window_foreach_transient($!mw, &func, $user_data);
   }
 
   method frame_rect_to_client_rect (
-    MetaRectangle() $frame_rect,
-    MetaRectangle() $client_rect
+    MutterMetaRectangle() $frame_rect,
+    MutterMetaRectangle() $client_rect
   ) {
     meta_window_frame_rect_to_client_rect($!mw, $frame_rect, $client_rect);
   }
 
-  method get_buffer_rect (MetaRectangle() $rect) {
+  method get_buffer_rect (MutterMetaRectangle() $rect) {
     meta_window_get_buffer_rect($!mw, $rect);
   }
 
@@ -144,7 +147,7 @@ class Mutter::Meta::Window {
     meta_window_get_frame_bounds($!mw);
   }
 
-  method get_frame_rect (MetaRectangle() $rect) {
+  method get_frame_rect (MutterMetaRectangle() $rect) {
     meta_window_get_frame_rect($!mw, $rect);
   }
 
@@ -180,7 +183,7 @@ class Mutter::Meta::Window {
     meta_window_get_gtk_window_object_path($!mw);
   }
 
-  method get_icon_geometry (MetaRectangle() $rect) {
+  method get_icon_geometry (MutterMetaRectangle() $rect) {
     meta_window_get_icon_geometry($!mw, $rect);
   }
 
@@ -258,17 +261,17 @@ class Mutter::Meta::Window {
     meta_window_get_wm_class_instance($!mw);
   }
 
-  method get_work_area_all_monitors (MetaRectangle() $area) {
+  method get_work_area_all_monitors (MutterMetaRectangle() $area) {
     meta_window_get_work_area_all_monitors($!mw, $area);
   }
 
-  method get_work_area_current_monitor (MetaRectangle() $area) {
+  method get_work_area_current_monitor (MutterMetaRectangle() $area) {
     meta_window_get_work_area_current_monitor($!mw, $area);
   }
 
   method get_work_area_for_monitor (
     Int()           $which_monitor,
-    MetaRectangle() $area
+    MutterMetaRectangle() $area
   ) {
     my gint $w = $which_monitor;
 
@@ -299,7 +302,7 @@ class Mutter::Meta::Window {
     so meta_window_is_always_on_all_workspaces($!mw);
   }
 
-  method is_ancestor_of_transient (MetaWindow() $transient) {
+  method is_ancestor_of_transient (MutterMetaWindow() $transient) {
     so meta_window_is_ancestor_of_transient($!mw, $transient);
   }
 
@@ -355,7 +358,7 @@ class Mutter::Meta::Window {
     meta_window_kill($!mw);
   }
 
-  method located_on_workspace (MetaWorkspace() $workspace) {
+  method located_on_workspace (MutterMetaWorkspace() $workspace) {
     meta_window_located_on_workspace($!mw, $workspace);
   }
 
@@ -378,7 +381,7 @@ class Mutter::Meta::Window {
   }
 
   method maximize (Int() $directions) {
-    my MetaMaximizeFlags $d = $directions;
+    my MutterMetaMaximizeFlags $d = $directions;
 
     meta_window_maximize($!mw, $d);
   }
@@ -425,7 +428,7 @@ class Mutter::Meta::Window {
     meta_window_set_demands_attention($!mw);
   }
 
-  method set_icon_geometry (MetaRectangle() $rect) {
+  method set_icon_geometry (MutterMetaRectangle() $rect) {
     meta_window_set_icon_geometry($!mw, $rect);
   }
 
@@ -460,7 +463,7 @@ class Mutter::Meta::Window {
   }
 
   method unmaximize (Int() $directions) {
-    my MetaMaximizeFlags $d = $directions;
+    my MutterMetaMaximizeFlags $d = $directions;
 
     meta_window_unmaximize($!mw, $d);
   }
