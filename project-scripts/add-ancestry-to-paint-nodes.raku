@@ -17,7 +17,7 @@ sub MAIN (
   }
 
   my rule classdef  {
-    'class' <classname> ['is' <classname>]? '{'
+    ['class' | 'role' ]  <classname> ['is' <classname>]? '{'
        <also-does>*
        'has' <typename> ('$!'<[\w\-]>+) 'is implementor;'
   }
