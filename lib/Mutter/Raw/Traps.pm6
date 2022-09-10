@@ -26,3 +26,6 @@
 ### /usr/src/mutter-42.1/cogl/cogl/cogl-spans.h
 ### /usr/src/mutter-42.1/cogl/cogl/cogl-rectangle-map.h
 ### /usr/src/mutter-42.1/cogl/cogl/cogl-profile.h
+
+### /usr/src/mutter-42.1/src/meta/meta-dnd.h
+### /usr/src/mutter-42.1/src/meta/meta-stage.h
