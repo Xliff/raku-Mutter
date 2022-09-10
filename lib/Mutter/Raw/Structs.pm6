@@ -260,6 +260,12 @@ class MutterCoglDepthState is export does GLib::Roles::Pointers {
   has uint32_t $!padding7;
   has uint32_t $!padding8;
   has uint32_t $!padding9;
+
+	method test-enabled  is rw { $!test_enabled  }
+	method test-function is rw { $!test_function }
+	method write-enabled is rw { $!write_enabled }
+	method range-near    is rw { $!range_near    }
+	method range-far     is rw { $!range_far     }
 }
 
 class MutterMetaBarrierEvent is repr<CStruct> does GLib::Roles::Pointers is export {
@@ -274,4 +280,18 @@ class MutterMetaBarrierEvent is repr<CStruct> does GLib::Roles::Pointers is expo
   has gdouble  $.dy          is rw;
   has gboolean $.released    is rw;
   has gboolean $.grabbed     is rw;
+
+	method event-id is rw { $!event_id }
+}
+
+class MutterMetaShadowParams is repr<CStruct> does GLib::Roles::Pointers is export {
+  has gint   $.radius   is rw;
+  has gint   $.top_fade is rw;
+  has gint   $.x_offset is rw;
+  has gint   $.y_offset is rw;
+  has guint8 $.opacity  is rw;
+
+	method top-fade is rw { $!top_fade  }
+	method x-offset is rw { $!x_offset  }
+	method y-offset is rw { $!y_offset  }
 }
