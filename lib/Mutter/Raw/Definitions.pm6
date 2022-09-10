@@ -59,6 +59,7 @@ class MutterMetaStartupNotification     is repr<CPointer> does GLib::Roles::Poin
 class MutterMetaStartupSequence         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaWindow                  is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaWindowActor             is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaWindowGroup             is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaWindowShape             is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaWorkspace               is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaX11Display              is repr<CPointer> does GLib::Roles::Pointers is export { }
