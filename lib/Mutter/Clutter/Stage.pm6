@@ -1,5 +1,9 @@
 use v6.c;
 
+use Method::Also;
+use NativeCall;
+
+use GLib::Raw::Traits;
 use Mutter::Raw::Types;
 #use Mutter::Raw::Clutter::Boxed;
 use Mutter::Raw::Clutter::Stage;
@@ -7,6 +11,7 @@ use Mutter::Raw::Clutter::Stage;
 use GLib::Value;
 use Mutter::Clutter::Actor;
 
+use GLib::Roles::Implementor;
 use Mutter::Clutter::Roles::Signals::Stage;
 
 our subset MutterClutterStageAncestry is export of Mu
@@ -29,18 +34,18 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
   {
     return unless $mutter-clutter-stage;
 
-    my $o = self.bless(:$mutter-clutter-stage, :$ref)
+    my $o = self.bless(:$mutter-clutter-stage, :$ref);
     $o.ref if $ref;
     $o;
   }
   multi method new {
     my $mutter-clutter-stage = clutter_stage_new();
 
-    $stage ?? self.bless(:$mutter-clutter-stage) !! Nil;
+    $mutter-clutter-stage ?? self.bless( :$mutter-clutter-stage ) !! Nil;
   }
 
   # Type: gboolean
-  method accept-focus is rw  is also<accept_focus> {
+  method accept-focus is rw is g-property is also<accept_focus> {
     my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
     Proxy.new(
       FETCH => sub ($) {
@@ -55,7 +60,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
   }
 
   # Type: gboolean
-  method cursor-visible is rw  is also<cursor_visible> {
+  method cursor-visible is rw is g-property is also<cursor_visible> {
     my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
     Proxy.new(
       FETCH => sub ($) {
@@ -70,7 +75,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
   }
 
   # Type: gboolean
-  method fullscreen-set is rw  is also<fullscreen_set> {
+  method fullscreen-set is rw is g-property is also<fullscreen_set> {
     my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
     Proxy.new(
       FETCH => sub ($) {
@@ -84,7 +89,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
   }
 
   # Type: MutterClutterActor
-  method key-focus is rw  is also<key_focus> {
+  method key-focus is rw is g-property is also<key_focus> {
     my GLib::Value $gv .= new( MutterClutter::Actor.get_type );
     Proxy.new(
       FETCH => sub ($) {
@@ -99,7 +104,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
   }
 
   # Type: gboolean
-  method no-clear-hint is rw  is also<no_clear_hint> {
+  method no-clear-hint is rw is g-property is also<no_clear_hint> {
     my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
     Proxy.new(
       FETCH => sub ($) {
@@ -114,7 +119,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
   }
 
   # Type: gboolean
-  method offscreen is rw is DEPRECATED {
+  method offscreen is rw is g-property  is DEPRECATED {
     my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
     Proxy.new(
       FETCH => sub ($) {
@@ -129,7 +134,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
   }
 
   # Type: MutterClutterPerspective
-  method perspective is rw  {
+  method perspective is rw is g-property {
     my GLib::Value $gv .= new( MutterClutter::Boxed.perspective_get_type );
     Proxy.new(
       FETCH => sub ($) {
@@ -144,7 +149,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
   }
 
   # Type: gchar
-  method title is rw  {
+  method title is rw is g-property {
     my GLib::Value $gv .= new( G_TYPE_STRING );
     Proxy.new(
       FETCH => sub ($) {
@@ -159,7 +164,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
   }
 
   # Type: gboolean
-  method use-alpha is rw  is also<use_alpha> {
+  method use-alpha is rw is g-property is also<use_alpha> {
     my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
     Proxy.new(
       FETCH => sub ($) {
@@ -174,7 +179,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
   }
 
   # Type: gboolean
-  method user-resizable is rw  is also<user_resizable> {
+  method user-resizable is rw is g-property is also<user_resizable> {
     my GLib::Value $gv .= new( G_TYPE_BOOLEAN );
     Proxy.new(
       FETCH => sub ($) {
@@ -189,7 +194,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
   }
 
   # Is originally:
-  # MutterClutterStage, gpointer --> void
+  # MutterClutterStage, -> void
   method activate {
     self.connect($!mcs, 'activate');
   }
@@ -225,7 +230,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
   }
 
   method ensure_viewport is also<ensure-viewport> {
-    clutter_stage_ensure_viewport($!cs);
+    clutter_stage_ensure_viewport($!mcs);
   }
 
   method get_actor_at_pos (
@@ -236,8 +241,8 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
   )
     is also<get-actor-at-pos>
   {
-    my guint $pm       = $pick_mode;
-    my gint ($xx, $yy) = $x, $y;
+    my guint   $pm       = $pick_mode;
+    my gfloat ($xx, $yy) = $x, $y;
 
     propReturnObject(
       clutter_stage_get_actor_at_pos(
@@ -251,15 +256,33 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
     );
   }
 
-  method get_capture_final_size (cairo_rectangle_int_t $rect, gint $out_width is rw, gint $out_height is rw, gfloat $out_scale is rw) {
-    clutter_stage_get_capture_final_size($!mcs, $rect, $out_width is rw, $out_height is rw, $out_scale is rw);
+  proto method get_capture_final_size (|)
+    is also<get-capture-final-size>
+  { * }
+
+  multi method get_capture_final_size (cairo_rectangle_int_t() $rect) {
+    samewith($rect, $, $, $);
+  }
+  multi method get_capture_final_size (
+    cairo_rectangle_int_t() $rect,
+                            $out_width  is rw,
+                            $out_height is rw,
+                            $out_scale  is rw
+  ) {
+    my gint   ($ow, $oh) = 0 xx 2;
+    my gfloat  $os       = 0e0;
+
+    clutter_stage_get_capture_final_size($!mcs, $rect, $ow, $oh, $os);
+    ($out_width, $out_height, $out_scale) = ($ow, $oh, $os);
   }
 
   method get_device_actor (
     MutterClutterInputDevice()    $device,
     MutterClutterEventSequence()  $sequence,
                                  :$raw       = False
-  ) {
+  )
+    is also<get-device-actor>
+  {
     propReturnObject(
       clutter_stage_get_device_actor($!mcs, $device, $sequence),
       $raw,
@@ -267,7 +290,9 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
     );
   }
 
-  method get_event_actor (MutterClutterEvent() $event, :$raw = False) {
+  method get_event_actor (MutterClutterEvent() $event, :$raw = False)
+    is also<get-event-actor>
+  {
     propReturnObject(
       clutter_stage_get_event_actor($!mcs, $event),
       $raw,
@@ -275,7 +300,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
     );
   }
 
-  method get_grab_actor ( :$raw = False ) {
+  method get_grab_actor ( :$raw = False ) is also<get-grab-actor> {
     propReturnObject(
       clutter_stage_get_grab_actor($!mcs),
       $raw,
@@ -283,11 +308,12 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
     );
   }
 
-  method get_key_focus {
+  method get_key_focus is also<get-key-focus> {
     clutter_stage_get_key_focus($!mcs);
   }
 
   proto method get_minimum_size (|)
+    is also<get-minimum-size>
   { * }
 
   multi method get_minimum_size {
@@ -300,11 +326,13 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
     ($width, $height) = ($w, $h);
   }
 
-  method get_perspective (MutterClutterPerspective() $perspective) {
+  method get_perspective (MutterClutterPerspective() $perspective)
+    is also<get-perspective>
+  {
     clutter_stage_get_perspective($!mcs, $perspective);
   }
 
-  method get_title {
+  method get_title is also<get-title> {
     clutter_stage_get_title($!mcs);
   }
 
@@ -314,7 +342,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
     unstable_get_type( self.^name, &clutter_stage_get_type, $n, $t );
   }
 
-  method get_view_at (Num() $x, Num() $y) {
+  method get_view_at (Num() $x, Num() $y) is also<get-view-at> {
     my gfloat ($xx, $yy) = ($x, $y);
 
     clutter_stage_get_view_at($!mcs, $xx, $yy);
@@ -324,62 +352,81 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
     clutter_stage_grab($!mcs, $actor);
   }
 
-  method is_redraw_queued_on_view (MutterClutterStageView() $view) {
+  method is_redraw_queued_on_view (MutterClutterStageView() $view)
+    is also<is-redraw-queued-on-view>
+  {
     so clutter_stage_is_redraw_queued_on_view($!mcs, $view);
   }
 
   method paint_to_buffer (
-    cairo_rectangle_int_t   $rect,
-    gfloat                  $scale,
-    CArray[uint8]           $data,
-    gint                    $stride,
-    CoglPixelFormat         $format,
-    MutterClutterPaintFlag  $paint_flags,
-    CArray[Pointer[GError]] $error = gerror
-  ) {
+    cairo_rectangle_int_t()  $rect,
+    Num()                    $scale,
+    CArray[uint8]            $data,
+    Int()                    $stride,
+    Int()                    $format,
+    Int()                    $paint_flags,
+    CArray[Pointer[GError]]  $error        = gerror
+  )
+    is also<paint-to-buffer>
+  {
+    my gfloat                 $sc = $scale,
+    my gint                   $s  = $stride;
+    my MutterCoglPixelFormat  $f  = $format;
+    my MutterClutterPaintFlag $p  = $paint_flags,
+
     clear_error;
     clutter_stage_paint_to_buffer(
       $!mcs,
       $rect,
-      $scale,
+      $sc,
       $data,
-      $stride,
-      $format,
-      $paint_flags,
+      $s,
+      $f,
+      $p,
       $error
     );
     set_error($error);
   }
 
   method paint_to_content (
-    cairo_rectangle_int_t   $rect,
-    gfloat                  $scale,
-    MutterClutterPaintFlag  $paint_flags,
-    CArray[Pointer[GError]] $error
-  ) {
+    cairo_rectangle_int_t() $rect,
+    Num()                   $scale,
+    Int()                   $paint_flags,
+    CArray[Pointer[GError]] $error         = gerror
+  )
+    is also<paint-to-content>
+  {
+    my gfloat                 $s = $scale;
+    my MutterClutterPaintFlag $p = $paint_flags;
+
     clear_error;
     clutter_stage_paint_to_content(
       $!mcs,
       $rect,
-      $scale,
-      $paint_flags,
+      $s,
+      $p,
       $error
     );
     set_error($error);
   }
 
   method paint_to_framebuffer (
-    CoglFramebuffer()      $framebuffer,
-    cairo_rectangle_int_t  $rect,
-    gfloat                 $scale,
-    MutterClutterPaintFlag $paint_flags
-  ) {
+    MutterCoglFramebuffer() $framebuffer,
+    cairo_rectangle_int_t() $rect,
+    Num()                   $scale,
+    Int()                   $paint_flags
+  )
+    is also<paint-to-framebuffer>
+  {
+    my gfloat                 $s = $scale;
+    my MutterClutterPaintFlag $p = $paint_flags;
+
     clutter_stage_paint_to_framebuffer(
       $!mcs,
       $framebuffer,
       $rect,
-      $scale,
-      $paint_flags
+      $s,
+      $p
     );
   }
 
@@ -396,11 +443,11 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
     clutter_stage_read_pixels($!mcs, $xx, $yy, $w, $h);
   }
 
-  method schedule_update {
+  method schedule_update is also<schedule-update> {
     clutter_stage_schedule_update($!mcs);
   }
 
-  method set_key_focus (MutterClutterActor() $actor) {
+  method set_key_focus (MutterClutterActor() $actor) is also<set-key-focus> {
     clutter_stage_set_key_focus($!mcs, $actor);
   }
 
@@ -412,7 +459,7 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
     clutter_stage_set_minimum_size($!mcs, $w, $h);
   }
 
-  method set_title (Str() $title) {
+  method set_title (Str() $title) is also<set-title> {
     clutter_stage_set_title($!mcs, $title);
   }
 

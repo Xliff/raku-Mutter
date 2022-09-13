@@ -10,6 +10,11 @@ use Mutter::Raw::Enums;
 unit package Mutter::Raw::Clutter::Stage;
 
 ### /usr/src/mutter-42.1/clutter/clutter/clutter-stage.h
+sub clutter_stage_new
+  returns MutterClutterStage
+  is native(mutter-clutter)
+  is export
+{ * }
 
 sub clutter_perspective_get_type ()
   returns GType

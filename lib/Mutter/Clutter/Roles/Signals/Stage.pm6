@@ -6,7 +6,7 @@ use Mutter::Raw::Types;
 
 use GLib::Raw::ReturnedValue;
 
-role Clutter::Roles::Signals::Stage {
+role Mutter::Clutter::Roles::Signals::Stage {
   has %!signals-mcs;
 
   # ClutterStage, ClutterEvent, gpointer --> gboolean
@@ -45,8 +45,8 @@ sub g-connect-delete-event(
           &handler (
             MutterClutterStage,
             MutterClutterEvent,
-            gpointer -
-            -> gboolean
+            gpointer,
+            --> gboolean
           ),
   Pointer $data,
   uint32  $flags
