@@ -9,7 +9,7 @@ class Mutter::Meta::Later {
     Int()    $when,
              &func,
     gpointer $user_data = gpointer
-             &notify    = $DEFAULT-GDESTROY-NOTIFY
+             &notify    = %DEFAULT-CALLBACKS<GDestroyNotify>
   ) {
     my MetaLaterType $w = $when;
 
@@ -22,7 +22,7 @@ class Mutter::Meta::Later {
 
              &func,
     gpointer $data   = gpointer,
-             &notify = $DEFAULT-GDESTROY-NOTIFY
+             &notify = %DEFAULT-CALLBACKS<GDestroyNotify>
   ) {
     meta_later_add(&func, $data, &notify);
   }
