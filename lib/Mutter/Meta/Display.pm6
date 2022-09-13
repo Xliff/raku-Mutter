@@ -7,14 +7,15 @@ use GLib::GList;
 use GLib::GSList;
 
 use GLib::Roles::Object;
+use GLib::Roles::Implementor;
 
-our subset MetaDisplayAncestry is export of Mu
-  where MetaDisplay | GObject;
+our subset MutterMetaDisplayAncestry is export of Mu
+  where MutterMetaDisplay | GObject;
 
 class Mutter::Meta::Display {
   also does GLib::Roles::Object;
 
-  has MetaDisplay $!md is implementor;
+  has MutterMetaDisplay $!md is implementor;
 
   method add_ignored_crossing_serial {
     meta_display_add_ignored_crossing_serial($!md);
@@ -26,9 +27,9 @@ class Mutter::Meta::Display {
     Int()       $flags,
                 &handler,
     gpointer    $user_data = gpointer,
-                &free_data = $DEFAULT-GDESTROYNOTIFY
+                &free_data = %DEFAULT-CALLBACKS<GDestroyNotify>
   ) {
-    my MetaKeyBindingFlags $f = $flags;
+    my MutterMetaKeyBindingFlags $f = $flags;
 
     meta_display_add_keybinding(
       $!md,
@@ -42,17 +43,17 @@ class Mutter::Meta::Display {
   }
 
   method begin_grab_op (
-    MetaWindow() $win,
-    Int() $op,
-    Int() $pointer_already_grabbed,
-    Int() $frame_action,
-    Int() $button,
-    Int() $modmask,
-    Int() $timestamp,
-    Int() $root_x,
-    Int() $root_y
+    MutterMetaWindow() $win,
+    Int()              $op,
+    Int()              $pointer_already_grabbed,
+    Int()              $frame_action,
+    Int()              $button,
+    Int()              $modmask,
+    Int()              $timestamp,
+    Int()              $root_x,
+    Int()              $root_y
   ) {
-    my MetaGrabOp $o            = $op;
+    my MutterMetaGrabOp $o      = $op;
     my gboolean   $p            = $pointer_already_grabbed.so.Int;
     my gboolean   $f            = $frame_action.so.Int;
     my gulong     $m            = $modmask;
@@ -132,7 +133,7 @@ class Mutter::Meta::Display {
     meta_display_get_last_user_time($!md);
   }
 
-  method get_monitor_geometry (Int() $monitor, MetaRectangle() $geometry) {
+  method get_monitor_geometry (Int() $monitor, MutterMetaRectangle() $geometry) {
     my gint $m = $monitor;
 
     meta_display_get_monitor_geometry($!md, $m, $geometry);
@@ -144,13 +145,13 @@ class Mutter::Meta::Display {
     meta_display_get_monitor_in_fullscreen($!md, $monitor);
   }
 
-  method get_monitor_index_for_rect (MetaRectangle() $rect) {
+  method get_monitor_index_for_rect (MutterMetaRectangle() $rect) {
     meta_display_get_monitor_index_for_rect($!md, $rect);
   }
 
   method get_monitor_neighbor_index (Int() $which_monitor, Int() $dir) {
     my gint                 $w = $which_monitor;
-    my MetaDisplayDirection $d = $dir;
+    my MutterMetaDisplayDirection $d = $dir;
 
     meta_display_get_monitor_neighbor_index($!md, $w, $d);
   }
@@ -166,12 +167,12 @@ class Mutter::Meta::Display {
   }
 
   method get_pad_action_label (
-    ClutterInputDevice() $pad,
-    Int()                $action_type,
-    Int()                $action_number
+    MutterClutterInputDevice() $pad,
+    Int()                      $action_type,
+    Int()                      $action_number
   ) {
-    my guint             $a  = $action_number;
-    my MetaPadActionType $ac = $action_type;
+    my guint                   $a  = $action_number;
+    my MutterMetaPadActionType $ac = $action_type;
 
     meta_display_get_pad_action_label($!md, $pad, $ac, $a);
   }
@@ -185,6 +186,7 @@ class Mutter::Meta::Display {
   }
 
   proto method get_size (|)
+  { * }
 
   multi method get_size {
     samewith($, $);
@@ -204,15 +206,18 @@ class Mutter::Meta::Display {
     meta_display_get_startup_notification($!md);
   }
 
-  method get_tab_current (MetaTabList() $type, MetaWorkspace() $workspace) {
+  method get_tab_current (
+    MutterMetaTabList()   $type,
+    MutterMetaWorkspace() $workspace
+  ) {
     meta_display_get_tab_current($!md, $type, $workspace);
   }
 
   method get_tab_list (
-    MetaTabList()    $type,
-    MetaWorkspace()  $workspace,
-                    :$raw        = False,
-                    :$glist      = False
+    MutterMetaTabList()    $type,
+    MutterMetaWorkspace()  $workspace,
+                          :$raw        = False,
+                          :$glist      = False
   ) {
     returnGList(
       meta_display_get_tab_list($!md, $type, $workspace),
@@ -223,11 +228,11 @@ class Mutter::Meta::Display {
   }
 
   method get_tab_next (
-    MetaTabList()    $type,
-    MetaWorkspace()  $workspace,
-    MetaWindow()     $window,
-    Int()            $backward,
-                    :$raw        = False
+    MutterMetaTabList()    $type,
+    MutterMetaWorkspace()  $workspace,
+    MutterMetaWindow()     $window,
+    Int()                  $backward,
+                          :$raw        = False
   ) {
     my gboolean $b = $backward.so.Int;
 
@@ -253,12 +258,12 @@ class Mutter::Meta::Display {
   }
 
   method grab_accelerator (Str() $accelerator, Int() $flags) {
-    my MetaKeyBindingFlags $f = $flags;
+    my MutterMetaKeyBindingFlags $f = $flags;
 
     meta_display_grab_accelerator($!md, $accelerator, $flags);
   }
 
-  method is_pointer_emulating_sequence (ClutterEventSequence() $sequence) {
+  method is_pointer_emulating_sequence (MutterClutterEventSequence() $sequence) {
     meta_display_is_pointer_emulating_sequence($!md, $sequence);
   }
 
@@ -275,23 +280,23 @@ class Mutter::Meta::Display {
     meta_display_remove_keybinding($!md, $name);
   }
 
-  method request_pad_osd (ClutterInputDevice() $pad, Int() $edition_mode) {
+  method request_pad_osd (MutterClutterInputDevice() $pad, Int() $edition_mode) {
     my gboolean $e = $edition_mode.so.Int;
 
     meta_display_request_pad_osd($!md, $pad, $e);
   }
 
-  method set_cursor (MetaCursor() $cursor) {
+  method set_cursor (MutterMetaCursor() $cursor) {
     meta_display_set_cursor($!md, $cursor);
   }
 
   method set_input_focus (
-    MetaWindow() $window,
-    Int()        $focus_frame,
-    Int()        $timestamp
+    MutterMetaWindow() $window,
+    Int()              $focus_frame,
+    Int()              $timestamp
   ) {
     my gboolean $f = $focus_frame;
-    my guint32  $t = $timestamp
+    my guint32  $t = $timestamp;
 
     meta_display_set_input_focus($!md, $window, $f, $t);
   }
