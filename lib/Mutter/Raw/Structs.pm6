@@ -295,3 +295,215 @@ class MutterMetaShadowParams is repr<CStruct> does GLib::Roles::Pointers is expo
 	method x-offset is rw { $!x_offset  }
 	method y-offset is rw { $!y_offset  }
 }
+
+class MutterClutterAnyEvent is repr<CStruct> is export does GLib::Roles::Pointers {
+  has guint                   $.type  ;
+  has guint32                 $.time  ;
+  has MutterClutterEventFlags $.flags ;
+  has MutterClutterStage      $.stage ;
+}
+
+role MutterClutterEventMethods {
+  method type   { self.header.type   }
+  method time   { self.header.time   }
+  method flags  { self.header.flags  }
+  method stage  { self.header.stage  }
+  method source { self.header.source }
+}
+
+# Why can't CStructs use delegation?
+
+class MutterClutterKeyEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+  HAS MutterClutterAnyEvent     $.header;
+
+  has guint                     $.modifier_state; # MutterClutterModifierType
+  has guint                     $.keyval;
+  has guint16                   $.hardware_keycode;
+  has gunichar                  $.unicode_value;
+  has MutterClutterInputDevice  $.device;
+	has guint32                   $.evdev_code;
+}
+
+class MutterClutterButtonEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+  HAS MutterClutterAnyEvent     $.header;
+
+  has gfloat                    $.x;
+  has gfloat                    $.y;
+  has guint                     $.modifier_state; # MutterClutterModifierType
+  has guint32                   $.button;
+  has CArray[gdouble]           $.axes;
+  has MutterClutterInputDevice  $.device;
+  has guint32                   $.evdev_code;
+}
+
+class MutterClutterProximityEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+  HAS MutterClutterAnyEvent     $.header;
+  has MutterClutterInputDevice  $.device;
+}
+
+class MutterClutterCrossingEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+  HAS MutterClutterAnyEvent     $.header;
+
+  has gfloat                     $.x;
+  has gfloat                     $.y;
+  has MutterClutterInputDevice   $.device;
+	has MutterClutterEventSequence $.sequence;
+  has MutterClutterActor         $.related;
+}
+
+class MutterClutterMotionEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+  HAS MutterClutterAnyEvent     $.header;
+
+  has gfloat                    $.x;
+  has gfloat                    $.y;
+  has guint                     $.modifier_state; # MutterClutterModifierType
+  has CArray[gdouble]           $.axes;
+  has MutterClutterInputDevice  $.device;
+	has int64                     $.time_us;
+	has gdouble                   $.dx;
+	has gdouble                   $.dy;
+	has gdouble                   $.dx_unaccel;
+	has gdouble                   $.dy_unaccel;
+}
+
+class MutterClutterScrollEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+  HAS MutterClutterAnyEvent     $.header;
+
+  has gfloat                    $.x;
+  has gfloat                    $.y;
+  has guint                     $.direction;      # MutterClutterScrollDirection direction;
+  has guint                     $.modifier_state; # MutterClutterModifierType
+  has CArray[gdouble]           $.axes;
+  has MutterClutterInputDevice  $.device;
+  has guint                     $.scroll_source;  # MutterClutterScrollSource scroll_source;
+  has guint                     $.finish_flags;   # MutterClutterScrollFinishFlags finish_flags;
+}
+
+class MutterClutterStageStateEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+  HAS MutterClutterAnyEvent     $.header;
+
+  has guint $.changed_mask; # MutterClutterStageState changed_mask;
+  has guint $.new_state;    # MutterClutterStageState new_state;
+}
+
+class MutterClutterTouchEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+  HAS MutterClutterAnyEvent      $.header;
+
+  has gfloat                     $.x;
+  has gfloat                     $.y;
+  has MutterClutterEventSequence $.sequence;
+  has guint                      $.modifier_state; # MutterClutterModifierType
+	has CArray[gdouble]            $.axes;
+  has MutterClutterInputDevice   $.device;
+}
+
+class MutterClutterTouchpadPinchEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+  HAS MutterClutterAnyEvent     $.header;
+
+  has guint                     $.phase; # MutterClutterTouchpadGesturePhase phase;
+  has gfloat                    $.x;
+  has gfloat                    $.y;
+  has gfloat                    $.dx;
+  has gfloat                    $.dy;
+  has gfloat                    $.angle_delta;
+  has gfloat                    $.scale;
+	has guint                     $.n_fingers;
+}
+
+class MutterClutterTouchpadSwipeEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+  HAS MutterClutterAnyEvent     $.header;
+
+  has guint                     $.phase; # MutterClutterTouchpadGesturePhase phase;
+  has guint                     $.n_fingers;
+  has gfloat                    $.x;
+  has gfloat                    $.y;
+  has gfloat                    $.dx;
+  has gfloat                    $.dy;
+	has gfloat                    $.dx_unaccel;
+	has gfloat                    $.dy_unaccel;
+}
+
+class MutterClutterTouchpadHoldEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+	HAS MutterClutterAnyEvent     $.header;
+
+	has guint32 $.phase; #= MutterClutterGesturePhase $.phase;
+	has guint32                   $.n_fingers;
+	has gfloat                    $.x;
+	has gfloat                    $.y;
+}
+
+class MutterClutterPadButtonEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+	HAS MutterClutterAnyEvent     $.header;
+
+	has guint32                   $.button;
+	has guint32                   $.group;
+	has MutterClutterInputDevice  $.device;
+	has guint32                   $.mode;
+}
+
+class MutterClutterPadStripEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+	HAS MutterClutterAnyEvent          $.header;
+
+	has MutterClutterInputDevice       $.device;
+	#has MutterClutterInputDeviceSource $.strip_source;
+	has guint32                        $.strip_source;
+	has guint32                        $.strip_number;
+	has guint32                        $.group;
+	has guint32                        $.value;
+	has guint32                        $.mode;
+}
+
+class MutterClutterPadRingEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+	HAS MutterClutterAnyEvent             $.header;
+
+	has MutterClutterInputDevice          $.device;
+	has MutterClutterInputDevicePadSource $.ring;
+	has guint32                           $.ring_number;
+	has guint32                           $.group;
+	has gdouble                           $.angle;
+	has guint32                           $.mode;
+}
+
+class MutterClutterDeviceEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+	HAS MutterClutterAnyEvent             $.header;
+
+	has MutterClutterInputDevice          $.device;
+}
+
+class MutterClutterIMEvent is repr<CStruct> is export does MutterClutterEventMethods does GLib::Roles::Pointers {
+	HAS MutterClutterAnyEvent         $.header;
+
+	has Str                           $.text;
+	has int32                         $.offset;
+	has uint32                        $.len;
+	has MutterClutterPreeditResetMode $.mode;
+}
+
+#| Skip Test
+class MutterClutterEvent is repr<CUnion> is repr<CStruct> is export does GLib::Roles::Pointers {
+  has MutterClutterAnyEvent           $.any;
+  has MutterClutterButtonEvent        $.button;
+  has MutterClutterKeyEvent           $.key;
+  has MutterClutterMotionEvent        $.motion;
+  has MutterClutterScrollEvent        $.scroll;
+  has MutterClutterStageStateEvent    $.stage_state;
+  has MutterClutterCrossingEvent      $.crossing;
+  has MutterClutterTouchEvent         $.touch;
+  has MutterClutterTouchpadPinchEvent $.touchpad_pinch;
+  has MutterClutterTouchpadSwipeEvent $.touchpad_swipe;
+	has MutterClutterTouchpadHoldEvent  $.touchpad_hold;
+	has MutterClutterProximityEvent     $.proximity;
+	has MutterClutterPadButtonEvent     $.pad_button;
+	has MutterClutterPadStripEvent      $.pad_strip;
+	has MutterClutterPadRingEvent       $.pad_ring;
+	has MutterClutterDeviceEvent        $.device;
+	has MutterClutterIMEvent            $.im;
+}
+
+our subset MutterClutterEvents is export where
+  MutterClutterAnyEvent           | MutterClutterButtonEvent      | MutterClutterKeyEvent           |
+  MutterClutterMotionEvent        | MutterClutterScrollEvent      | MutterClutterStageStateEvent    |
+  MutterClutterCrossingEvent      | MutterClutterTouchEvent       | MutterClutterTouchpadPinchEvent |
+  MutterClutterTouchpadSwipeEvent | MutterClutterTouchpadHoldEvent| MutterClutterProximityEvent     |
+	MutterClutterPadButtonEvent     | MutterClutterPadStripEvent    | MutterClutterPadRingEvent       |
+	MutterClutterDeviceEvent        | MutterClutterIMEvent;
