@@ -32,6 +32,7 @@ class MutterCallyActor                 is repr<CPointer> does GLib::Roles::Point
 class MutterMetaBackend                 is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaBackground              is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaBackgroundContent       is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaBackgroundGroup         is repr<CPointer> does GLib::Roles::Pointers is export { }
 #class MutterMetaBarrierEvent            is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaCloseDialog             is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaCompositor              is repr<CPointer> does GLib::Roles::Pointers is export { }
