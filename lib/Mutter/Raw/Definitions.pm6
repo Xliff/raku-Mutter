@@ -58,6 +58,7 @@ class MutterMetaShadowFactory           is repr<CPointer> does GLib::Roles::Poin
 class MutterMetaSoundPlayer             is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaStartupNotification     is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaStartupSequence         is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaTheme                   is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaWindow                  is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaWindowActor             is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaWindowGroup             is repr<CPointer> does GLib::Roles::Pointers is export { }
