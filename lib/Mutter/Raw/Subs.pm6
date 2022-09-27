@@ -1,6 +1,6 @@
 use v6.c;
 
-unit package Meta::Raw::Subs;
+unit package Mutter::Raw::Subs;
 
 role AnimatablePropertyMethod is export { }
 
