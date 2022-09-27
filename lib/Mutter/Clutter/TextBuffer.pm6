@@ -1,5 +1,7 @@
 use v6.c;
 
+use Method::Also;
+
 use NativeCall;
 
 use GLib::Raw::Traits;
@@ -9,12 +11,51 @@ use Mutter::Raw::Clutter::TextBuffer;
 use GLib::Roles::Implementor;
 use GLib::Roles::Object;
 
-class Mutter::Text::Buffer {
+our subset MutterClutterTextBufferAncestry is export of Mu
+  where MutterClutterTextBuffer | GObject;
+
+class Mutter::Clutter::TextBuffer {
   also does GLib::Roles::Object;
 
   has MutterClutterTextBuffer $!mctb is implementor;
 
-  method new {
+  submethod BUILD ( :$mutter-text-buffer ) {
+    self.setMutterClutterTextBuffer($mutter-text-buffer)
+      if $mutter-text-buffer;
+  }
+
+  method setMutterClutterTextBuffer (MutterClutterTextBufferAncestry $_) {
+    my $to-parent;
+
+    $!mctb = do {
+      when MutterClutterTextBuffer {
+        $to-parent = cast(GObject, $_);
+        $_;
+      }
+
+      default {
+        $to-parent = $_;
+        cast(MutterClutterTextBuffer, $_);
+      }
+    }
+    self!setObject($to-parent);
+  }
+
+  method Mutter::Raw::Definitions::MutterClutterTextBuffer
+    is also<MutterClutterTextBuffer>
+  { $!mctb }
+
+  multi method new (
+    MutterClutterTextBufferAncestry  $mutter-text-buffer,
+                                    :$ref                 = True
+  ) {
+    return unless $mutter-text-buffer;
+
+    my $o = self.bless( :$mutter-text-buffer );
+    $o.ref if $ref;
+    $o;
+  }
+  multi method new {
     my $mutter-text-buffer = clutter_text_buffer_new();
 
     $mutter-text-buffer ?? self.bless( :$mutter-text-buffer )
@@ -22,6 +63,7 @@ class Mutter::Text::Buffer {
   }
 
   proto method new_with_text (|)
+    is also<new-with-text>
   { * }
 
   multi method new_with_text (Str $text, :$encoding = 'utf8') {
@@ -70,7 +112,7 @@ class Mutter::Text::Buffer {
   }
 
   # Type: int
-  method max-length is rw  is g-property {
+  method max-length is rw  is g-property is also<max_length> {
     my $gv = GLib::Value.new( G_TYPE_INT );
     Proxy.new(
       FETCH => sub ($) {
@@ -84,56 +126,61 @@ class Mutter::Text::Buffer {
     );
   }
 
-  method deleted-text {
+  method deleted-text is also<deleted_text> {
     self.connect-uintuint($!mctb, 'deleted-text');
   }
 
-  method inserted-text {
+  method inserted-text is also<inserted_text> {
     self.connect-inserted-text($!mctb);
   }
 
-  method delete_text (Int() $position, Int() $n_chars) {
+  method delete_text (Int() $position, Int() $n_chars) is also<delete-text> {
     my guint $p = $position;
     my gint  $n = $n_chars;
 
     clutter_text_buffer_delete_text($!mctb, $p, $n);
   }
 
-  method emit_deleted_text (Int() $position, Int() $n_chars) {
+  method emit_deleted_text (Int() $position, Int() $n_chars)
+    is also<emit-deleted-text>
+  {
     my guint ($p, $n) = ($position, $n_chars);
 
     clutter_text_buffer_emit_deleted_text($!mctb, $p, $n);
   }
 
-  method emit_inserted_text (Int() $position, Str() $chars, Int() $n_chars) {
+  method emit_inserted_text (Int() $position, Str() $chars, Int() $n_chars)
+    is also<emit-inserted-text>
+  {
     my guint ($p, $n) = ($position, $n_chars);
 
     clutter_text_buffer_emit_inserted_text($!mctb, $p, $chars, $n);
   }
 
-  method get_bytes {
+  method get_bytes is also<get-bytes> {
     clutter_text_buffer_get_bytes($!mctb);
   }
 
-  method get_length {
+  method get_length is also<get-length> {
     clutter_text_buffer_get_length($!mctb);
   }
 
-  method get_max_length {
+  method get_max_length is also<get-max-length> {
     clutter_text_buffer_get_max_length($!mctb);
   }
 
-  method get_text {
+  method get_text is also<get-text> {
     clutter_text_buffer_get_text($!mctb);
   }
 
-  method get_type {
+  method get_type is also<get-type> {
     state ($n, $t);
 
     unstable_get_type( self.^name, &clutter_text_buffer_get_type, $n, $t );
   }
 
   proto method insert_text (|)
+    is also<insert-text>
   { * }
 
   multi method insert_text (
@@ -162,13 +209,14 @@ class Mutter::Text::Buffer {
     clutter_text_buffer_insert_text($!mctb, $position, $chars, $n_chars);
   }
 
-  method set_max_length (Int() $max_length) {
+  method set_max_length (Int() $max_length) is also<set-max-length> {
     my gint $m = $max_length;
 
     clutter_text_buffer_set_max_length($!mctb, $m);
   }
 
   proto method set_text (|)
+    is also<set-text>
   { * }
 
   multi method set_text (Str $chars, :$encoding = 'utf8') {
