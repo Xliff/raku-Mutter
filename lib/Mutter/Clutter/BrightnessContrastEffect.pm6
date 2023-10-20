@@ -13,13 +13,15 @@ use GLib::Roles::Implementor;
 class Mutter::Clutter::BrightnessContrastEffect is Mutter::Clutter::Effect {
   has MutterClutterBrightnessContrastEffect $!mcbce is implementor;
 
-  method new {
+  method new ( *%a ) {
     my $mutter-clutter-brightness-contrast-effect =
       clutter_brightness_contrast_effect_new();
 
-    $mutter-clutter-brightness-contrast-effect
+    my $o = $mutter-clutter-brightness-contrast-effect
       ?? self.bless( :$mutter-clutter-brightness-contrast-effect )
       !! Nil
+    $o.setAttributes( |%a ) if $o && +%a;
+    $o;
   }
 
   # Type: MutterClutterColor

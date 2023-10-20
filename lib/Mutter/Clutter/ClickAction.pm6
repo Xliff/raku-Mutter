@@ -17,11 +17,14 @@ class Mutter::Clutter::ClickAction is Mutter::Clutter::Action {
 
   has MutterClutterClickAction $!mcca is implementor;
 
-  method new {
+  method new (%a) {
     my $mutter-clutter-click = clutter_click_action_new();
 
-    $mutter-clutter-click ?? self.bless( :$mutter-clutter-click )
-                          !! Nil;
+    my $o = $mutter-clutter-click
+      ?? self.bless( :$mutter-clutter-click )
+      !! Nil;
+    $o.setAttributes( |%a) if $o && +%a;
+    $o;
   }
 
   # Type: boolean

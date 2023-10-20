@@ -12,7 +12,7 @@ use Mutter::Clutter::Constraint;
 our subset MutterClutterPathConstraintAncestry is export of Mu
   where MutterClutterPathConstraint | MutterClutterConstraintAncestry;
 
-class Mutter::Clutter::PathConstraint {
+class Mutter::Clutter::PathConstraint is Mutter::Clutter::Constraint {
   has MutterClutterPathConstraint $!mcpc is implementor;
 
   submethod BUILD ( :$mutter-clutter-path-constraint ) {
@@ -63,6 +63,15 @@ class Mutter::Clutter::PathConstraint {
     $mutter-clutter-path-constraint
       ?? self.bless( :$mutter-clutter-path-constraint )
       !! Nil
+  }
+  multi method new (*%a) {
+    X::Mutter::Clutter::BadCreationOps.new(
+      'Creation options must have the following: path, offset!'
+    ).throw unless [&&]( %a<path>:exists, %a<offset>:exists );
+
+    my $o = samewith(%a<path>:delete, %a<offset>:delete);
+    $o.setAttributes(%a) if $o && +%a;
+    $o;
   }
 
   # Type: MutterClutterPath
