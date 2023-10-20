@@ -10,6 +10,7 @@ use Mutter::Raw::Exports;
 
 unit package Mutter::Raw::Types;
 
+need GLib::Raw::Debug;
 need GLib::Raw::Definitions;
 need GLib::Raw::Enums;
 need GLib::Raw::Exceptions;
@@ -37,6 +38,7 @@ need Pango::Raw::Enums;
 need Pango::Raw::Structs;
 need Pango::Raw::Subs;
 need Graphene::Raw::Definitions;
+need Graphene::Raw::Enums;
 need Mutter::Raw::Definitions;
 need Mutter::Raw::Enums;
 need Mutter::Raw::GSettingsEnums;
