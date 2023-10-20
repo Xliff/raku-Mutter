@@ -79,6 +79,19 @@ class Mutter::Clutter::AlignConstraint is Mutter::Clutter::Constraint {
       ?? self.bless( :$mutter-clutter-align-constraint )
       !! Nil
   }
+  multi method new (*%a) {
+    X::Mutter::Clutter::BadCreationOps.new(
+      'Creation options must have the following: source, axis and factor!'
+    ).throw unless [&&](
+      %a<source>:exists,
+      %a<axis>:exists,
+      %a<factor>:exists
+    );
+
+    my $o = samewith(%a<source>:delete, %a<axis>:delete, %a<factor>:delete);
+    $o.setAttributes(%a) if $o && +%a;
+    $o;
+  }
 
   # Type: MutterClutterActor
   method source ( :$raw = False ) is rw is g-property {

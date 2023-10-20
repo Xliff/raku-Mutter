@@ -57,7 +57,7 @@ class Mutter::Clutter::BindConstraint is Mutter::Clutter::Constraint {
   multi method new (
     MutterClutterActor() $source,
     Int()                $coordinate,
-    Num()                $offset
+    Num()                $offset      = 0
   ) {
     my MutterClutterBindCoordinate $c = $coordinate;
     my gfloat                      $o = $offset;
@@ -71,6 +71,23 @@ class Mutter::Clutter::BindConstraint is Mutter::Clutter::Constraint {
     $mutter-clutter-bind-constraint
       ?? self.bless( :$mutter-clutter-bind-constraint )
       !! Nil;
+  }
+  multi method new (*%a) {
+    X::Mutter::Clutter::BadCreationOps.new(
+      "Creation options must have the following: {
+       '' }source, coordinate!"
+    ).throw unless [&&](
+      %a<source>:exists,
+      %a<coordinate>:exists
+    );
+
+    my $o = samewith(
+      %a<source>:delete,
+      %a<coordinate>:delete,
+      %a<offset>:delete      // 0
+    );
+    $o.setAttributes(%a) if $o && +%a;
+    $o;
   }
 
   # Type: MutterClutterActor
