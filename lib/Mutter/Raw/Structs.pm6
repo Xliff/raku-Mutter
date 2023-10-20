@@ -2,6 +2,8 @@ use v6.c;
 
 use NativeCall;
 
+use Method::Also;
+
 use GLib::Raw::Definitions;
 use GLib::Raw::Object;
 use GTK::Raw::Definitions;
@@ -42,6 +44,16 @@ class MutterClutterMargin is repr<CStruct> is export {
 	has gfloat $.top    is rw;
 	has gfloat $.bottom is rw;
 
+	method l is rw { $.left   }
+	method r is rw { $.right  }
+	method t is rw { $.top    }
+	method b is rw { $.bottom }
+
+	method width       is also<w>  { $!right  - $!left   }
+	method height      is also<h>  { $!bottom - $!top    }
+	method anti-width  is also<aw> { $!left   - $!right  }
+	method anti-height is also<ah> { $!top    - $!bottom }
+
 	multi method new (:$c-alloc is required, :$right, :$left, :$top, :$bottom) {
 		sub clutter_margin_new ()
 			returns MutterClutterMargin
@@ -77,6 +89,9 @@ class MutterClutterOffscreenRectangle is repr<CStruct> is export {
 	has gint $.y      is rw;
 	has gint $.width  is rw;
 	has gint $.height is rw;
+
+	method w is rw { $.width  }
+	method h is rw { $.height }
 }
 
 class MutterClutterOffscreenBarrierEvent is repr<CStruct> does GLib::Roles::Pointers is export {
