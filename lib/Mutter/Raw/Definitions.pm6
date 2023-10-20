@@ -8,10 +8,10 @@ use GLib::Raw::Definitions;
 
 unit package Mutter::Raw::Definitions;
 
-constant mutter                 is export = 'mutter-10',v0;
-constant mutter-clutter         is export = 'mutter-clutter-10',v0;
-constant mutter-cogl            is export = 'mutter-cogl-10',v0;
-constant mutter-cogl-pango      is export = 'mutter-cogl-pango-10',v0;
+constant mutter                 is export = 'mutter-13',v0;
+constant mutter-clutter         is export = '/usr/lib/x86_64-linux-gnu/mutter-13/mutter-clutter-13',v0;
+constant mutter-cogl            is export = '/usr/lib/x86_64-linux-gnu/mutter-13/mutter-cogl-13',v0;
+constant mutter-cogl-pango      is export = '/usr/lib/x86_64-linux-gnu/mutter-13/mutter-cogl-pango-13',v0;
 
 constant cairo_rectangle_t      is export := Cairo::cairo_rectangle_t;
 constant cairo_rectangle_int_t  is export := Cairo::cairo_rectangle_int_t;
@@ -57,6 +57,7 @@ class MutterMetaShapedTexture           is repr<CPointer> does GLib::Roles::Poin
 class MutterMetaShadow                  is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaShadowFactory           is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaSoundPlayer             is repr<CPointer> does GLib::Roles::Pointers is export { }
+class MutterMetaStackTracker            is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaStartupNotification     is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaStartupSequence         is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterMetaTheme                   is repr<CPointer> does GLib::Roles::Pointers is export { }
@@ -212,3 +213,6 @@ class X::Mutter::COGL::InvalidNumberOfElements is Exception {
     "Invalid number of elements in call to { $.routine }!";
   }
 }
+
+constant CLUTTER_EVENT_PROPAGATE is export = 0;
+constant CLUTTER_EVENT_STOP      is export = 1;
