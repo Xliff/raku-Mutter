@@ -45,6 +45,10 @@ class Mutter::Clutter::Color {
     $mutter-clutter-color ?? self.bless( :$mutter-clutter-color ) !! Nil;
   }
 
+  method new_gray (Int() $val, Int() $alpha) is also<new-gray> {
+    ::?CLASS.new($val, $val, $val, $alpha);
+  }
+
   method new_from_hls (
     Num()             $hue,
     Num()             $luminance,
