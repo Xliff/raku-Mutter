@@ -106,10 +106,15 @@ class Mutter::Clutter::Actor {
     $o.ref if $ref;
     $o;
   }
-  multi method new {
+  multi method new ( *%a ) {
     my $mutter-clutter-actor = clutter_actor_new();
 
-    $mutter-clutter-actor ?? self.bless( :$mutter-clutter-actor ) !! Nil;
+    my $o = $mutter-clutter-actor
+      ?? self.bless( :$mutter-clutter-actor )
+      !! Nil;
+
+    $o.setAttributes( |%a ) if $o && +%a;
+    $o;
   }
 
   # Type: float
@@ -667,6 +672,30 @@ class Mutter::Clutter::Actor {
         self.prop_set('scale-z', $gv);
       }
     );
+  }
+
+  method scale_xy is rw is also<scale-xy> {
+    Proxy.new:
+      FETCH => $     { ($.scale-x, $.scale-y) }
+      STORE => $, \v { ($.scale-x, $.scale-y) = v xx 2 }
+  }
+
+  method scale_xz is rw is also<scale-xz> {
+    Proxy.new:
+      FETCH => $     { ($.scale-x, $.scale-z) }
+      STORE => $, \v { ($.scale-x, $.scale-z) = v xx 2 }
+  }
+
+  method scale_yz is rw is also<scale-yz> {
+    Proxy.new:
+      FETCH => $     { ($.scale-y, $.scale-z) }
+      STORE => $, \v { ($.scale-y, $.scale-z) = v xx 2 }
+  }
+
+  method scale is rw {
+    Proxy.new:
+      FETCH => $     { ($.scale-x, $.scale-y, $.scale-z) }
+      STORE => $, \v { ($.scale-x, $.scale-y, $.scale-z) = v xx 3 }
   }
 
   # Type: double
@@ -1541,6 +1570,12 @@ class Mutter::Clutter::Actor {
     );
   }
 
+  method clone ( :$raw = False ) {
+    my $i = self.MutterClutterActor;
+    return $i if $raw;
+    ::?CLASS.new($i)
+  }
+
   method contains (MutterClutterActor() $descendant) {
     clutter_actor_contains($!mca, $descendant);
   }
@@ -1954,7 +1989,7 @@ class Mutter::Clutter::Actor {
     is also<get-preferred-height>
   { * }
 
-  multi method get_preferred_height (Num() $for_width) {
+  multi method get_preferred_height (Num() $for_width = -1) {
     samewith($for_width, $, $);
   }
   multi method get_preferred_height (
@@ -1992,13 +2027,13 @@ class Mutter::Clutter::Actor {
     is also<get-preferred-width>
   { * }
 
-  multi method get_preferred_width (Num() $for_height) {
+  multi method get_preferred_width (Num() $for_height = -1) {
     samewith($for_height, $, $);
   }
   multi method get_preferred_width (
     Num() $for_height,
-    $min_width_p       is rw,
-    $natural_width_p   is rw
+          $min_width_p       is rw,
+          $natural_width_p   is rw
   ) {
     my ($fh, $mw, $nw) = ($fh, 0e0, 0e0);
 
