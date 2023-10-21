@@ -2,48 +2,56 @@ use v6.c;
 
 use Method::Also;
 
+use GLib::Raw::Traits;
 use Mutter::Raw::Types;
 use Mutter::Raw::Meta::Workspace::Manager;
 
+use GLib::GList;
+
+use GLib::Roles::Implementor;
 use GLib::Roles::Object;
 use GLib::Roles::Signals::Generic;
 
-our subset MetaWorkspaceManagerAncestry is export of Mu
-  where MetaWorkspaceManager | GObject;
+our subset MutterMetaWorkspaceManagerAncestry is export of Mu
+  where MutterMetaWorkspaceManager | GObject;
 
 class Mutter::Meta::Workspace::Manager {
-  also does Positional
+  also does Positional;
   also does GLib::Roles::Object;
 
+  has MutterMetaWorkspaceManager $!mwm is implementor;
+
   submethod BUILD ( :$meta-workspace-manager ) {
-    self.setMetaWorkspaceManager($meta-workspace-manager)
+    self.setMutterMetaWorkspaceManager($meta-workspace-manager)
       if $meta-workspace-manager;
   }
 
-  method setMetaWorkspaceManager (MetaWorkspaceManagerAncestry $_) {
+  method setMutterMetaWorkspaceManager (
+    MutterMetaWorkspaceManagerAncestry $_
+  ) {
     my $to-parent;
 
-    $!gfc = do {
-      when MetaWorkspaceManager {
+    $!mwm = do {
+      when MutterMetaWorkspaceManager {
         $to-parent = cast(GObject, $_);
         $_;
       }
 
       default {
         $to-parent = $_;
-        cast(MetaWorkspaceManager, $_);
+        cast(MutterMetaWorkspaceManager, $_);
       }
     }
     self!setObject($to-parent);
   }
 
-  method Mutter::Raw::Definitions::MetaWorkspaceManager
-    is also<MetaWorkspaceManager>
-  { $!gfc }
+  method Mutter::Raw::Definitions::MutterMetaWorkspaceManager
+    is also<MutterMetaWorkspaceManager>
+  { $!mwm}
 
   multi method new (
-    MetaWorkspaceManagerAncestry  $meta-workspace-manager,
-                                 :$ref                     = True
+    MutterMetaWorkspaceManagerAncestry  $meta-workspace-manager,
+                                       :$ref                     = True
   ) {
     return Nil unless $meta-workspace-manager;
 
@@ -186,14 +194,20 @@ class Mutter::Meta::Workspace::Manager {
   )
     is also<override-workspace-layout>
   {
-    my MetaDisplayCorner  $s        =  $starting_corner;
-    my gboolean           $v        =  $vertical_layout;
-    my gint              ($nr, $nc) = ($n_rows, $n_columns);
+    my MutterMetaDisplayCorner  $s        =  $starting_corner;
+    my gboolean                 $v        =  $vertical_layout;
+    my gint                    ($nr, $nc) = ($n_rows, $n_columns);
 
-    meta_workspace_manager_override_workspace_layout($!mwm, $s, $v, $nr, $nc);
+    meta_workspace_manager_override_workspace_layout(
+      $!mwm,
+      $s,
+      $v,
+      $nr,
+      $nc
+    );
   }
 
-  method remove_workspace (MetaWorkspace() $workspace, Int() $timestamp)
+  method remove_workspace (MutterMetaWorkspace() $workspace, Int() $timestamp)
     is also<remove-workspace>
   {
     my guint32 $t = $timestamp;
@@ -201,10 +215,10 @@ class Mutter::Meta::Workspace::Manager {
     meta_workspace_manager_remove_workspace($!mwm, $workspace, $t);
   }
 
-  method reorder_workspace (MetaWorkspace() $workspace, Int() $new_index)
+  method reorder_workspace (MutterMetaWorkspace() $workspace, Int() $new_index)
     is also<reorder-workspace>
   {
-    myt gint $n = $new_index;
+    my gint $n = $new_index;
 
     meta_workspace_manager_reorder_workspace($!mwm, $workspace, $n);
   }
