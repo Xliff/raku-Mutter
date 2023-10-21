@@ -6,12 +6,53 @@ use GLib::Raw::Traits;
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::Text;
 
+use Mutter::Clutter::Actor;
+
 use GLib::Roles::Implementor;
 
-class Mutter::Clutter::Text {
+our subset MutterClutterTextAncestry is export of Mu
+  where MutterClutterText | MutterClutterActorAncestry;
+
+class Mutter::Clutter::Text is Mutter::Clutter::Actor {
   has MutterClutterText $!mct is implementor;
 
-  method new {
+  submethod BUILD ( :$mutter-clutter-text ) {
+    self.setMutterClutterText($mutter-clutter-text)
+      if $mutter-clutter-text
+  }
+
+  method setMutterClutterText (MutterClutterTextAncestry $_) {
+    my $to-parent;
+
+    $!mct = do {
+      when MutterClutterText {
+        $to-parent = cast(MutterClutterActor, $_);
+        $_;
+      }
+
+      default {
+        $to-parent = $_;
+        cast(MutterClutterText, $_);
+      }
+    }
+    self.setMutterClutterActor($to-parent);
+  }
+
+  method Mutter::Clutter::Raw::Definitions::MutterClutterText
+  { $!mct }
+
+  multi method new (
+    MutterClutterTextAncestry  $mutter-clutter-text,
+
+                              :$ref = True
+  ) {
+    return unless $mutter-clutter-text;
+
+    my $o = self.bless( :$mutter-clutter-text );
+    $o.ref if $ref;
+    $o;
+  }
+  multi method new {
     my $mutter-clutter-text = clutter_text_new();
 
     $mutter-clutter-text ?? self.bless( :$mutter-clutter-text )  !! Nil
