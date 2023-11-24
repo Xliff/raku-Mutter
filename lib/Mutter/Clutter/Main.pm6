@@ -40,6 +40,10 @@ class Mutter::Clutter::Main {
     );
   }
 
+  method is-rtl {
+    ::?CLASS.get-default-text-direction === CLUTTER_TEXT_DIRECTION_RTL
+  }
+
   method remove_debug_flags (
     Int() $debug_flags,
     Int() $draw_flags,
