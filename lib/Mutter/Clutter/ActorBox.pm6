@@ -12,7 +12,16 @@ use GLib::Roles::Implementor;
 class Mutter::Clutter::ActorBox {
   also does GLib::Roles::Implementor;
 
-  has MutterClutterActorBox $!mcab is implementor;
+  has MutterClutterActorBox $!mcab is implementor handles <
+    x1
+    x2
+    y1
+    y2
+    width
+    height
+    w
+    h
+  >;
 
   submethod BUILD ( :$mutter-actor-box ) {
     $!mcab = $mutter-actor-box if $mutter-actor-box;
