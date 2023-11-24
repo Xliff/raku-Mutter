@@ -83,6 +83,15 @@ class Mutter::Clutter::Backend {
     self.connect($!mcb, 'settings-changed');
   }
 
+  method clear_input_method 
+    is also<
+      clear-input-method
+      clearInputMethod
+    >
+  {
+    self.set_input_backend(MutterClutterInputMethod);
+  }
+
   method get_cogl_context ( :$raw = False ) is also<get-cogl-context> {
     propReturnObject(
       clutter_backend_get_cogl_context($!mcb),
