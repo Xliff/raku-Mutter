@@ -42,6 +42,8 @@ our subset MutterClutterActorAncestry is export of Mu
 my (@animatables, @set-methods, @add-methods, %properties);
 
 class Mutter::Clutter::Actor {
+  also does Iterable;
+  also does Positional;
   also does GLib::Roles::Object;
   also does Mutter::Clutter::Roles::Animatable;
   also does Mutter::Clutter::Roles::Container;
@@ -674,28 +676,32 @@ class Mutter::Clutter::Actor {
     );
   }
 
+  constant P = Positional;
   method scale_xy is rw is also<scale-xy> {
     Proxy.new:
-      FETCH => $     { ($.scale-x, $.scale-y) }
-      STORE => $, \v { ($.scale-x, $.scale-y) = v xx 2 }
+      FETCH => -> $     { ($.scale-x, $.scale-y) },
+      STORE => -> $, \v { ($.scale-x, $.scale-y) = v ~~ P ?? v !! v xx 2 }
   }
 
   method scale_xz is rw is also<scale-xz> {
     Proxy.new:
-      FETCH => $     { ($.scale-x, $.scale-z) }
-      STORE => $, \v { ($.scale-x, $.scale-z) = v xx 2 }
+      FETCH => -> $     { ($.scale-x, $.scale-z) },
+      STORE => -> $, \v { ($.scale-x, $.scale-z) = v ~~ P ?? v !! v xx 2 }
   }
 
   method scale_yz is rw is also<scale-yz> {
     Proxy.new:
-      FETCH => $     { ($.scale-y, $.scale-z) }
-      STORE => $, \v { ($.scale-y, $.scale-z) = v xx 2 }
+      FETCH => -> $     { ($.scale-y, $.scale-z) },
+      STORE => -> $, \v { ($.scale-y, $.scale-z) = v ~~ P ?? v !! v xx 2 }
   }
 
   method scale is rw {
     Proxy.new:
-      FETCH => $     { ($.scale-x, $.scale-y, $.scale-z) }
-      STORE => $, \v { ($.scale-x, $.scale-y, $.scale-z) = v xx 3 }
+      FETCH => -> $     { ($.scale-x, $.scale-y, $.scale-z) },
+
+      STORE => -> $, \v {
+        ($.scale-x, $.scale-y, $.scale-z) = v ~~ P ?? v !! v xx 3
+      }
   }
 
   # Type: double
@@ -1292,6 +1298,15 @@ class Mutter::Clutter::Actor {
       }
   }
 
+  method expand is rw {
+    Proxy.new:
+      FETCH => $ { ( .x_expand, .y_expand ) },
+
+      STORE => $, \v {
+        ( .x_expand, .y_expand ) v.elems == 1 ?? v xx 2 !! v;
+      }
+  }
+
   # Is originally:
   #   MutterClutterActor,
   #   MutterClutterActorBox,
@@ -1670,6 +1685,9 @@ class Mutter::Clutter::Actor {
       |self.getTypePair
     )
   }
+  method AT-POS (\k) {
+    self.get_child_at_index(k);
+  }
 
   # ...
 
@@ -1689,6 +1707,10 @@ class Mutter::Clutter::Actor {
       $glist,
       |self.getTypePair
     );
+  }
+
+  method iterator ( ::?CLASS:D: ) {
+    self.children.iterator;
   }
 
   proto method get_clip (|)
@@ -1749,19 +1771,19 @@ class Mutter::Clutter::Actor {
 
   method get_default_paint_volume (:$raw = False)
     is also<
-      get-default-paint-volume
+      get-default-paint-volumeeasing_mode
       default_paint_volume
       default-paint-volume
     >
   {
     propReturnObject(
-      clutter_actor_get_default_paint_volume($!mca),
+      clutter_actor_get_default_paint_volueasing_modeme($!mca),
       $raw,
       |Mutter::Clutter::PaintVolume.getTypePair
     );
   }
 
-  method get_easing_delay is also<get-easing-delay> {
+  method get_easing_delay is also<get-easieasing_modeng-delay> {
     clutter_actor_get_easing_delay($!mca);
   }
 
@@ -1773,7 +1795,13 @@ class Mutter::Clutter::Actor {
     MutterClutterAnimationModeEnum( clutter_actor_get_easing_mode($!mca) );
   }
 
-  method get_first_child (:$raw = False) is also<get-first-child> {
+  method get_first_child (:$raw = False)
+    is also<
+      get-first-child
+      first_child
+      first-child
+    >
+  {
     propReturnObject(
       clutter_actor_get_first_child($!mca),
       $raw,
@@ -1811,7 +1839,13 @@ class Mutter::Clutter::Actor {
     clutter_actor_get_height($!mca);
   }
 
-  method get_last_child ( :$raw = False ) is also<get-last-child> {
+  method get_last_child ( :$raw = False )
+    is also<
+      get-last-child
+      last_child
+      last-child
+    >
+  {
     propReturnObject(
       clutter_actor_get_last_child($!mca),
       $raw,
@@ -1819,7 +1853,13 @@ class Mutter::Clutter::Actor {
     );
   }
 
-  method get_layout_manager ( :$raw = False ) is also<get-layout-manager> {
+  method get_layout_manager ( :$raw = False )
+    is also<
+      get-layout-manager
+      layout_manager
+      layout-manager
+    >
+  {
     propReturnObject(
       clutter_actor_get_layout_manager($!mca),
       $raw,
@@ -2691,7 +2731,12 @@ class Mutter::Clutter::Actor {
     clutter_actor_set_scale_z($!mca, $sz);
   }
 
-  method set_size (Num() $width, Num() $height) is also<set-size> {
+  method set_size (Num() $width, Num() $height)
+    is also<
+      set-size
+      setSize
+    >
+  {
     my gfloat ($w, $h) = ($width, $height);
 
     clutter_actor_set_size($!mca, $w, $h);
@@ -2897,9 +2942,9 @@ class Mutter::Clutter::Actor {
         $_ ~~ MutterClutterConstraint,
         .^lookup('MutterClutterConstraint')
       );
-    }
 
-    self.add_constraint($_) for @constraints;
+      self.add_constraint($_);
+    }
   }
 
   method add_constraint (MutterClutterConstraint() $constraint)
@@ -3074,6 +3119,10 @@ class Mutter::Clutter::Actor::Iter {
 
   method remove {
     clutter_actor_iter_remove($!mcai);
+  }
+
+  method is-rtl {
+    $.get_text_direction === CLUTTER_TEXT_DIRECTION_RTL;
   }
 }
 
