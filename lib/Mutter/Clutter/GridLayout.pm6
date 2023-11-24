@@ -58,6 +58,16 @@ class Mutter::Clutter::GridLayout is Mutter::Clutter::LayoutManager {
     $mutter-clutter-grid-layout ?? self.bless( :$mutter-clutter-grid-layout )
                                 !! Nil;
   }
+  multi method new ( :horizontal(:$h) is required where *.so ) {
+    my $o = samewith();
+    $o.orientation = CLUTTER_ORIENTATION_HORIZONTAL;
+    $o;
+  }
+  multi method new ( :vertical(:$v) is required where *.so) {
+    my $o = samewith();
+    $o.orientation = CLUTTER_ORIENTATION_VERTICAL;
+    $o;
+  }
 
   # Type: MutterOrientation
   method orientation is rw  is g-property {
