@@ -42,8 +42,8 @@ our subset MutterClutterActorAncestry is export of Mu
 my (@animatables, @set-methods, @add-methods, %properties);
 
 class Mutter::Clutter::Actor {
-  also does Iterable;
   also does Positional;
+  also does Iterable;
   also does GLib::Roles::Object;
   also does Mutter::Clutter::Roles::Animatable;
   also does Mutter::Clutter::Roles::Container;
@@ -119,6 +119,11 @@ class Mutter::Clutter::Actor {
     $o;
   }
 
+  method pos_xy is also<pos-xy> is rw {
+    FETCH => -> $     { ($.x, $.y) },
+    STORE => -> $, \v { ($.x, $.y) = v }
+  }
+
   # Type: float
   method x is rw  is g-property is animatable {
     my $gv = GLib::Value.new( G_TYPE_FLOAT );
@@ -169,7 +174,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: float
-  method height is rw  is g-property is animatable {
+  method height is also<h> is rw  is g-property is animatable {
     my $gv = GLib::Value.new( G_TYPE_FLOAT );
     Proxy.new(
       FETCH => sub ($) {
@@ -184,7 +189,7 @@ class Mutter::Clutter::Actor {
   }
 
   # Type: float
-  method width is rw  is g-property is animatable {
+  method width is also<w> is rw  is g-property is animatable {
     my $gv = GLib::Value.new( G_TYPE_FLOAT );
     Proxy.new(
       FETCH => sub ($) {
@@ -196,6 +201,12 @@ class Mutter::Clutter::Actor {
         self.prop_set('width', $gv);
       }
     );
+  }
+
+  method size_wh is also<size-wh> is rw {
+    Proxy.new:
+      FETCH => -> $     { ($.width, $.height) }
+      STORE => -> $, \v { ($.width, $.height) = v }
   }
 
   # Type: GrapheneSize
@@ -1300,11 +1311,19 @@ class Mutter::Clutter::Actor {
 
   method expand is rw {
     Proxy.new:
-      FETCH => $ { ( .x_expand, .y_expand ) },
+      FETCH => -> $ {
+        ( .x_expand, .y_expand )
+      },
 
-      STORE => $, \v {
-        ( .x_expand, .y_expand ) v.elems == 1 ?? v xx 2 !! v;
+      STORE => -> $, \v {
+        ( .x_expand, .y_expand ) = v.elems == 1 ?? v xx 2 !! v;
       }
+  }
+
+  method easing-mode is also<easing_mode> is rw {
+	  Proxy.new:
+	  	FETCH => -> $     { self.get_easing_mode    },
+		STORE => -> $, \v { self.set_easing_mode(v) }
   }
 
   # Is originally:
@@ -1313,169 +1332,169 @@ class Mutter::Clutter::Actor {
   #   MutterClutterAllocationFlags,
   #   gpointer
   #   --> void
-  method allocation-changed is also<allocation_changed> {
+  method Allocation-Changed is also<allocation_changed> {
     self.connect-allocation-changed($!mca);
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
-  method button-press-event is also<button_press_event> {
+  method Button-Press-Event is also<button_press_event> {
     self.connect-clutter-event($!mca, 'button-press-event');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
-  method button-release-event is also<button_release_event> {
+  method Button-Release-Event is also<button_release_event> {
     self.connect-clutter-event($!mca, 'button-release-event');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
-  method captured-event is also<captured_event> {
+  method Captured-Event is also<captured_event> {
     self.connect-clutter-event($!mca, 'captured-event');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
-  method destroy {
+  method Destroy {
     self.connect($!mca, 'destroy');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
-  method enter-event is also<enter_event> {
+  method Enter-Event is also<enter_event> {
     self.connect-clutter-event($!mca, 'enter-event');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
-  method event {
+  method Event {
     self.connect-clutter-event($!mca, 'event');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
-  method hide {
+  method Hide {
     self.connect($!mca, 'hide');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
-  method key-focus-in is also<key_focus_in> {
+  method Key-Focus-In is also<key_focus_in> {
     self.connect($!mca, 'key-focus-in');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
-  method key-focus-out is also<key_focus_out> {
+  method Key-Focus-Out is also<key_focus_out> {
     self.connect($!mca, 'key-focus-out');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
-  method key-press-event is also<key_press_event> {
+  method Key-Press-Event is also<key_press_event> {
     self.connect-clutter-event($!mca, 'key-press-event');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
-  method key-release-event is also<key_release_event> {
+  method Key-Release-Event is also<key_release_event> {
     self.connect-clutter-event($!mca, 'key-release-event');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
-  method leave-event is also<leave_event> {
+  method Leave-Event is also<leave_event> {
     self.connect-clutter-event($!mca, 'leave-event');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
-  method motion-event is also<motion_event> {
+  method Motion-Event is also<motion_event> {
     self.connect-clutter-event($!mca, 'motion-event');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
-  method paint {
+  method Paint {
     self.connect($!mca, 'paint');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterActor, gpointer --> void
-  method parent-set is also<parent_set> {
-    self.connect-parent-set($!mca);
+  method Parent-Set is also<parent_set> {
+    self.connect-actor($!mca, 'parent-set');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterColor, gpointer --> void
-  method pick {
+  method Pick {
     self.connect-pick($!mca);
   }
 
   # Is originally:
   # void, void
-  method queue-redraw {
+  method Queue-Redraw {
     self.connect($!mca, 'queue-redraw');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
-  method queue-relayout is also<queue_relayout> {
+  method Queue-Relayout is also<queue_relayout> {
     self.connect($!mca, 'queue-relayout');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
-  method realize {
+  method Realize {
     self.connect($!mca, 'realize');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
-  method resource-scale-changed {
+  method Resource-Scale-Changed {
     self.connect($!mca, 'resource-scale-changed');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
-  method scroll-event is also<scroll_event> {
+  method Scroll-Event is also<scroll_event> {
     self.connect-clutter-event($!mca, 'scroll-event');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
-  method show {
+  method Show {
     self.connect($!mca, 'show');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
-  method stage-views-changed {
+  method Stage-Views-Changed {
     self.connect($!mca, 'stage-views-changed');
   }
 
   # Is originally:
   # MutterClutterActor, MutterClutterEvent, gpointer --> gboolean
-  method touch-event is also<touch_event> {
+  method Touch-Event is also<touch_event> {
     self.connect-clutter-event($!mca, 'touch-event');
   }
 
   # Is originally:
   # MutterClutterActor, gchar, gboolean, gpointer --> void
-  method transition-stopped is also<transition_stopped> {
+  method Transition-Stopped is also<transition_stopped> {
     self.connect-transition-stopped($!mca);
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
-  method transitions-completed is also<transitions_completed> {
+  method Transitions-completed is also<transitions_completed> {
     self.connect($!mca, 'transitions-completed');
   }
 
   # Is originally:
   # MutterClutterActor, gpointer --> void
-  method unrealize {
+  method Unrealize {
     self.connect($!mca, 'unrealize');
   }
 
@@ -1689,6 +1708,15 @@ class Mutter::Clutter::Actor {
     self.get_child_at_index(k);
   }
 
+  # cw: -XXX?- conflict, see 1740
+  # multi method iterator ({
+  #   generate-iterable(
+  #     self,
+  #     SUB      { self.get_n_children        },
+  #     sub (\i) { self.get_child_at_index(i) }
+  #   );
+  # }
+
   # ...
 
   method get_child_transform (graphene_matrix_t() $transform) {
@@ -1760,13 +1788,21 @@ class Mutter::Clutter::Actor {
     MutterClutterContentRepeatEnum( clutter_actor_get_content_repeat($!mca) );
   }
 
-  method get_content_scaling_filters (
-    MutterClutterScalingFilter() $min_filter,
-    MutterClutterScalingFilter() $mag_filter
-  )
+  proto method get_content_scaling_filters (|)
     is also<get-content-scaling-filters>
-  {
-    clutter_actor_get_content_scaling_filters($!mca, $min_filter, $mag_filter);
+  { * }
+
+  multi method get_content_scaling_filters {
+    samewith($, $);
+  }
+  multi method get_content_scaling_filters (
+    $min_filter is rw,
+    $mag_filter is rw
+  ) {
+    my MutterClutterScalingFilter ($mn, $mg) = 0 xx 2;
+
+    clutter_actor_get_content_scaling_filters($!mca, $mn, $mg);
+    ($min_filter, $mag_filter) = ($mn, $mg);
   }
 
   method get_default_paint_volume (:$raw = False)
@@ -1777,13 +1813,13 @@ class Mutter::Clutter::Actor {
     >
   {
     propReturnObject(
-      clutter_actor_get_default_paint_volueasing_modeme($!mca),
+      clutter_actor_get_default_paint_volume($!mca),
       $raw,
       |Mutter::Clutter::PaintVolume.getTypePair
     );
   }
 
-  method get_easing_delay is also<get-easieasing_modeng-delay> {
+  method get_easing_delay is also<get-easing-delay> {
     clutter_actor_get_easing_delay($!mca);
   }
 
@@ -1796,11 +1832,7 @@ class Mutter::Clutter::Actor {
   }
 
   method get_first_child (:$raw = False)
-    is also<
-      get-first-child
-      first_child
-      first-child
-    >
+    is also<get-first-child>
   {
     propReturnObject(
       clutter_actor_get_first_child($!mca),
@@ -1840,11 +1872,7 @@ class Mutter::Clutter::Actor {
   }
 
   method get_last_child ( :$raw = False )
-    is also<
-      get-last-child
-      last_child
-      last-child
-    >
+    is also<get-last-child>
   {
     propReturnObject(
       clutter_actor_get_last_child($!mca),
@@ -1854,11 +1882,7 @@ class Mutter::Clutter::Actor {
   }
 
   method get_layout_manager ( :$raw = False )
-    is also<
-      get-layout-manager
-      layout_manager
-      layout-manager
-    >
+    is also<get-layout-manager>
   {
     propReturnObject(
       clutter_actor_get_layout_manager($!mca),
@@ -2178,8 +2202,16 @@ class Mutter::Clutter::Actor {
     clutter_actor_get_transform($!mca, $transform);
   }
 
-  method get_transformed_extents (graphene_rect_t $rect) {
+
+  proto method get_transformed_extents (|)
+  { * }
+
+  multi method get_transformed_extents {
+    samewith(graphene_rect_t.new);
+  }
+  multi method get_transformed_extents (graphene_rect_t() $rect) {
     clutter_actor_get_transformed_extents($!mca, $rect);
+    $rect;
   }
 
   method get_transformed_paint_volume (
@@ -2515,7 +2547,7 @@ class Mutter::Clutter::Actor {
 
   method set_child_below_sibling (
     MutterClutterActor() $child,
-    MutterClutterActor() $sibling
+    MutterClutterActor() $sibling = MutterClutterActor
   ) {
     clutter_actor_set_child_below_sibling($!mca, $child, $sibling);
   }
@@ -3130,20 +3162,20 @@ use GLib::Object::Type;
 use GLib::Class::Object;
 
 BEGIN {
-  @animatables = Mutter::Clutter::Actor.&findMethodsWithRole(
-    AnimatablePropertyMethod
-  );
-  @set-methods = Mutter::Clutter::Actor.&findMethodsWithPrefixes('set_');
-  @add-methods = Mutter::Clutter::Actor.&findMethodsWithPrefixes('add_');
-  say "Mutter::Clutter::Actor - { +@animatables } animatables, {
-         +@set-methods } set methods, and { +@add-methods } add methods";
+  # @animatables = Mutter::Clutter::Actor.&findMethodsWithRole(
+  #   AnimatablePropertyMethod
+  # );
+  # @set-methods = Mutter::Clutter::Actor.&findMethodsWithPrefixes('set_');
+  # @add-methods = Mutter::Clutter::Actor.&findMethodsWithPrefixes('add_');
+  # say "Mutter::Clutter::Actor - { +@animatables } animatables, {
+  #        +@set-methods } set methods, and { +@add-methods } add methods";
 }
 
-INIT {
-  unless %*ENV<P6_GLIB_COMPILE_PROCESS> {
-    my $o = GLib::Object.new(Mutter::Clutter::Actor.get-type);
-    %properties = $o.getClass.getProperties;
-    my $np = %properties.elems;
-    say "Mutter::Clutter::Actor - { $np } property entr{ $np == 1 ?? 'y' !! 'ies' }";
-  }
-}
+# INIT {
+#   unless %*ENV<P6_GLIB_COMPILE_PROCESS> {
+#     my $o = GLib::Object.new(Mutter::Clutter::Actor.get-type);
+#     %properties = $o.getClass.getProperties;
+#     my $np = %properties.elems;
+#     say "Mutter::Clutter::Actor - { $np } property entr{ $np == 1 ?? 'y' !! 'ies' }";
+#   }
+# }
