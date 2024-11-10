@@ -10,18 +10,22 @@ role Mutter::Clutter::Roles::Signals::Actor {
 
   # ClutterActor, ClutterActorBox, ClutterAllocationFlags, gpointer
   method connect-allocation-changed (
-    $obj,
-    $signal = 'allocation-changed',
-    &handler?
+     $obj,
+     $signal    = 'allocation-changed',
+     &handler?,
+    :$raw       = False
   ) {
     my $hid;
     %!signals-a{$signal} //= do {
       my $s = Supplier.new;
       $hid = g-connect-allocation-changed($obj, $signal,
-        -> $, $cabx, $cafs, $ud {
+        -> $, $cabx is copy, $cafs, $ud {
           CATCH {
             default { .message.say; $s.quit($_) }
           }
+
+          $cabx = Mutter::Clutter::ActorBox.new($cabx);
+            unless $raw;
 
           $s.emit( [self, $cabx, $cafs, $ud ] );
         },
@@ -35,18 +39,21 @@ role Mutter::Clutter::Roles::Signals::Actor {
 
   # ClutterActor, ClutterEvent, gpointer --> gboolean
   method connect-clutter-event (
-    $obj,
-    $signal,
-    &handler?
+     $obj,
+     $signal,
+     &handler?,
+    :$raw       = False
   ) {
     my $hid;
     %!signals-a{$signal} //= do {
       my $s = Supplier.new;
       $hid = g-connect-clutter-event($obj, $signal,
-        -> $, $cet, $ud --> gboolean {
+        -> $, $cet is copy, $ud --> gboolean {
           CATCH {
             default { .message.say; $s.quit($_) }
           }
+
+          $cet = Mutter::Clutter::Event.new($cet) unless $raw;
 
           my $r = ReturnedValue.new;
           $s.emit( [self, $cet, $ud, $r] );
@@ -62,9 +69,10 @@ role Mutter::Clutter::Roles::Signals::Actor {
 
   # ClutterActor, ClutterColor, gpointer
   method connect-pick (
-    $obj,
-    $signal = 'pick',
-    &handler?
+     $obj,
+     $signal    = 'pick',
+     &handler?
+    :$raw       = False
   ) {
     my $hid;
     %!signals-a{$signal} //= do {
@@ -74,6 +82,8 @@ role Mutter::Clutter::Roles::Signals::Actor {
           CATCH {
             default { .message.say; $s.quit($_) }
           }
+
+          $ccr = Mutter::Clutter::Color.new($ccr) unless $raw;
 
           $s.emit( [self, $ccr, $ud ] );
         },
@@ -125,8 +135,8 @@ sub g-connect-allocation-changed (
   uint32  $flags
 )
   returns uint64
-  is native('gobject-2.0')
-  is symbol('g_signal_connect_object')
+  is      native('gobject-2.0')
+  is      symbol('g_signal_connect_object')
 { * }
 
 # ClutterActor, ClutterEvent, gpointer --> gboolean
@@ -143,8 +153,8 @@ sub g-connect-clutter-event (
   uint32  $flags
 )
   returns uint64
-  is native('gobject-2.0')
-  is symbol('g_signal_connect_object')
+  is      native('gobject-2.0')
+  is      symbol('g_signal_connect_object')
 { * }
 
 # ClutterActor, ClutterColor, gpointer
@@ -156,8 +166,8 @@ sub g-connect-pick (
   uint32  $flags
 )
   returns uint64
-  is native('gobject-2.0')
-  is symbol('g_signal_connect_object')
+  is      native('gobject-2.0')
+  is      symbol('g_signal_connect_object')
 { * }
 
 
@@ -170,6 +180,6 @@ sub g-connect-transition-stopped (
   uint32  $flags
 )
   returns uint64
-  is native('gobject-2.0')
-  is symbol('g_signal_connect_object')
+  is      native('gobject-2.0')
+  is      symbol('g_signal_connect_object')
 { * }
