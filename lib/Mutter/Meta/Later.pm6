@@ -5,7 +5,11 @@ class Mutter::Meta::Later {
 
   has MetaLaters $!later is implementor;
 
-  method add (
+  	
+  multi method add (&func, $user_data = gpointer, :$before is required) {
+	samewith(META_LATER_BEFORE_REDRAW, &func, $user_data)l
+  }
+  multi method add (
     Int()    $when,
              &func,
     gpointer $user_data = gpointer
@@ -17,7 +21,7 @@ class Mutter::Meta::Later {
   }
 
   # cw: 'is static' is not dispatch level, so we drop back to type smileys.
-  method add (
+  multi method add (
     ::?CLASS:U
 
              &func,
