@@ -126,24 +126,24 @@ class Mutter::Clutter::Color {
     self.bless( :$mutter-clutter-color );
   }
 
-  method get_static (Int() $static is copy) is static is also<get-static> {
-    die qq:to/DIE/.chomp unless $static ~~ Int || $static.^lookup('Int');
-Mutter::Clutter::Color.get_static only takes a MutterClutterStaticColor or
-Int-compatible parameter. The type passed was { $static.^name }
-DIE
-
-    $static .= Int;
-    my guint $s = $static;
-    my $mutter-clutter-color = clutter_color_get_static($s);
-
-    if $DEBUG {
-      say "S-{ MutterClutterStaticColorEnum( $static ) } - {$_}: {
-           $mutter-clutter-color."$_"() }"
-      for <red green blue alpha>;
-    }
-
-    $mutter-clutter-color ?? self.bless( :$mutter-clutter-color ) !! Nil;
-  }
+#   method get_static (Int() $static is copy) is static is also<get-static> {
+#     die qq:to/DIE/.chomp unless $static ~~ Int || $static.^lookup('Int');
+# Mutter::Clutter::Color.get_static only takes a MutterClutterStaticColor or
+# Int-compatible parameter. The type passed was { $static.^name }
+# DIE
+#
+#     $static .= Int;
+#     my guint $s = $static;
+#     my $mutter-clutter-color = clutter_color_get_static($s);
+#
+#     if $DEBUG {
+#       say "S-{ MutterClutterStaticColorEnum( $static ) } - {$_}: {
+#            $mutter-clutter-color."$_"() }"
+#       for <red green blue alpha>;
+#     }
+#
+#     $mutter-clutter-color ?? self.bless( :$mutter-clutter-color ) !! Nil;
+#   }
 
   method init (
     Int()             $red,
@@ -440,50 +440,50 @@ package Mutter::Clutter::Color::Package {
   our $MUTTER_CLUTTER_COLOR_Transparent     is export;
 
   INIT {
-    $MUTTER_CLUTTER_COLOR_White            = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_WHITE);
-    $MUTTER_CLUTTER_COLOR_Black            = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_BLACK);
-    $MUTTER_CLUTTER_COLOR_Red              = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_RED);
-    $MUTTER_CLUTTER_COLOR_DarkRed          = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_DARK_RED);
-    $MUTTER_CLUTTER_COLOR_Green            = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_GREEN);
-    $MUTTER_CLUTTER_COLOR_DarkGreen        = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_DARK_GREEN);
-    $MUTTER_CLUTTER_COLOR_Blue             = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_BLUE);
-    $MUTTER_CLUTTER_COLOR_DarkBlue         = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_DARK_BLUE);
-    $MUTTER_CLUTTER_COLOR_Cyan             = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_CYAN);
-    $MUTTER_CLUTTER_COLOR_DarkCyan         = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_DARK_CYAN);
-    $MUTTER_CLUTTER_COLOR_Magenta          = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_MAGENTA);
-    $MUTTER_CLUTTER_COLOR_DarkMagenta      = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_DARK_MAGENTA);
-    $MUTTER_CLUTTER_COLOR_Yellow           = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_YELLOW);
-    $MUTTER_CLUTTER_COLOR_DarkYellow       = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_DARK_YELLOW);
-    $MUTTER_CLUTTER_COLOR_Gray             = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_GRAY);
-    $MUTTER_CLUTTER_COLOR_DarkGray         = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_DARK_GRAY);
-    $MUTTER_CLUTTER_COLOR_LightGray        = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_LIGHT_GRAY);
-    $MUTTER_CLUTTER_COLOR_Butter           = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_BUTTER);
-    $MUTTER_CLUTTER_COLOR_LightButter      = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_BUTTER_LIGHT);
-    $MUTTER_CLUTTER_COLOR_DarkButter       = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_BUTTER_DARK);
-    $MUTTER_CLUTTER_COLOR_Orange           = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_ORANGE);
-    $MUTTER_CLUTTER_COLOR_LightOrange      = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_ORANGE_LIGHT);
-    $MUTTER_CLUTTER_COLOR_DarkOrange       = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_ORANGE_DARK);
-    $MUTTER_CLUTTER_COLOR_Chocolate        = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_CHOCOLATE);
-    $MUTTER_CLUTTER_COLOR_LightChocolate   = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_CHOCOLATE_LIGHT);
-    $MUTTER_CLUTTER_COLOR_DarkChocolate    = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_CHOCOLATE_DARK);
-    $MUTTER_CLUTTER_COLOR_Chameleon        = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_CHAMELEON);
-    $MUTTER_CLUTTER_COLOR_LightChameleon   = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_CHAMELEON_LIGHT);
-    $MUTTER_CLUTTER_COLOR_DarkChameleon    = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_CHAMELEON_DARK);
-    $MUTTER_CLUTTER_COLOR_SkyBlue          = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_SKY_BLUE);
-    $MUTTER_CLUTTER_COLOR_LightSkyBlue     = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_SKY_BLUE_LIGHT);
-    $MUTTER_CLUTTER_COLOR_DarkSkyBlue      = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_SKY_BLUE_DARK);
-    $MUTTER_CLUTTER_COLOR_Plum             = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_PLUM);
-    $MUTTER_CLUTTER_COLOR_LightPlum        = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_PLUM_LIGHT);
-    $MUTTER_CLUTTER_COLOR_DarkPlum         = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_PLUM_DARK);
-    $MUTTER_CLUTTER_COLOR_ScarletRed       = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_SCARLET_RED);
-    $MUTTER_CLUTTER_COLOR_LightScarletRed  = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_SCARLET_RED_LIGHT);
-    $MUTTER_CLUTTER_COLOR_DarkScarletRed   = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_SCARLET_RED_DARK);
-    $MUTTER_CLUTTER_COLOR_Aluminium1       = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_ALUMINIUM_1);
-    $MUTTER_CLUTTER_COLOR_Aluminium2       = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_ALUMINIUM_2);
-    $MUTTER_CLUTTER_COLOR_Aluminium3       = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_ALUMINIUM_3);
-    $MUTTER_CLUTTER_COLOR_Aluminium4       = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_ALUMINIUM_4);
-    $MUTTER_CLUTTER_COLOR_Aluminium5       = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_ALUMINIUM_5);
-    $MUTTER_CLUTTER_COLOR_Aluminium6       = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_ALUMINIUM_6);
-    $MUTTER_CLUTTER_COLOR_Transparent      = Mutter::Clutter::Color.get_static(CLUTTER_COLOR_TRANSPARENT);
+    $MUTTER_CLUTTER_COLOR_White            = Mutter::Clutter::Color.new(0xff, 0xff, 0xff, 0xff),   # white
+    $MUTTER_CLUTTER_COLOR_Black            = Mutter::Clutter::Color.new(0x00, 0x00, 0x00, 0xff),   # black
+    $MUTTER_CLUTTER_COLOR_Red              = Mutter::Clutter::Color.new(0xff, 0x00, 0x00, 0xff),   # red
+    $MUTTER_CLUTTER_COLOR_DarkRed          = Mutter::Clutter::Color.new(0x80, 0x00, 0x00, 0xff),   # dark red
+    $MUTTER_CLUTTER_COLOR_Green            = Mutter::Clutter::Color.new(0x00, 0xff, 0x00, 0xff),   # green
+    $MUTTER_CLUTTER_COLOR_DarkGreen        = Mutter::Clutter::Color.new(0x00, 0x80, 0x00, 0xff),   # dark green
+    $MUTTER_CLUTTER_COLOR_Blue             = Mutter::Clutter::Color.new(0x00, 0x00, 0xff, 0xff),   # blue
+    $MUTTER_CLUTTER_COLOR_DarkBlue         = Mutter::Clutter::Color.new(0x00, 0x00, 0x80, 0xff),   # dark blue
+    $MUTTER_CLUTTER_COLOR_Cyan             = Mutter::Clutter::Color.new(0x00, 0xff, 0xff, 0xff),   # cyan
+    $MUTTER_CLUTTER_COLOR_DarkCyan         = Mutter::Clutter::Color.new(0x00, 0x80, 0x80, 0xff),   # dark cyan
+    $MUTTER_CLUTTER_COLOR_Magenta          = Mutter::Clutter::Color.new(0xff, 0x00, 0xff, 0xff),   # magenta
+    $MUTTER_CLUTTER_COLOR_DarkMagenta      = Mutter::Clutter::Color.new(0x80, 0x00, 0x80, 0xff),   # dark magenta
+    $MUTTER_CLUTTER_COLOR_Yellow           = Mutter::Clutter::Color.new(0xff, 0xff, 0x00, 0xff),   # yellow
+    $MUTTER_CLUTTER_COLOR_DarkYellow       = Mutter::Clutter::Color.new(0x80, 0x80, 0x00, 0xff),   # dark yellow
+    $MUTTER_CLUTTER_COLOR_Gray             = Mutter::Clutter::Color.new(0xa0, 0xa0, 0xa4, 0xff),   # gray
+    $MUTTER_CLUTTER_COLOR_DarkGray         = Mutter::Clutter::Color.new(0x80, 0x80, 0x80, 0xff),   # dark gray
+    $MUTTER_CLUTTER_COLOR_LightGray        = Mutter::Clutter::Color.new(0xc0, 0xc0, 0xc0, 0xff),   # light gray
+    $MUTTER_CLUTTER_COLOR_Butter           = Mutter::Clutter::Color.new(0xed, 0xd4, 0x00, 0xff),   # butter
+    $MUTTER_CLUTTER_COLOR_LightButter      = Mutter::Clutter::Color.new(0xfc, 0xe9, 0x4f, 0xff),   # butter light
+    $MUTTER_CLUTTER_COLOR_DarkButter       = Mutter::Clutter::Color.new(0xc4, 0xa0, 0x00, 0xff),   # butter dark
+    $MUTTER_CLUTTER_COLOR_Orange           = Mutter::Clutter::Color.new(0xf5, 0x79, 0x00, 0xff),   # orange
+    $MUTTER_CLUTTER_COLOR_LightOrange      = Mutter::Clutter::Color.new(0xfc, 0xaf, 0x3e, 0xff),   # orange light
+    $MUTTER_CLUTTER_COLOR_DarkOrange       = Mutter::Clutter::Color.new(0xce, 0x5c, 0x00, 0xff),   # orange dark
+    $MUTTER_CLUTTER_COLOR_Chocolate        = Mutter::Clutter::Color.new(0xc1, 0x7d, 0x11, 0xff),   # chocolate
+    $MUTTER_CLUTTER_COLOR_LightChocolate   = Mutter::Clutter::Color.new(0xe9, 0xb9, 0x6e, 0xff),   # chocolate light
+    $MUTTER_CLUTTER_COLOR_DarkChocolate    = Mutter::Clutter::Color.new(0x8f, 0x59, 0x02, 0xff),   # chocolate dark
+    $MUTTER_CLUTTER_COLOR_Chameleon        = Mutter::Clutter::Color.new(0x73, 0xd2, 0x16, 0xff),   # chameleon
+    $MUTTER_CLUTTER_COLOR_LightChameleon   = Mutter::Clutter::Color.new(0x8a, 0xe2, 0x34, 0xff),   # chameleon light
+    $MUTTER_CLUTTER_COLOR_DarkChameleon    = Mutter::Clutter::Color.new(0x4e, 0x9a, 0x06, 0xff),   # chameleon dark
+    $MUTTER_CLUTTER_COLOR_SkyBlue          = Mutter::Clutter::Color.new(0x34, 0x65, 0xa4, 0xff),   # sky blue
+    $MUTTER_CLUTTER_COLOR_LightSkyBlue     = Mutter::Clutter::Color.new(0x72, 0x9f, 0xcf, 0xff),   # sky blue light
+    $MUTTER_CLUTTER_COLOR_DarkSkyBlue      = Mutter::Clutter::Color.new(0x20, 0x4a, 0x87, 0xff),   # sky blue dark
+    $MUTTER_CLUTTER_COLOR_Plum             = Mutter::Clutter::Color.new(0x75, 0x50, 0x7b, 0xff),   # plum
+    $MUTTER_CLUTTER_COLOR_LightPlum        = Mutter::Clutter::Color.new(0xad, 0x7f, 0xa8, 0xff),   # plum light
+    $MUTTER_CLUTTER_COLOR_DarkPlum         = Mutter::Clutter::Color.new(0x5c, 0x35, 0x66, 0xff),   # plum dark
+    $MUTTER_CLUTTER_COLOR_ScarletRed       = Mutter::Clutter::Color.new(0xcc, 0x00, 0x00, 0xff),   # scarlet red
+    $MUTTER_CLUTTER_COLOR_LightScarletRed  = Mutter::Clutter::Color.new(0xef, 0x29, 0x29, 0xff),   # scarlet red light
+    $MUTTER_CLUTTER_COLOR_DarkScarletRed   = Mutter::Clutter::Color.new(0xa4, 0x00, 0x00, 0xff),   # scarlet red dark
+    $MUTTER_CLUTTER_COLOR_Aluminium1       = Mutter::Clutter::Color.new(0xee, 0xee, 0xec, 0xff),   # aluminium 1
+    $MUTTER_CLUTTER_COLOR_Aluminium2       = Mutter::Clutter::Color.new(0xd3, 0xd7, 0xcf, 0xff),   # aluminium 2
+    $MUTTER_CLUTTER_COLOR_Aluminium3       = Mutter::Clutter::Color.new(0xba, 0xbd, 0xb6, 0xff),   # aluminium 3
+    $MUTTER_CLUTTER_COLOR_Aluminium4       = Mutter::Clutter::Color.new(0x88, 0x8a, 0x85, 0xff),   # aluminium 4
+    $MUTTER_CLUTTER_COLOR_Aluminium5       = Mutter::Clutter::Color.new(0x55, 0x57, 0x53, 0xff),   # aluminium 5
+    $MUTTER_CLUTTER_COLOR_Aluminium6       = Mutter::Clutter::Color.new(0x2e, 0x34, 0x36, 0xff),   # aluminium 6
+    $MUTTER_CLUTTER_COLOR_Transparent      = Mutter::Clutter::Color.new(0x00, 0x00, 0x00, 0x00)    #  transparent 
   }
 }
