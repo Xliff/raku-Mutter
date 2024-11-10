@@ -12,16 +12,7 @@ use GLib::Roles::Implementor;
 class Mutter::Clutter::ActorBox {
   also does GLib::Roles::Implementor;
 
-  has MutterClutterActorBox $!mcab is implementor handles <
-    x1
-    x2
-    y1
-    y2
-    width
-    height
-    w
-    h
-  >;
+  has MutterClutterActorBox $!mcab is implementor handles(*);
 
   submethod BUILD ( :$mutter-actor-box ) {
     $!mcab = $mutter-actor-box if $mutter-actor-box;
@@ -37,6 +28,12 @@ class Mutter::Clutter::ActorBox {
     my $mutter-actor-box = clutter_actor_box_new($x1, $y1, $x2, $y2);
 
     $mutter-actor-box ?? self.bless( :$mutter-actor-box ) !! Nil;
+  }
+
+  method new-with-size (Num() $x, Num() $y, Num() $width, Num() $height)
+    is also<new_with_height>
+  {
+    self.new($x, $y, $x + $width, $y + $height);
   }
 
   method new_from_vertices (graphene_point3d_t() $verts)
@@ -90,13 +87,7 @@ class Mutter::Clutter::ActorBox {
     clutter_actor_box_get_area($!mcab);
   }
 
-  method get_height
-    is also<
-      get-height
-      height
-      h
-    >
-  {
+  method get_height is also<get-height> {
     clutter_actor_box_get_height($!mcab);
   }
 
@@ -112,6 +103,18 @@ class Mutter::Clutter::ActorBox {
 
     clutter_actor_box_get_origin($!mcab, $xx, $yy);
     ($x, $y) = ($xx, $yy);
+  }
+
+  method pos1 is rw {
+    Proxy.new:
+      FETCH => -> $     { ( $.x1, $.y1 ) },
+      STORE => -> $, \v { ( $.x1, $.y1 ) = v }
+  }
+
+  method pos2 is rw {
+    Proxy.new:
+      FETCH => -> $     { ( $.x2, $.y2 ) },
+      STORE => -> $, \v { ( $.x2, $.y2 ) = v }
   }
 
   proto method get_size (|)
@@ -134,31 +137,15 @@ class Mutter::Clutter::ActorBox {
     unstable_get_type( self.^name, &clutter_actor_box_get_type, $n, $t );
   }
 
-  method get_width
-    is also<
-      get-width
-      width
-      w
-    >
-  {
+  method get_width is also<get-width> {
     clutter_actor_box_get_width($!mcab);
   }
 
-  method get_x
-    is also<
-      get-x
-      x
-    >
-  {
+  method get_x is also<get-x> {
     clutter_actor_box_get_x($!mcab);
   }
 
-  method get_y
-    is also<
-      get-y
-      y
-    >
-  {
+  method get_y is also<get-y> {
     clutter_actor_box_get_y($!mcab);
   }
 
