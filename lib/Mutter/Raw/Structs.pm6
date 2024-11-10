@@ -15,6 +15,22 @@ use GLib::Roles::Pointers;
 
 unit package Mutter::Raw::Structs;
 
+class MutterClutterActorBox is repr<CStruct> is export {
+  has gfloat $.x1 is rw;
+  has gfloat $.y1 is rw;
+  has gfloat $.x2 is rw;
+  has gfloat $.y2 is rw;
+
+  method x      is rw      { $!x1 }
+  method y      is rw      { $!y1 }
+	method width  is also<w> { $!x2 - $!x2 }
+	method height is also<h> { $!y2 - $!y1 }
+
+  method size { $.width, $.height             }
+  method pos  { $.x1, $.y1                    }
+  method dim  { $.x1, $.y1, $.width, $.height }
+}
+
 class MutterClutterFrameInfo is repr<CStruct> is export {
 	has int64_t                    $.frame-counter                  is rw;
 	has int64_t                    $.presentation-time              is rw; #= microseconds
@@ -84,6 +100,20 @@ class MutterClutterMargin is repr<CStruct> is export {
 
 }
 
+class MtkRectangle is repr<CStruct> is export does GLib::Roles::Pointers {
+  has int32 $.x      is rw;
+  has int32 $.y      is rw;
+  has int32 $.width  is rw;
+  has int32 $.height is rw;
+
+  method w is rw { $!width  }
+  method h is rw { $!height }
+
+  submethod BUILD ( :$!x, :$!y, :w(:$!width), :h(:$!height) )
+  { }
+}
+
+# cw: SSDD
 class MutterClutterOffscreenRectangle is repr<CStruct> is export {
 	has gint $.x      is rw;
 	has gint $.y      is rw;
@@ -92,6 +122,9 @@ class MutterClutterOffscreenRectangle is repr<CStruct> is export {
 
 	method w is rw { $.width  }
 	method h is rw { $.height }
+
+  submethod BUILD ( :$!x, :$!y, :w(:$!width), :h(:$!height) )
+  { }
 }
 
 class MutterClutterOffscreenBarrierEvent is repr<CStruct> does GLib::Roles::Pointers is export {
@@ -126,6 +159,38 @@ class MutterClutterOffscreenBarrier is repr<CStruct> is export {
 # 	has MutterClutterOffscreenSide      $.side_type;
 # 	has MutterClutterOffscreendgeType  $.edge_type;
 # }
+
+class MetaVector2 is repr<CStruct> does GLib::Roles::Pointers is export {
+  has gfloat $.x is rw;
+  has gfloat $.y is rw;
+
+  method pos      { ($!x, $!y) }
+
+  method subtract (MetaVector2 $b) {
+    self.new( |(self.pos »-« $b.pos) );
+  }
+
+  method new ($x, $y) {
+    self.bless( :$x, :$y );
+  }
+}
+
+multi sub infix:<-> (MetaVector2 $a, MetaVector2 $b) is export {
+  $a.subtract($b);
+}
+
+class MetaLine2 is repr<CStruct> does GLib::Roles::Pointers is export {
+  HAS MetaVector2 $.a;
+  HAS MetaVector2 $.b;
+}
+
+class MetaBorder is repr<CStruct> does GLib::Roles::Pointers is export {
+  has MetaLine2                 $.line;
+  has MetaBorderMotionDirection $.blocking_directions is rw;
+
+  method start { $.line.a.pos }
+  method end   { $.line.b.pos }
+}
 
 class MutterClutterOffscreenFrameBorders is repr<CStruct> is export {
 	has GtkBorder $.visible  ;
@@ -494,8 +559,67 @@ class MutterClutterIMEvent is repr<CStruct> is export does MutterClutterEventMet
 	has MutterClutterPreeditResetMode $.mode;
 }
 
+class MutterMetaPoint is repr<CStruct> {
+  has gdouble $.x is rw;
+  has gdouble $.y is rw;
+}
+class MetaOutputHdrMetadata is repr<CStruct> is export does GLib::Roles::Pointers {
+  has gboolean                  $.active                            is rw;
+  has MetaOutputHdrMetadataEOTF $.eotf                              is rw;
+  HAS MutterMetaPoint           @.mastering_display_primaries[3]    is CArray;
+  HAS MutterMetaPoint           $.mastering_display_white_point;
+  has gdouble                   $.mastering_display_max_luminance   is rw;
+  has gdouble                   $.mastering_display_min_luminance   is rw;
+  has gdouble                   $.max_cll                           is rw;
+  has gdouble                   $.max_fall                          is rw;
+}
+
+class MetaTileInfo is repr<CStruct> is export does GLib::Roles::Pointers {
+  has uint32 $.group_id     is rw;
+  has uint32 $.flags        is rw;
+  has uint32 $.max_h_tiles  is rw;
+  has uint32 $.max_v_tiles  is rw;
+  has uint32 $.loc_h_tile   is rw;
+  has uint32 $.loc_v_tile   is rw;
+  has uint32 $.tile_w       is rw;
+  has uint32 $.tile_h       is rw;
+}
+
+class MetaEdidHdrStaticMetadata is repr<CStruct> is export {
+  has int32                      $.available     is rw;
+  has int32                      $.max_luminance is rw;
+  has int32                      $.min_luminance is rw;
+  has int32                      $.max_fal       is rw;
+  has MetaEdidTransferFunction   $.tf            is rw;
+  has MetaEdidStaticMetadataType $.sm            is rw;
+}
+
+class MetaEdidInfo is repr<CStruct> is export does GLib::Roles::Pointers {
+  has Str                       $!manufacturer_code;
+  has int32                     $.product_code         is rw;
+  has uint32                    $.serial_number        is rw;
+  has gdouble                   $.gamma                is rw;
+  has gdouble                   $.red_x                is rw;
+  has gdouble                   $.red_y                is rw;
+  has gdouble                   $.green_x              is rw;
+  has gdouble                   $.green_y              is rw;
+  has gdouble                   $.blue_x               is rw;
+  has gdouble                   $.blue_y               is rw;
+  has gdouble                   $.white_x              is rw;
+  has gdouble                   $.white_y              is rw;
+  has Str                       $!dsc_serial_number;
+  has Str                       $!dsc_product_name;
+  has MetaEdidColorimetry       $.colorimetry          is rw;
+  HAS MetaEdidHdrStaticMetadata $.hdr_static_metadata;
+}
+
+class MutterMetaGpu is repr<CUnion> is export does GLib::Roles::Pointers {
+  HAS GObject  $.parent;
+  has gpointer $!private;
+}
+
 #| Skip Test
-class MutterClutterEvent is repr<CUnion> is repr<CStruct> is export does GLib::Roles::Pointers {
+class MutterClutterEvent is repr<CUnion> is export does GLib::Roles::Pointers {
   has MutterClutterAnyEvent           $.any;
   has MutterClutterButtonEvent        $.button;
   has MutterClutterKeyEvent           $.key;
