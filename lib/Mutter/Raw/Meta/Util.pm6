@@ -8,6 +8,15 @@ unit package Mutter::Raw::Meta::Util;
 
 ### /usr/src/mutter-42.1/src/meta/util.h
 
+sub meta_accelerator_name (
+  MutterClutterModifierType $accelerator_mods,
+  gint                      $accelerator_key
+)
+  returns Str
+  is      native(mutter)
+  is      export
+{ * }
+
 sub meta_add_clutter_debug_flags (
   ClutterDebugFlag     $debug_flags,
   ClutterDrawDebugFlag $draw_flags,
