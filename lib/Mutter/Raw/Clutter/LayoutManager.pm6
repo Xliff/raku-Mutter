@@ -5,6 +5,7 @@ use NativeCall;
 use GLib::Raw::Definitions;
 use GLib::Raw::Structs;
 use Mutter::Raw::Definitions;
+use Mutter::Raw::Structs;
 
 unit package Mutter::Raw::Clutter::LayoutManager;
 
