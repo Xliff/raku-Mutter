@@ -158,7 +158,7 @@ sub meta_display_get_last_user_time (MutterMetaDisplay $display)
 sub meta_display_get_monitor_geometry (
   MutterMetaDisplay   $display,
   gint                $monitor,
-  MutterMetaRectangle $geometry
+  MtkRectangle $geometry
 )
   is native(mutter)
   is export
@@ -175,7 +175,7 @@ sub meta_display_get_monitor_in_fullscreen (
 
 sub meta_display_get_monitor_index_for_rect (
   MutterMetaDisplay   $display,
-  MutterMetaRectangle $rect
+  MtkRectangle $rect
 )
   returns gint
   is native(mutter)
