@@ -83,7 +83,7 @@ class Mutter::Clutter::Backend {
     self.connect($!mcb, 'settings-changed');
   }
 
-  method clear_input_method 
+  method clear_input_method
     is also<
       clear-input-method
       clearInputMethod
@@ -141,10 +141,18 @@ class Mutter::Clutter::Backend {
     clutter_backend_set_font_options($!mcb, $options);
   }
 
+  method unset_font_options is also<cairo-font-options-t> {
+    $.set_font_options(cairo_font_options_t);
+  }
+
   method set_input_method (MutterClutterInputMethod() $method)
     is also<set-input-method>
   {
     clutter_backend_set_input_method($!mcb, $method);
+  }
+
+  method unset_input_method is also<unset-input-method> {
+    $.set_input_method(MutterClutterInputMethod);
   }
 
 }
