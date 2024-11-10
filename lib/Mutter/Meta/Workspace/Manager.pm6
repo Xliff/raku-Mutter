@@ -153,6 +153,7 @@ class Mutter::Meta::Workspace::Manager {
   method get_n_workspaces
     is also<
       get-n-workspaces
+      nWorkspaces
       elems
     >
   {
