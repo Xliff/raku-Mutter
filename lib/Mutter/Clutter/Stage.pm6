@@ -195,37 +195,37 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
 
   # Is originally:
   # MutterClutterStage, -> void
-  method activate {
+  method Activate {
     self.connect($!mcs, 'activate');
   }
 
   # Is originally:
   # MutterClutterStage, gpointer --> void
-  method after-paint is also<after_paint> {
+  method After-Paint is also<after_paint> {
     self.connect($!mcs, 'after-paint');
   }
 
   # Is originally:
   # MutterClutterStage, gpointer --> void
-  method deactivate {
+  method Deactivate {
     self.connect($!mcs, 'deactivate');
   }
 
   # Is originally:
   # MutterClutterStage, MutterClutterEvent, gpointer --> gboolean
-  method delete-event is also<delete_event> {
+  method Delete-Event is also<delete_event> {
     self.connec-event($!mcs, 'delete-event');
   }
 
   # Is originally:
   # MutterClutterStage, gpointer --> void
-  method fullscreen {
+  method Fullscreen {
     self.connect($!mcs, 'fullscreen');
   }
 
   # Is originally:
   # MutterClutterStage, gpointer --> void
-  method unfullscreen {
+  method Unfullscreen {
     self.connect($!mcs, 'unfullscreen');
   }
 
@@ -233,16 +233,26 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
     clutter_stage_ensure_viewport($!mcs);
   }
 
-  method get_actor_at_pos (
-    Int()  $pick_mode, # ClutterPickMode $pick_mode,
+  multi method get_actor_at_pos (|)
+    is also<get-actor-at-pos>
+  { * }
+
+  multi method get_actor_at_pos (
+    Int()  $x,
+    Int()  $y,
+          :$raw = False,
+    Int() :pick_mode(:pick-mode(:$mode)) = CLUTTER_PICK_ALL
+  ) {
+    samewith($mode, $x, $y, :$raw);
+  }
+  multi method get_actor_at_pos (
+    Int()  $pick_mode,
     Int()  $x,
     Int()  $y,
           :$raw = False
-  )
-    is also<get-actor-at-pos>
-  {
-    my guint   $pm       = $pick_mode;
-    my gfloat ($xx, $yy) = $x, $y;
+  ) {
+    my MutterClutterPickMode  $pm       = $pick_mode;
+    my gfloat                ($xx, $yy) = $x, $y;
 
     propReturnObject(
       clutter_stage_get_actor_at_pos(
@@ -449,6 +459,10 @@ class Mutter::Clutter::Stage is Mutter::Clutter::Actor {
 
   method set_key_focus (MutterClutterActor() $actor) is also<set-key-focus> {
     clutter_stage_set_key_focus($!mcs, $actor);
+  }
+
+  method unset_key_focus is also<unset-key-focus> {
+    self.set_key_focus(MutterClutterActor);
   }
 
   method set_minimum_size (Int() $width, Int() $height)
