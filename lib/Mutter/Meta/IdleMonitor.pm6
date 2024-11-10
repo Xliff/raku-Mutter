@@ -6,6 +6,8 @@ use NativeCall;
 
 use Mutter::Raw::Types;
 
+use GLib::Source;
+
 use GLib::Roles::Object;
 use GLib::Roles::Implementor;
 
@@ -70,7 +72,7 @@ class MutterMeta::Meta::IdleMonitor {
       &callback,
       $user_data,
       &notify
-    );
+    ) but GIdleId[ sub ($i) { self.remove-watch($i) } ]
   }
 
   method add_user_active_watch (
@@ -85,7 +87,7 @@ class MutterMeta::Meta::IdleMonitor {
       &callback,
       $user_data,
       &notify
-    );
+    ) but GIdleId[ sub ($i) { self.remove-watch($i) } ]
   }
 
   method get_idletime is also<get-idletime> {
