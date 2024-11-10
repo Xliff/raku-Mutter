@@ -123,6 +123,17 @@ class Mutter::Clutter::BoxLayout is Mutter::Clutter::LayoutManager {
     );
   }
 
+  # cw: QoL improvement
+  method add (
+    :$expand,
+    :x_fill( :$x-fill),
+    :y_fill( :$y-fill),
+    :x_align(:$x-align),
+    :y_align(:$y-align)
+  ) {
+    die 'NYI!'
+  }
+
   method get_homogeneous is also<get-homogeneous> {
     so clutter_box_layout_get_homogeneous($!mcbl);
   }
