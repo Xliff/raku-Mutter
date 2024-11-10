@@ -17,12 +17,12 @@ class Mutter::Meta::CursorTracker {
     $meta-cursor-tracker ?? self.bless( :$meta-cursor-tracker ) !! Nil;
   }
 
-  method get_for_display ( :$raw = False ) {
+  method get_for_display (MetaDisplay() $display, :$raw = False ) {
     propReturnObject(
-      meta_cursor_tracker_get_for_display($!mct),
+      meta_cursor_tracker_get_for_display($display),
       $raw,
       |self.getTypePair
-    );s
+    );
   }
 
   method get_hot ($x is rw, $y is rw) {
