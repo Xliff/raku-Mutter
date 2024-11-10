@@ -6,7 +6,7 @@ use Mutter::Raw::Clutter::PanAction;
 class Mutter::Clutter::PanAction {
   has MutterClutterPanAction $!mcpa is implementor;
 
-  method new {
+  multi method new {
     my $mutter-clutter-pan-action = clutter_pan_action_new();
 
     $mutter-clutter-pan-action ?? self.bless( :$mutter-clutter-pan-action )
@@ -93,7 +93,7 @@ class Mutter::Clutter::PanAction {
   proto method get_motion_delta (|)
   { * }
 
-  multi method get_motion_delta (Int() $point) {
+  multi method get_motion_delta (Int() $point = 0) {
     samewith($point, $, $);
   }
   multi method get_motion_delta (
