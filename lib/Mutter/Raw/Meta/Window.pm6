@@ -267,7 +267,7 @@ sub meta_window_get_icon_geometry (
 { * }
 
 sub meta_window_get_id (MutterMetaWindow $window)
-  returns uint64_t
+  returns uint64
   is native(mutter)
   is export
 { * }
@@ -642,8 +642,8 @@ sub meta_window_stick (MutterMetaWindow $window)
 
 sub meta_window_titlebar_is_onscreen (MutterMetaWindow $window)
   returns uint32
-  is native(mutter)
-  is export
+  is      native(mutter)
+  is      export
 { * }
 
 sub meta_window_unmake_above (MutterMetaWindow $window)
