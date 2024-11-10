@@ -747,6 +747,31 @@ our enum TestUtilsTextureFlagsEnum is export (
   TEST_UTILS_TEXTURE_NO_ATLAS       => 1 +< 2,
 );
 
+constant MutterClutterDebugFlag is export := guint32;
+our enum MutterClutterDebugFlagEnum is export (
+  CLUTTER_DEBUG_MISC                => 1,
+  CLUTTER_DEBUG_ACTOR               => 1 +< 1,
+  CLUTTER_DEBUG_TEXTURE             => 1 +< 2,
+  CLUTTER_DEBUG_EVENT               => 1 +< 3,
+  CLUTTER_DEBUG_PAINT               => 1 +< 4,
+  CLUTTER_DEBUG_PANGO               => 1 +< 5,
+  CLUTTER_DEBUG_BACKEND             => 1 +< 6,
+  CLUTTER_DEBUG_SCHEDULER           => 1 +< 7,
+  CLUTTER_DEBUG_SCRIPT              => 1 +< 8,
+  CLUTTER_DEBUG_SHADER              => 1 +< 9,
+  CLUTTER_DEBUG_MULTISTAGE          => 1 +< 10,
+  CLUTTER_DEBUG_ANIMATION           => 1 +< 11,
+  CLUTTER_DEBUG_LAYOUT              => 1 +< 12,
+  CLUTTER_DEBUG_PICK                => 1 +< 13,
+  CLUTTER_DEBUG_EVENTLOOP           => 1 +< 14,
+  CLUTTER_DEBUG_CLIPPING            => 1 +< 15,
+  CLUTTER_DEBUG_OOB_TRANSFORMS      => 1 +< 16,
+  CLUTTER_DEBUG_FRAME_TIMINGS       => 1 +< 17,
+  CLUTTER_DEBUG_DETAILED_TRACE      => 1 +< 18,
+  CLUTTER_DEBUG_GRABS               => 1 +< 19,
+  CLUTTER_DEBUG_FRAME_CLOCK         => 1 +< 20,
+);
+
 constant MutterClutterPointerA11yFlags is export := guint32;
 our enum MutterClutterPointerA11yFlagsEnum is export (
   CLUTTER_A11Y_SECONDARY_CLICK_ENABLED   => 1 +< 0,
@@ -908,29 +933,6 @@ our enum MutterClutterContentRepeatEnum is export (
   CLUTTER_REPEAT_X_AXIS => 1 +< 0,
   CLUTTER_REPEAT_Y_AXIS => 1 +< 1,
   CLUTTER_REPEAT_BOTH   => 1 +< 0 +| 1 +< 1
-);
-
-constant MutterClutterDebugFlag is export := guint32;
-our enum MutterClutterDebugFlagEnum is export (
-  CLUTTER_DEBUG_MISC           =>  1 +< 0,
-  CLUTTER_DEBUG_ACTOR          =>  1 +< 1,
-  CLUTTER_DEBUG_TEXTURE        =>  1 +< 2,
-  CLUTTER_DEBUG_EVENT          =>  1 +< 3,
-  CLUTTER_DEBUG_PAINT          =>  1 +< 4,
-  CLUTTER_DEBUG_PANGO          =>  1 +< 5,
-  CLUTTER_DEBUG_BACKEND        =>  1 +< 6,
-  CLUTTER_DEBUG_SCHEDULER      =>  1 +< 7,
-  CLUTTER_DEBUG_SCRIPT         =>  1 +< 8,
-  CLUTTER_DEBUG_SHADER         =>  1 +< 9,
-  CLUTTER_DEBUG_MULTISTAGE     => 1 +< 10,
-  CLUTTER_DEBUG_ANIMATION      => 1 +< 11,
-  CLUTTER_DEBUG_LAYOUT         => 1 +< 12,
-  CLUTTER_DEBUG_PICK           => 1 +< 13,
-  CLUTTER_DEBUG_EVENTLOOP      => 1 +< 14,
-  CLUTTER_DEBUG_CLIPPING       => 1 +< 15,
-  CLUTTER_DEBUG_OOB_TRANSFORMS => 1 +< 16,
-  CLUTTER_DEBUG_FRAME_TIMINGS  => 1 +< 17,
-  CLUTTER_DEBUG_DETAILED_TRACE => 1 +< 18,
 );
 
 constant MutterClutterDragAxis is export := guint32;
@@ -1795,6 +1797,20 @@ our enum MutterMetaPadActionTypeEnum is export <
   META_PAD_ACTION_STRIP
 >;
 
+constant MetaPadFeatureType is export := guint32;
+our enum MetaPadFeatureTypeEnum is export <
+  META_PAD_FEATURE_RING
+  META_PAD_FEATURE_STRIP
+>;
+
+constant MetaPadDirection is export := guint32
+our enum MetaPadDirectionEnum is export (
+  'META_PAD_DIRECTION_UP'     >= 1,
+  'META_PAD_DIRECTION_DOWN',
+  'META_PAD_DIRECTION_CW',
+  'META_PAD_DIRECTION_CCW'
+);
+
 constant MutterMetaPreference is export := guint32;
 our enum MutterMetaPreferenceEnum is export <
   META_PREF_MOUSE_BUTTON_MODS
@@ -1908,6 +1924,13 @@ our enum MutterMetaWindowMenuTypeEnum is export <
   META_WINDOW_MENU_APP
 >;
 
+constant MutterWindowSuspendStateEnum is export := guint;
+our enum MutterWindowSuspendState is export (
+  META_WINDOW_SUSPEND_STATE_ACTIVE      => 1,
+  'META_WINDOW_SUSPEND_STATE_HIDDEN',
+  'META_WINDOW_SUSPEND_STATE_SUSPENDED'
+);
+
 constant MutterMetaWindowType is export := guint32;
 our enum MutterMetaWindowTypeEnum is export <
   META_WINDOW_NORMAL
@@ -1926,6 +1949,13 @@ our enum MutterMetaWindowTypeEnum is export <
   META_WINDOW_COMBO
   META_WINDOW_DND
   META_WINDOW_OVERRIDE_OTHER
+>;
+
+constant MutterMtkRoundingStrategy is export := guint32;
+our enum MutterMtkRoundingStrategyEnum is export <
+  MTK_ROUNDING_STRATEGY_SHRINK
+  MTK_ROUNDING_STRATEGY_GROW
+  MTK_ROUNDING_STRATEGY_ROUND
 >;
 
 sub bppForMutterCoglFormat ($format) is export {
@@ -1985,3 +2015,78 @@ sub bppForMutterCoglFormat ($format) is export {
     }
   }
 }
+
+constant MetaEdidColorimetry is export := guint32;
+our enum MetaEdidColorimetryEnum (
+  META_EDID_COLORIMETRY_XVYCC601    => 1,
+  META_EDID_COLORIMETRY_XVYCC709    => 1 +<  1,
+  META_EDID_COLORIMETRY_SYCC601     => 1 +<  2,
+  META_EDID_COLORIMETRY_OPYCC601    => 1 +<  3,
+  META_EDID_COLORIMETRY_OPRGB       => 1 +<  4,
+  META_EDID_COLORIMETRY_BT2020CYCC  => 1 +<  5,
+  META_EDID_COLORIMETRY_BT2020YCC   => 1 +<  6,
+  META_EDID_COLORIMETRY_BT2020RGB   => 1 +<  7,
+  META_EDID_COLORIMETRY_ST2113RGB   => 1 +< 14,
+  META_EDID_COLORIMETRY_ICTCP       => 1 +< 15,
+);
+
+constant MetaEdidTransferFunction is export := guint32;
+our enum MetaEdidTransferFunctionEnum is export (
+  META_EDID_TF_TRADITIONAL_GAMMA_SDR => 1,
+  META_EDID_TF_TRADITIONAL_GAMMA_HDR => 1 +< 1,
+  META_EDID_TF_PQ                    => 1 +< 2,
+  META_EDID_TF_HLG                   => 1 +< 3,
+);
+
+constant MetaCrtcModeFlag is export := guint32;
+our enum MetaCrtcModeFlagEnum is export (
+  META_CRTC_MODE_FLAG_NONE      => 0,
+  META_CRTC_MODE_FLAG_PHSYNC    => 1,
+  META_CRTC_MODE_FLAG_NHSYNC    => 1 +<  1,
+  META_CRTC_MODE_FLAG_PVSYNC    => 1 +<  2,
+  META_CRTC_MODE_FLAG_NVSYNC    => 1 +<  3,
+  META_CRTC_MODE_FLAG_INTERLACE => 1 +<  4,
+  META_CRTC_MODE_FLAG_DBLSCAN   => 1 +<  5,
+  META_CRTC_MODE_FLAG_CSYNC     => 1 +<  6,
+  META_CRTC_MODE_FLAG_PCSYNC    => 1 +<  7,
+  META_CRTC_MODE_FLAG_NCSYNC    => 1 +<  8,
+  META_CRTC_MODE_FLAG_HSKEW     => 1 +<  9,
+  META_CRTC_MODE_FLAG_BCAST     => 1 +< 10,
+  META_CRTC_MODE_FLAG_PIXMUX    => 1 +< 11,
+  META_CRTC_MODE_FLAG_DBLCLK    => 1 +< 12,
+  META_CRTC_MODE_FLAG_CLKDIV2   => 1 +< 13,
+  META_CRTC_MODE_FLAG_MASK      => 0x3fff
+);
+
+constant MetaOutputHdrMetadataEOTF is export := guint32;
+our enum MetaOutputHdrMetadataEOTFEnum is export <
+  META_OUTPUT_HDR_METADATA_EOTF_TRADITIONAL_GAMMA_SDR
+  META_OUTPUT_HDR_METADATA_EOTF_TRADITIONAL_GAMMA_HDR
+  META_OUTPUT_HDR_METADATA_EOTF_PQ
+  META_OUTPUT_HDR_METADATA_EOTF_HLG
+>;
+
+constant MetaMonitorTransform is export := guint32;
+our enum MetaMonitorTransformEnum is export <
+  META_MONITOR_TRANSFORM_NORMAL
+  META_MONITOR_TRANSFORM_90
+  META_MONITOR_TRANSFORM_180
+  META_MONITOR_TRANSFORM_270
+  META_MONITOR_TRANSFORM_FLIPPED
+  META_MONITOR_TRANSFORM_FLIPPED_90
+  META_MONITOR_TRANSFORM_FLIPPED_180
+  META_MONITOR_TRANSFORM_FLIPPED_270
+>;
+
+constant MetaEdidStaticMetadataType is export := guint32;
+our enum MetaEdidStaticMetadataTypeEnum is export (
+  META_EDID_STATIC_METADATA_TYPE1 => 1
+)
+
+constant MetaBorderMotionDirection is export := guint32;
+our MetaBorderMotionDirectionEnum is export (
+  META_BORDER_MOTION_DIRECTION_POSITIVE_X => 1,
+  META_BORDER_MOTION_DIRECTION_POSITIVE_Y => 1 +< 1,
+  META_BORDER_MOTION_DIRECTION_NEGATIVE_X => 1 +< 2,
+  META_BORDER_MOTION_DIRECTION_NEGATIVE_Y => 1 +< 3,
+);
