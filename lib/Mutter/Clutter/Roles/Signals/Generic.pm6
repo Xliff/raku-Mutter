@@ -9,20 +9,22 @@ role Mutter::Clutter::Roles::Signals::Generic {
 
   # ClutterActor, ClutterActor, gpointer
   method connect-actor (
-    $obj,
-    $signal,
-    &handler?
+     $obj,
+     $signal,
+     &handler?,
+    :$raw       = False
   ) {
     my $hid;
     %!signals-clutter{$signal} //= do {
       my $s = Supplier.new;
       $hid = g-connect-actor($obj, $signal,
-        -> $, $car, $ud {
+        -> $, $car is copy, $ud {
           CATCH {
             default { .message.say; $s.quit($_) }
           }
 
           say 'connect-actor' if $DEBUG;
+          $car = ::('Mutter::Clutter::Actor').new($car) unless $raw;
 
           $s.emit( [self, $car, $ud ] );
         },
