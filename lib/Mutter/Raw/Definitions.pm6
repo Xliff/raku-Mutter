@@ -8,10 +8,11 @@ use GLib::Raw::Definitions;
 
 unit package Mutter::Raw::Definitions;
 
-constant mutter                 is export = 'mutter-13',v0;
-constant mutter-clutter         is export = '/usr/lib/x86_64-linux-gnu/mutter-13/mutter-clutter-13',v0;
-constant mutter-cogl            is export = '/usr/lib/x86_64-linux-gnu/mutter-13/mutter-cogl-13',v0;
-constant mutter-cogl-pango      is export = '/usr/lib/x86_64-linux-gnu/mutter-13/mutter-cogl-pango-13',v0;
+constant mutter                 is export = 'mutter-14',v0;
+constant mutter-clutter         is export = '/usr/lib/x86_64-linux-gnu/mutter-14/mutter-clutter-14',v0;
+constant mutter-cogl            is export = '/usr/lib/x86_64-linux-gnu/mutter-14/mutter-cogl-14',v0;
+constant mutter-cogl-pango      is export = '/usr/lib/x86_64-linux-gnu/mutter-14/mutter-cogl-pango-14',v0;
+constant mutter-mtk             is export = '/usr/lib/x86_64-linux-gnu/mutter-14/mutter-mtk-14',v0;
 
 constant cairo_rectangle_t      is export := Cairo::cairo_rectangle_t;
 constant cairo_rectangle_int_t  is export := Cairo::cairo_rectangle_int_t;
@@ -75,7 +76,6 @@ class MutterMetaKeyBinding              is repr<CPointer> does GLib::Roles::Poin
 
 class MutterClutterAction                   is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterActor                    is repr<CPointer> does GLib::Roles::Pointers is export { }
-class MutterClutterActorBox                 is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterActorMeta                is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterActorIter                is repr<CPointer> does GLib::Roles::Pointers is export { }
 class MutterClutterAlignConstraint          is repr<CPointer> does GLib::Roles::Pointers is export { }
@@ -206,12 +206,25 @@ class MutterCoglTimestampQuery       is repr<CPointer> does GLib::Roles::Pointer
 
 constant MutterCoglPipelineKey is export := Str;
 
-class X::Mutter::COGL::InvalidNumberOfElements is Exception {
-  has $.routine is built;
+class X::Mutter::InvalidNumberOfElements is Exception {
+  has $.routine is built is required;
+  has $.origin  is built is required;
 
   method message {
-    "Invalid number of elements in call to { $.routine }!";
+    do with $!routine && $!origin {
+      "[{ $.origin }] Invalid number of elements in call to { $.routine }!";
+    } orwith $!routine {
+      "Invalid number of elements in call to { $.routine }!";
+    } orwith $!origin {
+      "[{ $.origin }] Invalid number of elements!";
+    } else {
+      'Invalid number of elements!'
+    }
   }
+}
+
+class X::Mutter::Clutter::InvalidElementType is Exception {
+  has $.message is built;
 }
 
 constant CLUTTER_EVENT_PROPAGATE is export = 0;
