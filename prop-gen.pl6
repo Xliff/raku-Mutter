@@ -7,6 +7,7 @@ use DOM::Tiny;
 
 use lib <scripts .>;
 
+use ScriptConfig;
 use GTKScripts;
 
 my @really-strings = <
@@ -250,7 +251,7 @@ sub generateFromFile (
   /;
 
   my %properties;
-  for $search[] {
+  for $search.sort( *.<p>[0].Str ) {
 
     #.gist.say;
 
@@ -260,11 +261,13 @@ sub generateFromFile (
       do gather for .<p>.tail
                         .lc
                         .split(/ <.ws> '|' <.ws> /)
+        -> $_ is copy
      {
         my @perms;
 
-        #"RW-P: $_";
+        # say "RW-P: $_";
 
+        s:g/\W//;
         s/ 'writ'» /write/;
 
         @perms.push: 'read'           if .ends-with('_read'  | '_readable');
@@ -285,10 +288,11 @@ sub generateFromFile (
       $*types = $type;
       getType
     } else {
-      $*types = $type-prefix ~ .<p>[3].split('_')
-                                      .skip(2)
-                                      .map( *.lc.tc )
-                                      .join;
+      my $pre = .<p>[3] // '';
+      $*types = $type-prefix ~ $pre.split('_')
+                                   .skip(2)
+                                   .map( *.lc.tc )
+                                   .join;
     }
 
     my $dep = False;
@@ -307,7 +311,8 @@ sub MAIN (
   $control           is copy,
   :$var              is copy = 'w',
   :$prefix           is copy = "https://developer.gnome.org/gtk3/stable/",
-  :$type-prefix              = %config<type-prefix> // %config<type_prefix> // %config<prefix>,
+  :$type-prefix              = %config<struct-prefix> // %config<struct_prefix> //
+                               %config<type-prefix>   // %config<type_prefix>   // %config<prefix>,
   :$control-name
 ) {
   # If it's a URL, then try to pick it apart
