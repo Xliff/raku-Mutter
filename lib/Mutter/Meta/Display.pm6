@@ -8,14 +8,126 @@ use GLib::GSList;
 
 use GLib::Roles::Object;
 use GLib::Roles::Implementor;
+use Mutter::Meta::Roles::Signals::Display;
+
+# NEEDS REFRESH GOING TO MUTTER-14!
 
 our subset MutterMetaDisplayAncestry is export of Mu
   where MutterMetaDisplay | GObject;
 
 class Mutter::Meta::Display {
   also does GLib::Roles::Object;
+  also does Mutter::Meta::Roles::Signals::Display;
 
   has MutterMetaDisplay $!md is implementor;
+
+  method accelerator-activated {
+    $.connect-accelerator-activated($!md);
+  }
+
+  method metawindow {
+    $.connect-metawindow($!md);
+  }
+
+  method closing {
+    $.connect($!md, 'closing');
+  }
+
+  method cursor-updated {
+    $.connect($!md, 'cursor-updated');
+  }
+
+  method gl-video-memory-purged {
+    $.connect($!md, 'gl-video-memory-purged');
+  }
+
+  method grab-op-begin {
+    $.connect-grab-op($!md, 'grab-op-begin');
+  }
+
+  method grab-op-end {
+    $.connect-grab-op($!md, 'grab-op-end');
+  }
+
+  method init-xserver {
+    $.connect-init-xserver($!md);
+  }
+
+  method in-fullscreen-changed {
+    $.connect($!md, 'in-fullscreen-changed');
+  }
+
+  method modifiers-accelerator-activated {
+    $.connect-rbool($!md, 'modifiers-accelerator-activated');
+  }
+
+  method overlay-key {
+    $.connect($!md, 'overlay-key');
+  }
+
+  method pad-mode-switch {
+    $.connect-pad-mode-switch($!md);
+  }
+
+  method restacked {
+    $.connect($!md, 'restacked');
+  }
+
+  method restart {
+    $.connect-rbool($!md, 'restart');
+  }
+
+  method show-osd {
+    $.connect-show-osd($!md);
+  }
+
+  method show-osd-pad {
+    $.connect-show-osd-pad($!md);
+  }
+
+  method show-resize-popup {
+    $.connect-show-resize-popup($!md);
+  }
+
+  method showing-desktop-changed {
+    $.connect($!md, 'showing-desktop-changed');
+  }
+
+  method window-demands-attention {
+    $.connect-metawindow($!md, 'window-demands-attention')
+  }
+
+  method window-entered-monitor {
+    $.connect-metawindow-event($!md, 'window-entered-monitor');
+  }
+
+  method window-left-monitor {
+    $.connect-metawindow-event($!md, 'window-left-monitor');
+  }
+
+  method window-marked-urgent {
+    $.connect-metawindow($!md, 'window-marked-urgent')
+  }
+
+  method window-visibility-updated {
+    $.connect-window-visibility-updated($!md);
+  }
+
+  method workareas-changed {
+    $.connect($!md, 'workareas-changed');
+  }
+
+  method x11-display-closing {
+    $.connect($!md, 'x11-display-closing');
+  }
+
+  method x11-display-opened {
+    $.connect($!md, 'x11-display-opened');
+  }
+
+  method x11-display-setup {
+    $.connect($!md, 'x11-display-setup');
+  }
 
   method add_ignored_crossing_serial {
     meta_display_add_ignored_crossing_serial($!md);
@@ -53,12 +165,13 @@ class Mutter::Meta::Display {
     Int()              $root_x,
     Int()              $root_y
   ) {
-    my MutterMetaGrabOp $o      = $op;
-    my gboolean   $p            = $pointer_already_grabbed.so.Int;
-    my gboolean   $f            = $frame_action.so.Int;
-    my gulong     $m            = $modmask;
-    my guint32    $t            = $timestamp;
-    my gint      ($b, $rx, $ry) = ($button, $root_x, $root_y);
+    my MutterMetaGrabOp $o = $op;
+    my gboolean         $p = $pointer_already_grabbed.so.Int;
+    my gboolean         $f = $frame_action.so.Int;
+    my gulong           $m = $modmask;
+    my guint32          $t = $timestamp;
+
+    my gint ($b, $rx, $ry) = ($button, $root_x, $root_y);
 
     meta_display_begin_grab_op($!md, $win, $o, $p, $f, $b, $m, $t, $rx, $ry);
   }
@@ -133,7 +246,10 @@ class Mutter::Meta::Display {
     meta_display_get_last_user_time($!md);
   }
 
-  method get_monitor_geometry (Int() $monitor, MutterMetaRectangle() $geometry) {
+  method get_monitor_geometry (
+    Int()          $monitor,
+    MtkRectangle() $geometry
+  ) {
     my gint $m = $monitor;
 
     meta_display_get_monitor_geometry($!md, $m, $geometry);
@@ -145,12 +261,12 @@ class Mutter::Meta::Display {
     meta_display_get_monitor_in_fullscreen($!md, $monitor);
   }
 
-  method get_monitor_index_for_rect (MutterMetaRectangle() $rect) {
+  method get_monitor_index_for_rect (MtkRectangle() $rect) {
     meta_display_get_monitor_index_for_rect($!md, $rect);
   }
 
   method get_monitor_neighbor_index (Int() $which_monitor, Int() $dir) {
-    my gint                 $w = $which_monitor;
+    my gint                       $w = $which_monitor;
     my MutterMetaDisplayDirection $d = $dir;
 
     meta_display_get_monitor_neighbor_index($!md, $w, $d);
