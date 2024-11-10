@@ -3,6 +3,7 @@ use v6.c;
 use Method::Also;
 
 use GLib::Raw::Traits;
+use GLib::Raw::Object;
 use Mutter::Raw::Types;
 use Mutter::Raw::Clutter::Container;
 
@@ -48,15 +49,21 @@ role Mutter::Clutter::Roles::Container {
     self.connect-actor($!mcc, 'actor-removed');
   }
 
-  method create_child_meta (MutterClutterActor() $actor) is also<create-child-meta> {
+  method create_child_meta (MutterClutterActor() $actor)
+    is also<create-child-meta>
+  {
     clutter_container_create_child_meta($!mcc, $actor);
   }
 
-  method destroy_child_meta (MutterClutterActor() $actor) is also<destroy-child-meta> {
+  method destroy_child_meta (MutterClutterActor() $actor)
+    is also<destroy-child-meta>
+  {
     clutter_container_destroy_child_meta($!mcc, $actor);
   }
 
-  method find_child_by_name (Str() $child_name, :$raw = False) is also<find-child-by-name> {
+  method find_child_by_name (Str() $child_name, :$raw = False)
+    is also<find-child-by-name>
+  {
     propReturnObject(
       clutter_container_find_child_by_name($!mcc, $child_name),
       $raw,
@@ -64,7 +71,9 @@ role Mutter::Clutter::Roles::Container {
     );
   }
 
-  method get_child_meta (MutterClutterActor() $actor, :$raw = False) is also<get-child-meta> {
+  method get_child_meta (MutterClutterActor() $actor, :$raw = False)
+    is also<get-child-meta>
+  {
     propReturnObject(
       clutter_container_get_child_meta($!mcc, $actor),
       $raw,
@@ -72,7 +81,9 @@ role Mutter::Clutter::Roles::Container {
     );
   }
 
-  method muttercluttercontainer_get_type is also<muttercluttercontainer-get-type> {
+  method muttercluttercontainer_get_type
+    is also<muttercluttercontainer-get-type>
+  {
     state ($n, $t);
 
     unstable_get_type( self.^name, &clutter_container_get_type, $n, $t );
@@ -115,6 +126,30 @@ role Mutter::Clutter::Roles::Container {
   # method set (ClutterActor $actor, Str $first_prop, ...) {
   #   clutter_container_child_set($!mcc, $actor, $first_prop);
   # }
+
+  proto method child_set (|)
+    is also<child-set>
+  { * }
+
+  multi method child_set (MutterClutterActor() $child, *@props) {
+    X::Mutter::InvalidNumberOfElements.new(
+      origin  => 'Clutter',
+      routine => &?ROUTINE.name
+    ).throw unless @props % 2 == 0;
+
+    my @prop-pairs = @props.rotor(2);
+    X::Mutter::Clutter::InvalidElementType.new(
+      message => 'First element in property pairs must be a string!'
+    ).throw unless @prop-pairs.map( *.head ).all ~~ Str;
+
+    samewith( $child, .head, .tail ) for @prop-pairs;
+  }
+  multi method child_set (MutterClutterActor() $child, *%props) {
+    samewith($child, %props);
+  }
+  multi method child_set (MutterClutterActor() $child, %props) {
+    self.child-set-property($child, .key, .value) for %props.pairs;
+  }
 
   method child_set_property (
     MutterClutterActor() $child,
